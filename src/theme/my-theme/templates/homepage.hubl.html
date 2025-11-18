@@ -1,0 +1,55 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Homepage
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {% module
+    "navigation"
+    path="../components/modules/Navigation"
+  %}
+
+  {% module
+    "hero"
+    path="../components/modules/HeroDiagram"
+  %}
+
+  {% module
+    "logos"
+    path="../components/modules/LogosCarousel"
+  %}
+
+  {% module
+    "features"
+    path="../components/modules/AIFeatures"
+  %}
+
+  {% module
+    "results"
+    path="../components/modules/ResultsSection"
+  %}
+
+  {% module
+    "calculator"
+    path="../components/modules/ROICalculator"
+  %}
+
+  {% module
+    "stages"
+    path="../components/modules/StagesSection"
+  %}
+
+  {% module
+    "cta"
+    path="../components/modules/CTASection"
+  %}
+
+  {% module
+    "footer"
+    path="../components/modules/Footer"
+  %}
+
+{% endblock body %}
