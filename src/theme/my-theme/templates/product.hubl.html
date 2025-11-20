@@ -1,0 +1,21 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Product Page
+  screenshotPath: ../assets/images/template-previews/product.png
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {% module "navigation" path="../components/modules/Navigation" %}
+  {% module "hero" path="../components/modules/ProductHero" label="Product Hero" %}
+  {% module "system_intro" path="../components/modules/SystemIntro" label="System Introduction" %}
+  {% module "platform" path="../components/modules/PlatformSection" label="The Platform" %}
+  {% module "experience" path="../components/modules/ExperienceSection" label="The Experience" %}
+  {% module "story" path="../components/modules/StorySection" label="Success Story" %}
+  {% module "intelligence" path="../components/modules/IntelligenceSection" label="The Intelligence" %}
+  {% module "cta" path="../components/modules/CTASection" label="Get Started" %}
+  {% module "footer" path="../components/modules/Footer" %}
+
+{% endblock body %}

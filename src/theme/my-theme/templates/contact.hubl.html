@@ -1,0 +1,32 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Contact Page
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {% module
+    "navigation"
+    path="../components/modules/Navigation"
+  %}
+
+  {% module
+    "contact_form"
+    path="../components/modules/ContactForm"
+    layout="split"
+  %}
+
+  {% module
+    "newsletter"
+    path="../components/modules/Newsletter"
+    layout="boxed"
+  %}
+
+  {% module
+    "footer"
+    path="../components/modules/Footer"
+  %}
+
+{% endblock body %}

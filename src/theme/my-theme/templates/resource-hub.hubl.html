@@ -1,0 +1,41 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Resource Hub
+  screenshotPath: ../assets/resource-hub-screenshot.png
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {% module
+    "navigation"
+    path="../components/modules/Navigation"
+  %}
+
+  {% module
+    "resource_hero"
+    path="../components/modules/ResourceHero"
+  %}
+
+  {% module
+    "featured_resource"
+    path="../components/modules/FeaturedResource"
+  %}
+
+  {% module
+    "resource_grid"
+    path="../components/modules/ResourceGrid"
+  %}
+
+  {% module
+    "resource_cta"
+    path="../components/modules/ResourceCTA"
+  %}
+
+  {% module
+    "footer"
+    path="../components/modules/Footer"
+  %}
+
+{% endblock body %}

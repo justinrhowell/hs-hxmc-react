@@ -4,23 +4,48 @@ import {
 } from '@hubspot/cms-components/fields';
 import mcLogo from '../../../assets/mc-logo.png';
 
+interface FooterLink {
+  text: string;
+  url: string;
+}
+
+interface FooterColumn {
+  title: string;
+  links: FooterLink[];
+}
+
 export function Component({ fieldValues }: any) {
+  const description = fieldValues.description || 'The premier AI-powered mentorship operating system for human connection, resilience, and adaptability.';
+  const facebookUrl = fieldValues.facebook_url || '#';
+  const twitterUrl = fieldValues.twitter_url || '#';
+  const linkedinUrl = fieldValues.linkedin_url || '#';
+  const instagramUrl = fieldValues.instagram_url || '#';
+
+  const productsLinks = fieldValues.products_links || [];
+  const solutionsLinks = fieldValues.solutions_links || [];
+  const resourcesLinks = fieldValues.resources_links || [];
+  const companyLinks = fieldValues.company_links || [];
+
+  const privacyUrl = fieldValues.privacy_url || '#';
+  const termsUrl = fieldValues.terms_url || '#';
+
   return (
     <footer style={{
-      padding: '60px 20px 30px',
-      background: '#1a1a1a',
-      color: 'white'
+      padding: 'var(--spacing-3xl) var(--spacing-lg) var(--spacing-xl)',
+      background: 'var(--bg-white)',
+      color: 'var(--text-primary)',
+      borderTop: '1px solid var(--border-light)'
     }}>
       <div className="container">
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '2fr 1fr 1fr 1fr 1fr',
-          gap: '40px',
-          marginBottom: '50px'
+          gridTemplateColumns: '2fr 1fr 1fr 1fr',
+          gap: 'var(--spacing-3xl)',
+          marginBottom: 'var(--spacing-3xl)'
         }}>
           <div>
             <div style={{
-              marginBottom: '20px',
+              marginBottom: 'var(--spacing-lg)',
               height: '40px'
             }}>
               <img
@@ -28,117 +53,164 @@ export function Component({ fieldValues }: any) {
                 alt="Mentor Collective"
                 style={{
                   height: '100%',
-                  width: 'auto',
-                  filter: 'brightness(0) invert(1)'
+                  width: 'auto'
                 }}
               />
             </div>
             <p style={{
               fontSize: '0.95rem',
-              color: '#999',
+              color: 'var(--text-secondary)',
               lineHeight: 1.7,
-              marginBottom: '20px',
-              maxWidth: '300px'
+              marginBottom: 'var(--spacing-lg)',
+              maxWidth: '350px'
             }}>
-              The premier AI-powered mentorship operating system for human connection, resilience, and adaptability.
+              {description}
             </p>
-            <div style={{ display: 'flex', gap: '16px' }}>
-              <a href="#" style={{ color: '#999', fontSize: '20px' }}>f</a>
-              <a href="#" style={{ color: '#999', fontSize: '20px' }}>𝕏</a>
-              <a href="#" style={{ color: '#999', fontSize: '20px' }}>in</a>
-              <a href="#" style={{ color: '#999', fontSize: '20px' }}>IG</a>
+            <div style={{ display: 'flex', gap: 'var(--spacing-md)' }}>
+              <a href={linkedinUrl} style={{
+                color: 'var(--text-secondary)',
+                fontSize: '20px',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease'
+              }} aria-label="LinkedIn">in</a>
+              <a href={facebookUrl} style={{
+                color: 'var(--text-secondary)',
+                fontSize: '20px',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease'
+              }} aria-label="Facebook">f</a>
+              <a href={twitterUrl} style={{
+                color: 'var(--text-secondary)',
+                fontSize: '20px',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease'
+              }} aria-label="Twitter">𝕏</a>
+              <a href={instagramUrl} style={{
+                color: 'var(--text-secondary)',
+                fontSize: '20px',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease'
+              }} aria-label="Instagram">IG</a>
             </div>
           </div>
           <div>
             <h3 style={{
-              fontSize: '16px',
+              fontSize: '1rem',
               fontWeight: 600,
-              marginBottom: '20px',
-              color: 'white'
+              marginBottom: 'var(--spacing-lg)',
+              color: 'var(--text-primary)',
+              fontFamily: 'var(--font-headline)'
             }}>
-              Products
+              Product
             </h3>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px'
+              gap: 'var(--spacing-sm)'
             }}>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Platform</a>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Integrations</a>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Features</a>
+              {productsLinks.length > 0 ? productsLinks.map((link: FooterLink, idx: number) => (
+                <a key={idx} href={link.url} style={{
+                  color: 'var(--text-secondary)',
+                  textDecoration: 'none',
+                  fontSize: '0.95rem',
+                  transition: 'color 0.2s ease'
+                }}>{link.text}</a>
+              )) : (
+                <>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Reveal</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Spark</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Scale</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Fuel</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Help</a>
+                </>
+              )}
             </div>
           </div>
           <div>
             <h3 style={{
-              fontSize: '16px',
+              fontSize: '1rem',
               fontWeight: 600,
-              marginBottom: '20px',
-              color: 'white'
+              marginBottom: 'var(--spacing-lg)',
+              color: 'var(--text-primary)',
+              fontFamily: 'var(--font-headline)'
             }}>
               Solutions
             </h3>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px'
+              gap: 'var(--spacing-sm)'
             }}>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Higher Ed</a>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Corporate</a>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Nonprofit</a>
+              {solutionsLinks.length > 0 ? solutionsLinks.map((link: FooterLink, idx: number) => (
+                <a key={idx} href={link.url} style={{
+                  color: 'var(--text-secondary)',
+                  textDecoration: 'none',
+                  fontSize: '0.95rem',
+                  transition: 'color 0.2s ease'
+                }}>{link.text}</a>
+              )) : (
+                <>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Higher Ed</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>K-12</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Enterprise</a>
+                </>
+              )}
             </div>
           </div>
           <div>
             <h3 style={{
-              fontSize: '16px',
+              fontSize: '1rem',
               fontWeight: 600,
-              marginBottom: '20px',
-              color: 'white'
-            }}>
-              Resources
-            </h3>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px'
-            }}>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Blog</a>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Case Studies</a>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Support</a>
-            </div>
-          </div>
-          <div>
-            <h3 style={{
-              fontSize: '16px',
-              fontWeight: 600,
-              marginBottom: '20px',
-              color: 'white'
+              marginBottom: 'var(--spacing-lg)',
+              color: 'var(--text-primary)',
+              fontFamily: 'var(--font-headline)'
             }}>
               Company
             </h3>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px'
+              gap: 'var(--spacing-sm)'
             }}>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>About Us</a>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Careers</a>
-              <a href="#" style={{ color: '#999', textDecoration: 'none', fontSize: '0.95rem' }}>Contact</a>
+              {companyLinks.length > 0 ? companyLinks.map((link: FooterLink, idx: number) => (
+                <a key={idx} href={link.url} style={{
+                  color: 'var(--text-secondary)',
+                  textDecoration: 'none',
+                  fontSize: '0.95rem',
+                  transition: 'color 0.2s ease'
+                }}>{link.text}</a>
+              )) : (
+                <>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>About</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Careers</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Press</a>
+                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Contact</a>
+                </>
+              )}
             </div>
           </div>
         </div>
         <div style={{
-          borderTop: '1px solid #333',
-          paddingTop: '30px',
+          borderTop: '1px solid var(--border-light)',
+          paddingTop: 'var(--spacing-xl)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           fontSize: '0.875rem',
-          color: '#666'
+          color: 'var(--text-secondary)'
         }}>
-          <div>© 2025 Mentor Collective. All rights reserved.</div>
-          <div style={{ display: 'flex', gap: '24px' }}>
-            <a href="#" style={{ color: '#666', textDecoration: 'none' }}>Privacy Policy</a>
-            <a href="#" style={{ color: '#666', textDecoration: 'none' }}>Terms of Service</a>
+          <div>{fieldValues.copyright || '© 2025 Mentor Collective. All rights reserved.'}</div>
+          <div style={{ display: 'flex', gap: 'var(--spacing-xl)' }}>
+            <a href={privacyUrl} style={{
+              color: 'var(--text-secondary)',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>Privacy Policy</a>
+            <a href={termsUrl} style={{
+              color: 'var(--text-secondary)',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>Terms of Service</a>
           </div>
         </div>
       </div>
@@ -149,9 +221,44 @@ export function Component({ fieldValues }: any) {
 export const fields = (
   <ModuleFields>
     <TextField
+      name="description"
+      label="Company Description"
+      default="The premier AI-powered mentorship operating system for human connection, resilience, and adaptability."
+    />
+    <TextField
+      name="facebook_url"
+      label="Facebook URL"
+      default="#"
+    />
+    <TextField
+      name="twitter_url"
+      label="Twitter URL"
+      default="#"
+    />
+    <TextField
+      name="linkedin_url"
+      label="LinkedIn URL"
+      default="#"
+    />
+    <TextField
+      name="instagram_url"
+      label="Instagram URL"
+      default="#"
+    />
+    <TextField
       name="copyright"
       label="Copyright Text"
       default="© 2025 Mentor Collective. All rights reserved."
+    />
+    <TextField
+      name="privacy_url"
+      label="Privacy Policy URL"
+      default="#"
+    />
+    <TextField
+      name="terms_url"
+      label="Terms of Service URL"
+      default="#"
     />
   </ModuleFields>
 );
