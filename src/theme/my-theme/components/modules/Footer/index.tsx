@@ -2,7 +2,7 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import mcLogo from '../../../assets/mc-logo.png';
+import mcLogo from '../../../assets/MentorCollective-Black-Logo.svg';
 
 interface FooterLink {
   text: string;

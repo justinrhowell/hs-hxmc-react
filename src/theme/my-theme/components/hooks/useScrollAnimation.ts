@@ -1,14 +1,43 @@
 import { useEffect, useRef, useState } from 'react';
 
+/**
+ * Configuration options for scroll-triggered animations
+ */
 interface ScrollAnimationOptions {
+  /** Percentage of element that must be visible to trigger (0-1). Default: 0.1 */
   threshold?: number;
+  /** Margin around the root element. Default: '0px' */
   rootMargin?: string;
+  /** Whether to trigger animation only once. Default: true */
   triggerOnce?: boolean;
 }
 
 /**
- * Custom hook for scroll-triggered animations
- * Returns a ref to attach to the element and a boolean indicating if it's visible
+ * Custom hook for scroll-triggered animations using Intersection Observer.
+ *
+ * Provides a ref to attach to the animated element and a boolean indicating
+ * whether the element is currently visible in the viewport.
+ *
+ * @param options - Configuration options for the animation
+ * @returns Object containing elementRef and isVisible state
+ *
+ * @example
+ * ```tsx
+ * function MyComponent() {
+ *   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
+ *
+ *   return (
+ *     <section
+ *       ref={elementRef as React.RefObject<HTMLElement>}
+ *       style={animationStyles.fadeInUp(isVisible)}
+ *     >
+ *       Content that fades in when scrolled into view
+ *     </section>
+ *   );
+ * }
+ * ```
+ *
+ * @see {@link animationStyles} for available animation presets
  */
 export const useScrollAnimation = (options: ScrollAnimationOptions = {}) => {
   const {
@@ -49,7 +78,41 @@ export const useScrollAnimation = (options: ScrollAnimationOptions = {}) => {
 };
 
 /**
- * Animation style presets
+ * Animation style presets for scroll-triggered animations.
+ *
+ * Each function takes a visibility boolean and returns CSS properties
+ * that create smooth entrance animations when elements scroll into view.
+ *
+ * @example
+ * ```tsx
+ * // Basic fade in
+ * <div style={animationStyles.fadeIn(isVisible)}>Content</div>
+ *
+ * // Fade in with upward slide
+ * <section style={animationStyles.fadeInUp(isVisible)}>Section</section>
+ *
+ * // Staggered animation with delay
+ * {items.map((item, index) => (
+ *   <div key={index} style={animationStyles.staggered(isVisible, index * 0.1)}>
+ *     {item.content}
+ *   </div>
+ * ))}
+ * ```
+ *
+ * Available presets:
+ * - `fadeIn` - Simple opacity fade
+ * - `fadeInUp` - Fade with upward movement (30px)
+ * - `fadeInDown` - Fade with downward movement
+ * - `fadeInLeft` - Fade from left
+ * - `fadeInRight` - Fade from right
+ * - `scaleIn` - Fade with scale effect
+ * - `slideInUp` - More dramatic slide (50px)
+ * - `staggered` - Delayed animation for lists
+ * - `subtleSlideUp` - Elegant, subtle slide (24px) - recommended for sections
+ * - `elegantFadeScale` - Premium feel with slight scale
+ * - `softRise` - Gentle rise animation (16px)
+ * - `staggeredSubtle` - Subtle stagger for grids
+ * - `contentBlock` - Optimized for content blocks
  */
 export const animationStyles = {
   fadeIn: (isVisible: boolean): React.CSSProperties => ({

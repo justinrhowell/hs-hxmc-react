@@ -45,7 +45,7 @@ export function Component({ fieldValues }: any) {
               color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)',
             }}>
-              {fieldValues.title || 'Confidence Sparked Noah's Future'}
+              {fieldValues.title || "Confidence Sparked Noah's Future"}
             </h2>
 
             <p style={{
@@ -168,7 +168,7 @@ export const fields = (
     <TextField
       name="title"
       label="Story Title"
-      default="Confidence Sparked Noah's Future"
+      default="Confidence Sparked Noah&apos;s Future"
     />
     <TextField
       name="description"
