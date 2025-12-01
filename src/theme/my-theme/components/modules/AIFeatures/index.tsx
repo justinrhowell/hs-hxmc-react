@@ -31,28 +31,28 @@ export function Component({ fieldValues }: any) {
         {
           icon: revealIcon,
           title: 'Reveal',
-          description: 'Reveal hidden networks and growth signals. Uncover what makes people tick, connecting learners to opportunity.',
+          description: 'Uncover hidden growth signals, belonging gaps, and network strength through AI pattern recognition.',
           linkText: 'Learn more',
           linkUrl: '#'
         },
         {
           icon: sparkIcon,
           title: 'Spark',
-          description: 'Spark meaningful conversations. AI-guided conversations build confidence and belonging.',
+          description: 'AI-guided conversation prompts that spark increased engagement, confidence, and relationship quality.',
           linkText: 'Learn more',
           linkUrl: '#'
         },
         {
           icon: scaleIcon,
           title: 'Scale',
-          description: 'Scale connection at lower cost. Automation tools deliver mentorship anywhere, anytime.',
+          description: 'Automate workflows, matching, onboarding, and engagement across cohorts, campuses, districts, and employers.',
           linkText: 'Learn more',
           linkUrl: '#'
         },
         {
           icon: fuelIcon,
           title: 'Fuel',
-          description: 'Fuel your strategy with human-skill data. Workflows and analytics turn connection data into action and ROI.',
+          description: 'Turn conversations and connection data into real-time intelligence that fuels retention and workforce mobility.',
           linkText: 'Learn more',
           linkUrl: '#'
         }
@@ -181,22 +181,22 @@ export const fields: any = [
     type: 'text',
     name: 'heading',
     label: 'Section Heading',
-    default: 'The AI Mentorship Operating System',
+    default: 'The AI Mentorship OS: One System, Infinite Pathways',
   },
   {
     type: 'text',
     name: 'subtitle',
     label: 'Subtitle',
-    default: 'Our data engine reveals, sparks, scales, and fuels connection.',
+    default: 'Our data engine reveals, sparks, scales, and fuels connections across education, workforce, and early talent ecosystems.',
   },
   {
     type: 'group',
     name: 'features',
     label: 'Features',
     occurrence: {
-      min: 1,
+      min: 0,
       max: 8,
-      default: 4,
+      default: 0,
     },
     children: [
       {
@@ -221,7 +221,7 @@ export const fields: any = [
         type: 'text',
         name: 'description',
         label: 'Description',
-        default: 'Reveal hidden networks and growth signals. Uncover what makes people tick, connecting learners to opportunity.',
+        default: 'Uncover hidden growth signals, belonging gaps, and network strength through AI pattern recognition.',
       },
       {
         type: 'text',

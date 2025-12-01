@@ -20,11 +20,28 @@ interface TestimonialsCarouselProps {
   };
 }
 
+const defaultTestimonials = [
+  {
+    quote: "Mentorship has truly shaped my journey, helping me navigate uncertainty and build confidence. Mentors are like a personal Board of Advisors—supporting your academic, professional, and personal growth.",
+    author: "Genevieve Allotey-Pappoe",
+    role: "Recent Princeton Graduate, Educator and Mentee",
+    company: "",
+  },
+  {
+    quote: "Of the graduate students who engaged in multiple mentorship and experiential programs, 99% were employed one year after graduating, many in tenure-track positions across diverse fields.",
+    author: "Eva Kubu",
+    role: "Senior Associate Dean for Professional Development at Princeton University",
+    company: "Mentor Collective Partner",
+  },
+];
+
 export const Component: React.FC<TestimonialsCarouselProps> = ({
   fieldValues
 }) => {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
-  const testimonials = fieldValues.testimonials || [];
+  const testimonials = (fieldValues.testimonials && fieldValues.testimonials.length > 0)
+    ? fieldValues.testimonials
+    : defaultTestimonials;
 
   if (testimonials.length === 0) {
     return null;
@@ -303,9 +320,9 @@ export const fields: ModuleFields = [
     name: 'testimonials',
     label: 'Testimonials',
     occurrence: {
-      min: 1,
+      min: 0,
       max: 10,
-      default: 3,
+      default: 0,
     },
     children: [
       {

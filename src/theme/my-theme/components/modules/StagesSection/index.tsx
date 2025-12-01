@@ -368,9 +368,9 @@ export const fields: any = [
     name: 'stages',
     label: 'Stages',
     occurrence: {
-      min: 1,
+      min: 0,
       max: 10,
-      default: 5,
+      default: 0,
     },
     children: [
       {

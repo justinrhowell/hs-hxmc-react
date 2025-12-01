@@ -1,0 +1,44 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Network Page
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {% module "navigation" path="../components/modules/Navigation" %}
+
+  {% module "hero" path="../components/modules/NetworkHero" label="Network Hero" %}
+
+  {% module "why_choose" path="../components/modules/WhyChooseUs" label="Why Choose Us" %}
+
+  {% module "logos" path="../components/modules/LogosCarousel" %}
+
+  {% module "pillars" path="../components/modules/FourPillars" label="Four Pillars" %}
+
+  {% module "segments" path="../components/modules/SegmentCards" label="Segment Cards" %}
+
+  {% module "he_detail"
+    path="../components/modules/SegmentDetail"
+    label="Higher Education Detail"
+    segment_type="higher-education"
+  %}
+
+  {% module "emerging_detail"
+    path="../components/modules/SegmentDetail"
+    label="Emerging Markets Detail"
+    segment_type="emerging-markets"
+  %}
+
+  {% module "partnership_detail"
+    path="../components/modules/SegmentDetail"
+    label="Strategic Partnerships Detail"
+    segment_type="strategic-partnerships"
+  %}
+
+  {% module "cta" path="../components/modules/CTASection" label="Get Started" %}
+
+  {% module "footer" path="../components/modules/Footer" %}
+
+{% endblock body %}

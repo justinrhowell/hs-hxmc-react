@@ -175,11 +175,11 @@ export const fields: any = [
     type: 'group',
     name: 'logos',
     label: 'Partner Logos',
-    help_text: 'Add partner/client logos (use preset logos OR upload custom image URLs)',
+    help_text: 'Add partner/client logos (use preset logos OR upload custom image URLs). Leave empty to use default logos.',
     occurrence: {
-      min: 1,
+      min: 0,
       max: 50,
-      default: 7,
+      default: 0,
     },
     children: [
       {

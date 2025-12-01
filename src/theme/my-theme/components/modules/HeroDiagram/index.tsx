@@ -40,7 +40,7 @@ export function Component({ fieldValues }: any) {
   const [isMobile, setIsMobile] = useState(false);
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
-  const description = fieldValues.description || "In an AI-driven world, human skills are your edge. We help schools and employers use AI to scale human connection, improving durable skills, belonging and career outcomes.";
+  const description = fieldValues.description || "Mentorship reinvented as scalable AI infrastructure. Foster human connection, enhance durable skills, and drive improved retention and career outcomes across your educational, workforce, and employer ecosystems.";
 
   // Check for reduced motion preference
   useEffect(() => {
@@ -83,7 +83,7 @@ export function Component({ fieldValues }: any) {
   // Use custom nodes if provided, otherwise fall back to defaults
   const customNodes = fieldValues.nodes || [];
 
-  const nodeData: Record<string, NodeData> = customNodes.length >= 4 ? {
+  const nodeData: Record<string, NodeData> = customNodes.length === 4 ? {
     learners: {
       label: customNodes[0].node_label,
       shortLabel: customNodes[0].short_label,
@@ -130,14 +130,14 @@ export function Component({ fieldValues }: any) {
     }
   } : {
     learners: {
-      label: 'Learners',
-      shortLabel: 'Learners',
-      tooltipTitle: 'Learners & Career Starters',
-      tooltipStat: '70%',
-      tooltipLabel: 'planning careers in critical sectors',
-      tooltipDesc: 'Students and individuals seeking guidance and career development through meaningful mentorship connections.',
-      fullDescription: 'Our AI matches learners with mentors based on goals, interests, and career aspirations. Real-time insights help track progress and ensure meaningful connections.',
-      caseStudy: 'Duke University saw 85% engagement rate among students using our mentorship platform.',
+      label: 'Students & Early Talent',
+      shortLabel: 'Students',
+      tooltipTitle: 'Students & Early Talent',
+      tooltipStat: '2.5x',
+      tooltipLabel: 'more likely to feel career-ready',
+      tooltipDesc: 'Students, upskillers, and early talent build the durable skills and social capital needed to unlock career mobility.',
+      fullDescription: '2.5x more likely to feel career-ready and develop the durable skills employers need. 21% increase in comfort asking established professionals for help, demonstrating increased social capital for mentees.',
+      caseStudy: 'Students paired with mentors report significantly higher career confidence and networking abilities.',
       ...nodePositions.learners
     },
     employers: {
@@ -145,21 +145,21 @@ export function Component({ fieldValues }: any) {
       shortLabel: 'Employers',
       tooltipTitle: 'Employers',
       tooltipStat: '+42%',
-      tooltipLabel: 'increase in conversion',
-      tooltipDesc: 'Organizations leveraging mentorship to develop talent, increase retention, and build stronger teams.',
-      fullDescription: 'Help your workforce develop critical skills through peer mentorship. Our platform facilitates knowledge transfer and builds stronger team connections.',
-      caseStudy: 'JPMorgan Chase increased intern-to-full-time conversion by 42% using structured mentorship.',
+      tooltipLabel: 'increase in intern-to-full-time conversion',
+      tooltipDesc: 'Employers leverage mentorship to boost retention and build stronger teams with proven conversion rates.',
+      fullDescription: 'Reduced early attrition and increased engagement among underrepresented talent. Mentorship programs drive measurable improvements in talent retention and team cohesion.',
+      caseStudy: 'Partner employers see 42% increase in intern-to-full-time conversion rates.',
       ...nodePositions.employers
     },
     organizations: {
       label: 'Organizations',
       shortLabel: 'Organizations',
       tooltipTitle: 'Organizations',
-      tooltipStat: '2.5x',
-      tooltipLabel: 'more likely to feel career-ready',
-      tooltipDesc: 'Educational institutions and nonprofits using our platform to drive meaningful outcomes and student success.',
-      fullDescription: 'Scale mentorship across your entire organization with AI-powered matching, automated check-ins, and data-driven insights.',
-      caseStudy: 'UCLA reported students were 2.5x more likely to feel career-ready after participating in our program.',
+      tooltipStat: '+8-19%',
+      tooltipLabel: 'boost in sense of belonging',
+      tooltipDesc: 'Organizations use our platform to improve belonging, retention, and career readiness.',
+      fullDescription: '2.5x more likely to feel career-ready. +8-19% boost in sense of belonging across program participants.',
+      caseStudy: 'Partner institutions report significant improvements in student retention and belonging metrics.',
       ...nodePositions.organizations
     },
     partnerships: {
@@ -167,10 +167,10 @@ export function Component({ fieldValues }: any) {
       shortLabel: 'Partnerships',
       tooltipTitle: 'Strategic Partnerships',
       tooltipStat: '90-92%',
-      tooltipLabel: 'retention rate',
-      tooltipDesc: 'Fostering curiosity and innovation through guided conversations that spark growth and discovery.',
-      fullDescription: 'Partner organizations benefit from shared best practices, collaborative learning, and network effects across multiple institutions.',
-      caseStudy: 'Our partnership network maintains a 90-92% retention rate year-over-year.',
+      tooltipLabel: 'retention (vs. 64% national avg)',
+      tooltipDesc: 'Ecosystem partners embed mentorship directly into certification, training and regional workforce pipelines.',
+      fullDescription: 'Drive 90–92% retention (vs. 64% national avg). +$20K in savings per retained teacher for partner districts.',
+      caseStudy: 'Strategic partners achieve retention rates far exceeding national averages through embedded mentorship.',
       ...nodePositions.partnerships
     }
   };
@@ -185,7 +185,7 @@ export function Component({ fieldValues }: any) {
   // Use custom mentors if provided, otherwise fall back to defaults
   const customMentors = fieldValues.mentors || [];
 
-  const mentorProfiles: MentorProfile[] = customMentors.length >= 3 ? customMentors.map((m: any) => ({
+  const mentorProfiles: MentorProfile[] = customMentors.length === 3 ? customMentors.map((m: any) => ({
     name: m.mentor_name,
     role: m.role,
     image: mentorImageMap[m.image_key] || heroImg01,
@@ -1145,7 +1145,7 @@ export const fields: any = [
     type: 'text',
     name: 'description',
     label: 'Description',
-    default: 'In an AI-driven world, human skills are your edge. We help schools and employers use AI to scale human connection, improving durable skills, belonging and career outcomes.',
+    default: 'Mentorship reinvented as scalable AI infrastructure. Foster human connection, enhance durable skills, and drive improved retention and career outcomes across your educational, workforce, and employer ecosystems.',
   },
   {
     type: 'text',
@@ -1157,11 +1157,11 @@ export const fields: any = [
     type: 'group',
     name: 'nodes',
     label: 'Diagram Nodes',
-    help_text: 'The 4 clickable nodes around the diagram (order: top, right, bottom, left)',
+    help_text: 'The 4 clickable nodes around the diagram (order: top, right, bottom, left). Leave empty to use default content.',
     occurrence: {
-      min: 4,
+      min: 0,
       max: 4,
-      default: 4,
+      default: 0,
     },
     children: [
       {
@@ -1218,11 +1218,11 @@ export const fields: any = [
     type: 'group',
     name: 'mentors',
     label: 'Mentor Profiles',
-    help_text: 'The 3 mentor avatars in the center of the diagram',
+    help_text: 'The 3 mentor avatars in the center of the diagram. Leave empty to use default content.',
     occurrence: {
-      min: 3,
+      min: 0,
       max: 3,
-      default: 3,
+      default: 0,
     },
     children: [
       {

@@ -82,10 +82,19 @@ export function Component({ fieldValues }: any) {
               <p style={{
                 fontSize: '1.25rem',
                 color: 'var(--text-white-soft)',
-                marginBottom: 'var(--spacing-2xl)',
+                marginBottom: 'var(--spacing-md)',
                 lineHeight: 'var(--line-height-normal)'
               }}>
-                Go big. Scale connection. Drive outcomes in your school or organization.
+                Mentorship reinvented as AI infrastructure for education, workforce, and early talent ecosystems.
+              </p>
+              <p style={{
+                fontSize: '1.1rem',
+                color: 'var(--text-white-soft)',
+                marginBottom: 'var(--spacing-2xl)',
+                lineHeight: 'var(--line-height-normal)',
+                fontWeight: 600
+              }}>
+                One OS. Infinite pathways.
               </p>
               <button
                 onClick={() => setIsModalOpen(true)}
@@ -128,17 +137,22 @@ export const fields = (
     <TextField
       name="heading"
       label="Heading"
-      default="Ready to Transform Your Mentorship Program?"
+      default="Ready to unlock your network's hidden power?"
     />
     <TextField
       name="subheading"
       label="Subheading"
-      default="Join thousands of organizations using AI-powered mentorship to drive real results"
+      default="Mentorship reinvented as AI infrastructure for education, workforce, and early talent ecosystems."
+    />
+    <TextField
+      name="tagline"
+      label="Tagline"
+      default="One OS. Infinite pathways."
     />
     <TextField
       name="buttonText"
       label="Button Text"
-      default="Get Started Today"
+      default="Request a Demo"
     />
   </ModuleFields>
 );
