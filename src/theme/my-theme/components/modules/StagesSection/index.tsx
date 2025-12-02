@@ -145,6 +145,10 @@ export function Component({ fieldValues }: any) {
         }}
       >
         <style>{`
+          .stage-tab-btn:focus {
+            outline: none !important;
+            box-shadow: none !important;
+          }
           @media (max-width: 768px) {
             .stages-section h2 {
               font-size: 2rem !important;
@@ -173,12 +177,12 @@ export function Component({ fieldValues }: any) {
             }
           }
         `}</style>
-        <div className="container">
+        <div style={{ maxWidth: 'var(--max-width-lg)', margin: '0 auto', padding: '0 var(--container-padding)' }}>
         <h2 style={{
           fontSize: 'var(--font-size-h2)',
-          fontWeight: 700,
+          fontWeight: 500,
           textAlign: 'center',
-          marginBottom: '3rem',
+          marginBottom: 'var(--spacing-md)',
           fontFamily: 'var(--font-headline)',
           lineHeight: 'var(--line-height-tight)',
           letterSpacing: 'var(--letter-spacing-tight)',
@@ -188,21 +192,21 @@ export function Component({ fieldValues }: any) {
         </h2>
         <p style={{
           textAlign: 'center',
-          fontSize: '1.1rem',
+          fontSize: 'var(--font-size-body-lg)',
           color: 'var(--text-muted)',
-          marginBottom: '4rem',
+          marginBottom: 'var(--spacing-2xl)',
           maxWidth: 'var(--max-width-prose)',
-          margin: '0 auto 4rem'
+          margin: '0 auto var(--spacing-2xl)'
         }}>
           {fieldValues.subtitle || 'From first-year students to experienced professionals, our platform scales mentorship to drive growth, belonging, and opportunity.'}
         </p>
         <div className="tabs" style={{
-          background: 'rgba(255, 251, 248, 0.5)',
-          padding: '0.5rem',
+          background: 'var(--bg-light-coral)',
+          padding: 'var(--spacing-xs)',
           borderRadius: 'var(--radius-lg)',
-          marginBottom: '4rem',
+          marginBottom: 'var(--spacing-2xl)',
           display: 'flex',
-          gap: '0.5rem',
+          gap: 'var(--spacing-xs)',
           justifyContent: 'center',
           flexWrap: 'wrap'
         }}>
@@ -213,16 +217,16 @@ export function Component({ fieldValues }: any) {
               className="stage-tab-btn"
               data-tab-index={index}
               style={{
-                padding: 'var(--spacing-md) var(--spacing-lg)',
+                padding: 'var(--spacing-sm) var(--spacing-lg)',
                 borderRadius: 'var(--radius-md)',
                 fontFamily: 'var(--font-body)',
-                fontSize: '1rem',
+                fontSize: 'var(--font-size-body)',
                 border: 'none',
                 cursor: 'pointer',
                 background: index === 0 ? 'var(--gradient-coral)' : 'transparent',
                 color: index === 0 ? 'var(--text-white)' : 'var(--text-muted)',
                 transition: 'var(--transition-medium)',
-                boxShadow: index === 0 ? 'var(--shadow-coral)' : 'none',
+                boxShadow: index === 0 ? 'var(--shadow-coral-sm)' : 'none',
                 fontWeight: index === 0 ? 600 : 500,
               }}
             >
@@ -240,41 +244,41 @@ export function Component({ fieldValues }: any) {
             style={{
               display: index === 0 ? 'grid' : 'none',
               gridTemplateColumns: index % 2 === 0 ? '1.1fr 0.9fr' : '0.9fr 1.1fr',
-              gap: '5rem',
+              gap: 'var(--spacing-3xl)',
               alignItems: 'center',
-              maxWidth: 'var(--max-width-xl)',
+              maxWidth: 'var(--max-width-lg)',
               margin: '0 auto',
               padding: '0 var(--container-padding)',
               transition: 'var(--transition-medium)'
             }}
           >
             <div>
-              <h3 className="panel-title" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 600, marginBottom: '1.25rem', color: 'var(--text-primary)', fontFamily: 'var(--font-headline)', lineHeight: 'var(--line-height-normal)', letterSpacing: 'var(--letter-spacing-tight)' }}>
+              <h3 className="panel-title" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 500, marginBottom: 'var(--spacing-md)', color: 'var(--text-primary)', fontFamily: 'var(--font-headline)', lineHeight: 'var(--line-height-normal)', letterSpacing: 'var(--letter-spacing-tight)' }}>
                 {content.heading}
               </h3>
-              <p className="panel-description" style={{ fontSize: '1rem', lineHeight: 1.8, color: 'var(--text-muted)', marginBottom: '2rem', maxWidth: 'var(--max-width-prose)' }}>
+              <p className="panel-description" style={{ fontSize: 'var(--font-size-body)', lineHeight: 'var(--line-height-relaxed)', color: 'var(--text-muted)', marginBottom: 'var(--spacing-xl)', maxWidth: 'var(--max-width-prose)' }}>
                 {content.description}
               </p>
-              <h4 className="panel-subtitle" style={{ fontSize: '1.5rem', margin: '2.5rem 0 1.25rem', color: 'var(--text-primary)', fontFamily: 'var(--font-headline)' }}>
+              <h4 className="panel-subtitle" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 500, margin: 'var(--spacing-xl) 0 var(--spacing-md)', color: 'var(--text-primary)', fontFamily: 'var(--font-headline)' }}>
                 {content.subtitle}
               </h4>
-              <p className="panel-description" style={{ fontSize: '1.05rem', lineHeight: 1.8, color: 'var(--text-muted)' }}>
+              <p className="panel-description" style={{ fontSize: 'var(--font-size-body)', lineHeight: 'var(--line-height-relaxed)', color: 'var(--text-muted)' }}>
                 {content.stats}
               </p>
-              <div style={{ marginTop: '2.5rem' }}>
+              <div style={{ marginTop: 'var(--spacing-xl)' }}>
                 <a href="#" className="panel-more" style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.875rem 1.75rem',
+                  gap: 'var(--spacing-xs)',
+                  padding: 'var(--btn-padding)',
                   background: 'var(--bg-white)',
                   border: '2px solid var(--primary-blue)',
-                  borderRadius: 'var(--radius-md)',
-                  fontSize: '1rem',
+                  borderRadius: 'var(--radius-full)',
+                  fontSize: 'var(--font-size-body)',
                   color: 'var(--primary-blue)',
                   textDecoration: 'none',
                   fontWeight: 600,
-                  transition: 'var(--transition-bounce)'
+                  transition: 'var(--transition-medium)'
                 }}>
                   {content.cta}
                 </a>
@@ -297,7 +301,7 @@ export function Component({ fieldValues }: any) {
                   width: '60px',
                   height: '60px',
                   zIndex: 2,
-                  opacity: 0.8,
+                  opacity: 'var(--opacity-hover)',
                 }}
               />
 
@@ -306,7 +310,7 @@ export function Component({ fieldValues }: any) {
                 className="polaroid-frame"
                 style={{
                   background: 'var(--bg-white)',
-                  padding: '16px',
+                  padding: 'var(--spacing-md)',
                   boxShadow: 'var(--shadow-lg)',
                   borderRadius: 'var(--radius-sm)',
                   height: '100%',
@@ -337,7 +341,7 @@ export function Component({ fieldValues }: any) {
                   left: '-10px',
                   width: '80px',
                   height: '80px',
-                  opacity: 0.6,
+                  opacity: 'var(--opacity-disabled)',
                   zIndex: 1,
                 }}
               />

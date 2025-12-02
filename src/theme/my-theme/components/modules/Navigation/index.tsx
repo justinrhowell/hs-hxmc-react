@@ -8,79 +8,11 @@ import { DemoModal } from '../../shared/DemoModal';
 
 export function Component({ fieldValues }: any) {
   const menuItems = [
-    {
-      label: 'Mentorship OS',
-      hasDropdown: true,
-      megaMenu: {
-        sections: [
-          {
-            title: 'Platform',
-            items: [
-              { label: 'How It Works', description: 'AI-powered mentorship matching', icon: '⚡' },
-              { label: 'Features', description: 'Tools for meaningful connections', icon: '✨' },
-              { label: 'Technology', description: 'Our matching algorithm', icon: '🔬' },
-            ]
-          },
-          {
-            title: 'Solutions',
-            items: [
-              { label: 'For Institutions', description: 'Higher education solutions', icon: '🎓' },
-              { label: 'For Employers', description: 'Workforce development', icon: '💼' },
-              { label: 'For Organizations', description: 'Community programs', icon: '🤝' },
-            ]
-          }
-        ]
-      }
-    },
-    {
-      label: 'Network',
-      hasDropdown: true,
-      megaMenu: {
-        sections: [
-          {
-            title: 'Build Your Network',
-            items: [
-              { label: 'Matching', description: 'Smart mentor-mentee pairing', icon: '🔗' },
-              { label: 'Community', description: 'Connect with peers', icon: '👥' },
-              { label: 'Alumni Network', description: 'Leverage alumni connections', icon: '🎓' },
-            ]
-          },
-          {
-            title: 'Growth',
-            items: [
-              { label: 'Professional Development', description: 'Career advancement paths', icon: '📈' },
-              { label: 'Skills Development', description: 'Build durable skills', icon: '💡' },
-            ]
-          }
-        ]
-      }
-    },
+    { label: 'Mentorship OS', hasDropdown: false, href: '/product' },
+    { label: 'Network', hasDropdown: false, href: '/network' },
     { label: 'Outcomes', hasDropdown: false, href: '/outcomes' },
-    { label: 'Pricing', hasDropdown: false, href: '/pricing' },
     { label: 'Resources', hasDropdown: false, href: '/resources' },
-    {
-      label: 'Company',
-      hasDropdown: true,
-      megaMenu: {
-        sections: [
-          {
-            title: 'About',
-            items: [
-              { label: 'Our Story', description: 'Mission and values', icon: '🌟' },
-              { label: 'Team', description: 'Meet the people behind MC', icon: '👥' },
-              { label: 'Careers', description: 'Join our team', icon: '🚀' },
-            ]
-          },
-          {
-            title: 'Connect',
-            items: [
-              { label: 'Blog', description: 'Latest news and insights', icon: '✍️' },
-              { label: 'Contact Us', description: 'Get in touch', icon: '💬' },
-            ]
-          }
-        ]
-      }
-    },
+    { label: 'Company', hasDropdown: false, href: '/about' },
     { label: 'Log In', hasDropdown: false, href: '/login' }
   ];
 
@@ -88,11 +20,11 @@ export function Component({ fieldValues }: any) {
     nav: {
       position: 'sticky',
       top: 0,
-      background: 'rgba(255, 255, 255, 0.98)',
+      background: 'var(--bg-glass)',
       backdropFilter: 'blur(20px)',
       boxShadow: 'var(--shadow-sm)',
       zIndex: 'var(--z-modal)',
-      padding: '1.25rem 0',
+      padding: 'var(--spacing-sm) 0',
       transition: 'var(--transition-smooth)',
       overflow: 'visible',
     },
@@ -126,19 +58,19 @@ export function Component({ fieldValues }: any) {
     },
     menuLink: {
       fontFamily: 'var(--font-body)',
-      fontSize: '0.95rem',
+      fontSize: 'var(--font-size-body)',
       fontWeight: 500,
       color: 'var(--text-primary)',
       textDecoration: 'none',
-      padding: '0.5rem 0',
+      padding: 'var(--spacing-xs) 0',
       transition: 'var(--transition-fast)',
     },
     ctaButton: {
       background: 'var(--gradient-coral)',
       color: 'var(--text-white)',
-      padding: '0.75rem 1.75rem',
+      padding: 'var(--btn-padding-sm)',
       borderRadius: 'var(--radius-full)',
-      fontSize: '0.95rem',
+      fontSize: 'var(--font-size-body)',
       fontWeight: 600,
       border: 'none',
       cursor: 'pointer',
@@ -150,7 +82,7 @@ export function Component({ fieldValues }: any) {
       background: 'none',
       border: 'none',
       cursor: 'pointer',
-      padding: '8px',
+      padding: 'var(--spacing-xs)',
       zIndex: 1001,
     },
   };
@@ -363,7 +295,7 @@ export function Component({ fieldValues }: any) {
                     }}
                   >
                     {item.label}
-                    {item.hasDropdown && <span style={{ fontSize: '0.7rem', marginLeft: '0.25rem', opacity: 0.5 }}>▼</span>}
+                    {item.hasDropdown && <span style={{ fontSize: 'var(--font-size-xs)', marginLeft: 'var(--spacing-xxs)', opacity: 0.5 }}>▼</span>}
                   </a>
 
                   {/* Mega Menu Dropdown */}
@@ -377,9 +309,9 @@ export function Component({ fieldValues }: any) {
                           left: 0,
                           right: 0,
                           background: 'var(--bg-white)',
-                          borderTop: '1px solid rgba(0, 0, 0, 0.05)',
-                          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)',
-                          padding: '2.5rem 0',
+                          borderTop: '1px solid var(--border-light)',
+                          boxShadow: 'var(--shadow-xl)',
+                          padding: 'var(--spacing-xl) 0',
                           opacity: 0,
                           visibility: 'hidden',
                           transform: 'translateY(-10px)',
@@ -400,16 +332,16 @@ export function Component({ fieldValues }: any) {
                             {item.megaMenu.sections.map((section, sectionIndex) => (
                               <div key={sectionIndex}>
                                 <h3 style={{
-                                  fontSize: '0.75rem',
-                                  fontWeight: 700,
+                                  fontSize: 'var(--font-size-label)',
+                                  fontWeight: 500,
                                   color: 'var(--text-muted)',
                                   textTransform: 'uppercase',
-                                  letterSpacing: '0.05em',
+                                  letterSpacing: 'var(--letter-spacing-wide)',
                                   marginBottom: 'var(--spacing-md)',
                                 }}>
                                   {section.title}
                                 </h3>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xxs)' }}>
                                   {section.items.map((menuItem, itemIndex) => (
                                     <a
                                       key={itemIndex}
@@ -432,20 +364,20 @@ export function Component({ fieldValues }: any) {
                                         e.currentTarget.style.transform = 'translateX(0)';
                                       }}
                                     >
-                                      <span style={{ fontSize: '1.5rem', flexShrink: 0 }}>
+                                      <span style={{ fontSize: 'var(--font-size-h3)', flexShrink: 0 }}>
                                         {menuItem.icon}
                                       </span>
                                       <div style={{ flex: 1 }}>
                                         <div style={{
-                                          fontSize: '1rem',
+                                          fontSize: 'var(--font-size-body)',
                                           fontWeight: 600,
                                           color: 'var(--text-primary)',
-                                          marginBottom: '0.25rem',
+                                          marginBottom: 'var(--spacing-xxs)',
                                         }}>
                                           {menuItem.label}
                                         </div>
                                         <div style={{
-                                          fontSize: '0.875rem',
+                                          fontSize: 'var(--font-size-small)',
                                           color: 'var(--text-muted)',
                                           lineHeight: 'var(--line-height-normal)',
                                         }}>
@@ -469,6 +401,14 @@ export function Component({ fieldValues }: any) {
                 style={styles.ctaButton}
                 type="button"
                 aria-label="Request a demo"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-coral)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+                }}
               >
                 Request a Demo
               </button>
@@ -520,11 +460,11 @@ export function Component({ fieldValues }: any) {
                 key={index}
                 href={item.href || '#'}
                 style={{
-                  fontSize: '1.2rem',
+                  fontSize: 'var(--font-size-body-lg)',
                   fontWeight: 500,
                   color: 'var(--text-primary)',
                   textDecoration: 'none',
-                  padding: '0.5rem 0',
+                  padding: 'var(--spacing-xs) 0',
                 }}
               >
                 {item.label}
@@ -535,17 +475,26 @@ export function Component({ fieldValues }: any) {
               style={{
                 background: 'var(--gradient-coral)',
                 color: 'var(--text-white)',
-                padding: '0.75rem 1.75rem',
+                padding: 'var(--btn-padding-sm)',
                 borderRadius: 'var(--radius-full)',
-                fontSize: '0.95rem',
+                fontSize: 'var(--font-size-body)',
                 fontWeight: 600,
                 border: 'none',
                 cursor: 'pointer',
                 boxShadow: 'var(--shadow-md)',
                 width: '100%',
                 marginTop: 'var(--spacing-sm)',
+                transition: 'var(--transition-medium)',
               }}
               type="button"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-coral)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+              }}
             >
               Request a Demo
             </button>

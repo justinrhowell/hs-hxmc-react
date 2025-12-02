@@ -13,17 +13,17 @@ export function Component({ fieldValues }: any) {
 
   return (
     <section style={{
-      padding: '80px 20px',
-      background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.05) 0%, rgba(255, 160, 188, 0.05) 100%)',
+      padding: 'var(--section-padding-lg) var(--spacing-lg)',
+      background: 'var(--gradient-coral-light)',
     }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
         {fieldValues.heading && (
           <h2 style={{
-            fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+            fontSize: 'var(--font-size-h2)',
             fontWeight: 600,
             textAlign: 'center',
-            marginBottom: '3rem',
-            color: '#1a1a1a',
+            marginBottom: 'var(--spacing-xl)',
+            color: 'var(--text-primary)',
           }}>
             {fieldValues.heading}
           </h2>
@@ -31,7 +31,7 @@ export function Component({ fieldValues }: any) {
 
         <div style={{
           display: 'flex',
-          gap: '3rem',
+          gap: 'var(--spacing-xl)',
           justifyContent: 'center',
           flexWrap: 'wrap',
         }}>
@@ -44,16 +44,16 @@ export function Component({ fieldValues }: any) {
               }}
             >
               <div style={{
-                fontSize: '2.5rem',
+                fontSize: 'var(--font-size-h2)',
                 fontWeight: 800,
-                color: '#EF476F',
-                marginBottom: '0.5rem',
+                color: 'var(--text-coral)',
+                marginBottom: 'var(--spacing-xs)',
               }}>
                 {stat.value}
               </div>
               <div style={{
-                fontSize: '0.95rem',
-                color: '#666',
+                fontSize: 'var(--font-size-body)',
+                color: 'var(--text-secondary)',
                 fontWeight: 500,
               }}>
                 {stat.stat_label}

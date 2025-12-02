@@ -68,7 +68,7 @@ export function Component({ fieldValues }: any) {
       color: 'var(--text-primary)',
       textAlign: 'center' as const,
       fontFamily: 'var(--font-headline)',
-      fontWeight: 600,
+      fontWeight: 500,
       letterSpacing: 'var(--letter-spacing-normal)',
       lineHeight: 'var(--line-height-normal)',
     },
@@ -87,21 +87,21 @@ export function Component({ fieldValues }: any) {
       width: 'fit-content',
     },
     logoItem: {
-      height: '60px',
+      height: '80px',
       display: 'flex',
       alignItems: 'center',
       opacity: 0.7,
       filter: 'grayscale(100%)',
       transition: 'var(--transition-smooth)',
       flexShrink: 0,
-      minWidth: '160px',
+      minWidth: '180px',
       justifyContent: 'center' as const,
     },
     logoImg: {
       height: '100%',
       width: 'auto',
       objectFit: 'contain' as const,
-      maxWidth: '180px',
+      maxWidth: '220px',
     },
   };
 

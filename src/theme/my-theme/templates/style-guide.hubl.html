@@ -1,0 +1,16 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Style Guide
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {% module "navigation" path="../components/modules/Navigation" %}
+
+  {% module "style_guide" path="../components/modules/StyleGuide" label="Design System Style Guide" %}
+
+  {% module "footer" path="../components/modules/Footer" %}
+
+{% endblock body %}

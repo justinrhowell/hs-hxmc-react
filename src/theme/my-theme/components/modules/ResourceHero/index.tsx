@@ -68,7 +68,7 @@ export function Component({ fieldValues }: any) {
             padding: '0.5rem 1.25rem',
             background: 'rgba(239, 71, 111, 0.1)',
             color: '#EF476F',
-            borderRadius: '50px',
+            borderRadius: 'var(--radius-full)',
             fontSize: '0.85rem',
             fontWeight: 600,
             textTransform: 'uppercase',
@@ -113,7 +113,7 @@ export function Component({ fieldValues }: any) {
               display: 'flex',
               alignItems: 'center',
               background: 'white',
-              borderRadius: '50px',
+              borderRadius: 'var(--radius-full)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
               padding: '0.5rem 0.75rem 0.5rem 2rem',
               border: '2px solid rgba(239, 71, 111, 0.1)',
@@ -153,14 +153,23 @@ export function Component({ fieldValues }: any) {
                 style={{
                   background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
                   color: 'white',
-                  padding: '0.75rem 2rem',
-                  borderRadius: '50px',
+                  padding: 'var(--btn-padding-sm)',
+                  borderRadius: 'var(--radius-full)',
                   border: 'none',
-                  fontSize: '0.95rem',
+                  fontSize: '1rem',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  transition: 'all 0.3s ease',
+                  transition: 'var(--transition-medium)',
                   whiteSpace: 'nowrap',
+                  boxShadow: '0 4px 12px rgba(239, 71, 111, 0.25)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(239, 71, 111, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(239, 71, 111, 0.25)';
                 }}
               >
                 Search
@@ -191,11 +200,11 @@ export function Component({ fieldValues }: any) {
                   padding: '0.5rem 1rem',
                   background: 'white',
                   border: '1px solid #E5E7EB',
-                  borderRadius: '50px',
-                  fontSize: '0.85rem',
+                  borderRadius: 'var(--radius-full)',
+                  fontSize: '0.875rem',
                   color: '#494949',
                   textDecoration: 'none',
-                  transition: 'all 0.3s ease',
+                  transition: 'var(--transition-medium)',
                 }}
               >
                 {topic}

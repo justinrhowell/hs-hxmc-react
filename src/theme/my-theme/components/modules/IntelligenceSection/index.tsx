@@ -35,20 +35,20 @@ export function Component({ fieldValues }: any) {
         <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '1.5rem', color: '#1a1a1a', fontFamily: 'var(--font-headline)' }}>
           {fieldValues.heading}
         </h2>
-        <p style={{ fontSize: '1.15rem', color: '#4a4a4a', lineHeight: 1.7, marginBottom: '4rem', maxWidth: '900px' }}>
+        <p style={{ fontSize: '1.15rem', color: 'var(--text-primary)', lineHeight: 1.7, marginBottom: '4rem', maxWidth: '900px' }}>
           {fieldValues.subtitle}
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
           {features.map((feature, index) => (
-            <div key={index} style={{ background: 'white', padding: '2rem', borderRadius: '16px', border: '2px solid rgba(239, 71, 111, 0.1)' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: '#EF476F' }}>{feature.title}</h3>
+            <div key={index} style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', border: '2px solid rgba(239, 71, 111, 0.1)' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 500, marginBottom: '1rem', color: '#EF476F' }}>{feature.title}</h3>
               <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: '#6B7280' }}>{feature.description}</p>
             </div>
           ))}
         </div>
 
-        <div style={{ background: 'white', padding: '3rem', borderRadius: '20px' }}>
+        <div style={{ background: 'white', padding: '3rem', borderRadius: 'var(--radius-lg)' }}>
           <p style={{ fontSize: '1.25rem', fontWeight: 600, textAlign: 'center', marginBottom: '2rem', color: '#1a1a1a' }}>
             {fieldValues.stats_heading}
           </p>

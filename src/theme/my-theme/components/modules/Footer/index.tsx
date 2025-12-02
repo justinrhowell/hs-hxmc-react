@@ -69,34 +69,34 @@ export function Component({ fieldValues }: any) {
             <div style={{ display: 'flex', gap: 'var(--spacing-md)' }}>
               <a href={linkedinUrl} style={{
                 color: 'var(--text-secondary)',
-                fontSize: '20px',
+                fontSize: '1.25rem',
                 textDecoration: 'none',
-                transition: 'color 0.2s ease'
+                transition: 'var(--transition-fast)'
               }} aria-label="LinkedIn">in</a>
               <a href={facebookUrl} style={{
                 color: 'var(--text-secondary)',
-                fontSize: '20px',
+                fontSize: '1.25rem',
                 textDecoration: 'none',
-                transition: 'color 0.2s ease'
+                transition: 'var(--transition-fast)'
               }} aria-label="Facebook">f</a>
               <a href={twitterUrl} style={{
                 color: 'var(--text-secondary)',
-                fontSize: '20px',
+                fontSize: '1.25rem',
                 textDecoration: 'none',
-                transition: 'color 0.2s ease'
+                transition: 'var(--transition-fast)'
               }} aria-label="Twitter">𝕏</a>
               <a href={instagramUrl} style={{
                 color: 'var(--text-secondary)',
-                fontSize: '20px',
+                fontSize: '1.25rem',
                 textDecoration: 'none',
-                transition: 'color 0.2s ease'
+                transition: 'var(--transition-fast)'
               }} aria-label="Instagram">IG</a>
             </div>
           </div>
           <div>
             <h3 style={{
               fontSize: '1rem',
-              fontWeight: 600,
+              fontWeight: 500,
               marginBottom: 'var(--spacing-lg)',
               color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)'
@@ -106,14 +106,14 @@ export function Component({ fieldValues }: any) {
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 'var(--spacing-sm)'
+              gap: '0.5rem'
             }}>
               {productsLinks.length > 0 ? productsLinks.map((link: FooterLink, idx: number) => (
                 <a key={idx} href={link.url} style={{
                   color: 'var(--text-secondary)',
                   textDecoration: 'none',
-                  fontSize: '0.95rem',
-                  transition: 'color 0.2s ease'
+                  fontSize: 'var(--font-size-small)',
+                  transition: 'var(--transition-fast)'
                 }}>{link.text}</a>
               )) : (
                 <>
@@ -129,7 +129,7 @@ export function Component({ fieldValues }: any) {
           <div>
             <h3 style={{
               fontSize: '1rem',
-              fontWeight: 600,
+              fontWeight: 500,
               marginBottom: 'var(--spacing-lg)',
               color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)'
@@ -139,14 +139,14 @@ export function Component({ fieldValues }: any) {
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 'var(--spacing-sm)'
+              gap: '0.5rem'
             }}>
               {solutionsLinks.length > 0 ? solutionsLinks.map((link: FooterLink, idx: number) => (
                 <a key={idx} href={link.url} style={{
                   color: 'var(--text-secondary)',
                   textDecoration: 'none',
-                  fontSize: '0.95rem',
-                  transition: 'color 0.2s ease'
+                  fontSize: 'var(--font-size-small)',
+                  transition: 'var(--transition-fast)'
                 }}>{link.text}</a>
               )) : (
                 <>
@@ -160,7 +160,7 @@ export function Component({ fieldValues }: any) {
           <div>
             <h3 style={{
               fontSize: '1rem',
-              fontWeight: 600,
+              fontWeight: 500,
               marginBottom: 'var(--spacing-lg)',
               color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)'
@@ -170,19 +170,18 @@ export function Component({ fieldValues }: any) {
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 'var(--spacing-sm)'
+              gap: '0.5rem'
             }}>
               {companyLinks.length > 0 ? companyLinks.map((link: FooterLink, idx: number) => (
                 <a key={idx} href={link.url} style={{
                   color: 'var(--text-secondary)',
                   textDecoration: 'none',
-                  fontSize: '0.95rem',
-                  transition: 'color 0.2s ease'
+                  fontSize: 'var(--font-size-small)',
+                  transition: 'var(--transition-fast)'
                 }}>{link.text}</a>
               )) : (
                 <>
                   <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>About</a>
-                  <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Careers</a>
                   <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Press</a>
                   <a href="#" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.95rem' }}>Contact</a>
                 </>
@@ -204,12 +203,12 @@ export function Component({ fieldValues }: any) {
             <a href={privacyUrl} style={{
               color: 'var(--text-secondary)',
               textDecoration: 'none',
-              transition: 'color 0.2s ease'
+              transition: 'var(--transition-fast)'
             }}>Privacy Policy</a>
             <a href={termsUrl} style={{
               color: 'var(--text-secondary)',
               textDecoration: 'none',
-              transition: 'color 0.2s ease'
+              transition: 'var(--transition-fast)'
             }}>Terms of Service</a>
           </div>
         </div>

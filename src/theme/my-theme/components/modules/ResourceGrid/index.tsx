@@ -165,15 +165,15 @@ export function Component({ fieldValues }: any) {
               className="filter-btn"
               data-filter="all"
               style={{
-                padding: '0.75rem 1.5rem',
-                borderRadius: '50px',
+                padding: 'var(--btn-padding-sm)',
+                borderRadius: 'var(--radius-full)',
                 border: 'none',
                 background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
                 color: 'white',
-                fontSize: '0.95rem',
+                fontSize: '1rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'var(--transition-medium)',
               }}
             >
               All Resources
@@ -182,15 +182,15 @@ export function Component({ fieldValues }: any) {
               className="filter-btn"
               data-filter="article"
               style={{
-                padding: '0.75rem 1.5rem',
-                borderRadius: '50px',
+                padding: 'var(--btn-padding-sm)',
+                borderRadius: 'var(--radius-full)',
                 border: '2px solid #E5E7EB',
                 background: 'transparent',
                 color: '#6B7280',
-                fontSize: '0.95rem',
+                fontSize: '1rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'var(--transition-medium)',
               }}
             >
               Articles
@@ -199,15 +199,15 @@ export function Component({ fieldValues }: any) {
               className="filter-btn"
               data-filter="guide"
               style={{
-                padding: '0.75rem 1.5rem',
-                borderRadius: '50px',
+                padding: 'var(--btn-padding-sm)',
+                borderRadius: 'var(--radius-full)',
                 border: '2px solid #E5E7EB',
                 background: 'transparent',
                 color: '#6B7280',
-                fontSize: '0.95rem',
+                fontSize: '1rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'var(--transition-medium)',
               }}
             >
               Guides
@@ -216,15 +216,15 @@ export function Component({ fieldValues }: any) {
               className="filter-btn"
               data-filter="case_study"
               style={{
-                padding: '0.75rem 1.5rem',
-                borderRadius: '50px',
+                padding: 'var(--btn-padding-sm)',
+                borderRadius: 'var(--radius-full)',
                 border: '2px solid #E5E7EB',
                 background: 'transparent',
                 color: '#6B7280',
-                fontSize: '0.95rem',
+                fontSize: '1rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'var(--transition-medium)',
               }}
             >
               Case Studies
@@ -233,15 +233,15 @@ export function Component({ fieldValues }: any) {
               className="filter-btn"
               data-filter="ebook"
               style={{
-                padding: '0.75rem 1.5rem',
-                borderRadius: '50px',
+                padding: 'var(--btn-padding-sm)',
+                borderRadius: 'var(--radius-full)',
                 border: '2px solid #E5E7EB',
                 background: 'transparent',
                 color: '#6B7280',
-                fontSize: '0.95rem',
+                fontSize: '1rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'var(--transition-medium)',
               }}
             >
               eBooks
@@ -265,7 +265,7 @@ export function Component({ fieldValues }: any) {
                   data-type={resource.resource_type}
                   style={{
                     background: 'white',
-                    borderRadius: '16px',
+                    borderRadius: 'var(--radius-lg)',
                     overflow: 'hidden',
                     boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
                     transition: 'all 0.3s ease',
@@ -301,7 +301,7 @@ export function Component({ fieldValues }: any) {
                       background: colors.bg,
                       color: colors.text,
                       padding: '0.375rem 0.875rem',
-                      borderRadius: '20px',
+                      borderRadius: 'var(--radius-full)',
                       fontSize: '0.75rem',
                       fontWeight: 600,
                       textTransform: 'uppercase',
@@ -321,7 +321,7 @@ export function Component({ fieldValues }: any) {
                   }}>
                     <h3 style={{
                       fontSize: '1.25rem',
-                      fontWeight: 600,
+                      fontWeight: 500,
                       color: '#1a1a1a',
                       marginBottom: '0.75rem',
                       fontFamily: 'var(--font-headline)',

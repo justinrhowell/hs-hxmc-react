@@ -85,7 +85,7 @@ export function Component({ fieldValues }: any) {
                 <div>
                   <h3 style={{
                     fontSize: '1.25rem',
-                    fontWeight: 600,
+                    fontWeight: 500,
                     color: 'var(--text-primary)',
                     margin: 0,
                     fontFamily: 'var(--font-headline)',
@@ -195,7 +195,7 @@ export function Component({ fieldValues }: any) {
 
             <h2 style={{
               fontSize: 'var(--font-size-h2)',
-              fontWeight: 700,
+              fontWeight: 500,
               lineHeight: 'var(--line-height-tight)',
               letterSpacing: 'var(--letter-spacing-tight)',
               marginBottom: 'var(--spacing-lg)',
@@ -237,7 +237,7 @@ export function Component({ fieldValues }: any) {
                   <div>
                     <h3 style={{
                       fontSize: '1.15rem',
-                      fontWeight: 600,
+                      fontWeight: 500,
                       color: 'var(--text-primary)',
                       marginBottom: '0.5rem',
                       fontFamily: 'var(--font-headline)',

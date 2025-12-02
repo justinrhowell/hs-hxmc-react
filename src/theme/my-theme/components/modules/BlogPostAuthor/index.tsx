@@ -1,0 +1,233 @@
+import {
+  ModuleFields,
+  TextField,
+  ImageField,
+  RichTextField,
+} from '@hubspot/cms-components/fields';
+
+export function Component({ fieldValues }: any) {
+  const name = fieldValues.author_name || 'Author Name';
+  const title = fieldValues.title || 'Content Writer';
+  const bio = fieldValues.bio || 'A brief bio about the author and their expertise.';
+  const image = fieldValues.image?.src || '';
+  const twitterUrl = fieldValues.twitter_url || '';
+  const linkedinUrl = fieldValues.linkedin_url || '';
+  const websiteUrl = fieldValues.website_url || '';
+
+  return (
+    <section style={{
+      padding: '60px 20px',
+      background: 'linear-gradient(180deg, #FFFFFF 0%, #FFFBF8 100%)',
+    }}>
+      <div style={{
+        maxWidth: '750px',
+        margin: '0 auto',
+      }}>
+        <div style={{
+          background: 'white',
+          borderRadius: 'var(--radius-xl)',
+          padding: '2.5rem',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
+          border: '2px solid rgba(239, 71, 111, 0.08)',
+          display: 'flex',
+          gap: '2rem',
+          alignItems: 'flex-start',
+          flexWrap: 'wrap',
+        }}>
+          {/* Author Image */}
+          <div style={{ flexShrink: 0 }}>
+            {image ? (
+              <img
+                src={image}
+                alt={name}
+                style={{
+                  width: '100px',
+                  height: '100px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '3px solid rgba(239, 71, 111, 0.2)',
+                }}
+              />
+            ) : (
+              <div style={{
+                width: '100px',
+                height: '100px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '2.5rem',
+                fontWeight: 600,
+              }}>
+                {name.charAt(0).toUpperCase()}
+              </div>
+            )}
+          </div>
+
+          {/* Author Info */}
+          <div style={{ flex: 1, minWidth: '250px' }}>
+            <div style={{
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              color: '#EF476F',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              marginBottom: '0.5rem',
+            }}>
+              Written by
+            </div>
+            <h3 style={{
+              fontSize: '1.5rem',
+              fontWeight: 500,
+              color: '#1a1a1a',
+              marginBottom: '0.25rem',
+              fontFamily: 'var(--font-headline)',
+            }}>
+              {name}
+            </h3>
+            <div style={{
+              fontSize: '0.95rem',
+              color: '#6B7280',
+              marginBottom: '1rem',
+            }}>
+              {title}
+            </div>
+            <div
+              style={{
+                fontSize: '0.95rem',
+                lineHeight: 1.7,
+                color: '#4B5563',
+                marginBottom: '1.25rem',
+              }}
+              dangerouslySetInnerHTML={{ __html: bio }}
+            />
+
+            {/* Social Links */}
+            {(twitterUrl || linkedinUrl || websiteUrl) && (
+              <div style={{
+                display: 'flex',
+                gap: '0.75rem',
+              }}>
+                {twitterUrl && (
+                  <a
+                    href={twitterUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '50%',
+                      background: 'rgba(239, 71, 111, 0.1)',
+                      color: '#EF476F',
+                      transition: 'var(--transition-medium)',
+                    }}
+                    aria-label="Twitter"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  </a>
+                )}
+                {linkedinUrl && (
+                  <a
+                    href={linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '50%',
+                      background: 'rgba(239, 71, 111, 0.1)',
+                      color: '#EF476F',
+                      transition: 'var(--transition-medium)',
+                    }}
+                    aria-label="LinkedIn"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                )}
+                {websiteUrl && (
+                  <a
+                    href={websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '50%',
+                      background: 'rgba(239, 71, 111, 0.1)',
+                      color: '#EF476F',
+                      transition: 'var(--transition-medium)',
+                    }}
+                    aria-label="Website"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export const fields = (
+  <ModuleFields>
+    <TextField
+      name="author_name"
+      label="Author Name"
+      default="Sarah Johnson"
+    />
+    <TextField
+      name="title"
+      label="Job Title"
+      default="Senior Content Strategist"
+    />
+    <RichTextField
+      name="bio"
+      label="Author Bio"
+      default="Sarah is a content strategist with over 10 years of experience in education technology. She's passionate about helping organizations leverage mentorship to drive meaningful outcomes."
+    />
+    <ImageField
+      name="image"
+      label="Author Photo"
+    />
+    <TextField
+      name="twitter_url"
+      label="Twitter/X URL"
+      default=""
+    />
+    <TextField
+      name="linkedin_url"
+      label="LinkedIn URL"
+      default=""
+    />
+    <TextField
+      name="website_url"
+      label="Website URL"
+      default=""
+    />
+  </ModuleFields>
+);
+
+export const meta = {
+  label: 'Blog Post Author',
+};

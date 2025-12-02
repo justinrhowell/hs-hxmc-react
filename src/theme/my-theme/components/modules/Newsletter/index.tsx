@@ -16,13 +16,13 @@ export function Component({ fieldValues }: any) {
     <>
       <style dangerouslySetInnerHTML={{__html: `
         .newsletter-input:focus {
-          border-color: #EF476F !important;
-          box-shadow: 0 0 0 3px rgba(239, 71, 111, 0.1) !important;
+          border-color: var(--primary-coral) !important;
+          box-shadow: 0 0 0 3px var(--bg-light-coral) !important;
         }
 
         .newsletter-button:hover {
           transform: translateY(-2px);
-          box-shadow: 0 12px 28px rgba(239, 71, 111, 0.35) !important;
+          box-shadow: var(--shadow-coral) !important;
         }
 
         @media (max-width: 768px) {
@@ -41,21 +41,21 @@ export function Component({ fieldValues }: any) {
       `}} />
 
       <section style={{
-        padding: '60px 20px',
-        background: layout === 'boxed' ? 'white' : 'transparent',
+        padding: 'var(--section-padding-sm) var(--spacing-lg)',
+        background: layout === 'boxed' ? 'var(--bg-white)' : 'transparent',
       }}>
         <div style={{
-          maxWidth: layout === 'wide' ? '900px' : '600px',
+          maxWidth: layout === 'wide' ? 'var(--max-width-md)' : 'var(--max-width-sm)',
           margin: '0 auto',
           textAlign: layout === 'vertical' ? 'center' : 'left',
         }}>
           {layout === 'boxed' && (
             <div style={{
-              background: 'linear-gradient(135deg, #FDF8EF 0%, #FFFFFF 100%)',
-              padding: '3rem',
-              borderRadius: '24px',
-              border: '2px solid rgba(239, 71, 111, 0.1)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
+              background: 'linear-gradient(135deg, var(--cream) 0%, var(--white) 100%)',
+              padding: 'var(--spacing-xl)',
+              borderRadius: 'var(--radius-xl)',
+              border: '2px solid var(--border-light)',
+              boxShadow: 'var(--shadow-md)',
             }}>
               {renderContent()}
             </div>
@@ -71,10 +71,10 @@ export function Component({ fieldValues }: any) {
       <>
         {/* Heading */}
         <h3 style={{
-          fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-          fontWeight: 600,
-          marginBottom: '0.75rem',
-          color: '#1a1a1a',
+          fontSize: 'var(--font-size-h3)',
+          fontWeight: 500,
+          marginBottom: 'var(--spacing-xs)',
+          color: 'var(--text-primary)',
           fontFamily: 'var(--font-headline)',
         }}>
           {heading}
@@ -82,12 +82,12 @@ export function Component({ fieldValues }: any) {
 
         {/* Description */}
         <p style={{
-          fontSize: '1rem',
-          lineHeight: 1.6,
-          color: '#6B7280',
-          marginBottom: '2rem',
+          fontSize: 'var(--font-size-body)',
+          lineHeight: 'var(--line-height-normal)',
+          color: 'var(--text-muted)',
+          marginBottom: 'var(--spacing-lg)',
           maxWidth: layout === 'vertical' ? '500px' : '100%',
-          margin: layout === 'vertical' ? '0 auto 2rem' : '0 0 2rem 0',
+          margin: layout === 'vertical' ? '0 auto var(--spacing-lg)' : '0 0 var(--spacing-lg) 0',
         }}>
           {description}
         </p>
@@ -99,8 +99,8 @@ export function Component({ fieldValues }: any) {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.75rem',
-              maxWidth: '600px',
+              gap: 'var(--spacing-xs)',
+              maxWidth: 'var(--max-width-sm)',
             }}
           >
             <input
@@ -109,31 +109,31 @@ export function Component({ fieldValues }: any) {
               className="newsletter-input newsletter-input-horizontal"
               style={{
                 flex: 1,
-                padding: '0.875rem 1.25rem',
-                border: '2px solid #E5E7EB',
-                borderRadius: '12px',
-                fontSize: '1rem',
+                padding: 'var(--spacing-sm) var(--spacing-md)',
+                border: '2px solid var(--border-light)',
+                borderRadius: 'var(--radius-md)',
+                fontSize: 'var(--font-size-body)',
                 outline: 'none',
-                transition: 'all 0.3s ease',
+                transition: 'var(--transition-medium)',
               }}
             />
             <button
               type="button"
               className="newsletter-button newsletter-button-horizontal"
               style={{
-                background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
-                color: 'white',
-                padding: '0.875rem 2rem',
-                borderRadius: '12px',
+                background: 'var(--gradient-coral)',
+                color: 'var(--text-white)',
+                padding: 'var(--btn-padding-sm)',
+                borderRadius: 'var(--radius-full)',
                 border: 'none',
-                fontSize: '1rem',
+                fontSize: 'var(--font-size-body)',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'var(--transition-medium)',
                 whiteSpace: 'nowrap',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem',
+                gap: 'var(--spacing-xs)',
               }}
             >
               {buttonText}
@@ -152,13 +152,13 @@ export function Component({ fieldValues }: any) {
               className="newsletter-input"
               style={{
                 width: '100%',
-                padding: '1rem 1.25rem',
-                border: '2px solid #E5E7EB',
-                borderRadius: '12px',
-                fontSize: '1rem',
+                padding: 'var(--spacing-sm) var(--spacing-md)',
+                border: '2px solid var(--border-light)',
+                borderRadius: 'var(--radius-full)',
+                fontSize: 'var(--font-size-body)',
                 outline: 'none',
-                transition: 'all 0.3s ease',
-                marginBottom: '1rem',
+                transition: 'var(--transition-medium)',
+                marginBottom: 'var(--spacing-sm)',
               }}
             />
             <button
@@ -166,19 +166,19 @@ export function Component({ fieldValues }: any) {
               className="newsletter-button"
               style={{
                 width: '100%',
-                background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
-                color: 'white',
-                padding: '1rem 2rem',
-                borderRadius: '12px',
+                background: 'var(--gradient-coral)',
+                color: 'var(--text-white)',
+                padding: 'var(--btn-padding)',
+                borderRadius: 'var(--radius-full)',
                 border: 'none',
-                fontSize: '1rem',
+                fontSize: 'var(--font-size-body)',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'var(--transition-medium)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '0.5rem',
+                gap: 'var(--spacing-xs)',
               }}
             >
               {buttonText}
@@ -193,9 +193,9 @@ export function Component({ fieldValues }: any) {
 
         {/* Privacy Note */}
         <p style={{
-          fontSize: '0.8rem',
-          color: '#9CA3AF',
-          marginTop: '1rem',
+          fontSize: 'var(--font-size-small)',
+          color: 'var(--text-muted)',
+          marginTop: 'var(--spacing-sm)',
           textAlign: layout === 'vertical' ? 'center' : 'left',
         }}>
           We respect your privacy. Unsubscribe anytime.

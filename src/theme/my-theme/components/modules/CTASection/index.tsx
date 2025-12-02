@@ -31,7 +31,7 @@ export function Component({ fieldValues }: any) {
           <div style={{
             background: 'var(--gradient-coral-peach)',
             borderRadius: 'var(--radius-2xl)',
-            padding: 'var(--spacing-3xl) var(--spacing-2xl)',
+            padding: 'var(--spacing-2xl) var(--spacing-2xl)',
             textAlign: 'center',
             position: 'relative',
             overflow: 'hidden',
@@ -61,7 +61,7 @@ export function Component({ fieldValues }: any) {
             }} />
 
             <div style={{
-              maxWidth: '700px',
+              maxWidth: '850px',
               margin: '0 auto',
               position: 'relative',
               zIndex: 'var(--z-base)'
@@ -70,7 +70,7 @@ export function Component({ fieldValues }: any) {
                 id="cta-heading"
                 style={{
                   fontSize: 'var(--font-size-h2)',
-                  fontWeight: 700,
+                  fontWeight: 500,
                   color: 'var(--text-white)',
                   marginBottom: 'var(--spacing-md)',
                   fontFamily: 'var(--font-headline)',
@@ -80,7 +80,7 @@ export function Component({ fieldValues }: any) {
                 Ready to unlock your network's hidden power?
               </h2>
               <p style={{
-                fontSize: '1.25rem',
+                fontSize: 'var(--font-size-lead)',
                 color: 'var(--text-white-soft)',
                 marginBottom: 'var(--spacing-md)',
                 lineHeight: 'var(--line-height-normal)'
@@ -88,7 +88,7 @@ export function Component({ fieldValues }: any) {
                 Mentorship reinvented as AI infrastructure for education, workforce, and early talent ecosystems.
               </p>
               <p style={{
-                fontSize: '1.1rem',
+                fontSize: 'var(--font-size-body-lg)',
                 color: 'var(--text-white-soft)',
                 marginBottom: 'var(--spacing-2xl)',
                 lineHeight: 'var(--line-height-normal)',
@@ -104,19 +104,19 @@ export function Component({ fieldValues }: any) {
                   color: 'var(--text-coral)',
                   border: 'none',
                   borderRadius: 'var(--radius-full)',
-                  fontSize: '1.05rem',
-                  fontWeight: 700,
+                  fontSize: 'var(--font-size-body)',
+                  fontWeight: 600,
                   cursor: 'pointer',
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                  boxShadow: 'var(--shadow-lg)',
                   transition: 'var(--transition-medium)'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.2)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-hover)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.15)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
                 }}
                 aria-label="Request a demo"
               >

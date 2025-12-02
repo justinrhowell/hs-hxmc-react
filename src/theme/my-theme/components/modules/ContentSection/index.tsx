@@ -48,7 +48,7 @@ export function Component({ fieldValues }: any) {
           <div
             style={{
               fontSize: '1.15rem',
-              color: '#4a4a4a',
+              color: 'var(--text-primary)',
               lineHeight: 1.7,
               marginBottom: '2rem',
               maxWidth: alignment === 'center' ? '800px' : '100%',
@@ -63,16 +63,16 @@ export function Component({ fieldValues }: any) {
             href={fieldValues.button_url || '#'}
             style={{
               display: 'inline-block',
-              padding: '1rem 2.5rem',
+              padding: 'var(--btn-padding)',
               background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
               color: 'white',
               border: 'none',
-              borderRadius: '50px',
-              fontSize: '1.05rem',
+              borderRadius: 'var(--radius-full)',
+              fontSize: '1rem',
               fontWeight: 600,
               textDecoration: 'none',
               boxShadow: '0 8px 24px rgba(239, 71, 111, 0.3)',
-              transition: 'all 0.3s ease',
+              transition: 'var(--transition-medium)',
             }}
             aria-label={fieldValues.button_text}
           >

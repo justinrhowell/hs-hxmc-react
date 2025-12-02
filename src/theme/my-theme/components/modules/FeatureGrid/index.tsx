@@ -13,17 +13,17 @@ export function Component({ fieldValues }: any) {
 
   return (
     <section style={{
-      padding: '80px 20px',
-      background: 'white',
+      padding: 'var(--section-padding-lg) var(--spacing-lg)',
+      background: 'var(--bg-white)',
     }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
         {fieldValues.heading && (
           <h2 style={{
-            fontSize: 'clamp(2rem, 4vw, 3rem)',
+            fontSize: 'var(--font-size-h2)',
             fontWeight: 500,
             textAlign: 'center',
-            marginBottom: '1.5rem',
-            color: '#1a1a1a',
+            marginBottom: 'var(--spacing-md)',
+            color: 'var(--text-primary)',
             fontFamily: 'var(--font-headline)',
           }}>
             {fieldValues.heading}
@@ -32,13 +32,13 @@ export function Component({ fieldValues }: any) {
 
         {fieldValues.subtitle && (
           <p style={{
-            fontSize: '1.15rem',
+            fontSize: 'var(--font-size-lead)',
             textAlign: 'center',
-            color: '#4a4a4a',
-            lineHeight: 1.7,
-            marginBottom: '4rem',
-            maxWidth: '800px',
-            margin: '0 auto 4rem',
+            color: 'var(--text-primary)',
+            lineHeight: 'var(--line-height-relaxed)',
+            marginBottom: 'var(--spacing-2xl)',
+            maxWidth: 'var(--max-width-md)',
+            margin: '0 auto var(--spacing-2xl)',
           }}>
             {fieldValues.subtitle}
           </p>
@@ -47,39 +47,39 @@ export function Component({ fieldValues }: any) {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '2rem',
+          gap: 'var(--spacing-lg)',
         }}>
           {features.map((feature: any, index: number) => (
             <div
               key={index}
               style={{
-                background: 'white',
-                padding: '2rem',
-                borderRadius: '16px',
-                border: '2px solid rgba(239, 71, 111, 0.1)',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)',
+                background: 'var(--bg-white)',
+                padding: 'var(--card-padding)',
+                borderRadius: 'var(--radius-lg)',
+                border: '2px solid var(--border-light)',
+                boxShadow: 'var(--shadow-sm)',
               }}
             >
               {feature.icon && (
                 <div style={{
-                  fontSize: '2.5rem',
-                  marginBottom: '1rem',
+                  fontSize: 'var(--font-size-h2)',
+                  marginBottom: 'var(--spacing-sm)',
                 }}>
                   {feature.icon}
                 </div>
               )}
               <h3 style={{
-                fontSize: '1.25rem',
-                fontWeight: 600,
-                marginBottom: '1rem',
-                color: '#EF476F',
+                fontSize: 'var(--font-size-h4)',
+                fontWeight: 500,
+                marginBottom: 'var(--spacing-sm)',
+                color: 'var(--text-coral)',
               }}>
                 {feature.title}
               </h3>
               <p style={{
-                fontSize: '0.95rem',
-                lineHeight: 1.7,
-                color: '#6B7280',
+                fontSize: 'var(--font-size-body)',
+                lineHeight: 'var(--line-height-relaxed)',
+                color: 'var(--text-secondary)',
               }}>
                 {feature.description}
               </p>

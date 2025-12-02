@@ -40,7 +40,7 @@ export function Component({ fieldValues }: any) {
       className="resource-card"
       style={{
         background: 'white',
-        borderRadius: '16px',
+        borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
         boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
         transition: 'all 0.3s ease',
@@ -76,7 +76,7 @@ export function Component({ fieldValues }: any) {
           background: colors.bg,
           color: colors.text,
           padding: '0.375rem 0.875rem',
-          borderRadius: '20px',
+          borderRadius: 'var(--radius-full)',
           fontSize: '0.75rem',
           fontWeight: 600,
           textTransform: 'uppercase',
@@ -96,7 +96,7 @@ export function Component({ fieldValues }: any) {
       }}>
         <h3 style={{
           fontSize: '1.25rem',
-          fontWeight: 600,
+          fontWeight: 500,
           color: '#1a1a1a',
           marginBottom: '0.75rem',
           fontFamily: 'var(--font-headline)',

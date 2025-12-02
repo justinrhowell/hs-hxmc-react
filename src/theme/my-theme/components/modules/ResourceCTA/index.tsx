@@ -117,7 +117,7 @@ export function Component({ fieldValues }: any) {
             display: 'flex',
             alignItems: 'center',
             background: 'white',
-            borderRadius: '50px',
+            borderRadius: 'var(--radius-full)',
             padding: '0.5rem',
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
             gap: '0.5rem',
@@ -140,14 +140,22 @@ export function Component({ fieldValues }: any) {
               style={{
                 background: 'linear-gradient(135deg, #1a1a1a 0%, #333333 100%)',
                 color: 'white',
-                padding: '1rem 2rem',
-                borderRadius: '50px',
+                padding: 'var(--btn-padding)',
+                borderRadius: 'var(--radius-full)',
                 border: 'none',
                 fontSize: '1rem',
                 fontWeight: 600,
                 cursor: 'pointer',
-                transition: 'all 0.3s ease',
+                transition: 'var(--transition-medium)',
                 whiteSpace: 'nowrap',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               {config.buttonText}

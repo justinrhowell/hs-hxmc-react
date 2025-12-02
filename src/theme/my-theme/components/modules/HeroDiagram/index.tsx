@@ -60,22 +60,22 @@ export function Component({ fieldValues }: any) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Define node positions (layout-related, should stay consistent)
+  // Define node positions - asymmetrical constellation layout
   const nodePositions: Record<string, { position: React.CSSProperties; tooltipPosition: string }> = {
     learners: {
-      position: { top: '10%', left: '50%', transform: 'translate(-50%, -50%)' },
+      position: { top: '8%', left: '35%', transform: 'translate(-50%, -50%)' },
       tooltipPosition: 'bottom'
     },
     employers: {
-      position: { right: '10%', top: '50%', transform: 'translate(50%, -50%)' },
+      position: { right: '5%', top: '35%', transform: 'translate(50%, -50%)' },
       tooltipPosition: 'left'
     },
     organizations: {
-      position: { bottom: '10%', left: '50%', transform: 'translate(-50%, 50%)' },
+      position: { bottom: '15%', left: '60%', transform: 'translate(-50%, 50%)' },
       tooltipPosition: 'top'
     },
     partnerships: {
-      position: { left: '10%', top: '50%', transform: 'translate(-50%, -50%)' },
+      position: { left: '8%', top: '60%', transform: 'translate(-50%, -50%)' },
       tooltipPosition: 'right'
     }
   };
@@ -295,8 +295,8 @@ export function Component({ fieldValues }: any) {
         style={{
           position: 'absolute',
           ...data.position,
-          width: '80px',
-          height: '80px',
+          width: '60px',
+          height: '60px',
           borderRadius: 'var(--radius-circle)',
           background: isExpanded
             ? 'linear-gradient(135deg, #E35D7A 0%, #F89F7B 100%)'
@@ -310,7 +310,7 @@ export function Component({ fieldValues }: any) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          border: '4px solid var(--bg-white)'
+          border: '3px solid var(--bg-white)'
         }}
       >
         {/* Plus/Minus Icon */}
@@ -322,7 +322,7 @@ export function Component({ fieldValues }: any) {
           justifyContent: 'center',
           color: 'var(--text-white)',
           fontWeight: 700,
-          fontSize: '32px',
+          fontSize: '24px',
           transition: 'var(--transition-medium)',
           transform: isExpanded ? 'rotate(45deg)' : 'rotate(0deg)'
         }}>
@@ -341,19 +341,19 @@ export function Component({ fieldValues }: any) {
         >
           <h4 style={{
             fontFamily: 'var(--font-headline)',
-            fontSize: '1.25rem',
+            fontSize: 'var(--font-size-h4)',
             fontWeight: 600,
-            marginBottom: '0.75rem',
-            color: 'var(--text-coral)'
+            marginBottom: 'var(--spacing-sm)',
+            color: 'var(--text-primary)'
           }}>
             {data.tooltipTitle}
           </h4>
           <p style={{
             fontFamily: 'var(--font-body)',
-            fontSize: '0.95rem',
-            lineHeight: 1.6,
-            color: '#4a4a4a',
-            marginBottom: '1rem'
+            fontSize: 'var(--font-size-body)',
+            lineHeight: 'var(--line-height-normal)',
+            color: 'var(--text-primary)',
+            marginBottom: 'var(--spacing-md)'
           }}>
             {data.tooltipDesc}
           </p>
@@ -361,23 +361,23 @@ export function Component({ fieldValues }: any) {
           {isExpanded && (
             <>
               <p style={{
-                fontSize: '0.9rem',
-                lineHeight: 1.6,
-                color: '#666',
-                marginBottom: '1rem',
-                paddingTop: '1rem',
-                borderTop: '1px solid #E0E0E0'
+                fontSize: 'var(--font-size-small)',
+                lineHeight: 'var(--line-height-normal)',
+                color: 'var(--text-muted)',
+                marginBottom: 'var(--spacing-md)',
+                paddingTop: 'var(--spacing-md)',
+                borderTop: '1px solid var(--border-light)'
               }}>
                 {data.fullDescription}
               </p>
               <div style={{
-                background: '#F8F9FA',
-                padding: '1rem',
+                background: 'var(--bg-cream)',
+                padding: 'var(--spacing-md)',
                 borderRadius: 'var(--radius-sm)',
-                marginBottom: '1rem'
+                marginBottom: 'var(--spacing-md)'
               }}>
-                <strong style={{ fontSize: '0.85rem', color: '#666' }}>Case Study:</strong>
-                <p style={{ fontSize: '0.9rem', color: '#333', marginTop: '0.5rem' }}>
+                <strong style={{ fontSize: 'var(--font-size-small)', color: 'var(--text-muted)' }}>Case Study:</strong>
+                <p style={{ fontSize: 'var(--font-size-small)', color: 'var(--text-secondary)', marginTop: 'var(--spacing-xs)' }}>
                   {data.caseStudy}
                 </p>
               </div>
@@ -385,30 +385,31 @@ export function Component({ fieldValues }: any) {
           )}
 
           <div style={{
-            padding: '1rem',
-            background: 'rgba(239, 71, 111, 0.05)',
+            padding: 'var(--spacing-md)',
+            background: 'var(--primary-blue)',
             borderRadius: 'var(--radius-md)',
-            borderLeft: '4px solid var(--text-coral)'
+            borderLeft: '4px solid var(--secondary-blue)'
           }}>
             <div style={{
               display: 'flex',
               alignItems: 'baseline',
-              gap: '0.5rem',
+              gap: 'var(--spacing-xs)',
               flexWrap: 'wrap'
             }}>
               <strong style={{
-                fontSize: '2rem',
-                fontWeight: 800,
-                color: 'var(--text-coral)',
+                fontSize: 'var(--font-size-h2)',
+                fontWeight: 600,
+                color: 'var(--text-white)',
                 fontFamily: 'var(--font-headline)',
                 lineHeight: 1
               }}>
                 {data.tooltipStat}
               </strong>
               <span style={{
-                fontSize: '0.9rem',
-                color: 'var(--text-primary)',
-                fontWeight: 500
+                fontSize: 'var(--font-size-body)',
+                color: 'var(--text-white)',
+                fontWeight: 500,
+                opacity: 0.9
               }}>
                 {data.tooltipLabel}
               </span>
@@ -430,12 +431,12 @@ export function Component({ fieldValues }: any) {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          backgroundColor: 'var(--overlay-dark)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 9999,
-          padding: '20px',
+          padding: 'var(--spacing-lg)',
           backdropFilter: 'blur(4px)',
         }}
         onClick={() => setSelectedMentor(null)}
@@ -447,9 +448,9 @@ export function Component({ fieldValues }: any) {
           style={{
             backgroundColor: 'var(--bg-white)',
             borderRadius: 'var(--radius-xl)',
-            maxWidth: '500px',
+            maxWidth: 'var(--max-width-sm)',
             width: '100%',
-            padding: '40px',
+            padding: 'var(--spacing-2xl)',
             position: 'relative',
           }}
           onClick={(e) => e.stopPropagation()}
@@ -458,21 +459,21 @@ export function Component({ fieldValues }: any) {
             onClick={() => setSelectedMentor(null)}
             style={{
               position: 'absolute',
-              top: '20px',
-              right: '20px',
+              top: 'var(--spacing-lg)',
+              right: 'var(--spacing-lg)',
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: '#666',
-              fontSize: '24px',
-              padding: '8px',
+              color: 'var(--text-muted)',
+              fontSize: 'var(--font-size-h3)',
+              padding: 'var(--spacing-xs)',
             }}
             aria-label="Close mentor profile"
           >
             ×
           </button>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-lg)', marginBottom: 'var(--spacing-lg)' }}>
             <img
               src={selectedMentor.image}
               alt={selectedMentor.name}
@@ -485,33 +486,33 @@ export function Component({ fieldValues }: any) {
               }}
             />
             <div>
-              <h3 id="mentor-modal-title" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '4px' }}>
+              <h3 id="mentor-modal-title" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 500, marginBottom: 'var(--spacing-xxs)' }}>
                 {selectedMentor.name}
               </h3>
-              <p style={{ color: 'var(--text-coral)', fontSize: '16px', fontWeight: 600 }}>
+              <p style={{ color: 'var(--text-coral)', fontSize: 'var(--font-size-body)', fontWeight: 600 }}>
                 {selectedMentor.role}
               </p>
             </div>
           </div>
 
-          <p style={{ fontSize: '15px', lineHeight: 1.6, color: '#666', marginBottom: '20px' }}>
+          <p style={{ fontSize: 'var(--font-size-body)', lineHeight: 'var(--line-height-normal)', color: 'var(--text-muted)', marginBottom: 'var(--spacing-lg)' }}>
             {selectedMentor.bio}
           </p>
 
-          <div style={{ marginBottom: '20px' }}>
-            <h4 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '12px', color: '#333' }}>
+          <div style={{ marginBottom: 'var(--spacing-lg)' }}>
+            <h4 style={{ fontSize: 'var(--font-size-small)', fontWeight: 600, marginBottom: 'var(--spacing-sm)', color: 'var(--text-secondary)' }}>
               Expertise
             </h4>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 'var(--spacing-xs)', flexWrap: 'wrap' }}>
               {selectedMentor.expertise.map((skill, index) => (
                 <span
                   key={index}
                   style={{
-                    background: '#FFF0F5',
+                    background: 'var(--bg-light-coral)',
                     color: 'var(--text-coral)',
-                    padding: '6px 12px',
+                    padding: 'var(--spacing-xxs) var(--spacing-sm)',
                     borderRadius: 'var(--radius-xl)',
-                    fontSize: '13px',
+                    fontSize: 'var(--font-size-small)',
                     fontWeight: 500
                   }}
                 >
@@ -521,21 +522,21 @@ export function Component({ fieldValues }: any) {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--spacing-md)' }}>
             {selectedMentor.stats.map((stat, index) => (
               <div
                 key={index}
                 style={{
                   textAlign: 'center',
-                  padding: '16px',
-                  background: '#F8F9FA',
+                  padding: 'var(--spacing-md)',
+                  background: 'var(--bg-cream)',
                   borderRadius: 'var(--radius-md)'
                 }}
               >
-                <div style={{ fontSize: '24px', fontWeight: 700, color: 'var(--text-coral)', marginBottom: '4px' }}>
+                <div style={{ fontSize: 'var(--font-size-h3)', fontWeight: 700, color: 'var(--text-coral)', marginBottom: 'var(--spacing-xxs)' }}>
                   {stat.value}
                 </div>
-                <div style={{ fontSize: '12px', color: '#666' }}>
+                <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)' }}>
                   {stat.label}
                 </div>
               </div>
@@ -548,14 +549,14 @@ export function Component({ fieldValues }: any) {
 
   // Mobile simplified version
   const renderMobileHero = () => (
-    <div style={{ padding: '1.5rem 0', width: '100%', overflow: 'hidden' }}>
+    <div style={{ padding: 'var(--spacing-lg) 0', width: '100%', overflow: 'hidden' }}>
       <h1 className="hero-mobile-title" style={{
         fontFamily: 'var(--font-headline)',
-        fontSize: '2.25rem',
+        fontSize: 'var(--font-size-h1)',
         fontWeight: 700,
-        lineHeight: 1.2,
+        lineHeight: 'var(--line-height-tight)',
         letterSpacing: 'var(--letter-spacing-tight)',
-        marginBottom: '1rem',
+        marginBottom: 'var(--spacing-md)',
         color: 'var(--text-primary)',
         wordWrap: 'break-word',
         overflowWrap: 'break-word',
@@ -565,10 +566,10 @@ export function Component({ fieldValues }: any) {
         {fieldValues.title}
       </h1>
       <p className="hero-mobile-description" style={{
-        fontSize: '1.05rem',
+        fontSize: 'var(--font-size-body)',
         color: 'var(--text-secondary)',
-        lineHeight: 1.6,
-        marginBottom: '2rem',
+        lineHeight: 'var(--line-height-normal)',
+        marginBottom: 'var(--spacing-xl)',
         maxWidth: 'var(--max-width-prose)',
         wordWrap: 'break-word',
         overflowWrap: 'break-word',
@@ -577,39 +578,39 @@ export function Component({ fieldValues }: any) {
       </p>
 
       {/* Mobile Stats Cards */}
-      <div style={{ display: 'grid', gap: '1rem', marginBottom: '2rem' }}>
+      <div style={{ display: 'grid', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-xl)' }}>
         {Object.entries(nodeData).map(([key, data]) => (
           <div
             key={key}
             style={{
               background: 'var(--bg-white)',
-              padding: '1.5rem',
+              padding: 'var(--spacing-lg)',
               borderRadius: 'var(--radius-lg)',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
-              border: '2px solid rgba(239, 71, 111, 0.1)'
+              boxShadow: 'var(--shadow-md)',
+              border: '2px solid var(--border-coral-light)'
             }}
           >
             <h3 style={{
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              color: 'var(--text-coral)',
-              marginBottom: '0.5rem'
+              fontSize: 'var(--font-size-body-lg)',
+              fontWeight: 500,
+              color: 'var(--text-primary)',
+              marginBottom: 'var(--spacing-xs)'
             }}>
               {data.tooltipTitle}
             </h3>
-            <p style={{ fontSize: '0.9rem', color: '#666', marginBottom: '1rem' }}>
+            <p style={{ fontSize: 'var(--font-size-small)', color: 'var(--text-muted)', marginBottom: 'var(--spacing-md)' }}>
               {data.tooltipDesc}
             </p>
             <div style={{
-              background: 'rgba(239, 71, 111, 0.05)',
-              padding: '0.75rem',
+              background: 'var(--primary-blue)',
+              padding: 'var(--spacing-sm)',
               borderRadius: 'var(--radius-sm)',
-              borderLeft: '3px solid var(--text-coral)'
+              borderLeft: '3px solid var(--secondary-blue)'
             }}>
-              <strong style={{ fontSize: '1.5rem', color: 'var(--text-coral)' }}>
+              <strong style={{ fontSize: 'var(--font-size-h3)', fontWeight: 600, color: 'var(--text-white)' }}>
                 {data.tooltipStat}
               </strong>
-              <span style={{ fontSize: '0.85rem', color: '#333', marginLeft: '0.5rem' }}>
+              <span style={{ fontSize: 'var(--font-size-body)', color: 'var(--text-white)', marginLeft: 'var(--spacing-xs)', opacity: 0.9 }}>
                 {data.tooltipLabel}
               </span>
             </div>
@@ -618,11 +619,11 @@ export function Component({ fieldValues }: any) {
       </div>
 
       {/* Mobile Mentors */}
-      <div style={{ marginBottom: '2rem' }}>
-        <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', textAlign: 'center' }}>
+      <div style={{ marginBottom: 'var(--spacing-xl)' }}>
+        <h3 style={{ fontSize: 'var(--font-size-h4)', fontWeight: 500, marginBottom: 'var(--spacing-md)', textAlign: 'center' }}>
           Meet Our Mentors
         </h3>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--spacing-md)' }}>
           {mentorProfiles.map((mentor, index) => (
             <div
               key={index}
@@ -632,10 +633,10 @@ export function Component({ fieldValues }: any) {
                 height: '80px',
                 borderRadius: 'var(--radius-circle)',
                 border: '3px solid var(--bg-white)',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                boxShadow: 'var(--shadow-md)',
                 overflow: 'hidden',
                 cursor: 'pointer',
-                transition: 'transform 0.3s ease'
+                transition: 'var(--transition-medium)'
               }}
             >
               <img
@@ -655,16 +656,25 @@ export function Component({ fieldValues }: any) {
       <button
         onClick={() => setIsDemoModalOpen(true)}
         style={{
-          background: 'linear-gradient(135deg, var(--text-coral) 0%, #F89F7B 100%)',
+          background: 'var(--gradient-coral)',
           color: 'var(--text-white)',
-          padding: '1rem 2rem',
+          padding: 'var(--btn-padding)',
           borderRadius: 'var(--radius-full)',
-          fontSize: '1rem',
+          fontSize: 'var(--font-size-body)',
           fontWeight: 600,
           border: 'none',
           cursor: 'pointer',
-          boxShadow: '0 8px 24px rgba(239, 71, 111, 0.3)',
-          width: '100%'
+          boxShadow: 'var(--shadow-coral-sm)',
+          width: '100%',
+          transition: 'var(--transition-medium)'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translateY(-2px)';
+          e.currentTarget.style.boxShadow = 'var(--shadow-coral)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = 'var(--shadow-coral-sm)';
         }}
         aria-label={fieldValues.button_text}
       >
@@ -819,7 +829,7 @@ export function Component({ fieldValues }: any) {
           minHeight: isMobile ? 'auto' : '65vh',
           display: 'flex',
           alignItems: 'center',
-          padding: '3rem 0',
+          padding: 'var(--spacing-2xl) 0',
           background: 'var(--gradient-hero)',
           position: 'relative',
           overflow: 'visible',
@@ -844,10 +854,10 @@ export function Component({ fieldValues }: any) {
                     id="hero-heading"
                     style={{
                       fontFamily: 'var(--font-headline)',
-                      fontSize: '3.5rem',
+                      fontSize: 'var(--font-size-h1)',
                       fontWeight: 500,
-                      lineHeight: 1.15,
-                      marginBottom: '1.5rem',
+                      lineHeight: 'var(--line-height-tight)',
+                      marginBottom: 'var(--spacing-lg)',
                       color: 'var(--text-primary)',
                       letterSpacing: 'var(--letter-spacing-tight)',
                       wordWrap: 'break-word',
@@ -858,10 +868,10 @@ export function Component({ fieldValues }: any) {
                   </h1>
                   <p style={{
                     fontFamily: 'var(--font-body)',
-                    fontSize: '1.15rem',
-                    color: '#4a4a4a',
-                    lineHeight: 1.7,
-                    marginBottom: '2rem'
+                    fontSize: 'var(--font-size-body-lg)',
+                    color: 'var(--text-primary)',
+                    lineHeight: 'var(--line-height-relaxed)',
+                    marginBottom: 'var(--spacing-xl)'
                   }}>
                     {description}
                   </p>
@@ -869,17 +879,25 @@ export function Component({ fieldValues }: any) {
                   <button
                     onClick={() => setIsDemoModalOpen(true)}
                     style={{
-                      background: 'linear-gradient(135deg, var(--text-coral) 0%, #F89F7B 100%)',
+                      background: 'var(--gradient-coral)',
                       color: 'var(--text-white)',
-                      padding: '1rem 2.5rem',
+                      padding: 'var(--btn-padding)',
                       borderRadius: 'var(--radius-full)',
                       fontFamily: 'var(--font-body)',
-                      fontSize: '1.05rem',
+                      fontSize: 'var(--font-size-body)',
                       fontWeight: 600,
                       border: 'none',
                       cursor: 'pointer',
-                      boxShadow: '0 8px 24px rgba(239, 71, 111, 0.3)',
-                      transition: 'all 0.3s ease'
+                      boxShadow: 'var(--shadow-coral-sm)',
+                      transition: 'var(--transition-medium)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = 'var(--shadow-coral)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'var(--shadow-coral-sm)';
                     }}
                     aria-label={fieldValues.button_text}
                   >
@@ -906,7 +924,7 @@ export function Component({ fieldValues }: any) {
                       width: '120%',
                       height: '120%',
                       zIndex: 0,
-                      opacity: 0.4,
+                      opacity: 0.6,
                       pointerEvents: 'none'
                     }}
                     viewBox="0 0 600 600"
@@ -914,7 +932,7 @@ export function Component({ fieldValues }: any) {
                     <defs>
                       {/* Gradient for lines */}
                       <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style={{ stopColor: 'var(--text-coral)', stopOpacity: 0.6 }} />
+                        <stop offset="0%" style={{ stopColor: '#EF476F', stopOpacity: 0.6 }} />
                         <stop offset="100%" style={{ stopColor: '#F89F7B', stopOpacity: 0.3 }} />
                       </linearGradient>
 
@@ -928,66 +946,51 @@ export function Component({ fieldValues }: any) {
                       </filter>
                     </defs>
 
-                    {/* Animated connecting lines - mesh pattern */}
-                    <line x1="300" y1="100" x2="450" y2="300" stroke="url(#lineGradient)" strokeWidth="2">
-                      <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="8s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" />
+                    {/* Connection lines */}
+                    <line x1="210" y1="80" x2="520" y2="180" stroke="url(#lineGradient)" strokeWidth="1.5">
+                      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="8s" repeatCount="indefinite" />
                     </line>
-                    <line x1="450" y1="300" x2="300" y2="500" stroke="url(#lineGradient)" strokeWidth="2">
-                      <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="7s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="5s" repeatCount="indefinite" />
+                    <line x1="520" y1="180" x2="360" y2="450" stroke="url(#lineGradient)" strokeWidth="1.5">
+                      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="10s" repeatCount="indefinite" />
                     </line>
-                    <line x1="300" y1="500" x2="150" y2="300" stroke="url(#lineGradient)" strokeWidth="2">
-                      <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="9s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.3;0.9;0.3" dur="4.5s" repeatCount="indefinite" />
+                    <line x1="360" y1="450" x2="80" y2="340" stroke="url(#lineGradient)" strokeWidth="1.5">
+                      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="9s" repeatCount="indefinite" />
                     </line>
-                    <line x1="150" y1="300" x2="300" y2="100" stroke="url(#lineGradient)" strokeWidth="2">
-                      <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="6s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0.8;0.4" dur="4s" repeatCount="indefinite" />
+                    <line x1="80" y1="340" x2="210" y2="80" stroke="url(#lineGradient)" strokeWidth="1.5">
+                      <animate attributeName="opacity" values="0.35;0.65;0.35" dur="11s" repeatCount="indefinite" />
                     </line>
-
-                    {/* Diagonal cross lines */}
-                    <line x1="300" y1="100" x2="300" y2="500" stroke="url(#lineGradient)" strokeWidth="1.5" opacity="0.4">
-                      <animate attributeName="stroke-dasharray" from="0,800" to="800,0" dur="10s" repeatCount="indefinite" />
+                    {/* Cross lines */}
+                    <line x1="210" y1="80" x2="360" y2="450" stroke="url(#lineGradient)" strokeWidth="1">
+                      <animate attributeName="opacity" values="0.2;0.45;0.2" dur="12s" repeatCount="indefinite" />
                     </line>
-                    <line x1="150" y1="300" x2="450" y2="300" stroke="url(#lineGradient)" strokeWidth="1.5" opacity="0.4">
-                      <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="8s" repeatCount="indefinite" />
+                    <line x1="520" y1="180" x2="80" y2="340" stroke="url(#lineGradient)" strokeWidth="1">
+                      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="14s" repeatCount="indefinite" />
                     </line>
 
-                    {/* Animated nodes */}
-                    <circle cx="300" cy="100" r="6" fill="var(--text-coral)" filter="url(#glow)">
-                      <animate attributeName="r" values="4;8;4" dur="3s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.5;1;0.5" dur="3s" repeatCount="indefinite" />
+                    {/* Scattered nodes */}
+                    <circle cx="320" cy="150" r="3" fill="#F89F7B" filter="url(#glow)">
+                      <animate attributeName="r" values="2;4;2" dur="6s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="6s" repeatCount="indefinite" />
                     </circle>
-                    <circle cx="450" cy="300" r="6" fill="#F89F7B" filter="url(#glow)">
-                      <animate attributeName="r" values="6;10;6" dur="4s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.6;1;0.6" dur="4s" repeatCount="indefinite" />
+                    <circle cx="420" cy="280" r="4" fill="#FED700" filter="url(#glow)">
+                      <animate attributeName="r" values="3;5;3" dur="8s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="8s" repeatCount="indefinite" />
                     </circle>
-                    <circle cx="300" cy="500" r="6" fill="var(--text-coral)" filter="url(#glow)">
-                      <animate attributeName="r" values="5;9;5" dur="3.5s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.5;1;0.5" dur="3.5s" repeatCount="indefinite" />
+                    <circle cx="180" cy="380" r="3" fill="#EF476F" filter="url(#glow)">
+                      <animate attributeName="r" values="2;5;2" dur="7s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.4;0.75;0.4" dur="7s" repeatCount="indefinite" />
                     </circle>
-                    <circle cx="150" cy="300" r="6" fill="#F89F7B" filter="url(#glow)">
-                      <animate attributeName="r" values="4;7;4" dur="4.5s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.6;1;0.6" dur="4.5s" repeatCount="indefinite" />
+                    <circle cx="280" cy="320" r="4" fill="#F89F7B" filter="url(#glow)">
+                      <animate attributeName="r" values="3;6;3" dur="9s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.45;0.8;0.45" dur="9s" repeatCount="indefinite" />
                     </circle>
-
-                    {/* Additional connecting nodes */}
-                    <circle cx="375" cy="200" r="4" fill="#FED700" filter="url(#glow)">
-                      <animate attributeName="r" values="3;6;3" dur="5s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0.9;0.4" dur="5s" repeatCount="indefinite" />
+                    <circle cx="450" cy="380" r="3" fill="#FED700" filter="url(#glow)">
+                      <animate attributeName="r" values="2;4;2" dur="10s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="10s" repeatCount="indefinite" />
                     </circle>
-                    <circle cx="375" cy="400" r="4" fill="#FED700" filter="url(#glow)">
-                      <animate attributeName="r" values="3;5;3" dur="4s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="225" cy="400" r="4" fill="var(--text-coral)" filter="url(#glow)">
-                      <animate attributeName="r" values="3;7;3" dur="3.8s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;1;0.4" dur="3.8s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="225" cy="200" r="4" fill="#F89F7B" filter="url(#glow)">
-                      <animate attributeName="r" values="3;6;3" dur="4.2s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="4.2s" repeatCount="indefinite" />
+                    <circle cx="140" cy="200" r="3" fill="#EF476F" filter="url(#glow)">
+                      <animate attributeName="r" values="2;5;2" dur="8s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" values="0.45;0.75;0.45" dur="8s" repeatCount="indefinite" />
                     </circle>
                   </svg>
 
@@ -997,24 +1000,25 @@ export function Component({ fieldValues }: any) {
                   {renderNode('organizations', nodeData.organizations)}
                   {renderNode('partnerships', nodeData.partnerships)}
 
-                  {/* Center Avatars - Diagonal arrangement with overlap */}
+                  {/* Center Avatars - Floating constellation arrangement */}
                   <div style={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '240px',
-                    height: '240px',
+                    width: '280px',
+                    height: '280px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     zIndex: 150
                   }}>
                     {mentorProfiles.map((mentor, index) => {
+                      // Floating positions with whitespace between avatars
                       const positions = [
-                        { top: '20px', left: '35px' },   // Avatar 1 - top left
-                        { top: '75px', left: '85px' },   // Avatar 2 - center (overlapping)
-                        { top: '130px', left: '135px' }   // Avatar 3 - bottom right
+                        { top: '-10px', left: '90px' },    // Avatar 1 - top center-right
+                        { top: '85px', left: '10px' },     // Avatar 2 - middle left
+                        { top: '160px', left: '140px' }    // Avatar 3 - bottom right
                       ];
 
                       const isHovered = hoveredAvatar === index;
@@ -1044,8 +1048,8 @@ export function Component({ fieldValues }: any) {
                             role="button"
                             aria-label={`View profile of ${mentor.name}, ${mentor.role}`}
                             style={{
-                              width: '90px',
-                              height: '90px',
+                              width: '105px',
+                              height: '105px',
                               borderRadius: 'var(--radius-circle)',
                               border: '4px solid var(--bg-white)',
                               boxShadow: isHovered
@@ -1073,40 +1077,40 @@ export function Component({ fieldValues }: any) {
                             className={`avatar-tooltip-${index}`}
                             style={{
                               position: 'absolute',
-                              top: '110px',
+                              top: '120px',
                               left: '50%',
                               transform: 'translateX(-50%)',
                               background: 'var(--bg-white)',
                               borderRadius: 'var(--radius-lg)',
-                              padding: '20px 24px',
-                              boxShadow: '0 12px 32px rgba(0, 0, 0, 0.15)',
+                              padding: 'var(--spacing-lg) var(--spacing-lg)',
+                              boxShadow: 'var(--shadow-lg)',
                               zIndex: 600,
                               minWidth: '240px',
                               textAlign: 'center' as const,
                               pointerEvents: 'none',
                               opacity: 0,
                               visibility: 'hidden',
-                              transition: 'opacity 0.3s ease, visibility 0.3s ease',
+                              transition: 'var(--transition-medium)',
                             }}>
                             <div style={{
-                              fontSize: '1.5rem',
+                              fontSize: 'var(--font-size-h3)',
                               fontWeight: 700,
                               color: 'var(--text-primary)',
-                              marginBottom: '4px',
+                              marginBottom: 'var(--spacing-xxs)',
                               fontFamily: 'var(--font-headline)',
                             }}>
                               {mentor.name}
                             </div>
                             <div style={{
-                              fontSize: '1rem',
-                              color: '#999',
-                              marginBottom: '12px',
+                              fontSize: 'var(--font-size-body)',
+                              color: 'var(--text-muted)',
+                              marginBottom: 'var(--spacing-sm)',
                               fontFamily: 'var(--font-body)',
                             }}>
                               {mentor.role}
                             </div>
                             <div style={{
-                              fontSize: '1.15rem',
+                              fontSize: 'var(--font-size-body-lg)',
                               fontWeight: 600,
                               color: 'var(--text-coral)',
                               fontFamily: 'var(--font-body)',

@@ -32,7 +32,7 @@ export function Component({ fieldValues }: any) {
           <p style={{
             fontSize: '1.15rem',
             textAlign: 'center',
-            color: '#4a4a4a',
+            color: 'var(--text-primary)',
             lineHeight: 1.7,
             marginBottom: '4rem',
             maxWidth: '800px',
@@ -53,7 +53,7 @@ export function Component({ fieldValues }: any) {
               style={{
                 background: 'white',
                 padding: '2rem',
-                borderRadius: '16px',
+                borderRadius: 'var(--radius-lg)',
                 borderLeft: '4px solid #EF476F',
                 boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)',
               }}

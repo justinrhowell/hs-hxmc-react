@@ -1,0 +1,49 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Blog Post
+  screenshotPath: ../assets/blog-post-screenshot.png
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {% module
+    "navigation"
+    path="../components/modules/Navigation"
+  %}
+
+  {% module
+    "blog_post_hero"
+    path="../components/modules/BlogPostHero"
+  %}
+
+  {% module
+    "blog_post_content"
+    path="../components/modules/BlogPostContent"
+  %}
+
+  {% module
+    "blog_post_author"
+    path="../components/modules/BlogPostAuthor"
+  %}
+
+  {% module
+    "newsletter"
+    path="../components/modules/Newsletter",
+    heading="Enjoyed this article?",
+    description="Subscribe to our newsletter for more insights on mentorship, education technology, and organizational success.",
+    layout="boxed"
+  %}
+
+  {% module
+    "related_posts"
+    path="../components/modules/RelatedPosts"
+  %}
+
+  {% module
+    "footer"
+    path="../components/modules/Footer"
+  %}
+
+{% endblock body %}

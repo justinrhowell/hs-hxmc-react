@@ -14,30 +14,7 @@ interface ScrollAnimationOptions {
 
 /**
  * Custom hook for scroll-triggered animations using Intersection Observer.
- *
- * Provides a ref to attach to the animated element and a boolean indicating
- * whether the element is currently visible in the viewport.
- *
- * @param options - Configuration options for the animation
- * @returns Object containing elementRef and isVisible state
- *
- * @example
- * ```tsx
- * function MyComponent() {
- *   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
- *
- *   return (
- *     <section
- *       ref={elementRef as React.RefObject<HTMLElement>}
- *       style={animationStyles.fadeInUp(isVisible)}
- *     >
- *       Content that fades in when scrolled into view
- *     </section>
- *   );
- * }
- * ```
- *
- * @see {@link animationStyles} for available animation presets
+ * Uses CSS class-based animations for better compatibility with HubSpot.
  */
 export const useScrollAnimation = (options: ScrollAnimationOptions = {}) => {
   const {
@@ -47,27 +24,35 @@ export const useScrollAnimation = (options: ScrollAnimationOptions = {}) => {
   } = options;
 
   const elementRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(true); // Start visible to prevent flash
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const element = elementRef.current;
     if (!element) return;
 
+    // Add the animation class
+    element.classList.add('scroll-animate');
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          element.classList.add('is-visible');
           setIsVisible(true);
           if (triggerOnce) {
             observer.unobserve(element);
           }
         } else if (!triggerOnce) {
+          element.classList.remove('is-visible');
           setIsVisible(false);
         }
       },
       { threshold, rootMargin }
     );
 
-    observer.observe(element);
+    // Small delay to ensure initial state is set
+    requestAnimationFrame(() => {
+      observer.observe(element);
+    });
 
     return () => {
       observer.unobserve(element);
@@ -117,83 +102,97 @@ export const useScrollAnimation = (options: ScrollAnimationOptions = {}) => {
 export const animationStyles = {
   fadeIn: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transition: 'opacity 0.6s ease-out',
+    transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
   }),
 
   fadeInUp: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-    transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+    transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
+    transition: 'opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1)',
   }),
 
   fadeInDown: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
     transform: isVisible ? 'translateY(0)' : 'translateY(-30px)',
-    transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+    transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
   }),
 
   fadeInLeft: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateX(0)' : 'translateX(-30px)',
-    transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+    transform: isVisible ? 'translateX(0)' : 'translateX(-40px)',
+    transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
   }),
 
   fadeInRight: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateX(0)' : 'translateX(30px)',
-    transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+    transform: isVisible ? 'translateX(0)' : 'translateX(40px)',
+    transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
   }),
 
   scaleIn: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'scale(1)' : 'scale(0.9)',
-    transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
+    transform: isVisible ? 'scale(1)' : 'scale(0.95)',
+    transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
   }),
 
   slideInUp: (isVisible: boolean): React.CSSProperties => ({
-    transform: isVisible ? 'translateY(0)' : 'translateY(50px)',
+    transform: isVisible ? 'translateY(0)' : 'translateY(60px)',
     opacity: isVisible ? 1 : 0,
-    transition: 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out',
+    transition: 'transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s cubic-bezier(0.4, 0, 0.2, 1)',
   }),
 
   staggered: (isVisible: boolean, delay: number = 0): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-    transition: `opacity 0.6s ease-out ${delay}s, transform 0.6s ease-out ${delay}s`,
+    transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+    transition: `opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
   }),
 
   // Subtle, elegant slide up - perfect for sections
   subtleSlideUp: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
-    transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+    transform: isVisible ? 'translateY(0)' : 'translateY(32px)',
+    transition: 'opacity 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1)',
   }),
 
   // Elegant fade with slight scale
   elegantFadeScale: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'scale(1)' : 'scale(0.96)',
-    transition: 'opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)',
+    transform: isVisible ? 'scale(1) translateY(0)' : 'scale(0.97) translateY(20px)',
+    transition: 'opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1)',
   }),
 
   // Soft rise animation
   softRise: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0)' : 'translateY(16px)',
-    transition: 'opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
+    transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
   }),
 
-  // Staggered with subtle movement
+  // Staggered with subtle movement - great for cards and list items
   staggeredSubtle: (isVisible: boolean, delay: number = 0): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0)' : 'translateY(16px)',
-    transition: `opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s, transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s`,
+    transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
+    transition: `opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${delay}s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
   }),
 
   // Content block animation
   contentBlock: (isVisible: boolean): React.CSSProperties => ({
     opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-    transition: 'opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1)',
+    transform: isVisible ? 'translateY(0)' : 'translateY(28px)',
+    transition: 'opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 0.9s cubic-bezier(0.23, 1, 0.32, 1)',
+  }),
+
+  // Premium hero animation - slower and more dramatic
+  heroEntrance: (isVisible: boolean): React.CSSProperties => ({
+    opacity: isVisible ? 1 : 0,
+    transform: isVisible ? 'translateY(0)' : 'translateY(48px)',
+    transition: 'opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1)',
+  }),
+
+  // Gentle reveal for large sections
+  sectionReveal: (isVisible: boolean): React.CSSProperties => ({
+    opacity: isVisible ? 1 : 0,
+    transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
+    transition: 'opacity 1.1s cubic-bezier(0.4, 0, 0.2, 1), transform 1.1s cubic-bezier(0.16, 1, 0.3, 1)',
   }),
 };

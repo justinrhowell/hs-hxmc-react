@@ -49,6 +49,14 @@ export const Component: React.FC<TestimonialsCarouselProps> = ({
 
   return (
     <>
+      <style dangerouslySetInnerHTML={{__html: `
+        .testimonial-item {
+          display: none;
+        }
+        .testimonial-item:first-child {
+          display: block;
+        }
+      `}} />
       <script dangerouslySetInnerHTML={{__html: `
         (function() {
           function initTestimonials() {
@@ -199,9 +207,9 @@ const styles: Record<string, React.CSSProperties> = {
   heading: {
     fontSize: 'var(--font-size-h2)',
     fontFamily: 'var(--font-headline)',
-    fontWeight: 700,
+    fontWeight: 500,
     textAlign: 'center',
-    marginBottom: '60px',
+    marginBottom: 'var(--spacing-3xl)',
     lineHeight: 'var(--line-height-tight)',
     letterSpacing: 'var(--letter-spacing-tight)',
     color: 'var(--text-primary)',
@@ -209,14 +217,13 @@ const styles: Record<string, React.CSSProperties> = {
   carouselContainer: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    gap: '30px',
+    justifyContent: 'center',
+    gap: 'var(--spacing-lg)',
     marginBottom: 'var(--spacing-2xl)',
-    paddingLeft: '60px',
   },
   navButton: {
     background: 'var(--bg-white)',
-    border: '2px solid rgba(239, 71, 111, 0.2)',
+    border: '2px solid var(--border-medium)',
     borderRadius: 'var(--radius-circle)',
     width: '56px',
     height: '56px',
@@ -232,18 +239,14 @@ const styles: Record<string, React.CSSProperties> = {
     position: 'relative',
     width: '100%',
     maxWidth: 'var(--max-width-md)',
-    minHeight: '400px',
   },
   testimonialCard: {
-    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 251, 248, 0.95) 100%)',
+    background: 'var(--bg-glass)',
     borderRadius: 'var(--radius-xl)',
-    padding: '60px',
+    padding: 'var(--spacing-3xl)',
     maxWidth: 'var(--max-width-md)',
-    boxShadow: '0 16px 48px rgba(0, 0, 0, 0.12)',
-    border: '1px solid rgba(239, 71, 111, 0.08)',
-    position: 'absolute',
-    top: 0,
-    left: 0,
+    boxShadow: 'var(--shadow-lg)',
+    border: '1px solid var(--border-light)',
     width: '100%',
     backdropFilter: 'blur(10px)',
   },
@@ -257,8 +260,8 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
   },
   quote: {
-    fontSize: '1.35rem',
-    lineHeight: '1.7',
+    fontSize: 'var(--font-size-quote)',
+    lineHeight: 'var(--line-height-relaxed)',
     color: 'var(--text-secondary)',
     marginBottom: 'var(--spacing-2xl)',
     fontStyle: 'normal',
@@ -270,7 +273,7 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     gap: 'var(--spacing-md)',
     paddingTop: 'var(--spacing-lg)',
-    borderTop: '1px solid rgba(239, 71, 111, 0.1)',
+    borderTop: '1px solid var(--border-light)',
   },
   avatar: {
     width: '60px',
@@ -279,27 +282,29 @@ const styles: Record<string, React.CSSProperties> = {
     objectFit: 'cover',
   },
   author: {
-    fontSize: '1.1rem',
+    fontSize: 'var(--font-size-body-lg)',
     fontWeight: 700,
     color: 'var(--text-primary)',
     margin: 0,
     fontFamily: 'var(--font-headline)',
   },
   role: {
-    fontSize: '0.95rem',
+    fontSize: 'var(--font-size-body)',
     color: 'var(--text-muted)',
     margin: 0,
-    marginTop: '4px',
-    lineHeight: '1.4',
+    marginTop: 'var(--spacing-xxs)',
+    lineHeight: 'var(--line-height-normal)',
   },
   pagination: {
     display: 'flex',
     justifyContent: 'center',
-    gap: '10px',
+    gap: 'var(--spacing-xs)',
   },
   dot: {
-    width: '12px',
-    height: '12px',
+    width: '8px',
+    height: '8px',
+    minWidth: '8px',
+    minHeight: '8px',
     borderRadius: 'var(--radius-circle)',
     border: 'none',
     cursor: 'pointer',

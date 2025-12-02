@@ -55,7 +55,7 @@ export function Component({ fieldValues }: ResultsSectionProps) {
       }}
       aria-labelledby="results-heading"
     >
-      <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto', padding: '0 var(--container-padding)', position: 'relative', zIndex: 'var(--z-base)' }}>
+      <div style={{ maxWidth: 'var(--max-width-lg)', margin: '0 auto', padding: '0 var(--container-padding)', position: 'relative', zIndex: 'var(--z-base)' }}>
         <div className="results-content" style={{ display: 'grid', gridTemplateColumns: '0.95fr 1.05fr', gap: 'var(--spacing-3xl)', alignItems: 'center' }}>
           <div style={{
             position: 'relative',
@@ -70,12 +70,12 @@ export function Component({ fieldValues }: ResultsSectionProps) {
               loading="lazy"
               style={{
                 position: 'absolute',
-                top: '20px',
-                left: '20px',
+                top: 'var(--spacing-lg)',
+                left: 'var(--spacing-lg)',
                 width: '50px',
                 height: '50px',
                 zIndex: 1,
-                opacity: 0.8,
+                opacity: 'var(--opacity-hover)',
               }}
             />
 
@@ -87,25 +87,25 @@ export function Component({ fieldValues }: ResultsSectionProps) {
               loading="lazy"
               style={{
                 position: 'absolute',
-                bottom: '20px',
-                left: '20px',
+                bottom: 'var(--spacing-lg)',
+                left: 'var(--spacing-lg)',
                 width: '100px',
                 height: '100px',
                 zIndex: 1,
-                opacity: 0.8,
+                opacity: 'var(--opacity-hover)',
               }}
             />
 
             {/* Photo 1 - Girl with microscope - BACK/LEFT - larger, more prominent */}
             <div style={{
               position: 'absolute',
-              top: '40px',
-              left: '40px',
+              top: 'var(--spacing-2xl)',
+              left: 'var(--spacing-2xl)',
               width: '420px',
               height: '340px',
               background: 'var(--bg-white)',
-              padding: '16px',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+              padding: 'var(--spacing-md)',
+              boxShadow: 'var(--shadow-lg)',
               borderRadius: 'var(--radius-sm)',
               zIndex: 2,
               transform: 'rotate(-2deg)',
@@ -127,12 +127,12 @@ export function Component({ fieldValues }: ResultsSectionProps) {
             <div style={{
               position: 'absolute',
               top: '180px',
-              right: '40px',
+              right: 'var(--spacing-2xl)',
               width: '340px',
               height: '340px',
               background: 'var(--bg-white)',
-              padding: '16px',
-              boxShadow: '0 12px 32px rgba(0, 0, 0, 0.15)',
+              padding: 'var(--spacing-md)',
+              boxShadow: 'var(--shadow-hover)',
               borderRadius: 'var(--radius-sm)',
               zIndex: 3,
               transform: 'rotate(2deg)',
@@ -155,7 +155,7 @@ export function Component({ fieldValues }: ResultsSectionProps) {
               id="results-heading"
               style={{
                 fontSize: 'var(--font-size-h2)',
-                fontWeight: 700,
+                fontWeight: 500,
                 lineHeight: 'var(--line-height-tight)',
                 letterSpacing: 'var(--letter-spacing-tight)',
                 marginBottom: 'var(--spacing-md)',
@@ -170,7 +170,7 @@ export function Component({ fieldValues }: ResultsSectionProps) {
               }}>Real Results.</span>
             </h2>
             <p style={{
-              fontSize: '1.1rem',
+              fontSize: 'var(--font-size-body-lg)',
               lineHeight: 'var(--line-height-relaxed)',
               marginBottom: 'var(--spacing-xl)',
               color: 'var(--text-secondary)',
@@ -209,7 +209,7 @@ export function Component({ fieldValues }: ResultsSectionProps) {
                     borderRadius: 'var(--radius-circle)'
                   }} />
                   <div style={{
-                    fontSize: '2.5rem',
+                    fontSize: 'var(--font-size-h2)',
                     marginBottom: 'var(--spacing-sm)',
                     fontWeight: 800,
                     background: 'var(--gradient-coral-peach)',
@@ -223,7 +223,7 @@ export function Component({ fieldValues }: ResultsSectionProps) {
                     {stat.number}
                   </div>
                   <div style={{
-                    fontSize: '0.95rem',
+                    fontSize: 'var(--font-size-body)',
                     lineHeight: 'var(--line-height-normal)',
                     color: 'var(--text-primary)',
                     fontWeight: 500,

@@ -9,18 +9,18 @@ export function Component({ fieldValues }: any) {
   const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   const inputStyle = {
-    fontSize: '1.1rem',
+    fontSize: 'var(--font-size-body-lg)',
     fontWeight: 600,
-    color: 'var(--text-coral)',
-    border: '2px solid var(--border-medium)',
-    padding: '0.6rem 0.75rem',
+    color: 'var(--primary-blue)',
+    border: '2px solid var(--border-light)',
+    padding: 'var(--spacing-xs) var(--spacing-sm)',
     borderRadius: 'var(--radius-md)',
     width: '100%',
     outline: 'none'
   };
 
   const labelStyle = {
-    fontSize: '0.8rem',
+    fontSize: 'var(--font-size-label)',
     color: 'var(--text-muted)',
     marginBottom: 'var(--spacing-xs)',
     display: 'block',
@@ -207,33 +207,42 @@ export function Component({ fieldValues }: any) {
           display: flex;
           justify-content: center;
           gap: 0;
-          margin-bottom: 2rem;
+          margin-bottom: var(--spacing-xl);
         }
         .roi-toggle-btn {
-          padding: 0.75rem 2rem;
-          font-size: 0.95rem;
+          padding: var(--spacing-sm) var(--spacing-xl);
+          font-size: var(--font-size-body);
           font-weight: 600;
-          border: 2px solid var(--border-medium);
+          border: 2px solid var(--border-light);
           background: var(--bg-white);
           color: var(--text-secondary);
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: var(--transition-fast);
         }
         .roi-toggle-btn:first-child {
-          border-radius: 8px 0 0 8px;
-          border-right: 1px solid var(--border-medium);
+          border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+          border-right: 1px solid var(--border-light);
         }
         .roi-toggle-btn:last-child {
-          border-radius: 0 8px 8px 0;
-          border-left: 1px solid var(--border-medium);
+          border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+          border-left: 1px solid var(--border-light);
         }
         .roi-toggle-btn:hover {
-          background: rgba(239, 71, 111, 0.05);
+          background: var(--bg-light-coral);
         }
         .roi-toggle-btn.active {
-          background: linear-gradient(135deg, #EF476F 0%, #F89F7B 100%);
-          color: white;
-          border-color: #EF476F;
+          background: var(--gradient-teal);
+          color: var(--text-white);
+          border-color: var(--primary-blue);
+        }
+        #roi-calculator-he input:focus,
+        #roi-calculator-corp input:focus {
+          border-color: var(--primary-blue) !important;
+          box-shadow: 0 0 0 3px rgba(74, 158, 170, 0.15) !important;
+        }
+        .roi-toggle-btn:focus {
+          outline: none !important;
+          box-shadow: 0 0 0 3px rgba(74, 158, 170, 0.3) !important;
         }
       `}} />
 
@@ -256,13 +265,13 @@ export function Component({ fieldValues }: any) {
               letterSpacing: 'var(--letter-spacing-tight)',
               marginBottom: 'var(--spacing-sm)',
               fontFamily: 'var(--font-headline)',
-              fontWeight: 700,
+              fontWeight: 500,
               color: 'var(--text-primary)'
             }}>
               {fieldValues.heading || 'Measure What Matters'}
             </h2>
             <p style={{
-              fontSize: '1.1rem',
+              fontSize: 'var(--font-size-body-lg)',
               lineHeight: 'var(--line-height-relaxed)',
               color: 'var(--text-secondary)',
               maxWidth: 'var(--max-width-prose)',
@@ -342,31 +351,31 @@ export function Component({ fieldValues }: any) {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
-                <div style={{ padding: '1.25rem', background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.08) 0%, rgba(248, 159, 123, 0.05) 100%)', borderRadius: '16px', border: '2px solid rgba(239, 71, 111, 0.2)' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#666', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-lg)' }}>
+                <div style={{ padding: 'var(--spacing-md)', background: 'var(--gradient-blue-light)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-medium)' }}>
+                  <div style={{ fontSize: 'var(--font-size-label)', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 'var(--spacing-xs)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Staff Savings
                   </div>
-                  <div id="staff-savings-value-he" style={{ fontSize: '1.75rem', fontWeight: 800, color: '#EF476F' }}>
+                  <div id="staff-savings-value-he" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--primary-blue)' }}>
                     $23,408
                   </div>
                 </div>
 
-                <div style={{ padding: '1.25rem', background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.08) 0%, rgba(248, 159, 123, 0.05) 100%)', borderRadius: '16px', border: '2px solid rgba(239, 71, 111, 0.2)' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#666', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <div style={{ padding: 'var(--spacing-md)', background: 'var(--gradient-blue-light)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-medium)' }}>
+                  <div style={{ fontSize: 'var(--font-size-label)', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 'var(--spacing-xs)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Revenue Retained
                   </div>
-                  <div id="revenue-savings-value-he" style={{ fontSize: '1.75rem', fontWeight: 800, color: '#EF476F' }}>
+                  <div id="revenue-savings-value-he" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--primary-blue)' }}>
                     $845,700
                   </div>
                 </div>
               </div>
 
-              <div style={{ padding: '2rem', background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)', borderRadius: '20px', textAlign: 'center', boxShadow: '0 8px 24px rgba(239, 71, 111, 0.35)' }}>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.9)', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              <div style={{ padding: 'var(--spacing-xl)', background: 'var(--gradient-teal)', borderRadius: 'var(--radius-lg)', textAlign: 'center', boxShadow: 'var(--shadow-lg)' }}>
+                <div style={{ fontSize: 'var(--font-size-small)', fontWeight: 600, color: 'var(--text-white-soft)', marginBottom: 'var(--spacing-sm)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                   Total Annual ROI
                 </div>
-                <div id="total-roi-value-he" style={{ fontSize: '2.75rem', fontWeight: 900, color: 'white', lineHeight: 1 }}>
+                <div id="total-roi-value-he" style={{ fontSize: 'var(--font-size-h1)', fontWeight: 900, color: 'var(--text-white)', lineHeight: 1 }}>
                   $869,108
                 </div>
               </div>
@@ -423,42 +432,42 @@ export function Component({ fieldValues }: any) {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
-                <div style={{ padding: '1.25rem', background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.08) 0%, rgba(248, 159, 123, 0.05) 100%)', borderRadius: '16px', border: '2px solid rgba(239, 71, 111, 0.2)' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#666', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-lg)' }}>
+                <div style={{ padding: 'var(--spacing-md)', background: 'var(--gradient-blue-light)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-medium)' }}>
+                  <div style={{ fontSize: 'var(--font-size-label)', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 'var(--spacing-xs)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Staff Savings
                   </div>
-                  <div id="staff-savings-value-corp" style={{ fontSize: '1.75rem', fontWeight: 800, color: '#EF476F' }}>
+                  <div id="staff-savings-value-corp" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--primary-blue)' }}>
                     $37,917
                   </div>
                 </div>
 
-                <div style={{ padding: '1.25rem', background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.08) 0%, rgba(248, 159, 123, 0.05) 100%)', borderRadius: '16px', border: '2px solid rgba(239, 71, 111, 0.2)' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#666', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                <div style={{ padding: 'var(--spacing-md)', background: 'var(--gradient-blue-light)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-medium)' }}>
+                  <div style={{ fontSize: 'var(--font-size-label)', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 'var(--spacing-xs)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Revenue Retained
                   </div>
-                  <div id="revenue-savings-value-corp" style={{ fontSize: '1.75rem', fontWeight: 800, color: '#EF476F' }}>
+                  <div id="revenue-savings-value-corp" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--primary-blue)' }}>
                     $3,375,000
                   </div>
                 </div>
               </div>
 
-              <div style={{ padding: '2rem', background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)', borderRadius: '20px', textAlign: 'center', boxShadow: '0 8px 24px rgba(239, 71, 111, 0.35)' }}>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.9)', marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              <div style={{ padding: 'var(--spacing-xl)', background: 'var(--gradient-teal)', borderRadius: 'var(--radius-lg)', textAlign: 'center', boxShadow: 'var(--shadow-lg)' }}>
+                <div style={{ fontSize: 'var(--font-size-small)', fontWeight: 600, color: 'var(--text-white-soft)', marginBottom: 'var(--spacing-sm)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                   Total Annual ROI
                 </div>
-                <div id="total-roi-value-corp" style={{ fontSize: '2.75rem', fontWeight: 900, color: 'white', lineHeight: 1 }}>
+                <div id="total-roi-value-corp" style={{ fontSize: 'var(--font-size-h1)', fontWeight: 900, color: 'var(--text-white)', lineHeight: 1 }}>
                   $3,412,917
                 </div>
               </div>
             </div>
 
-            <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.7rem', color: '#999', fontStyle: 'italic' }}>
+            <div style={{ marginTop: 'var(--spacing-lg)', textAlign: 'center', fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', fontStyle: 'italic' }}>
               *Estimates based on your inputs and industry benchmarks
             </div>
 
-            <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-              <a href={fieldValues.link_url || '#'} style={{ color: '#EF476F', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 600 }}>
+            <div style={{ marginTop: 'var(--spacing-lg)', textAlign: 'center' }}>
+              <a href={fieldValues.link_url || '#'} style={{ color: 'var(--primary-blue)', textDecoration: 'none', fontSize: 'var(--font-size-body)', fontWeight: 600 }}>
                 {fieldValues.link_text || 'Learn more'} →
               </a>
             </div>

@@ -130,7 +130,7 @@ export function Component({ fieldValues }: any) {
                   className={`pricing-card ${isFeatured ? 'pricing-card-featured' : ''}`}
                   style={{
                     background: 'white',
-                    borderRadius: '24px',
+                    borderRadius: 'var(--radius-xl)',
                     padding: '2.5rem',
                     boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
                     border: isFeatured ? '2px solid #EF476F' : '2px solid rgba(239, 71, 111, 0.1)',
@@ -149,7 +149,7 @@ export function Component({ fieldValues }: any) {
                       background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
                       color: 'white',
                       padding: '0.4rem 1.5rem',
-                      borderRadius: '50px',
+                      borderRadius: 'var(--radius-full)',
                       fontSize: '0.8rem',
                       fontWeight: 600,
                       textTransform: 'uppercase',
@@ -164,7 +164,7 @@ export function Component({ fieldValues }: any) {
                   <div style={{ marginBottom: '2rem' }}>
                     <h3 style={{
                       fontSize: '1.75rem',
-                      fontWeight: 600,
+                      fontWeight: 500,
                       marginBottom: '0.5rem',
                       color: '#1a1a1a',
                       fontFamily: 'var(--font-headline)',
@@ -252,12 +252,12 @@ export function Component({ fieldValues }: any) {
                         : 'transparent',
                       color: isFeatured ? 'white' : '#EF476F',
                       border: isFeatured ? 'none' : '2px solid #EF476F',
-                      padding: '1rem 2rem',
-                      borderRadius: '12px',
+                      padding: 'var(--btn-padding)',
+                      borderRadius: 'var(--radius-full)',
                       fontSize: '1rem',
                       fontWeight: 600,
                       textDecoration: 'none',
-                      transition: 'all 0.3s ease',
+                      transition: 'var(--transition-medium)',
                       textAlign: 'center',
                     }}
                   >

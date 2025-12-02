@@ -64,7 +64,7 @@ export function Component({ fieldValues }: any) {
         <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-3xl)' }}>
           <h2 style={{
             fontSize: 'var(--font-size-h2)',
-            fontWeight: 700,
+            fontWeight: 500,
             color: 'var(--text-primary)',
             marginBottom: 'var(--spacing-md)',
             fontFamily: 'var(--font-headline)',
@@ -129,7 +129,7 @@ export function Component({ fieldValues }: any) {
 
               <h3 style={{
                 fontSize: '1.5rem',
-                fontWeight: 700,
+                fontWeight: 500,
                 color: 'var(--text-primary)',
                 marginBottom: 'var(--spacing-md)',
                 fontFamily: 'var(--font-headline)',

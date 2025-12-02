@@ -114,7 +114,7 @@ export function Component({ fieldValues }: any) {
               <div>
                 <h3 style={{
                   fontSize: '1.5rem',
-                  fontWeight: 600,
+                  fontWeight: 500,
                   marginBottom: '1.5rem',
                   color: '#1a1a1a',
                   fontFamily: 'var(--font-headline)',
@@ -131,7 +131,7 @@ export function Component({ fieldValues }: any) {
                       <div style={{
                         width: '48px',
                         height: '48px',
-                        borderRadius: '12px',
+                        borderRadius: 'var(--radius-md)',
                         background: 'rgba(239, 71, 111, 0.1)',
                         color: '#EF476F',
                         display: 'flex',
@@ -180,7 +180,7 @@ export function Component({ fieldValues }: any) {
             <div style={{
               background: 'white',
               padding: '3rem',
-              borderRadius: '24px',
+              borderRadius: 'var(--radius-xl)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
               border: '1px solid rgba(239, 71, 111, 0.08)',
             }}>
@@ -210,10 +210,10 @@ export function Component({ fieldValues }: any) {
                         width: '100%',
                         padding: '0.875rem 1rem',
                         border: '2px solid #E5E7EB',
-                        borderRadius: '12px',
+                        borderRadius: 'var(--radius-md)',
                         fontSize: '1rem',
                         outline: 'none',
-                        transition: 'all 0.3s ease',
+                        transition: 'var(--transition-medium)',
                       }}
                     />
                   </div>
@@ -235,10 +235,10 @@ export function Component({ fieldValues }: any) {
                         width: '100%',
                         padding: '0.875rem 1rem',
                         border: '2px solid #E5E7EB',
-                        borderRadius: '12px',
+                        borderRadius: 'var(--radius-md)',
                         fontSize: '1rem',
                         outline: 'none',
-                        transition: 'all 0.3s ease',
+                        transition: 'var(--transition-medium)',
                       }}
                     />
                   </div>
@@ -263,10 +263,10 @@ export function Component({ fieldValues }: any) {
                       width: '100%',
                       padding: '0.875rem 1rem',
                       border: '2px solid #E5E7EB',
-                      borderRadius: '12px',
+                      borderRadius: 'var(--radius-md)',
                       fontSize: '1rem',
                       outline: 'none',
-                      transition: 'all 0.3s ease',
+                      transition: 'var(--transition-medium)',
                     }}
                   />
                 </div>
@@ -289,10 +289,10 @@ export function Component({ fieldValues }: any) {
                       width: '100%',
                       padding: '0.875rem 1rem',
                       border: '2px solid #E5E7EB',
-                      borderRadius: '12px',
+                      borderRadius: 'var(--radius-md)',
                       fontSize: '1rem',
                       outline: 'none',
-                      transition: 'all 0.3s ease',
+                      transition: 'var(--transition-medium)',
                     }}
                   />
                 </div>
@@ -316,10 +316,10 @@ export function Component({ fieldValues }: any) {
                       width: '100%',
                       padding: '0.875rem 1rem',
                       border: '2px solid #E5E7EB',
-                      borderRadius: '12px',
+                      borderRadius: 'var(--radius-md)',
                       fontSize: '1rem',
                       outline: 'none',
-                      transition: 'all 0.3s ease',
+                      transition: 'var(--transition-medium)',
                       resize: 'vertical',
                       fontFamily: 'inherit',
                     }}
@@ -334,13 +334,13 @@ export function Component({ fieldValues }: any) {
                     width: '100%',
                     background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
                     color: 'white',
-                    padding: '1rem 2rem',
-                    borderRadius: '12px',
+                    padding: 'var(--btn-padding)',
+                    borderRadius: 'var(--radius-full)',
                     border: 'none',
                     fontSize: '1rem',
                     fontWeight: 600,
                     cursor: 'pointer',
-                    transition: 'all 0.3s ease',
+                    transition: 'var(--transition-medium)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

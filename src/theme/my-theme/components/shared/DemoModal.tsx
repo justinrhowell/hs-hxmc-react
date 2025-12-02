@@ -4,6 +4,11 @@ export const DemoModal: React.FC = () => {
   return (
     <>
       <style>{`
+        .demo-submit-btn:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 32px rgba(239, 71, 111, 0.4) !important;
+        }
+
         @media (max-width: 768px) {
           .demo-modal-content {
             padding: 24px 20px !important;

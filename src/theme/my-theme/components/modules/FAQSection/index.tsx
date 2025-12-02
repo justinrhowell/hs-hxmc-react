@@ -162,7 +162,7 @@ const styles: Record<string, React.CSSProperties> = {
   heading: {
     fontSize: 'var(--font-size-h2)',
     fontFamily: 'var(--font-headline)',
-    fontWeight: 700,
+    fontWeight: 500,
     textAlign: 'center',
     marginBottom: 'var(--spacing-3xl)',
     lineHeight: 'var(--line-height-tight)',

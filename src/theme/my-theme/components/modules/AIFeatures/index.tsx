@@ -73,7 +73,7 @@ export function Component({ fieldValues }: any) {
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto', padding: '0 var(--container-padding)' }}>
         <h2 style={{
           fontSize: 'var(--font-size-h2)',
-          fontWeight: 700,
+          fontWeight: 500,
           textAlign: 'center',
           marginBottom: 'var(--spacing-sm)',
           color: 'var(--text-primary)',
@@ -137,7 +137,7 @@ export function Component({ fieldValues }: any) {
               </div>
               <h3 style={{
                 fontSize: 'var(--font-size-h3)',
-                fontWeight: 600,
+                fontWeight: 500,
                 marginBottom: 'var(--spacing-sm)',
                 color: 'var(--text-primary)',
                 fontFamily: 'var(--font-headline)',

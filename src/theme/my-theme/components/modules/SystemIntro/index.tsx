@@ -46,7 +46,7 @@ export function Component({ fieldValues }: any) {
         <p style={{
           fontSize: '1.15rem',
           textAlign: 'center',
-          color: '#4a4a4a',
+          color: 'var(--text-primary)',
           lineHeight: 1.7,
           marginBottom: '4rem',
           maxWidth: '900px',
@@ -67,7 +67,7 @@ export function Component({ fieldValues }: any) {
               style={{
                 background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 251, 248, 0.9) 100%)',
                 padding: '2.5rem',
-                borderRadius: '20px',
+                borderRadius: 'var(--radius-lg)',
                 border: '2px solid rgba(239, 71, 111, 0.1)',
                 boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
                 transition: 'all 0.3s ease',
@@ -75,7 +75,7 @@ export function Component({ fieldValues }: any) {
             >
               <h3 style={{
                 fontSize: '1.5rem',
-                fontWeight: 600,
+                fontWeight: 500,
                 marginBottom: '1rem',
                 color: '#EF476F',
                 fontFamily: 'var(--font-headline)',
@@ -118,16 +118,16 @@ export function Component({ fieldValues }: any) {
             href={fieldValues.button_url || '#contact'}
             style={{
               display: 'inline-block',
-              padding: '1rem 2.5rem',
+              padding: 'var(--btn-padding)',
               background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
               color: 'white',
               border: 'none',
-              borderRadius: '50px',
-              fontSize: '1.05rem',
+              borderRadius: 'var(--radius-full)',
+              fontSize: '1rem',
               fontWeight: 600,
               textDecoration: 'none',
               boxShadow: '0 8px 24px rgba(239, 71, 111, 0.3)',
-              transition: 'all 0.3s ease',
+              transition: 'var(--transition-medium)',
             }}
             aria-label={fieldValues.button_text}
           >

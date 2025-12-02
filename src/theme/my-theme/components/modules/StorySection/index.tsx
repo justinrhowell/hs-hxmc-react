@@ -38,7 +38,7 @@ export function Component({ fieldValues }: any) {
           <div>
             <h2 style={{
               fontSize: 'var(--font-size-h2)',
-              fontWeight: 700,
+              fontWeight: 500,
               lineHeight: 'var(--line-height-tight)',
               letterSpacing: 'var(--letter-spacing-tight)',
               marginBottom: 'var(--spacing-lg)',

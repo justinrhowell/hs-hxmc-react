@@ -61,7 +61,7 @@ export function Component({ fieldValues }: any) {
           className="featured-resource-grid"
           style={{
             background: 'white',
-            borderRadius: '24px',
+            borderRadius: 'var(--radius-xl)',
             overflow: 'hidden',
             boxShadow: '0 12px 48px rgba(0, 0, 0, 0.08)',
             display: 'grid',
@@ -92,8 +92,8 @@ export function Component({ fieldValues }: any) {
               background: colors.bg,
               color: colors.text,
               padding: '0.5rem 1.25rem',
-              borderRadius: '50px',
-              fontSize: '0.8rem',
+              borderRadius: 'var(--radius-full)',
+              fontSize: '0.875rem',
               fontWeight: 600,
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
@@ -185,13 +185,13 @@ export function Component({ fieldValues }: any) {
                   gap: '0.75rem',
                   background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
                   color: 'white',
-                  padding: '1rem 2rem',
-                  borderRadius: '50px',
+                  padding: 'var(--btn-padding)',
+                  borderRadius: 'var(--radius-full)',
                   fontSize: '1rem',
                   fontWeight: 600,
                   textDecoration: 'none',
                   boxShadow: '0 8px 24px rgba(239, 71, 111, 0.25)',
-                  transition: 'all 0.3s ease',
+                  transition: 'var(--transition-medium)',
                 }}
               >
                 {ctaText}

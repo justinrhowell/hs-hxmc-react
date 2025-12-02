@@ -12,15 +12,15 @@ export function Component({ fieldValues }: any) {
 
   return (
     <section style={{
-      padding: '80px 20px',
-      background: 'white',
+      padding: 'var(--section-padding-lg) var(--spacing-lg)',
+      background: 'var(--bg-white)',
     }}>
       <div style={{
-        maxWidth: '1200px',
+        maxWidth: 'var(--max-width-xl)',
         margin: '0 auto',
         display: 'grid',
         gridTemplateColumns: hasImage ? 'repeat(auto-fit, minmax(300px, 1fr))' : '1fr',
-        gap: '4rem',
+        gap: 'var(--spacing-2xl)',
         alignItems: 'center',
       }}>
         {hasImage && imagePosition === 'left' && (
@@ -33,8 +33,8 @@ export function Component({ fieldValues }: any) {
               style={{
                 width: '100%',
                 height: 'auto',
-                borderRadius: '16px',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                borderRadius: 'var(--radius-lg)',
+                boxShadow: 'var(--shadow-md)',
               }}
             />
           </div>
@@ -45,11 +45,11 @@ export function Component({ fieldValues }: any) {
         }}>
           {fieldValues.eyebrow && (
             <div style={{
-              fontSize: '0.9rem',
+              fontSize: 'var(--font-size-small)',
               fontWeight: 600,
-              color: '#EF476F',
-              marginBottom: '1rem',
-              letterSpacing: '0.05em',
+              color: 'var(--text-coral)',
+              marginBottom: 'var(--spacing-sm)',
+              letterSpacing: 'var(--letter-spacing-wide)',
               textTransform: 'uppercase',
             }}>
               {fieldValues.eyebrow}
@@ -57,10 +57,10 @@ export function Component({ fieldValues }: any) {
           )}
 
           <h2 style={{
-            fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
+            fontSize: 'var(--font-size-h2)',
             fontWeight: 500,
-            marginBottom: '1.5rem',
-            color: '#1a1a1a',
+            marginBottom: 'var(--spacing-md)',
+            color: 'var(--text-primary)',
             fontFamily: 'var(--font-headline)',
           }}>
             {fieldValues.heading}
@@ -68,10 +68,10 @@ export function Component({ fieldValues }: any) {
 
           <div
             style={{
-              fontSize: '1.1rem',
-              color: '#4a4a4a',
-              lineHeight: 1.7,
-              marginBottom: '2rem',
+              fontSize: 'var(--font-size-body-lg)',
+              color: 'var(--text-primary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              marginBottom: 'var(--spacing-lg)',
             }}
             dangerouslySetInnerHTML={{ __html: fieldValues.content }}
           />
@@ -81,16 +81,16 @@ export function Component({ fieldValues }: any) {
               href={fieldValues.button_url || '#'}
               style={{
                 display: 'inline-block',
-                padding: '1rem 2.5rem',
-                background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
-                color: 'white',
+                padding: 'var(--btn-padding)',
+                background: 'var(--gradient-coral)',
+                color: 'var(--text-white)',
                 border: 'none',
-                borderRadius: '50px',
-                fontSize: '1.05rem',
+                borderRadius: 'var(--radius-full)',
+                fontSize: 'var(--font-size-body)',
                 fontWeight: 600,
                 textDecoration: 'none',
-                boxShadow: '0 8px 24px rgba(239, 71, 111, 0.3)',
-                transition: 'all 0.3s ease',
+                boxShadow: 'var(--shadow-coral-sm)',
+                transition: 'var(--transition-medium)',
               }}
               aria-label={fieldValues.button_text}
             >
@@ -109,8 +109,8 @@ export function Component({ fieldValues }: any) {
               style={{
                 width: '100%',
                 height: 'auto',
-                borderRadius: '16px',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+                borderRadius: 'var(--radius-lg)',
+                boxShadow: 'var(--shadow-md)',
               }}
             />
           </div>
