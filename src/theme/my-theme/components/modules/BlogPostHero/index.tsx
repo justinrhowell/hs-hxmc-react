@@ -17,12 +17,12 @@ export function Component({ fieldValues }: any) {
   const featuredImage = fieldValues.featured_image?.src || '';
 
   const categoryColors: Record<string, { bg: string; text: string }> = {
-    article: { bg: 'rgba(239, 71, 111, 0.1)', text: '#EF476F' },
-    guide: { bg: 'rgba(6, 214, 160, 0.1)', text: '#06D6A0' },
-    case_study: { bg: 'rgba(17, 138, 178, 0.1)', text: '#118AB2' },
-    news: { bg: 'rgba(255, 209, 102, 0.1)', text: '#FFD166' },
-    tutorial: { bg: 'rgba(239, 71, 111, 0.1)', text: '#EF476F' },
-    insights: { bg: 'rgba(17, 138, 178, 0.1)', text: '#118AB2' },
+    article: { bg: 'var(--bg-light-coral)', text: 'var(--text-coral)' },
+    guide: { bg: 'var(--bg-light-teal)', text: 'var(--text-teal)' },
+    case_study: { bg: 'rgba(17, 138, 178, 0.1)', text: 'var(--text-blue)' }, // TODO: Consider creating --bg-light-blue token
+    news: { bg: 'rgba(255, 209, 102, 0.1)', text: 'var(--secondary-yellow)' }, // Yellow bg kept as-is
+    tutorial: { bg: 'var(--bg-light-coral)', text: 'var(--text-coral)' },
+    insights: { bg: 'rgba(17, 138, 178, 0.1)', text: 'var(--text-blue)' }, // TODO: Consider creating --bg-light-blue token
   };
 
   const categoryLabels: Record<string, string> = {
@@ -62,7 +62,7 @@ export function Component({ fieldValues }: any) {
       `}} />
 
       <section style={{
-        background: 'linear-gradient(180deg, #FFFBF8 0%, #FFFFFF 100%)',
+        background: 'var(--gradient-hero)',
         position: 'relative',
       }}>
         <div
@@ -81,11 +81,11 @@ export function Component({ fieldValues }: any) {
             background: colors.bg,
             color: colors.text,
             borderRadius: 'var(--radius-full)',
-            fontSize: '0.85rem',
+            fontSize: 'var(--font-size-small)',
             fontWeight: 600,
             textTransform: 'uppercase',
             letterSpacing: '0.1em',
-            marginBottom: '1.5rem',
+            marginBottom: 'var(--spacing-lg)',
           }}>
             {categoryLabel}
           </div>
@@ -95,8 +95,8 @@ export function Component({ fieldValues }: any) {
             fontSize: 'clamp(2rem, 5vw, 3.5rem)',
             fontWeight: 500,
             lineHeight: 1.15,
-            marginBottom: '1.5rem',
-            color: '#1a1a1a',
+            marginBottom: 'var(--spacing-lg)',
+            color: 'var(--text-primary)',
             fontFamily: 'var(--font-headline)',
             letterSpacing: '-0.02em',
           }}>
@@ -106,12 +106,12 @@ export function Component({ fieldValues }: any) {
           {/* Subtitle */}
           {subtitle && (
             <p style={{
-              fontSize: '1.25rem',
+              fontSize: 'var(--font-size-h4)',
               lineHeight: 1.6,
-              color: '#6B7280',
-              marginBottom: '2rem',
+              color: 'var(--text-muted)',
+              marginBottom: 'var(--spacing-xl)',
               maxWidth: '700px',
-              margin: '0 auto 2rem',
+              margin: '0 auto var(--spacing-xl)',
             }}>
               {subtitle}
             </p>
@@ -124,7 +124,7 @@ export function Component({ fieldValues }: any) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '2rem',
+              gap: 'var(--spacing-xl)',
               flexWrap: 'wrap',
             }}
           >
@@ -132,7 +132,7 @@ export function Component({ fieldValues }: any) {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.75rem',
+              gap: 'var(--spacing-sm)',
             }}>
               {authorImage ? (
                 <img
@@ -151,12 +151,12 @@ export function Component({ fieldValues }: any) {
                   width: '48px',
                   height: '48px',
                   borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
+                  background: 'var(--gradient-coral)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: 'white',
-                  fontSize: '1.25rem',
+                  fontSize: 'var(--font-size-h4)',
                   fontWeight: 600,
                 }}>
                   {author.charAt(0).toUpperCase()}
@@ -164,15 +164,15 @@ export function Component({ fieldValues }: any) {
               )}
               <div style={{ textAlign: 'left' }}>
                 <div style={{
-                  fontSize: '1rem',
+                  fontSize: 'var(--font-size-body)',
                   fontWeight: 600,
-                  color: '#1a1a1a',
+                  color: 'var(--text-primary)',
                 }}>
                   {author}
                 </div>
                 <div style={{
-                  fontSize: '0.875rem',
-                  color: '#9CA3AF',
+                  fontSize: 'var(--font-size-small)',
+                  color: 'var(--text-muted)',
                 }}>
                   {formatDate(publishDate)}
                 </div>
@@ -183,21 +183,21 @@ export function Component({ fieldValues }: any) {
             <div style={{
               width: '1px',
               height: '40px',
-              background: '#E5E7EB',
+              background: 'var(--border-light)',
             }} />
 
             {/* Read Time */}
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem',
-              color: '#6B7280',
+              gap: 'var(--spacing-xs)',
+              color: 'var(--text-muted)',
             }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2"/>
                 <path d="M12 7V12L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              <span style={{ fontSize: '0.95rem' }}>{readTime}</span>
+              <span style={{ fontSize: 'var(--font-size-body)' }}>{readTime}</span>
             </div>
           </div>
         </div>

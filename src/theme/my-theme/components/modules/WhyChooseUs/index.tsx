@@ -3,7 +3,7 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 const defaultFeatures = [
   {
@@ -25,8 +25,6 @@ const defaultFeatures = [
 ];
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
-
   const features = (fieldValues.features && fieldValues.features.length > 0)
     ? fieldValues.features.map((f: any) => ({
         title: f.title,
@@ -43,15 +41,16 @@ export function Component({ fieldValues }: any) {
   ];
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
         background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 100%)',
         position: 'relative',
         overflow: 'hidden',
         minHeight: '700px',
-        ...animationStyles.subtleSlideUp(isVisible),
       }}
     >
       {/* Constellation SVG Background */}
@@ -156,7 +155,7 @@ export function Component({ fieldValues }: any) {
             {fieldValues.heading || 'Why Choose Mentor Collective?'}
           </h2>
           <p style={{
-            fontSize: '1.15rem',
+            fontSize: 'var(--font-size-body-lg)',
             color: 'rgba(255, 255, 255, 0.8)',
             maxWidth: 'var(--max-width-prose)',
             margin: '0 auto',
@@ -184,14 +183,15 @@ export function Component({ fieldValues }: any) {
                 padding: 'var(--card-padding-lg)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 transition: 'var(--transition-medium)',
-                ...animationStyles.staggeredSubtle(isVisible, index * 0.1),
               }}
+              className="scroll-animate"
+              data-delay={index * 100}
             >
               {/* Star icon */}
               <div style={{
                 width: '48px',
                 height: '48px',
-                background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
+                background: 'var(--gradient-coral)',
                 borderRadius: 'var(--radius-md)',
                 display: 'flex',
                 alignItems: 'center',
@@ -205,7 +205,7 @@ export function Component({ fieldValues }: any) {
               </div>
 
               <h3 style={{
-                fontSize: '1.25rem',
+                fontSize: 'var(--font-size-h4)',
                 fontWeight: 500,
                 color: 'white',
                 marginBottom: 'var(--spacing-sm)',
@@ -214,7 +214,7 @@ export function Component({ fieldValues }: any) {
                 {feature.title}
               </h3>
               <p style={{
-                fontSize: '1rem',
+                fontSize: 'var(--font-size-base)',
                 color: 'rgba(255, 255, 255, 0.7)',
                 lineHeight: 1.6,
               }}>
@@ -225,6 +225,7 @@ export function Component({ fieldValues }: any) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

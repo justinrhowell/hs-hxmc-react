@@ -1,214 +1,282 @@
 import {
   ModuleFields,
   TextField,
-  ChoiceField,
+  BooleanField,
 } from '@hubspot/cms-components/fields';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
+import blueArrows from '../../../assets/blue-arrows.svg';
+import yellowStar from '../../../assets/yellow-star.svg';
 
-export function Component({ fieldValues }: any) {
+// HubL template to fetch featured/latest blog post
+export const hublDataTemplate = `
+{% set featured_post = blog_recent_posts('default', 1)[0] %}
+{% if featured_post %}
+  {% set hublData = {
+    "id": featured_post.id,
+    "title": featured_post.name,
+    "description": featured_post.post_summary,
+    "url": featured_post.absolute_url,
+    "featured_image": featured_post.featured_image,
+    "publish_date": featured_post.publish_date|datetimeformat('%B %d, %Y'),
+    "author": featured_post.blog_author.display_name,
+    "topic": featured_post.topic_list[0].name if featured_post.topic_list else "Article"
+  } %}
+{% endif %}
+`;
+
+export function Component({ fieldValues, hublData }: any) {
+  const useManualContent = fieldValues.use_manual_content || false;
+
+  // Manual content fields
   const eyebrow = fieldValues.eyebrow || 'Featured Resource';
   const title = fieldValues.title || 'The Complete Guide to AI-Powered Mentorship';
   const description = fieldValues.description || 'Learn how leading organizations are leveraging artificial intelligence to scale meaningful mentorship connections and drive measurable outcomes.';
-  const imageUrl = fieldValues.image_url || 'https://via.placeholder.com/600x400';
-  const ctaText = fieldValues.cta_text || 'Download Guide';
+  const imageUrl = fieldValues.image_url || '';
+  const ctaText = fieldValues.cta_text || 'Read Article';
   const ctaUrl = fieldValues.cta_url || '#';
-  const resourceType = fieldValues.resource_type || 'guide';
 
-  const stats = [
-    { value: fieldValues.stat1_value || '10K+', label: fieldValues.stat1_label || 'Downloads' },
-    { value: fieldValues.stat2_value || '45 min', label: fieldValues.stat2_label || 'Read Time' },
-    { value: fieldValues.stat3_value || '8 Chapters', label: fieldValues.stat3_label || 'Content' },
-  ];
+  // Try to parse HubL data for dynamic content
+  let dynamicPost: any = null;
+  if (!useManualContent && hublData) {
+    try {
+      dynamicPost = typeof hublData === 'string' ? JSON.parse(hublData) : hublData;
+    } catch (e) {
+      console.error('Error parsing featured post:', e);
+    }
+  }
 
-  const typeColors: Record<string, { bg: string; text: string }> = {
-    article: { bg: 'rgba(239, 71, 111, 0.1)', text: '#EF476F' },
-    guide: { bg: 'rgba(6, 214, 160, 0.1)', text: '#06D6A0' },
-    case_study: { bg: 'rgba(17, 138, 178, 0.1)', text: '#118AB2' },
-    ebook: { bg: 'rgba(255, 209, 102, 0.1)', text: '#FFD166' },
-    video: { bg: 'rgba(239, 71, 111, 0.1)', text: '#EF476F' },
-    webinar: { bg: 'rgba(17, 138, 178, 0.1)', text: '#118AB2' }
+  // Use dynamic or manual content
+  const displayTitle = dynamicPost?.title || title;
+  const displayDescription = dynamicPost?.description || description;
+  const displayImage = dynamicPost?.featured_image || imageUrl;
+  const displayUrl = dynamicPost?.url || ctaUrl;
+  const displayTopic = dynamicPost?.topic || 'Article';
+
+  // Type colors for badges
+  const getTypeColor = (topic: string) => {
+    const topicLower = topic?.toLowerCase() || 'article';
+    if (topicLower.includes('case study')) return { bg: 'rgba(17, 138, 178, 0.1)', text: 'var(--text-blue)' };
+    if (topicLower.includes('guide')) return { bg: 'var(--bg-light-teal)', text: 'var(--text-teal)' };
+    if (topicLower.includes('webinar')) return { bg: 'rgba(17, 138, 178, 0.1)', text: 'var(--text-blue)' };
+    return { bg: 'var(--bg-light-coral)', text: 'var(--text-coral)' };
   };
 
-  const typeLabels: Record<string, string> = {
-    article: 'Featured Article',
-    guide: 'Featured Guide',
-    case_study: 'Featured Case Study',
-    ebook: 'Featured eBook',
-    video: 'Featured Video',
-    webinar: 'Featured Webinar'
-  };
-
-  const colors = typeColors[resourceType] || typeColors.guide;
-  const label = typeLabels[resourceType] || 'Featured Resource';
+  const colors = getTypeColor(displayTopic);
 
   return (
-    <section style={{
-      padding: '80px 20px',
-      background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.03) 0%, rgba(248, 159, 123, 0.03) 100%)',
-    }}>
-      <style dangerouslySetInnerHTML={{__html: `
-        @media (max-width: 768px) {
+    <>
+      <ScrollAnimationScript />
+      <style>{`
+        .featured-resource-cta:hover {
+          background: var(--bg-white) !important;
+          color: var(--primary-coral) !important;
+          border-color: var(--primary-coral) !important;
+        }
+        @media (max-width: 968px) {
           .featured-resource-grid {
             grid-template-columns: 1fr !important;
           }
-          .featured-resource-stats {
-            grid-template-columns: 1fr !important;
-            gap: 1rem !important;
+          .featured-resource-image {
+            order: -1 !important;
+            min-height: 300px !important;
+          }
+          .featured-resource-content {
+            padding: var(--spacing-xl) !important;
           }
         }
-      `}} />
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div
-          className="featured-resource-grid"
-          style={{
-            background: 'white',
-            borderRadius: 'var(--radius-xl)',
-            overflow: 'hidden',
-            boxShadow: '0 12px 48px rgba(0, 0, 0, 0.08)',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '0',
-          }}>
-          {/* Image Side */}
-          <div style={{
-            position: 'relative',
-            minHeight: '500px',
-            overflow: 'hidden',
-          }}>
-            <img
-              src={imageUrl}
-              alt={title}
-              loading="lazy"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
-            />
-            {/* Overlay Badge */}
-            <div style={{
-              position: 'absolute',
-              top: '2rem',
-              left: '2rem',
-              background: colors.bg,
-              color: colors.text,
-              padding: '0.5rem 1.25rem',
-              borderRadius: 'var(--radius-full)',
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-              backdropFilter: 'blur(10px)',
-            }}>
-              {label}
-            </div>
-          </div>
+      `}</style>
 
-          {/* Content Side */}
-          <div style={{
-            padding: '3rem',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-          }}>
-            {/* Eyebrow */}
-            <div style={{
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              color: '#EF476F',
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-              marginBottom: '1rem',
-            }}>
-              {eyebrow}
-            </div>
-
-            {/* Title */}
-            <h2 style={{
-              fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
-              fontWeight: 500,
-              lineHeight: 1.2,
-              marginBottom: '1.5rem',
-              color: '#1a1a1a',
-              fontFamily: 'var(--font-headline)',
-            }}>
-              {title}
-            </h2>
-
-            {/* Description */}
-            <p style={{
-              fontSize: '1.05rem',
-              lineHeight: 1.7,
-              color: '#6B7280',
-              marginBottom: '2rem',
-            }}>
-              {description}
-            </p>
-
-            {/* Stats */}
+      <section style={{
+        padding: 'var(--spacing-2xl) var(--spacing-lg)',
+        background: 'var(--bg-cream)',
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div
+            className="scroll-animate featured-resource-grid"
+            style={{
+              background: 'var(--bg-white)',
+              borderRadius: 'var(--radius-xl)',
+              overflow: 'hidden',
+              boxShadow: 'var(--shadow-lg)',
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              border: '1px solid var(--border-light)',
+            }}
+          >
+            {/* Image Side with Decorative Elements */}
             <div
-              className="featured-resource-stats"
+              className="featured-resource-image"
               style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '1.5rem',
-                marginBottom: '2rem',
-                paddingTop: '2rem',
-                borderTop: '1px solid #E5E7EB',
-              }}>
-              {stats.map((stat, index) => (
-                <div key={index}>
-                  <div style={{
-                    fontSize: '1.75rem',
-                    fontWeight: 700,
-                    color: '#EF476F',
-                    marginBottom: '0.25rem',
-                  }}>
-                    {stat.value}
-                  </div>
-                  <div style={{
-                    fontSize: '0.85rem',
-                    color: '#6B7280',
-                  }}>
-                    {stat.label}
-                  </div>
+                position: 'relative',
+                minHeight: '450px',
+                overflow: 'visible',
+                padding: 'var(--spacing-xl)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: 'var(--bg-cream)',
+              }}
+            >
+              {/* Blue arrows - top left */}
+              <img
+                src={blueArrows}
+                alt=""
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  top: 'var(--spacing-md)',
+                  left: 'var(--spacing-md)',
+                  width: '100px',
+                  height: 'auto',
+                  zIndex: 1,
+                }}
+              />
+
+              {/* Main Image */}
+              {displayImage ? (
+                <img
+                  src={displayImage}
+                  alt={displayTitle}
+                  loading="lazy"
+                  style={{
+                    width: '90%',
+                    height: 'auto',
+                    maxHeight: '350px',
+                    objectFit: 'cover',
+                    borderRadius: '20px',
+                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.12)',
+                    position: 'relative',
+                    zIndex: 2,
+                  }}
+                />
+              ) : (
+                <div style={{
+                  width: '90%',
+                  height: '300px',
+                  borderRadius: '20px',
+                  background: 'linear-gradient(135deg, var(--bg-light) 0%, var(--bg-white) 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  zIndex: 2,
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
+                }}>
+                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" style={{ opacity: 0.3 }}>
+                    <rect x="3" y="3" width="18" height="18" rx="2" stroke="var(--text-muted)" strokeWidth="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5" fill="var(--text-muted)"/>
+                    <path d="M3 16L8 11L13 16" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M14 14L17 11L21 15" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round"/>
+                  </svg>
                 </div>
-              ))}
+              )}
+
+              {/* Yellow star - bottom right */}
+              <img
+                src={yellowStar}
+                alt=""
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  bottom: 'var(--spacing-md)',
+                  right: 'var(--spacing-md)',
+                  width: '80px',
+                  height: 'auto',
+                  zIndex: 3,
+                }}
+              />
             </div>
 
-            {/* CTA */}
-            <div>
-              <a
-                href={ctaUrl}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.75rem',
-                  background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
-                  color: 'white',
-                  padding: 'var(--btn-padding)',
-                  borderRadius: 'var(--radius-full)',
-                  fontSize: '1rem',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  boxShadow: '0 8px 24px rgba(239, 71, 111, 0.25)',
-                  transition: 'var(--transition-medium)',
-                }}
-              >
-                {ctaText}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </a>
+            {/* Content Side */}
+            <div
+              className="featured-resource-content"
+              style={{
+                padding: 'var(--spacing-2xl)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
+              {/* Topic Badge */}
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: 'var(--spacing-xs) var(--spacing-md)',
+                background: colors.bg,
+                color: colors.text,
+                borderRadius: 'var(--radius-full)',
+                fontSize: 'var(--font-size-xs)',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                marginBottom: 'var(--spacing-md)',
+                alignSelf: 'flex-start',
+              }}>
+                {eyebrow}
+              </div>
+
+              {/* Title */}
+              <h2 style={{
+                fontSize: 'var(--font-size-h2)',
+                fontWeight: 500,
+                lineHeight: 'var(--line-height-tight)',
+                marginBottom: 'var(--spacing-md)',
+                color: 'var(--text-primary)',
+                fontFamily: 'var(--font-headline)',
+              }}>
+                {displayTitle}
+              </h2>
+
+              {/* Description */}
+              <p style={{
+                fontSize: 'var(--font-size-body)',
+                lineHeight: 'var(--line-height-relaxed)',
+                color: 'var(--text-secondary)',
+                marginBottom: 'var(--spacing-xl)',
+              }}>
+                {displayDescription}
+              </p>
+
+              {/* CTA */}
+              <div>
+                <a
+                  href={displayUrl}
+                  className="featured-resource-cta"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 'var(--spacing-sm)',
+                    background: 'var(--gradient-coral)',
+                    color: 'white',
+                    padding: 'var(--btn-padding-sm)',
+                    borderRadius: 'var(--radius-full)',
+                    fontSize: 'var(--font-size-body)',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    border: '2px solid transparent',
+                    boxShadow: 'var(--shadow-coral-sm)',
+                    transition: 'var(--transition-medium)',
+                  }}
+                >
+                  {ctaText}
+                  <span>→</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 
 export const fields = (
   <ModuleFields>
+    <BooleanField
+      name="use_manual_content"
+      label="Use Manual Content (instead of latest blog post)"
+      default={false}
+    />
     <TextField
       name="eyebrow"
       label="Eyebrow Text"
@@ -216,70 +284,27 @@ export const fields = (
     />
     <TextField
       name="title"
-      label="Title"
+      label="Title (manual)"
       default="The Complete Guide to AI-Powered Mentorship"
     />
     <TextField
       name="description"
-      label="Description"
+      label="Description (manual)"
       default="Learn how leading organizations are leveraging artificial intelligence to scale meaningful mentorship connections and drive measurable outcomes."
     />
     <TextField
       name="image_url"
-      label="Image URL"
-      default="https://via.placeholder.com/600x400"
-    />
-    <ChoiceField
-      name="resource_type"
-      label="Resource Type"
-      choices={[
-        ['guide', 'Guide'],
-        ['article', 'Article'],
-        ['case_study', 'Case Study'],
-        ['ebook', 'eBook'],
-        ['video', 'Video'],
-        ['webinar', 'Webinar'],
-      ]}
-      default="guide"
-    />
-    <TextField
-      name="stat1_value"
-      label="Stat 1 Value"
-      default="10K+"
-    />
-    <TextField
-      name="stat1_label"
-      label="Stat 1 Label"
-      default="Downloads"
-    />
-    <TextField
-      name="stat2_value"
-      label="Stat 2 Value"
-      default="45 min"
-    />
-    <TextField
-      name="stat2_label"
-      label="Stat 2 Label"
-      default="Read Time"
-    />
-    <TextField
-      name="stat3_value"
-      label="Stat 3 Value"
-      default="8 Chapters"
-    />
-    <TextField
-      name="stat3_label"
-      label="Stat 3 Label"
-      default="Content"
+      label="Image URL (manual)"
+      default=""
     />
     <TextField
       name="cta_text"
       label="CTA Button Text"
-      default="Download Guide"
+      default="Read Article"
     />
     <TextField
       name="cta_url"
-      label="CTA Button URL"
+      label="CTA Button URL (manual)"
       default="#"
     />
   </ModuleFields>

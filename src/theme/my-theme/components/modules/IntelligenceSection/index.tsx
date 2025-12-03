@@ -1,7 +1,9 @@
+import React from 'react';
 import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 export function Component({ fieldValues }: any) {
   const features = [
@@ -30,39 +32,42 @@ export function Component({ fieldValues }: any) {
   ];
 
   return (
-    <section id="intelligence" style={{ padding: '100px 20px', background: 'linear-gradient(180deg, white 0%, #FFFBF8 100%)' }}>
+    <>
+    <ScrollAnimationScript />
+    <section id="intelligence" className="scroll-animate" style={{ padding: '100px 20px', background: 'var(--bg-white)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 500, marginBottom: '1.5rem', color: '#1a1a1a', fontFamily: 'var(--font-headline)' }}>
-          {fieldValues.heading}
+        <h2 style={{ fontSize: 'var(--font-size-h2)', fontWeight: 500, marginBottom: 'var(--spacing-sm)', color: 'var(--text-coral)', fontFamily: 'var(--font-headline)' }}>
+          {fieldValues.heading || 'The Intelligence'}
         </h2>
-        <p style={{ fontSize: '1.15rem', color: 'var(--text-primary)', lineHeight: 1.7, marginBottom: '4rem', maxWidth: '900px' }}>
-          {fieldValues.subtitle}
+        <p style={{ fontSize: 'var(--font-size-h3)', fontWeight: 500, color: 'var(--text-primary)', lineHeight: 'var(--line-height-tight)', marginBottom: 'var(--spacing-lg)', maxWidth: '900px', fontFamily: 'var(--font-headline)' }}>
+          {fieldValues.subtitle || 'Transform human connection into measurable outcomes.'}
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--spacing-xl)', marginBottom: 'var(--spacing-2xl)' }}>
           {features.map((feature, index) => (
-            <div key={index} style={{ background: 'white', padding: '2rem', borderRadius: 'var(--radius-lg)', border: '2px solid rgba(239, 71, 111, 0.1)' }}>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 500, marginBottom: '1rem', color: '#EF476F' }}>{feature.title}</h3>
-              <p style={{ fontSize: '0.95rem', lineHeight: 1.7, color: '#6B7280' }}>{feature.description}</p>
+            <div key={index} style={{ background: 'white', padding: 'var(--spacing-xl)', borderRadius: 'var(--radius-lg)', border: '2px solid rgba(239, 71, 111, 0.1)' }}>
+              <h3 style={{ fontSize: 'var(--font-size-xl)', fontWeight: 500, marginBottom: 'var(--spacing-md)', color: 'var(--color-primary)' }}>{feature.title}</h3>
+              <p style={{ fontSize: 'var(--font-size-base)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{feature.description}</p>
             </div>
           ))}
         </div>
 
-        <div style={{ background: 'white', padding: '3rem', borderRadius: 'var(--radius-lg)' }}>
-          <p style={{ fontSize: '1.25rem', fontWeight: 600, textAlign: 'center', marginBottom: '2rem', color: '#1a1a1a' }}>
+        <div style={{ background: 'white', padding: 'var(--spacing-2xl)', borderRadius: 'var(--radius-lg)' }}>
+          <p style={{ fontSize: 'var(--font-size-xl)', fontWeight: 600, textAlign: 'center', marginBottom: 'var(--spacing-xl)', color: 'var(--text-primary)' }}>
             {fieldValues.stats_heading}
           </p>
-          <div style={{ display: 'flex', gap: '3rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 'var(--spacing-2xl)', justifyContent: 'center', flexWrap: 'wrap' }}>
             {stats.map((stat, index) => (
               <div key={index} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '2.5rem', fontWeight: 800, color: '#EF476F', marginBottom: '0.5rem' }}>{stat.value}</div>
-                <div style={{ fontSize: '0.95rem', color: '#666', fontWeight: 500 }}>{stat.label}</div>
+                <div style={{ fontSize: 'var(--font-size-4xl)', fontWeight: 800, color: 'var(--color-primary)', marginBottom: 'var(--spacing-xs)' }}>{stat.value}</div>
+                <div style={{ fontSize: 'var(--font-size-base)', color: 'var(--text-secondary)', fontWeight: 500 }}>{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
     </section>
+    </>
   );
 }
 

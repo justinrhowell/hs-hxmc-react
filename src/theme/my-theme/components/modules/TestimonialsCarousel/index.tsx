@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ModuleFields } from '@hubspot/cms-components';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface Testimonial {
   quote: string;
@@ -38,7 +38,6 @@ const defaultTestimonials = [
 export const Component: React.FC<TestimonialsCarouselProps> = ({
   fieldValues
 }) => {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
   const testimonials = (fieldValues.testimonials && fieldValues.testimonials.length > 0)
     ? fieldValues.testimonials
     : defaultTestimonials;
@@ -71,7 +70,7 @@ export const Component: React.FC<TestimonialsCarouselProps> = ({
                 t.style.display = i === index ? 'block' : 'none';
               });
               dots.forEach((d, i) => {
-                d.style.backgroundColor = i === index ? 'var(--text-coral)' : '#E0E0E0';
+                d.style.backgroundColor = i === index ? 'var(--text-coral)' : 'var(--border-light)';
               });
               currentIndex = index;
             }
@@ -107,12 +106,10 @@ export const Component: React.FC<TestimonialsCarouselProps> = ({
         })();
       `}} />
 
+      <ScrollAnimationScript />
       <section
-        ref={elementRef as React.RefObject<HTMLElement>}
-        style={{
-          ...styles.section,
-          ...animationStyles.subtleSlideUp(isVisible),
-        }}
+        className="scroll-animate"
+        style={styles.section}
         aria-label="Customer testimonials"
       >
         <div style={styles.container}>
@@ -181,7 +178,7 @@ export const Component: React.FC<TestimonialsCarouselProps> = ({
                 className="testimonial-dot"
                 style={{
                   ...styles.dot,
-                  backgroundColor: index === 0 ? 'var(--text-coral)' : '#E0E0E0'
+                  backgroundColor: index === 0 ? 'var(--text-coral)' : 'var(--border-light)'
                 }}
                 aria-label={`Go to testimonial ${index + 1}`}
                 type="button"

@@ -3,11 +3,11 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import heroImg01 from '../../../assets/hero-img-01.png';
-import heroImg02 from '../../../assets/hero-img-02.png';
-import heroImg03 from '../../../assets/hero-img-03.png';
+import heroImg01 from '../../../assets/Hero_Img_01.png';
+import heroImg02 from '../../../assets/Hero_Img_02.png';
+import heroImg03 from '../../../assets/Hero_Img_03.png';
 import { DemoModal } from '../../shared/DemoModal';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface NodeData {
   label: string;
@@ -38,7 +38,6 @@ export function Component({ fieldValues }: any) {
   const [hoveredAvatar, setHoveredAvatar] = useState<number | null>(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.1 });
 
   const description = fieldValues.description || "Mentorship reinvented as scalable AI infrastructure. Foster human connection, enhance durable skills, and drive improved retention and career outcomes across your educational, workforce, and employer ecosystems.";
 
@@ -60,22 +59,22 @@ export function Component({ fieldValues }: any) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Define node positions - asymmetrical constellation layout
+  // Define node positions - positioned around the outside to not overlap avatars
   const nodePositions: Record<string, { position: React.CSSProperties; tooltipPosition: string }> = {
     learners: {
-      position: { top: '8%', left: '35%', transform: 'translate(-50%, -50%)' },
+      position: { top: '2%', left: '20%', transform: 'translate(-50%, 0)' },
       tooltipPosition: 'bottom'
     },
     employers: {
-      position: { right: '5%', top: '35%', transform: 'translate(50%, -50%)' },
+      position: { right: '2%', top: '25%', transform: 'translate(0, -50%)' },
       tooltipPosition: 'left'
     },
     organizations: {
-      position: { bottom: '15%', left: '60%', transform: 'translate(-50%, 50%)' },
+      position: { bottom: '2%', right: '15%', transform: 'translate(0, 0)' },
       tooltipPosition: 'top'
     },
     partnerships: {
-      position: { left: '8%', top: '60%', transform: 'translate(-50%, -50%)' },
+      position: { left: '2%', bottom: '25%', transform: 'translate(0, 50%)' },
       tooltipPosition: 'right'
     }
   };
@@ -198,39 +197,39 @@ export function Component({ fieldValues }: any) {
     ]
   })) : [
     {
-      name: 'Sarah Chen',
-      role: 'Career Mentor',
+      name: 'Nic Hayes',
+      role: 'Apprentice to Project Manager',
       image: heroImg01,
-      bio: 'Technology executive with 15 years of experience helping early-career professionals navigate the tech industry.',
-      expertise: ['Career Planning', 'Leadership', 'Tech Industry'],
+      bio: 'Mentorship developed durable skills that transformed my career trajectory from apprentice to project manager.',
+      expertise: ['Project Management', 'Durable Skills', 'Career Growth'],
       stats: [
-        { label: 'Mentees', value: '47' },
-        { label: 'Years Experience', value: '15' },
-        { label: 'Success Rate', value: '94%' }
+        { label: 'Mentees', value: '24' },
+        { label: 'Years Growth', value: '3' },
+        { label: 'Success Rate', value: '92%' }
       ]
     },
     {
       name: 'Maya Rodriguez',
-      role: 'Student Success',
+      role: 'Early-Career Talent',
       image: heroImg02,
-      bio: 'Recent graduate who successfully navigated career transitions with mentorship. Now helping others find their path.',
-      expertise: ['Student Life', 'Career Transitions', 'Networking'],
+      bio: 'Mentorship increased her social capital, opening doors to opportunities she never thought possible.',
+      expertise: ['Networking', 'Social Capital', 'Career Development'],
       stats: [
-        { label: 'Mentees', value: '23' },
-        { label: 'Career Changes', value: '3' },
-        { label: 'Success Rate', value: '91%' }
+        { label: 'Connections', value: '45' },
+        { label: 'New Opportunities', value: '8' },
+        { label: 'Confidence', value: '+40%' }
       ]
     },
     {
-      name: 'James Park',
-      role: 'Industry Professional',
+      name: 'Sara Chen',
+      role: 'Award Winning Researcher',
       image: heroImg03,
-      bio: 'Senior manager at Fortune 500 company, passionate about developing the next generation of talent.',
-      expertise: ['Business Strategy', 'Management', 'Professional Development'],
+      bio: 'Mentorship developed human skills in the AI Era, balancing technical expertise with emotional intelligence.',
+      expertise: ['AI Research', 'Human Skills', 'Leadership'],
       stats: [
-        { label: 'Mentees', value: '62' },
-        { label: 'Years Experience', value: '20' },
-        { label: 'Success Rate', value: '96%' }
+        { label: 'Mentees', value: '38' },
+        { label: 'Publications', value: '12' },
+        { label: 'Impact Score', value: '96%' }
       ]
     }
   ];
@@ -655,27 +654,8 @@ export function Component({ fieldValues }: any) {
 
       <button
         onClick={() => setIsDemoModalOpen(true)}
-        style={{
-          background: 'var(--gradient-coral)',
-          color: 'var(--text-white)',
-          padding: 'var(--btn-padding)',
-          borderRadius: 'var(--radius-full)',
-          fontSize: 'var(--font-size-body)',
-          fontWeight: 600,
-          border: 'none',
-          cursor: 'pointer',
-          boxShadow: 'var(--shadow-coral-sm)',
-          width: '100%',
-          transition: 'var(--transition-medium)'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-2px)';
-          e.currentTarget.style.boxShadow = 'var(--shadow-coral)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0)';
-          e.currentTarget.style.boxShadow = 'var(--shadow-coral-sm)';
-        }}
+        className="btn-primary-coral"
+        style={{ width: '100%' }}
         aria-label={fieldValues.button_text}
       >
         {fieldValues.button_text}
@@ -823,8 +803,9 @@ export function Component({ fieldValues }: any) {
           }
         })();
       `}} />
+      <ScrollAnimationScript />
       <section
-        ref={elementRef as React.RefObject<HTMLElement>}
+        className="scroll-animate"
         style={{
           minHeight: isMobile ? 'auto' : '65vh',
           display: 'flex',
@@ -833,7 +814,6 @@ export function Component({ fieldValues }: any) {
           background: 'var(--gradient-hero)',
           position: 'relative',
           overflow: 'visible',
-          ...animationStyles.subtleSlideUp(isVisible),
         }}
         aria-labelledby="hero-heading"
       >
@@ -878,27 +858,7 @@ export function Component({ fieldValues }: any) {
 
                   <button
                     onClick={() => setIsDemoModalOpen(true)}
-                    style={{
-                      background: 'var(--gradient-coral)',
-                      color: 'var(--text-white)',
-                      padding: 'var(--btn-padding)',
-                      borderRadius: 'var(--radius-full)',
-                      fontFamily: 'var(--font-body)',
-                      fontSize: 'var(--font-size-body)',
-                      fontWeight: 600,
-                      border: 'none',
-                      cursor: 'pointer',
-                      boxShadow: 'var(--shadow-coral-sm)',
-                      transition: 'var(--transition-medium)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px)';
-                      e.currentTarget.style.boxShadow = 'var(--shadow-coral)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = 'var(--shadow-coral-sm)';
-                    }}
+                    className="btn-primary-coral"
                     aria-label={fieldValues.button_text}
                   >
                     {fieldValues.button_text}
@@ -946,51 +906,180 @@ export function Component({ fieldValues }: any) {
                       </filter>
                     </defs>
 
-                    {/* Connection lines */}
-                    <line x1="210" y1="80" x2="520" y2="180" stroke="url(#lineGradient)" strokeWidth="1.5">
-                      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="8s" repeatCount="indefinite" />
-                    </line>
-                    <line x1="520" y1="180" x2="360" y2="450" stroke="url(#lineGradient)" strokeWidth="1.5">
-                      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="10s" repeatCount="indefinite" />
-                    </line>
-                    <line x1="360" y1="450" x2="80" y2="340" stroke="url(#lineGradient)" strokeWidth="1.5">
-                      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="9s" repeatCount="indefinite" />
-                    </line>
-                    <line x1="80" y1="340" x2="210" y2="80" stroke="url(#lineGradient)" strokeWidth="1.5">
-                      <animate attributeName="opacity" values="0.35;0.65;0.35" dur="11s" repeatCount="indefinite" />
-                    </line>
-                    {/* Cross lines */}
-                    <line x1="210" y1="80" x2="360" y2="450" stroke="url(#lineGradient)" strokeWidth="1">
-                      <animate attributeName="opacity" values="0.2;0.45;0.2" dur="12s" repeatCount="indefinite" />
-                    </line>
-                    <line x1="520" y1="180" x2="80" y2="340" stroke="url(#lineGradient)" strokeWidth="1">
-                      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="14s" repeatCount="indefinite" />
-                    </line>
+                    {/* Dynamic connection lines - fade in/out at different times to show organic networking
+                        Node positions: Learners(120,30), Employers(570,150), Organizations(510,570), Partnerships(30,450)
+                        Avatar positions (center): Top(300,140), Left(160,310), Right(410,380)
+                        Lines have dot terminators to give appearance of node growth
+                    */}
 
-                    {/* Scattered nodes */}
-                    <circle cx="320" cy="150" r="3" fill="#F89F7B" filter="url(#glow)">
-                      <animate attributeName="r" values="2;4;2" dur="6s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="6s" repeatCount="indefinite" />
+                    {/* Connection 1: Learners to Top Avatar */}
+                    <g>
+                      <line x1="120" y1="30" x2="300" y2="140" stroke="url(#lineGradient)" strokeWidth="2.5">
+                        <animate attributeName="opacity" values="0;0;0.7;0.7;0" dur="6s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="120" cy="30" r="5" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0;0.8;0.8;0" dur="6s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="300" cy="140" r="5" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0;0.8;0.8;0" dur="6s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Connection 2: Employers to Right Avatar */}
+                    <g>
+                      <line x1="570" y1="150" x2="410" y2="380" stroke="url(#lineGradient)" strokeWidth="2.5">
+                        <animate attributeName="opacity" values="0;0.7;0.7;0;0" dur="7s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="570" cy="150" r="5" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0.8;0.8;0;0" dur="7s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="410" cy="380" r="5" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0.8;0.8;0;0" dur="7s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Connection 3: Organizations to Right Avatar */}
+                    <g>
+                      <line x1="510" y1="570" x2="410" y2="380" stroke="url(#lineGradient)" strokeWidth="2.5">
+                        <animate attributeName="opacity" values="0.6;0;0;0.6;0.6" dur="8s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="510" cy="570" r="5" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0.7;0;0;0.7;0.7" dur="8s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="410" cy="380" r="5" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0.7;0;0;0.7;0.7" dur="8s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Connection 4: Partnerships to Left Avatar */}
+                    <g>
+                      <line x1="30" y1="450" x2="160" y2="310" stroke="url(#lineGradient)" strokeWidth="2.5">
+                        <animate attributeName="opacity" values="0;0;0.7;0;0" dur="5s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="30" cy="450" r="5" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0;0.8;0;0" dur="5s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="160" cy="310" r="5" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0;0.8;0;0" dur="5s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Connection 5: Learners to Left Avatar */}
+                    <g>
+                      <line x1="120" y1="30" x2="160" y2="310" stroke="url(#lineGradient)" strokeWidth="2.5">
+                        <animate attributeName="opacity" values="0.6;0.6;0;0;0" dur="9s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="120" cy="30" r="5" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0.7;0.7;0;0;0" dur="9s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="160" cy="310" r="5" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0.7;0.7;0;0;0" dur="9s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Connection 6: Employers to Top Avatar */}
+                    <g>
+                      <line x1="570" y1="150" x2="300" y2="140" stroke="url(#lineGradient)" strokeWidth="2.5">
+                        <animate attributeName="opacity" values="0;0.6;0;0;0.6" dur="7s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="570" cy="150" r="5" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0.7;0;0;0.7" dur="7s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="300" cy="140" r="5" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0.7;0;0;0.7" dur="7s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Avatar to Avatar connections - mentorship relationships */}
+                    {/* Top Avatar to Left Avatar */}
+                    <g>
+                      <line x1="300" y1="140" x2="160" y2="310" stroke="url(#lineGradient)" strokeWidth="3">
+                        <animate attributeName="opacity" values="0;0.8;0.8;0;0" dur="8s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="300" cy="140" r="6" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0.9;0.9;0;0" dur="8s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="160" cy="310" r="6" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0.9;0.9;0;0" dur="8s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Left Avatar to Right Avatar */}
+                    <g>
+                      <line x1="160" y1="310" x2="410" y2="380" stroke="url(#lineGradient)" strokeWidth="3">
+                        <animate attributeName="opacity" values="0.7;0;0;0.7;0" dur="6s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="160" cy="310" r="6" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0.8;0;0;0.8;0" dur="6s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="410" cy="380" r="6" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0.8;0;0;0.8;0" dur="6s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Top Avatar to Right Avatar */}
+                    <g>
+                      <line x1="300" y1="140" x2="410" y2="380" stroke="url(#lineGradient)" strokeWidth="3">
+                        <animate attributeName="opacity" values="0;0;0.7;0.7;0" dur="9s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="300" cy="140" r="6" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0;0.8;0.8;0" dur="9s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="410" cy="380" r="6" fill="#F89F7B" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0;0.8;0.8;0" dur="9s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Node to node connections - occasional distant connections */}
+                    <g>
+                      <line x1="120" y1="30" x2="570" y2="150" stroke="url(#lineGradient)" strokeWidth="2">
+                        <animate attributeName="opacity" values="0;0;0.5;0;0" dur="10s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="120" cy="30" r="4" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0;0.6;0;0" dur="10s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="570" cy="150" r="4" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0;0.6;0;0" dur="10s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    <g>
+                      <line x1="30" y1="450" x2="510" y2="570" stroke="url(#lineGradient)" strokeWidth="2">
+                        <animate attributeName="opacity" values="0;0.5;0;0;0" dur="11s" repeatCount="indefinite" />
+                      </line>
+                      <circle cx="30" cy="450" r="4" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0.6;0;0;0" dur="11s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx="510" cy="570" r="4" fill="#EF476F" filter="url(#glow)">
+                        <animate attributeName="opacity" values="0;0.6;0;0;0" dur="11s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    {/* Floating particles - representing data/connections flowing */}
+                    <circle cx="200" cy="200" r="4" fill="#F89F7B" filter="url(#glow)">
+                      <animate attributeName="opacity" values="0;0.8;0" dur="4s" repeatCount="indefinite" />
+                      <animate attributeName="cx" values="200;280;200" dur="4s" repeatCount="indefinite" />
+                      <animate attributeName="cy" values="200;160;200" dur="4s" repeatCount="indefinite" />
                     </circle>
-                    <circle cx="420" cy="280" r="4" fill="#FED700" filter="url(#glow)">
-                      <animate attributeName="r" values="3;5;3" dur="8s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="8s" repeatCount="indefinite" />
+                    <circle cx="400" cy="300" r="4" fill="#FED700" filter="url(#glow)">
+                      <animate attributeName="opacity" values="0;0.7;0" dur="5s" repeatCount="indefinite" begin="1s" />
+                      <animate attributeName="cx" values="400;450;400" dur="5s" repeatCount="indefinite" begin="1s" />
+                      <animate attributeName="cy" values="300;350;300" dur="5s" repeatCount="indefinite" begin="1s" />
                     </circle>
-                    <circle cx="180" cy="380" r="3" fill="#EF476F" filter="url(#glow)">
-                      <animate attributeName="r" values="2;5;2" dur="7s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0.75;0.4" dur="7s" repeatCount="indefinite" />
+                    <circle cx="250" cy="400" r="3" fill="#EF476F" filter="url(#glow)">
+                      <animate attributeName="opacity" values="0;0.6;0" dur="6s" repeatCount="indefinite" begin="2s" />
+                      <animate attributeName="cx" values="250;180;250" dur="6s" repeatCount="indefinite" begin="2s" />
+                      <animate attributeName="cy" values="400;330;400" dur="6s" repeatCount="indefinite" begin="2s" />
                     </circle>
-                    <circle cx="280" cy="320" r="4" fill="#F89F7B" filter="url(#glow)">
-                      <animate attributeName="r" values="3;6;3" dur="9s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.45;0.8;0.45" dur="9s" repeatCount="indefinite" />
+                    <circle cx="350" cy="250" r="3" fill="#F89F7B" filter="url(#glow)">
+                      <animate attributeName="opacity" values="0;0.7;0" dur="5s" repeatCount="indefinite" begin="0.5s" />
+                      <animate attributeName="cx" values="350;300;350" dur="5s" repeatCount="indefinite" begin="0.5s" />
+                      <animate attributeName="cy" values="250;180;250" dur="5s" repeatCount="indefinite" begin="0.5s" />
                     </circle>
-                    <circle cx="450" cy="380" r="3" fill="#FED700" filter="url(#glow)">
-                      <animate attributeName="r" values="2;4;2" dur="10s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.4;0.7;0.4" dur="10s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="140" cy="200" r="3" fill="#EF476F" filter="url(#glow)">
-                      <animate attributeName="r" values="2;5;2" dur="8s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" values="0.45;0.75;0.45" dur="8s" repeatCount="indefinite" />
+                    <circle cx="480" cy="450" r="4" fill="#FED700" filter="url(#glow)">
+                      <animate attributeName="opacity" values="0;0.6;0" dur="7s" repeatCount="indefinite" begin="3s" />
+                      <animate attributeName="cx" values="480;420;480" dur="7s" repeatCount="indefinite" begin="3s" />
+                      <animate attributeName="cy" values="450;400;450" dur="7s" repeatCount="indefinite" begin="3s" />
                     </circle>
                   </svg>
 
@@ -1006,19 +1095,19 @@ export function Component({ fieldValues }: any) {
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '280px',
-                    height: '280px',
+                    width: '420px',
+                    height: '420px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     zIndex: 150
                   }}>
                     {mentorProfiles.map((mentor, index) => {
-                      // Floating positions with whitespace between avatars
+                      // Triangular arrangement - well spaced to avoid overlap
                       const positions = [
-                        { top: '-10px', left: '90px' },    // Avatar 1 - top center-right
-                        { top: '85px', left: '10px' },     // Avatar 2 - middle left
-                        { top: '160px', left: '140px' }    // Avatar 3 - bottom right
+                        { top: '0px', left: '140px' },     // Avatar 1 - top center
+                        { top: '160px', left: '0px' },     // Avatar 2 - bottom left
+                        { top: '200px', left: '250px' }    // Avatar 3 - bottom right
                       ];
 
                       const isHovered = hoveredAvatar === index;
@@ -1048,15 +1137,15 @@ export function Component({ fieldValues }: any) {
                             role="button"
                             aria-label={`View profile of ${mentor.name}, ${mentor.role}`}
                             style={{
-                              width: '105px',
-                              height: '105px',
+                              width: '145px',
+                              height: '145px',
                               borderRadius: 'var(--radius-circle)',
                               border: '4px solid var(--bg-white)',
                               boxShadow: isHovered
                                 ? '0 8px 24px rgba(239, 71, 111, 0.4), 0 0 0 4px rgba(239, 71, 111, 0.5)'
                                 : '0 4px 12px rgba(239, 71, 111, 0.25), 0 0 0 2px rgba(239, 71, 111, 0.3)',
                               overflow: 'hidden',
-                              background: '#f0f0f0',
+                              background: 'var(--bg-light)',
                               cursor: 'pointer',
                               transition: 'all 0.3s ease',
                             }}
@@ -1077,7 +1166,7 @@ export function Component({ fieldValues }: any) {
                             className={`avatar-tooltip-${index}`}
                             style={{
                               position: 'absolute',
-                              top: '120px',
+                              top: '160px',
                               left: '50%',
                               transform: 'translateX(-50%)',
                               background: 'var(--bg-white)',
@@ -1093,29 +1182,32 @@ export function Component({ fieldValues }: any) {
                               transition: 'var(--transition-medium)',
                             }}>
                             <div style={{
-                              fontSize: 'var(--font-size-h3)',
-                              fontWeight: 700,
+                              fontSize: 'var(--font-size-h4)',
+                              fontWeight: 500,
                               color: 'var(--text-primary)',
-                              marginBottom: 'var(--spacing-xxs)',
+                              marginBottom: '2px',
                               fontFamily: 'var(--font-headline)',
+                              lineHeight: 1.2,
                             }}>
                               {mentor.name}
                             </div>
                             <div style={{
                               fontSize: 'var(--font-size-body)',
-                              color: 'var(--text-muted)',
+                              fontWeight: 600,
+                              color: 'var(--text-primary)',
                               marginBottom: 'var(--spacing-sm)',
                               fontFamily: 'var(--font-body)',
                             }}>
                               {mentor.role}
                             </div>
                             <div style={{
-                              fontSize: 'var(--font-size-body-lg)',
-                              fontWeight: 600,
+                              fontSize: 'var(--font-size-small)',
+                              fontWeight: 500,
                               color: 'var(--text-coral)',
                               fontFamily: 'var(--font-body)',
+                              lineHeight: 'var(--line-height-normal)',
                             }}>
-                              {mentor.stats[0].value} mentees guided
+                              {mentor.bio.split('.')[0]}
                             </div>
                           </div>
                         </div>

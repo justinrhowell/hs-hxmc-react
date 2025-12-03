@@ -4,7 +4,7 @@ import {
   TextField,
   ChoiceField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface ProofPoint {
   title: string;
@@ -64,8 +64,6 @@ const defaultContent: Record<string, { heading: string; subheading: string; proo
 };
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
-
   const segmentType = fieldValues.segment_type || 'higher-education';
   const content = defaultContent[segmentType] || defaultContent['higher-education'];
 
@@ -91,24 +89,25 @@ export function Component({ fieldValues }: any) {
   // Alternate background based on segment type
   const bgStyles: Record<string, React.CSSProperties> = {
     'higher-education': {
-      background: 'linear-gradient(180deg, #FFFBF8 0%, white 100%)',
+      background: 'var(--gradient-hero)',
     },
     'emerging-markets': {
-      background: 'linear-gradient(180deg, white 0%, #FFFBF8 100%)',
+      background: 'var(--gradient-hero)',
     },
     'strategic-partnerships': {
-      background: 'linear-gradient(180deg, #FFFBF8 0%, white 100%)',
+      background: 'var(--gradient-hero)',
     },
   };
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      className="scroll-animate"
       id={segmentType}
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
         ...bgStyles[segmentType],
-        ...animationStyles.subtleSlideUp(isVisible),
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
@@ -125,7 +124,7 @@ export function Component({ fieldValues }: any) {
             {heading}
           </h2>
           <p style={{
-            fontSize: '1.15rem',
+            fontSize: 'var(--font-size-body-lg)',
             color: 'var(--text-secondary)',
           }}>
             {subheading}
@@ -145,7 +144,7 @@ export function Component({ fieldValues }: any) {
           <div style={{
             display: 'grid',
             gridTemplateColumns: '1fr 2fr 1.5fr',
-            background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
+            background: 'var(--gradient-coral)',
             padding: 'var(--spacing-md) var(--spacing-xl)',
             gap: 'var(--spacing-lg)',
           }} className="segment-detail-header">
@@ -160,7 +159,7 @@ export function Component({ fieldValues }: any) {
             <div style={{
               color: 'white',
               fontWeight: 700,
-              fontSize: '0.875rem',
+              fontSize: 'var(--font-size-small)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
             }}>
@@ -169,7 +168,7 @@ export function Component({ fieldValues }: any) {
             <div style={{
               color: 'white',
               fontWeight: 700,
-              fontSize: '0.875rem',
+              fontSize: 'var(--font-size-small)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
             }}>
@@ -178,7 +177,7 @@ export function Component({ fieldValues }: any) {
             <div style={{
               color: 'white',
               fontWeight: 700,
-              fontSize: '0.875rem',
+              fontSize: 'var(--font-size-small)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
             }}>
@@ -198,12 +197,13 @@ export function Component({ fieldValues }: any) {
                 gap: 'var(--spacing-lg)',
                 borderBottom: index < proofPoints.length - 1 ? '1px solid var(--border-light)' : 'none',
                 background: index % 2 === 0 ? 'white' : 'rgba(255, 251, 248, 0.5)',
-                ...animationStyles.staggeredSubtle(isVisible, index * 0.15),
               }}
+              className="scroll-animate"
+              data-delay={index * 150}
             >
               <div>
                 <h3 style={{
-                  fontSize: '1.1rem',
+                  fontSize: 'var(--font-size-body-lg)',
                   fontWeight: 500,
                   color: 'var(--text-coral)',
                   fontFamily: 'var(--font-headline)',
@@ -214,7 +214,7 @@ export function Component({ fieldValues }: any) {
               </div>
               <div>
                 <p style={{
-                  fontSize: '1rem',
+                  fontSize: 'var(--font-size-body)',
                   color: 'var(--text-secondary)',
                   lineHeight: 1.6,
                   margin: 0,
@@ -232,12 +232,12 @@ export function Component({ fieldValues }: any) {
                     <li
                       key={statIndex}
                       style={{
-                        fontSize: '0.95rem',
+                        fontSize: 'var(--font-size-body)',
                         color: 'var(--text-primary)',
                         fontWeight: 600,
                         lineHeight: 1.5,
-                        marginBottom: statIndex < point.stats.length - 1 ? '0.5rem' : 0,
-                        paddingLeft: '1rem',
+                        marginBottom: statIndex < point.stats.length - 1 ? 'var(--spacing-sm)' : 0,
+                        paddingLeft: 'var(--spacing-md)',
                         position: 'relative',
                       }}
                     >
@@ -264,10 +264,11 @@ export function Component({ fieldValues }: any) {
             borderRadius: 'var(--radius-xl)',
             padding: 'var(--spacing-2xl)',
             border: '1px solid rgba(239, 71, 111, 0.1)',
-            ...animationStyles.fadeInUp(isVisible),
-          }}>
+          }}
+          className="scroll-animate"
+          data-delay="300">
             <div style={{
-              fontSize: '3rem',
+              fontSize: 'var(--font-size-h1)',
               color: 'var(--text-coral)',
               opacity: 0.3,
               fontFamily: 'Georgia, serif',
@@ -277,7 +278,7 @@ export function Component({ fieldValues }: any) {
               "
             </div>
             <p style={{
-              fontSize: '1.25rem',
+              fontSize: 'var(--font-size-h4)',
               color: 'var(--text-secondary)',
               lineHeight: 1.7,
               fontStyle: 'italic',
@@ -287,7 +288,7 @@ export function Component({ fieldValues }: any) {
             </p>
             <div>
               <p style={{
-                fontSize: '1rem',
+                fontSize: 'var(--font-size-body)',
                 fontWeight: 700,
                 color: 'var(--text-primary)',
                 margin: 0,
@@ -295,7 +296,7 @@ export function Component({ fieldValues }: any) {
                 — {testimonial.author}
               </p>
               <p style={{
-                fontSize: '0.9rem',
+                fontSize: 'var(--font-size-small)',
                 color: 'var(--text-muted)',
                 margin: 0,
               }}>
@@ -306,6 +307,7 @@ export function Component({ fieldValues }: any) {
         )}
       </div>
     </section>
+    </>
   );
 }
 

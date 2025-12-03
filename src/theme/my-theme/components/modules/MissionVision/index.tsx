@@ -3,7 +3,7 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 const defaultPartners = [
   'Credential providers',
@@ -14,19 +14,18 @@ const defaultPartners = [
 ];
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
-
   const partners = (fieldValues.partners && fieldValues.partners.length > 0)
     ? fieldValues.partners.map((p: any) => p.partner_name)
     : defaultPartners;
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
-        background: 'linear-gradient(180deg, white 0%, #FFFBF8 100%)',
-        ...animationStyles.subtleSlideUp(isVisible),
+        background: 'var(--gradient-hero)',
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
@@ -54,7 +53,6 @@ export function Component({ fieldValues }: any) {
             border: '2px solid var(--border-light)',
             position: 'relative',
             overflow: 'hidden',
-            ...animationStyles.staggeredSubtle(isVisible, 0),
           }}>
             <div style={{
               position: 'absolute',
@@ -62,7 +60,7 @@ export function Component({ fieldValues }: any) {
               left: 0,
               right: 0,
               height: '4px',
-              background: 'linear-gradient(90deg, #EF476F 0%, #F89F7B 100%)',
+              background: 'var(--gradient-coral)',
             }} />
             <div style={{
               display: 'inline-flex',
@@ -70,7 +68,7 @@ export function Component({ fieldValues }: any) {
               padding: '0.5rem 1rem',
               background: 'rgba(239, 71, 111, 0.1)',
               borderRadius: 'var(--radius-full)',
-              fontSize: '0.75rem',
+              fontSize: 'var(--font-size-xs)',
               fontWeight: 700,
               color: 'var(--text-coral)',
               marginBottom: 'var(--spacing-lg)',
@@ -80,7 +78,7 @@ export function Component({ fieldValues }: any) {
               Our Mission
             </div>
             <p style={{
-              fontSize: '1.25rem',
+              fontSize: 'var(--font-size-h4)',
               color: 'var(--text-primary)',
               lineHeight: 'var(--line-height-relaxed)',
               fontWeight: 500,
@@ -98,7 +96,6 @@ export function Component({ fieldValues }: any) {
             boxShadow: 'var(--shadow-lg)',
             position: 'relative',
             overflow: 'hidden',
-            ...animationStyles.staggeredSubtle(isVisible, 0.1),
           }}>
             <div style={{
               display: 'inline-flex',
@@ -106,9 +103,9 @@ export function Component({ fieldValues }: any) {
               padding: '0.5rem 1rem',
               background: 'rgba(239, 71, 111, 0.2)',
               borderRadius: 'var(--radius-full)',
-              fontSize: '0.75rem',
+              fontSize: 'var(--font-size-xs)',
               fontWeight: 700,
-              color: '#F89F7B',
+              color: 'var(--text-coral)',
               marginBottom: 'var(--spacing-lg)',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
@@ -116,7 +113,7 @@ export function Component({ fieldValues }: any) {
               Our Vision
             </div>
             <p style={{
-              fontSize: '1.5rem',
+              fontSize: 'var(--font-size-h3)',
               color: 'white',
               lineHeight: 'var(--line-height-tight)',
               fontWeight: 700,
@@ -126,8 +123,8 @@ export function Component({ fieldValues }: any) {
               {fieldValues.vision_headline || "A world where mentorship isn't a program."}
             </p>
             <p style={{
-              fontSize: '2rem',
-              color: '#F89F7B',
+              fontSize: 'var(--font-size-h2)',
+              color: 'var(--text-coral)',
               lineHeight: 1,
               fontWeight: 700,
               fontFamily: 'var(--font-headline)',
@@ -145,7 +142,6 @@ export function Component({ fieldValues }: any) {
           padding: 'var(--spacing-3xl)',
           boxShadow: 'var(--shadow-md)',
           border: '1px solid var(--border-light)',
-          ...animationStyles.fadeInUp(isVisible),
         }}>
           <div style={{
             display: 'grid',
@@ -163,7 +159,7 @@ export function Component({ fieldValues }: any) {
 
             <div>
               <p style={{
-                fontSize: '1.1rem',
+                fontSize: 'var(--font-size-body-lg)',
                 color: 'var(--text-secondary)',
                 lineHeight: 'var(--line-height-relaxed)',
                 marginBottom: 'var(--spacing-lg)',
@@ -171,7 +167,7 @@ export function Component({ fieldValues }: any) {
                 {fieldValues.vision_description || "For decades, mentorship lived in pockets — siloed, manual, and dependent on heroic staff lift. Today's learners and workers need something different: reliable, accessible, AI-supported connections that meet them where they are."}
               </p>
               <p style={{
-                fontSize: '1.1rem',
+                fontSize: 'var(--font-size-body-lg)',
                 color: 'var(--text-primary)',
                 lineHeight: 'var(--line-height-relaxed)',
                 fontWeight: 600,
@@ -195,7 +191,6 @@ export function Component({ fieldValues }: any) {
                       gap: 'var(--spacing-md)',
                       padding: 'var(--spacing-md) 0',
                       borderBottom: index < partners.length - 1 ? '1px solid var(--border-light)' : 'none',
-                      ...animationStyles.staggeredSubtle(isVisible, 0.3 + index * 0.05),
                     }}
                   >
                     <div style={{
@@ -213,7 +208,7 @@ export function Component({ fieldValues }: any) {
                       </svg>
                     </div>
                     <span style={{
-                      fontSize: '1rem',
+                      fontSize: 'var(--font-size-body)',
                       color: 'var(--text-primary)',
                       fontWeight: 500,
                     }}>
@@ -233,7 +228,7 @@ export function Component({ fieldValues }: any) {
             textAlign: 'center',
           }}>
             <p style={{
-              fontSize: '1.15rem',
+              fontSize: 'var(--font-size-body-lg)',
               color: 'var(--text-coral)',
               fontWeight: 600,
               margin: 0,
@@ -244,6 +239,7 @@ export function Component({ fieldValues }: any) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

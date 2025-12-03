@@ -3,7 +3,7 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface Quote {
   quote: string;
@@ -40,8 +40,6 @@ const defaultQuotes: Quote[] = [
 ];
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
-
   const quotes = (fieldValues.quotes && fieldValues.quotes.length > 0)
     ? fieldValues.quotes.map((q: any) => ({
         quote: q.quote,
@@ -52,12 +50,13 @@ export function Component({ fieldValues }: any) {
     : defaultQuotes;
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
-        background: 'linear-gradient(180deg, white 0%, #FFFBF8 100%)',
-        ...animationStyles.subtleSlideUp(isVisible),
+        background: 'var(--gradient-hero)',
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
@@ -69,7 +68,7 @@ export function Component({ fieldValues }: any) {
             padding: '0.5rem 1.25rem',
             background: 'rgba(239, 71, 111, 0.1)',
             borderRadius: 'var(--radius-full)',
-            fontSize: '0.875rem',
+            fontSize: 'var(--font-size-small)',
             fontWeight: 600,
             color: 'var(--text-coral)',
             marginBottom: 'var(--spacing-lg)',
@@ -88,7 +87,7 @@ export function Component({ fieldValues }: any) {
             {fieldValues.heading || 'Real Stories, Real Impact'}
           </h2>
           <p style={{
-            fontSize: '1.15rem',
+            fontSize: 'var(--font-size-body-lg)',
             color: 'var(--text-secondary)',
             maxWidth: 'var(--max-width-prose)',
             margin: '0 auto',
@@ -127,13 +126,12 @@ export function Component({ fieldValues }: any) {
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
-                ...animationStyles.staggeredSubtle(isVisible, index * 0.1),
               }}
             >
               {/* Quote mark */}
               <div style={{
-                fontSize: '4rem',
-                color: quote.type === 'mentor' ? 'rgba(248, 159, 123, 0.3)' : 'rgba(239, 71, 111, 0.15)',
+                fontSize: 'var(--font-size-display)',
+                color: quote.type === 'mentor' ? 'var(--secondary-yellow)' : 'rgba(239, 71, 111, 0.15)',
                 fontFamily: 'Georgia, serif',
                 lineHeight: 1,
                 marginBottom: 'var(--spacing-sm)',
@@ -144,7 +142,7 @@ export function Component({ fieldValues }: any) {
 
               {/* Quote text */}
               <p style={{
-                fontSize: '1.1rem',
+                fontSize: 'var(--font-size-body-lg)',
                 color: quote.type === 'mentor' ? 'rgba(255, 255, 255, 0.9)' : 'var(--text-secondary)',
                 lineHeight: 1.7,
                 fontStyle: 'italic',
@@ -166,21 +164,21 @@ export function Component({ fieldValues }: any) {
                   height: '48px',
                   borderRadius: 'var(--radius-full)',
                   background: quote.type === 'mentor'
-                    ? 'linear-gradient(135deg, rgba(248, 159, 123, 0.3) 0%, rgba(239, 71, 111, 0.3) 100%)'
-                    : 'linear-gradient(135deg, rgba(239, 71, 111, 0.15) 0%, rgba(248, 159, 123, 0.15) 100%)',
+                    ? 'linear-gradient(135deg, var(--secondary-yellow) 0%, rgba(239, 71, 111, 0.3) 100%)'
+                    : 'linear-gradient(135deg, rgba(239, 71, 111, 0.15) 0%, var(--secondary-yellow) 100%)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexShrink: 0,
                 }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill={quote.type === 'mentor' ? '#F89F7B' : 'var(--text-coral)'}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill={quote.type === 'mentor' ? 'var(--secondary-yellow)' : 'var(--text-coral)'}>
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                   </svg>
                 </div>
 
                 <div>
                   <p style={{
-                    fontSize: '1rem',
+                    fontSize: 'var(--font-size-body)',
                     fontWeight: 700,
                     color: quote.type === 'mentor' ? 'white' : 'var(--text-primary)',
                     margin: 0,
@@ -188,7 +186,7 @@ export function Component({ fieldValues }: any) {
                     {quote.author}
                   </p>
                   <p style={{
-                    fontSize: '0.875rem',
+                    fontSize: 'var(--font-size-small)',
                     color: quote.type === 'mentor' ? 'rgba(255, 255, 255, 0.6)' : 'var(--text-muted)',
                     margin: 0,
                   }}>
@@ -201,12 +199,12 @@ export function Component({ fieldValues }: any) {
                   marginLeft: 'auto',
                   padding: '0.25rem 0.75rem',
                   background: quote.type === 'mentor'
-                    ? 'rgba(248, 159, 123, 0.2)'
+                    ? 'var(--secondary-yellow)'
                     : 'rgba(239, 71, 111, 0.1)',
                   borderRadius: 'var(--radius-full)',
-                  fontSize: '0.75rem',
+                  fontSize: 'var(--font-size-xs)',
                   fontWeight: 600,
-                  color: quote.type === 'mentor' ? '#F89F7B' : 'var(--text-coral)',
+                  color: quote.type === 'mentor' ? 'var(--secondary-yellow)' : 'var(--text-coral)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
                 }}>
@@ -218,6 +216,7 @@ export function Component({ fieldValues }: any) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

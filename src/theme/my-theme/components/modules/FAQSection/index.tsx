@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ModuleFields } from '@hubspot/cms-components';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface FAQ {
   question: string;
@@ -15,7 +15,6 @@ interface FAQSectionProps {
 }
 
 export const Component: React.FC<FAQSectionProps> = ({ fieldValues }) => {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
   const faqs = fieldValues.faqs || [];
 
   if (faqs.length === 0) {
@@ -80,12 +79,10 @@ export const Component: React.FC<FAQSectionProps> = ({ fieldValues }) => {
         })();
       `}} />
 
+      <ScrollAnimationScript />
       <section
-        ref={elementRef as React.RefObject<HTMLElement>}
-        style={{
-          ...styles.section,
-          ...animationStyles.subtleSlideUp(isVisible),
-        }}
+        className="scroll-animate"
+        style={styles.section}
         aria-labelledby="faq-heading"
       >
         <div style={styles.container}>
@@ -150,7 +147,7 @@ export const Component: React.FC<FAQSectionProps> = ({ fieldValues }) => {
 const styles: Record<string, React.CSSProperties> = {
   section: {
     padding: 'var(--section-padding-lg) var(--spacing-lg)',
-    background: 'linear-gradient(135deg, #FFFFFF 0%, #FFFBF8 100%)',
+    background: 'var(--gradient-hero)',
     backgroundImage: 'var(--pattern-dots)',
     backgroundSize: 'var(--pattern-dots-size)',
     position: 'relative',

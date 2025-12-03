@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ModuleFields,
   TextField,
@@ -6,10 +7,9 @@ import revealIcon from '../../../assets/reveal-icon.svg';
 import sparkIcon from '../../../assets/spark-icon.svg';
 import scaleIcon from '../../../assets/scale-icon.svg';
 import fuelIcon from '../../../assets/fuel-icon.svg';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
   // Map icon names to imported icon assets
   const iconMap: Record<string, string> = {
     reveal: revealIcon,
@@ -59,15 +59,16 @@ export function Component({ fieldValues }: any) {
       ];
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
-        background: 'linear-gradient(180deg, white 0%, #FFFBF8 50%, white 100%)',
+        background: 'var(--gradient-hero)',
         backgroundImage: 'var(--pattern-dots)',
         backgroundSize: 'var(--pattern-dots-size)',
         position: 'relative',
-        ...animationStyles.subtleSlideUp(isVisible),
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto', padding: '0 var(--container-padding)' }}>
@@ -85,7 +86,7 @@ export function Component({ fieldValues }: any) {
         </h2>
         <p style={{
           textAlign: 'center',
-          fontSize: '1.1rem',
+          fontSize: 'var(--font-size-body-lg)',
           color: 'var(--text-secondary)',
           marginBottom: 'var(--spacing-2xl)',
           maxWidth: 'var(--max-width-prose)',
@@ -96,14 +97,15 @@ export function Component({ fieldValues }: any) {
         <div className="features-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '2.5rem',
+          gap: 'var(--spacing-xl)',
           maxWidth: '1100px',
           margin: '0 auto'
         }}>
           {features.map((feature, index) => (
             <div
               key={index}
-              className="feature-card"
+              className="feature-card scroll-animate"
+              data-delay={index * 100}
               style={{
                 background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 251, 248, 0.9) 100%)',
                 padding: 'var(--card-padding-lg)',
@@ -114,7 +116,6 @@ export function Component({ fieldValues }: any) {
                 cursor: 'pointer',
                 position: 'relative',
                 overflow: 'hidden',
-                ...animationStyles.staggeredSubtle(isVisible, index * 0.1)
               }}
             >
               <div style={{
@@ -147,7 +148,7 @@ export function Component({ fieldValues }: any) {
                 {feature.title}
               </h3>
               <p style={{
-                fontSize: '1rem',
+                fontSize: 'var(--font-size-body)',
                 lineHeight: 1.7,
                 color: 'var(--text-muted)',
                 fontFamily: 'var(--font-body)',
@@ -159,20 +160,21 @@ export function Component({ fieldValues }: any) {
               <a href={feature.linkUrl} style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.5rem',
+                gap: 'var(--spacing-xs)',
                 color: 'var(--text-coral)',
                 textDecoration: 'none',
-                fontSize: '1rem',
+                fontSize: 'var(--font-size-body)',
                 fontWeight: 600,
                 transition: 'var(--transition-medium)'
               }}>
-                {feature.linkText} <span style={{ fontSize: '1.25rem' }}>→</span>
+                {feature.linkText} <span style={{ fontSize: 'var(--font-size-h4)' }}>→</span>
               </a>
             </div>
           ))}
         </div>
       </div>
     </section>
+    </>
   );
 }
 

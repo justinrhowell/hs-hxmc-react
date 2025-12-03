@@ -3,7 +3,7 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 const defaultPillars = [
   {
@@ -63,8 +63,6 @@ const icons: Record<string, React.ReactNode> = {
 };
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
-
   const pillars = (fieldValues.pillars && fieldValues.pillars.length > 0)
     ? fieldValues.pillars.map((p: any) => ({
         icon: p.icon || 'people',
@@ -74,14 +72,15 @@ export function Component({ fieldValues }: any) {
     : defaultPillars;
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
         background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
         position: 'relative',
         overflow: 'hidden',
-        ...animationStyles.subtleSlideUp(isVisible),
       }}
     >
       {/* Background pattern */}
@@ -100,13 +99,13 @@ export function Component({ fieldValues }: any) {
             display: 'inline-flex',
             alignItems: 'center',
             padding: '0.5rem 1.25rem',
-            background: 'rgba(239, 71, 111, 0.15)',
+            background: 'var(--bg-light-coral)',
             borderRadius: 'var(--radius-full)',
-            fontSize: '0.875rem',
+            fontSize: 'var(--font-size-small)',
             fontWeight: 600,
-            color: '#F89F7B',
+            color: 'var(--text-coral)',
             marginBottom: 'var(--spacing-lg)',
-            border: '1px solid rgba(248, 159, 123, 0.2)',
+            border: '1px solid var(--border-light)',
           }}>
             How We Work
           </div>
@@ -151,8 +150,9 @@ export function Component({ fieldValues }: any) {
                 padding: 'var(--spacing-xl)',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
                 backdropFilter: 'blur(10px)',
-                ...animationStyles.staggeredSubtle(isVisible, index * 0.1),
               }}
+              className="scroll-animate"
+              data-delay={index * 100}
             >
               <div style={{
                 width: '56px',
@@ -163,12 +163,12 @@ export function Component({ fieldValues }: any) {
                 alignItems: 'center',
                 justifyContent: 'center',
                 marginBottom: 'var(--spacing-lg)',
-                color: '#F89F7B',
+                color: 'var(--text-coral)',
               }}>
                 {icons[pillar.icon] || icons.people}
               </div>
               <h3 style={{
-                fontSize: '1.1rem',
+                fontSize: 'var(--font-size-body-lg)',
                 fontWeight: 500,
                 color: 'white',
                 marginBottom: 'var(--spacing-sm)',
@@ -177,7 +177,7 @@ export function Component({ fieldValues }: any) {
                 {pillar.title}
               </h3>
               <p style={{
-                fontSize: '0.95rem',
+                fontSize: 'var(--font-size-base)',
                 color: 'rgba(255, 255, 255, 0.7)',
                 lineHeight: 1.6,
                 margin: 0,
@@ -189,20 +189,19 @@ export function Component({ fieldValues }: any) {
         </div>
 
         {/* Bottom Statement */}
-        <div style={{
+        <div className="scroll-animate" data-delay="400" style={{
           textAlign: 'center',
-          ...animationStyles.fadeInUp(isVisible),
         }}>
           <div style={{
-            background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.15) 0%, rgba(248, 159, 123, 0.15) 100%)',
+            background: 'linear-gradient(135deg, var(--bg-light-coral) 0%, rgba(248, 159, 123, 0.15) 100%)',
             borderRadius: 'var(--radius-xl)',
             padding: 'var(--spacing-2xl)',
-            border: '1px solid rgba(248, 159, 123, 0.2)',
+            border: '1px solid var(--border-light)',
             maxWidth: 'var(--max-width-prose)',
             margin: '0 auto',
           }}>
             <p style={{
-              fontSize: '1.35rem',
+              fontSize: 'var(--font-size-h4)',
               color: 'white',
               fontWeight: 600,
               lineHeight: 'var(--line-height-normal)',
@@ -215,6 +214,7 @@ export function Component({ fieldValues }: any) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

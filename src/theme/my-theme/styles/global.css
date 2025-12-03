@@ -248,6 +248,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: var(--line-height-tight);
     color: var(--dark-text);
     letter-spacing: var(--letter-spacing-tight);
+    text-wrap: balance;
 }
 
 /* Fluid Typography */
@@ -996,6 +997,178 @@ h1#hero-heading {
     .scroll-animate.is-visible {
         opacity: 1;
         transform: none;
+    }
+}
+
+/* ==========================================================================
+   BUTTON HOVER STATES - Inverse/Reverse Effect
+   ========================================================================== */
+
+/* Primary Coral Button - gradient background, inverts to outlined on hover */
+.btn-primary-coral {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--btn-padding);
+    background: var(--gradient-coral);
+    color: var(--text-white);
+    border: 2px solid transparent;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.btn-primary-coral:hover {
+    background: var(--white);
+    color: var(--primary-coral);
+    border-color: var(--primary-coral);
+}
+
+/* Primary Navy Button - solid background, inverts to outlined on hover */
+.btn-primary-navy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--btn-padding);
+    background: var(--primary-navy);
+    color: var(--text-white);
+    border: 2px solid transparent;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.btn-primary-navy:hover {
+    background: var(--white);
+    color: var(--primary-navy);
+    border-color: var(--primary-navy);
+}
+
+/* Outlined Coral Button - inverts to filled on hover */
+.btn-outlined {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--btn-padding);
+    background: transparent;
+    color: var(--primary-coral);
+    border: 2px solid var(--primary-coral);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.btn-outlined:hover {
+    background: var(--primary-coral);
+    color: var(--white);
+}
+
+/* Outlined Navy Button - inverts to filled on hover */
+.btn-outlined-navy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--btn-padding);
+    background: transparent;
+    color: var(--primary-navy);
+    border: 2px solid var(--primary-navy);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.btn-outlined-navy:hover {
+    background: var(--primary-navy);
+    color: var(--white);
+}
+
+/* Text Button with Arrow */
+.btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    background: transparent;
+    color: var(--primary-coral);
+    border: none;
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.btn-text:hover {
+    gap: 0.75rem;
+    color: var(--primary-navy);
+}
+
+/* White Button - for dark backgrounds, inverts to outlined on hover */
+.btn-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--btn-padding);
+    background: var(--white);
+    color: var(--primary-coral);
+    border: 2px solid transparent;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-body);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.btn-white:hover {
+    background: transparent;
+    color: var(--white);
+    border-color: var(--white);
+}
+
+/* Small Button Variant */
+.btn-sm {
+    padding: var(--btn-padding-sm) !important;
+    font-size: var(--font-size-small) !important;
+}
+
+/* Large Button Variant */
+.btn-lg {
+    padding: var(--btn-padding-lg) !important;
+    font-size: var(--font-size-body-lg) !important;
+}
+
+/* Disabled Button State */
+.btn-disabled,
+button:disabled,
+.btn-primary-coral:disabled,
+.btn-primary-navy:disabled,
+.btn-outlined:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Respect reduced motion preference for buttons */
+@media (prefers-reduced-motion: reduce) {
+    .btn-primary-coral,
+    .btn-primary-navy,
+    .btn-outlined,
+    .btn-outlined-navy,
+    .btn-text,
+    .btn-white {
+        transition: none;
     }
 }
 

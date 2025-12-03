@@ -1,278 +1,173 @@
 import {
   ModuleFields,
   TextField,
-  RepeatedFieldGroup,
-  ChoiceField,
-  ImageField,
+  NumberField,
 } from '@hubspot/cms-components/fields';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
-export function Component({ fieldValues }: any) {
-  const heading = fieldValues.heading || 'Browse Resources';
-  const subtitle = fieldValues.subtitle || 'Explore our collection of guides, articles, and case studies';
+// HubL template to fetch blog posts
+export const hublDataTemplate = `
+{% set blog_posts = blog_recent_posts('default', module.post_limit || 9) %}
+{% set posts_array = [] %}
+{% for post in blog_posts %}
+  {% set post_data = {
+    "id": post.id,
+    "title": post.name,
+    "description": post.post_summary|truncate(150),
+    "url": post.absolute_url,
+    "featured_image": post.featured_image,
+    "publish_date": post.publish_date|datetimeformat('%B %d, %Y'),
+    "author": post.blog_author.display_name,
+    "topic": post.topic_list[0].name if post.topic_list else "Article"
+  } %}
+  {% do posts_array.append(post_data) %}
+{% endfor %}
+{% set hublData = { "posts": posts_array } %}
+`;
 
-  const resources = fieldValues.resources || [
-    {
-      title: 'The Future of Mentorship',
-      description: 'How AI is transforming the way we connect and learn',
-      resource_type: 'article',
-      read_time: '5 min read',
-      link_url: '#',
-      image_url: 'https://via.placeholder.com/400x250'
-    },
-    {
-      title: 'Complete Guide to Scaling Mentorship',
-      description: 'Best practices for building successful mentorship programs',
-      resource_type: 'guide',
-      read_time: '12 min read',
-      link_url: '#',
-      image_url: 'https://via.placeholder.com/400x250'
-    },
-    {
-      title: 'Duke University Case Study',
-      description: 'How Duke increased retention by 15% with mentorship',
-      resource_type: 'case_study',
-      read_time: '8 min read',
-      link_url: '#',
-      image_url: 'https://via.placeholder.com/400x250'
+export function Component({ fieldValues, hublData }: any) {
+  const heading = fieldValues.heading || 'Latest Resources';
+  const subtitle = fieldValues.subtitle || 'Stay up to date with our latest insights and research';
+
+  // Parse blog posts from HubL data or use fallback
+  let posts: any[] = [];
+  try {
+    if (hublData?.posts && Array.isArray(hublData.posts)) {
+      posts = hublData.posts;
+    } else if (hublData && typeof hublData === 'string') {
+      const parsed = JSON.parse(hublData);
+      posts = parsed.posts || parsed;
+    } else if (Array.isArray(hublData)) {
+      posts = hublData;
     }
-  ];
+  } catch (e) {
+    console.error('Error parsing blog posts:', e);
+  }
 
-  const typeColors: Record<string, { bg: string; text: string }> = {
-    article: { bg: 'rgba(239, 71, 111, 0.1)', text: '#EF476F' },
-    guide: { bg: 'rgba(6, 214, 160, 0.1)', text: '#06D6A0' },
-    case_study: { bg: 'rgba(17, 138, 178, 0.1)', text: '#118AB2' },
-    ebook: { bg: 'rgba(255, 209, 102, 0.1)', text: '#FFD166' },
-    video: { bg: 'rgba(239, 71, 111, 0.1)', text: '#EF476F' },
-    webinar: { bg: 'rgba(17, 138, 178, 0.1)', text: '#118AB2' }
-  };
+  // Fallback content if no posts available
+  if (!posts || posts.length === 0) {
+    posts = [
+      {
+        id: '1',
+        title: 'The Future of AI-Powered Mentorship',
+        description: 'Discover how artificial intelligence is revolutionizing the way organizations scale meaningful mentorship connections.',
+        url: '#',
+        featured_image: '',
+        publish_date: 'December 1, 2024',
+        author: 'Mentor Collective',
+        topic: 'Article'
+      },
+      {
+        id: '2',
+        title: 'Case Study: Duke University',
+        description: 'How Duke increased student retention by 15% with a comprehensive peer mentorship program.',
+        url: '#',
+        featured_image: '',
+        publish_date: 'November 28, 2024',
+        author: 'Mentor Collective',
+        topic: 'Case Study'
+      },
+      {
+        id: '3',
+        title: 'Complete Guide to Scaling Mentorship',
+        description: 'Best practices and strategies for building successful mentorship programs at scale.',
+        url: '#',
+        featured_image: '',
+        publish_date: 'November 20, 2024',
+        author: 'Mentor Collective',
+        topic: 'Guide'
+      }
+    ];
+  }
 
-  const typeLabels: Record<string, string> = {
-    article: 'Article',
-    guide: 'Guide',
-    case_study: 'Case Study',
-    ebook: 'eBook',
-    video: 'Video',
-    webinar: 'Webinar'
+  // Type colors for badges
+  const getTypeColor = (topic: string) => {
+    const topicLower = topic?.toLowerCase() || 'article';
+    if (topicLower.includes('case study')) return { bg: 'rgba(17, 138, 178, 0.1)', text: 'var(--text-blue)' };
+    if (topicLower.includes('guide')) return { bg: 'var(--bg-light-teal)', text: 'var(--text-teal)' };
+    if (topicLower.includes('webinar')) return { bg: 'rgba(17, 138, 178, 0.1)', text: 'var(--text-blue)' };
+    if (topicLower.includes('ebook')) return { bg: 'rgba(255, 209, 102, 0.15)', text: '#B8860B' };
+    return { bg: 'var(--bg-light-coral)', text: 'var(--text-coral)' };
   };
 
   return (
     <>
-      <script dangerouslySetInnerHTML={{__html: `
-        (function() {
-          function initResourceGrid() {
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const resourceCards = document.querySelectorAll('.resource-item');
-
-            if (!filterBtns.length || !resourceCards.length) return;
-
-            filterBtns.forEach(btn => {
-              btn.addEventListener('click', function() {
-                const filter = this.getAttribute('data-filter');
-
-                // Update active button
-                filterBtns.forEach(b => {
-                  b.style.background = 'transparent';
-                  b.style.color = '#6B7280';
-                });
-                this.style.background = 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)';
-                this.style.color = 'white';
-
-                // Filter resources
-                resourceCards.forEach(card => {
-                  const cardType = card.getAttribute('data-type');
-                  if (filter === 'all' || cardType === filter) {
-                    card.style.display = 'block';
-                    card.style.animation = 'fadeInUp 0.5s ease forwards';
-                  } else {
-                    card.style.display = 'none';
-                  }
-                });
-              });
-            });
-          }
-
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initResourceGrid);
-          } else {
-            setTimeout(initResourceGrid, 100);
-          }
-        })();
-      `}} />
-
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+      <ScrollAnimationScript />
+      <style>{`
+        .resource-grid-card {
+          transition: all 0.3s ease;
         }
-
-        .resource-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 12px 32px rgba(239, 71, 111, 0.15) !important;
+        .resource-grid-card:hover {
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-lg) !important;
         }
-
-        .resource-card:hover img {
+        .resource-grid-card:hover img {
           transform: scale(1.05);
         }
-
-        .resource-card:hover a {
-          gap: 0.75rem !important;
+        .resource-grid-card:hover .resource-link {
+          gap: var(--spacing-sm) !important;
         }
-      `}} />
+        @media (max-width: 768px) {
+          .resource-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
 
       <section style={{
-        padding: '80px 20px',
-        background: 'linear-gradient(180deg, #FFFFFF 0%, #FFFBF8 100%)',
+        padding: 'var(--spacing-2xl) var(--spacing-lg)',
+        background: 'var(--bg-white)',
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              fontWeight: 500,
-              marginBottom: '1rem',
-              color: '#1a1a1a',
-              fontFamily: 'var(--font-headline)',
-            }}>
-              {heading}
-            </h2>
-            {subtitle && (
-              <p style={{
-                fontSize: '1.15rem',
-                color: '#6B7280',
-                maxWidth: '700px',
-                margin: '0 auto',
+          {heading && (
+            <div className="scroll-animate" style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)' }}>
+              <h2 style={{
+                fontSize: 'var(--font-size-h2)',
+                fontWeight: 500,
+                marginBottom: 'var(--spacing-sm)',
+                color: 'var(--text-primary)',
+                fontFamily: 'var(--font-headline)',
               }}>
-                {subtitle}
-              </p>
-            )}
-          </div>
+                {heading}
+              </h2>
+              {subtitle && (
+                <p style={{
+                  fontSize: 'var(--font-size-body)',
+                  color: 'var(--text-secondary)',
+                  maxWidth: '600px',
+                  margin: '0 auto',
+                }}>
+                  {subtitle}
+                </p>
+              )}
+            </div>
+          )}
 
-          {/* Filter Tabs */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '1rem',
-            marginBottom: '3rem',
-            flexWrap: 'wrap',
-          }}>
-            <button
-              className="filter-btn"
-              data-filter="all"
-              style={{
-                padding: 'var(--btn-padding-sm)',
-                borderRadius: 'var(--radius-full)',
-                border: 'none',
-                background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
-                color: 'white',
-                fontSize: '1rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'var(--transition-medium)',
-              }}
-            >
-              All Resources
-            </button>
-            <button
-              className="filter-btn"
-              data-filter="article"
-              style={{
-                padding: 'var(--btn-padding-sm)',
-                borderRadius: 'var(--radius-full)',
-                border: '2px solid #E5E7EB',
-                background: 'transparent',
-                color: '#6B7280',
-                fontSize: '1rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'var(--transition-medium)',
-              }}
-            >
-              Articles
-            </button>
-            <button
-              className="filter-btn"
-              data-filter="guide"
-              style={{
-                padding: 'var(--btn-padding-sm)',
-                borderRadius: 'var(--radius-full)',
-                border: '2px solid #E5E7EB',
-                background: 'transparent',
-                color: '#6B7280',
-                fontSize: '1rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'var(--transition-medium)',
-              }}
-            >
-              Guides
-            </button>
-            <button
-              className="filter-btn"
-              data-filter="case_study"
-              style={{
-                padding: 'var(--btn-padding-sm)',
-                borderRadius: 'var(--radius-full)',
-                border: '2px solid #E5E7EB',
-                background: 'transparent',
-                color: '#6B7280',
-                fontSize: '1rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'var(--transition-medium)',
-              }}
-            >
-              Case Studies
-            </button>
-            <button
-              className="filter-btn"
-              data-filter="ebook"
-              style={{
-                padding: 'var(--btn-padding-sm)',
-                borderRadius: 'var(--radius-full)',
-                border: '2px solid #E5E7EB',
-                background: 'transparent',
-                color: '#6B7280',
-                fontSize: '1rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'var(--transition-medium)',
-              }}
-            >
-              eBooks
-            </button>
-          </div>
-
-          {/* Resource Grid */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: '2rem',
-          }}>
-            {resources.map((resource: any, index: number) => {
-              const colors = typeColors[resource.resource_type] || typeColors.article;
-              const label = typeLabels[resource.resource_type] || 'Resource';
-
+          {/* Grid */}
+          <div
+            className="resource-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 'var(--spacing-lg)',
+            }}
+          >
+            {posts.map((post: any, index: number) => {
+              const colors = getTypeColor(post.topic);
               return (
-                <div
-                  key={index}
-                  className="resource-item resource-card"
-                  data-type={resource.resource_type}
+                <article
+                  key={post.id || index}
+                  className="scroll-animate resource-grid-card"
+                  data-delay={index * 100}
                   style={{
-                    background: 'white',
-                    borderRadius: 'var(--radius-lg)',
+                    background: 'var(--bg-white)',
+                    borderRadius: 'var(--radius-xl)',
                     overflow: 'hidden',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer',
-                    height: '100%',
+                    boxShadow: 'var(--shadow-md)',
                     display: 'flex',
                     flexDirection: 'column',
+                    border: '1px solid var(--border-light)',
                   }}
                 >
                   {/* Image */}
@@ -281,63 +176,81 @@ export function Component({ fieldValues }: any) {
                     height: '200px',
                     overflow: 'hidden',
                     position: 'relative',
+                    background: 'var(--bg-cream)',
                   }}>
-                    <img
-                      src={resource.image_url}
-                      alt={resource.title}
-                      loading="lazy"
-                      style={{
+                    {post.featured_image ? (
+                      <img
+                        src={post.featured_image}
+                        alt={post.title}
+                        loading="lazy"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          transition: 'transform 0.3s ease',
+                        }}
+                      />
+                    ) : (
+                      <div style={{
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover',
-                        transition: 'transform 0.3s ease',
-                      }}
-                    />
-                    {/* Type Badge */}
+                        background: 'linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-light) 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style={{ opacity: 0.3 }}>
+                          <rect x="3" y="3" width="18" height="18" rx="2" stroke="var(--text-muted)" strokeWidth="2"/>
+                          <circle cx="8.5" cy="8.5" r="1.5" fill="var(--text-muted)"/>
+                          <path d="M3 16L8 11L13 16" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round"/>
+                          <path d="M14 14L17 11L21 15" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                      </div>
+                    )}
+                    {/* Topic Badge */}
                     <div style={{
                       position: 'absolute',
-                      top: '1rem',
-                      left: '1rem',
+                      top: 'var(--spacing-sm)',
+                      left: 'var(--spacing-sm)',
                       background: colors.bg,
                       color: colors.text,
-                      padding: '0.375rem 0.875rem',
+                      padding: '0.375rem 0.75rem',
                       borderRadius: 'var(--radius-full)',
-                      fontSize: '0.75rem',
+                      fontSize: 'var(--font-size-xs)',
                       fontWeight: 600,
                       textTransform: 'uppercase',
                       letterSpacing: '0.05em',
-                      backdropFilter: 'blur(10px)',
                     }}>
-                      {label}
+                      {post.topic || 'Article'}
                     </div>
                   </div>
 
                   {/* Content */}
                   <div style={{
-                    padding: '1.5rem',
+                    padding: 'var(--spacing-lg)',
                     display: 'flex',
                     flexDirection: 'column',
                     flex: 1,
                   }}>
                     <h3 style={{
-                      fontSize: '1.25rem',
+                      fontSize: 'var(--font-size-h4)',
                       fontWeight: 500,
-                      color: '#1a1a1a',
-                      marginBottom: '0.75rem',
+                      color: 'var(--text-primary)',
+                      marginBottom: 'var(--spacing-sm)',
                       fontFamily: 'var(--font-headline)',
                       lineHeight: 1.3,
                     }}>
-                      {resource.title}
+                      {post.title}
                     </h3>
 
                     <p style={{
-                      fontSize: '0.95rem',
-                      color: '#6B7280',
-                      lineHeight: 1.6,
-                      marginBottom: '1.25rem',
+                      fontSize: 'var(--font-size-small)',
+                      color: 'var(--text-secondary)',
+                      lineHeight: 'var(--line-height-normal)',
+                      marginBottom: 'var(--spacing-md)',
                       flex: 1,
                     }}>
-                      {resource.description}
+                      {post.description}
                     </p>
 
                     {/* Footer */}
@@ -345,36 +258,50 @@ export function Component({ fieldValues }: any) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      paddingTop: '1rem',
-                      borderTop: '1px solid #E5E7EB',
+                      paddingTop: 'var(--spacing-sm)',
+                      borderTop: '1px solid var(--border-light)',
                     }}>
                       <span style={{
-                        fontSize: '0.85rem',
-                        color: '#9CA3AF',
+                        fontSize: 'var(--font-size-xs)',
+                        color: 'var(--text-muted)',
                       }}>
-                        {resource.read_time}
+                        {post.publish_date}
                       </span>
 
                       <a
-                        href={resource.link_url}
+                        href={post.url}
+                        className="resource-link"
                         style={{
                           display: 'inline-flex',
                           alignItems: 'center',
-                          gap: '0.5rem',
-                          color: '#EF476F',
+                          gap: 'var(--spacing-xs)',
+                          color: 'var(--text-coral)',
                           textDecoration: 'none',
-                          fontSize: '0.9rem',
+                          fontSize: 'var(--font-size-small)',
                           fontWeight: 600,
                           transition: 'gap 0.3s ease',
                         }}
                       >
-                        Read More <span style={{ fontSize: '1.1rem' }}>→</span>
+                        Read More <span>→</span>
                       </a>
                     </div>
                   </div>
-                </div>
+                </article>
               );
             })}
+          </div>
+
+          {/* Load More */}
+          <div className="scroll-animate" style={{ textAlign: 'center', marginTop: 'var(--spacing-2xl)' }}>
+            <button
+              type="button"
+              className="btn-outlined"
+              style={{
+                padding: 'var(--btn-padding-sm)',
+              }}
+            >
+              Load More Resources
+            </button>
           </div>
         </div>
       </section>
@@ -387,61 +314,20 @@ export const fields = (
     <TextField
       name="heading"
       label="Section Heading"
-      default="Browse Resources"
+      default="Latest Resources"
     />
     <TextField
       name="subtitle"
       label="Subtitle"
-      default="Explore our collection of guides, articles, and case studies"
+      default="Stay up to date with our latest insights and research"
     />
-    <RepeatedFieldGroup
-      name="resources"
-      label="Resources"
-      occurrence={{
-        min: 1,
-        max: 24,
-        default: 6,
-      }}
-    >
-      <TextField
-        name="title"
-        label="Title"
-        default="Resource Title"
-      />
-      <TextField
-        name="description"
-        label="Description"
-        default="Brief description of this resource"
-      />
-      <TextField
-        name="image_url"
-        label="Image URL"
-        default="https://via.placeholder.com/400x250"
-      />
-      <ChoiceField
-        name="resource_type"
-        label="Resource Type"
-        choices={[
-          ['article', 'Article'],
-          ['guide', 'Guide'],
-          ['case_study', 'Case Study'],
-          ['ebook', 'eBook'],
-          ['video', 'Video'],
-          ['webinar', 'Webinar'],
-        ]}
-        default="article"
-      />
-      <TextField
-        name="read_time"
-        label="Read Time"
-        default="5 min read"
-      />
-      <TextField
-        name="link_url"
-        label="Link URL"
-        default="#"
-      />
-    </RepeatedFieldGroup>
+    <NumberField
+      name="post_limit"
+      label="Number of Posts"
+      default={9}
+      min={3}
+      max={24}
+    />
   </ModuleFields>
 );
 

@@ -6,7 +6,7 @@ import {
 export function Component({ fieldValues }: any) {
   return (
     <section style={{ padding: '80px 20px', textAlign: 'center' }}>
-      <h1 style={{ fontSize: '48px' }}>{fieldValues.title}</h1>
+      <h1 style={{ fontSize: 'var(--font-size-h1)' }}>{fieldValues.title}</h1>
     </section>
   );
 }

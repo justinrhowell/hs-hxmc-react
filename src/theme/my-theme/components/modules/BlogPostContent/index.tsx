@@ -20,7 +20,7 @@ export function Component({ fieldValues }: any) {
         }
 
         .blog-content h2 {
-          font-size: 1.875rem;
+          font-size: var(--font-size-h2);
           font-weight: 500;
           color: var(--text-primary);
           margin: var(--spacing-xl) 0 var(--spacing-md);
@@ -29,16 +29,16 @@ export function Component({ fieldValues }: any) {
         }
 
         .blog-content h3 {
-          font-size: 1.5rem;
+          font-size: var(--font-size-h3);
           font-weight: 500;
           color: var(--text-primary);
           margin: var(--spacing-xl) 0 var(--spacing-sm);
           font-family: var(--font-headline);
-          line-height: 1.4;
+          line-height: var(--line-height-normal);
         }
 
         .blog-content h4 {
-          font-size: 1.25rem;
+          font-size: var(--font-size-h4);
           font-weight: 600;
           color: var(--text-primary);
           margin: var(--spacing-lg) 0 var(--spacing-sm);
@@ -93,21 +93,21 @@ export function Component({ fieldValues }: any) {
 
         .blog-content pre {
           background: var(--black);
-          color: #f8f8f2;
+          color: var(--text-inverse);
           padding: var(--spacing-md);
           border-radius: var(--radius-md);
           overflow-x: auto;
           margin: var(--spacing-lg) 0;
-          font-size: 0.9rem;
+          font-size: var(--font-size-small);
           line-height: var(--line-height-normal);
         }
 
         .blog-content code {
           background: var(--bg-light-coral);
           color: var(--text-coral);
-          padding: 0.2em 0.4em;
+          padding: var(--spacing-3xs) var(--spacing-2xs);
           border-radius: var(--radius-sm);
-          font-size: 0.9em;
+          font-size: var(--font-size-small);
         }
 
         .blog-content pre code {
@@ -159,20 +159,12 @@ export function Component({ fieldValues }: any) {
         .share-button:hover {
           border-color: var(--primary-coral);
           color: var(--text-coral);
-          transform: translateY(-2px);
+          background: var(--bg-light-coral);
         }
 
-        @media (max-width: 768px) {
-          .blog-layout {
-            flex-direction: column !important;
-          }
-          .blog-sidebar {
-            position: static !important;
-            top: auto !important;
-            width: 100% !important;
-            order: -1;
-            margin-bottom: var(--spacing-lg) !important;
-          }
+        .share-button svg {
+          width: 18px;
+          height: 18px;
         }
       `}} />
 
@@ -180,99 +172,85 @@ export function Component({ fieldValues }: any) {
         padding: '0 var(--spacing-lg) var(--section-padding-md)',
         background: 'var(--bg-white)',
       }}>
-        <div
-          className="blog-layout"
-          style={{
-            maxWidth: 'var(--max-width-xl)',
-            margin: '0 auto',
-            display: 'flex',
-            gap: 'var(--spacing-2xl)',
-          }}
-        >
-          {/* Sidebar */}
-          {(showTableOfContents || showShareButtons) && (
-            <aside
-              className="blog-sidebar"
-              style={{
-                width: '200px',
-                flexShrink: 0,
-                position: 'sticky',
-                top: '100px',
-                height: 'fit-content',
-              }}
-            >
-              {/* Share Buttons */}
-              {showShareButtons && (
-                <div style={{ marginBottom: 'var(--spacing-lg)' }}>
-                  <div style={{
-                    fontSize: 'var(--font-size-small)',
-                    fontWeight: 600,
-                    color: 'var(--text-muted)',
-                    textTransform: 'uppercase',
-                    letterSpacing: 'var(--letter-spacing-wide)',
-                    marginBottom: 'var(--spacing-sm)',
-                  }}>
-                    Share
-                  </div>
-                  <div style={{
-                    display: 'flex',
-                    gap: 'var(--spacing-xs)',
-                  }}>
-                    <button
-                      className="share-button"
-                      onClick={() => {
-                        if (typeof window !== 'undefined') {
-                          window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`, '_blank');
-                        }
-                      }}
-                      aria-label="Share on Twitter"
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                      </svg>
-                    </button>
-                    <button
-                      className="share-button"
-                      onClick={() => {
-                        if (typeof window !== 'undefined') {
-                          window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
-                        }
-                      }}
-                      aria-label="Share on LinkedIn"
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                      </svg>
-                    </button>
-                    <button
-                      className="share-button"
-                      onClick={() => {
-                        if (typeof window !== 'undefined' && navigator.clipboard) {
-                          navigator.clipboard.writeText(window.location.href);
-                        }
-                      }}
-                      aria-label="Copy link"
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              )}
-            </aside>
-          )}
-
+        <div style={{
+          maxWidth: '800px',
+          margin: '0 auto',
+        }}>
           {/* Main Content */}
           <article
             className="blog-content"
-            style={{
-              flex: 1,
-              maxWidth: '750px',
-            }}
             dangerouslySetInnerHTML={{ __html: content }}
           />
+
+          {/* Share Buttons - at bottom of article */}
+          {showShareButtons && (
+            <div style={{
+              marginTop: 'var(--spacing-2xl)',
+              paddingTop: 'var(--spacing-xl)',
+              borderTop: '1px solid var(--border-light)',
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'var(--spacing-md)',
+              }}>
+                <span style={{
+                  fontSize: 'var(--font-size-small)',
+                  fontWeight: 600,
+                  color: 'var(--text-muted)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}>
+                  Share this article
+                </span>
+                <div style={{
+                  display: 'flex',
+                  gap: 'var(--spacing-xs)',
+                }}>
+                  <button
+                    className="share-button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}`, '_blank');
+                      }
+                    }}
+                    aria-label="Share on Twitter"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                  </button>
+                  <button
+                    className="share-button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
+                      }
+                    }}
+                    aria-label="Share on LinkedIn"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </button>
+                  <button
+                    className="share-button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && navigator.clipboard) {
+                        navigator.clipboard.writeText(window.location.href);
+                      }
+                    }}
+                    aria-label="Copy link"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </>

@@ -56,7 +56,7 @@ export function Component({ fieldValues }: any) {
         }
 
         .pricing-card-featured {
-          border: 2px solid #EF476F !important;
+          border: 2px solid var(--primary-coral) !important;
           transform: scale(1.05);
         }
 
@@ -83,26 +83,26 @@ export function Component({ fieldValues }: any) {
 
       <section style={{
         padding: '80px 20px',
-        background: 'linear-gradient(180deg, #FFFFFF 0%, #FFFBF8 50%, #FFFFFF 100%)',
+        background: 'var(--gradient-hero)',
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           {/* Header */}
           <div style={{
             textAlign: 'center',
-            marginBottom: '4rem',
+            marginBottom: 'var(--spacing-2xl)',
           }}>
             <h2 style={{
               fontSize: 'clamp(2rem, 4vw, 3rem)',
               fontWeight: 500,
-              marginBottom: '1rem',
-              color: '#1a1a1a',
+              marginBottom: 'var(--spacing-md)',
+              color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)',
             }}>
               {heading}
             </h2>
             <p style={{
-              fontSize: '1.15rem',
-              color: '#6B7280',
+              fontSize: 'var(--font-size-body-lg)',
+              color: 'var(--text-muted)',
               maxWidth: '600px',
               margin: '0 auto',
             }}>
@@ -116,8 +116,8 @@ export function Component({ fieldValues }: any) {
             style={{
               display: 'grid',
               gridTemplateColumns: `repeat(${Math.min(plans.length, 3)}, 1fr)`,
-              gap: '2rem',
-              marginBottom: '3rem',
+              gap: 'var(--spacing-xl)',
+              marginBottom: 'var(--spacing-2xl)',
             }}
           >
             {plans.map((plan: any, index: number) => {
@@ -129,11 +129,11 @@ export function Component({ fieldValues }: any) {
                   key={index}
                   className={`pricing-card ${isFeatured ? 'pricing-card-featured' : ''}`}
                   style={{
-                    background: 'white',
+                    background: 'var(--text-white)',
                     borderRadius: 'var(--radius-xl)',
-                    padding: '2.5rem',
+                    padding: 'var(--spacing-xl)',
                     boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
-                    border: isFeatured ? '2px solid #EF476F' : '2px solid rgba(239, 71, 111, 0.1)',
+                    border: isFeatured ? '2px solid var(--primary-coral)' : '2px solid var(--border-light)',
                     position: 'relative',
                     display: 'flex',
                     flexDirection: 'column',
@@ -146,11 +146,11 @@ export function Component({ fieldValues }: any) {
                       top: '-14px',
                       left: '50%',
                       transform: 'translateX(-50%)',
-                      background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
-                      color: 'white',
+                      background: 'var(--gradient-coral)',
+                      color: 'var(--text-white)',
                       padding: '0.4rem 1.5rem',
                       borderRadius: 'var(--radius-full)',
-                      fontSize: '0.8rem',
+                      fontSize: 'var(--font-size-xs)',
                       fontWeight: 600,
                       textTransform: 'uppercase',
                       letterSpacing: '0.05em',
@@ -161,20 +161,20 @@ export function Component({ fieldValues }: any) {
                   )}
 
                   {/* Plan Header */}
-                  <div style={{ marginBottom: '2rem' }}>
+                  <div style={{ marginBottom: 'var(--spacing-xl)' }}>
                     <h3 style={{
-                      fontSize: '1.75rem',
+                      fontSize: 'var(--font-size-h3)',
                       fontWeight: 500,
-                      marginBottom: '0.5rem',
-                      color: '#1a1a1a',
+                      marginBottom: 'var(--spacing-xs)',
+                      color: 'var(--text-primary)',
                       fontFamily: 'var(--font-headline)',
                     }}>
                       {plan.plan_name}
                     </h3>
                     <p style={{
-                      fontSize: '0.95rem',
-                      color: '#6B7280',
-                      marginBottom: '1.5rem',
+                      fontSize: 'var(--font-size-base)',
+                      color: 'var(--text-muted)',
+                      marginBottom: 'var(--spacing-lg)',
                     }}>
                       {plan.description}
                     </p>
@@ -183,13 +183,13 @@ export function Component({ fieldValues }: any) {
                     <div style={{
                       display: 'flex',
                       alignItems: 'baseline',
-                      gap: '0.5rem',
-                      marginBottom: '0.5rem',
+                      gap: 'var(--spacing-xs)',
+                      marginBottom: 'var(--spacing-xs)',
                     }}>
                       <span style={{
-                        fontSize: '3rem',
+                        fontSize: 'var(--font-size-h1)',
                         fontWeight: 700,
-                        color: '#EF476F',
+                        color: 'var(--text-coral)',
                         fontFamily: 'var(--font-headline)',
                         lineHeight: 1,
                       }}>
@@ -197,8 +197,8 @@ export function Component({ fieldValues }: any) {
                       </span>
                       {plan.billing_period && (
                         <span style={{
-                          fontSize: '1.1rem',
-                          color: '#9CA3AF',
+                          fontSize: 'var(--font-size-body-lg)',
+                          color: 'var(--text-muted)',
                         }}>
                           {plan.billing_period}
                         </span>
@@ -209,26 +209,26 @@ export function Component({ fieldValues }: any) {
                   {/* Features List */}
                   <div style={{
                     flex: 1,
-                    marginBottom: '2rem',
+                    marginBottom: 'var(--spacing-xl)',
                   }}>
                     <div style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '1rem',
+                      gap: 'var(--spacing-md)',
                     }}>
                       {features.map((feature: string, fIndex: number) => (
                         <div key={fIndex} style={{
                           display: 'flex',
                           alignItems: 'flex-start',
-                          gap: '0.75rem',
+                          gap: 'var(--spacing-sm)',
                         }}>
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: '2px' }}>
-                            <circle cx="12" cy="12" r="10" fill="rgba(239, 71, 111, 0.1)"/>
-                            <path d="M8 12L11 15L16 9" stroke="#EF476F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            <circle cx="12" cy="12" r="10" fill="var(--border-light)"/>
+                            <path d="M8 12L11 15L16 9" stroke="var(--primary-coral)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
                           <span style={{
-                            fontSize: '0.95rem',
-                            color: '#374151',
+                            fontSize: 'var(--font-size-base)',
+                            color: 'var(--text-secondary)',
                             lineHeight: 1.5,
                           }}>
                             {feature}
@@ -246,15 +246,15 @@ export function Component({ fieldValues }: any) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      gap: '0.5rem',
+                      gap: 'var(--spacing-xs)',
                       background: isFeatured
-                        ? 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)'
+                        ? 'var(--gradient-coral)'
                         : 'transparent',
-                      color: isFeatured ? 'white' : '#EF476F',
-                      border: isFeatured ? 'none' : '2px solid #EF476F',
+                      color: isFeatured ? 'var(--text-white)' : 'var(--text-coral)',
+                      border: isFeatured ? 'none' : '2px solid var(--primary-coral)',
                       padding: 'var(--btn-padding)',
                       borderRadius: 'var(--radius-full)',
-                      fontSize: '1rem',
+                      fontSize: 'var(--font-size-base)',
                       fontWeight: 600,
                       textDecoration: 'none',
                       transition: 'var(--transition-medium)',
@@ -274,12 +274,12 @@ export function Component({ fieldValues }: any) {
           {/* Bottom Note */}
           <div style={{
             textAlign: 'center',
-            color: '#6B7280',
-            fontSize: '0.95rem',
+            color: 'var(--text-muted)',
+            fontSize: 'var(--font-size-base)',
           }}>
             <p>
               All plans include a 30-day money-back guarantee. Need a custom solution?{' '}
-              <a href="#" style={{ color: '#EF476F', textDecoration: 'none', fontWeight: 600 }}>
+              <a href="#" style={{ color: 'var(--text-coral)', textDecoration: 'none', fontWeight: 600 }}>
                 Contact our sales team
               </a>
             </p>

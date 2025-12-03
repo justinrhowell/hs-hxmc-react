@@ -3,7 +3,7 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 const defaultSegments = [
   {
@@ -36,8 +36,6 @@ const iconPaths: Record<string, string> = {
 };
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
-
   const segments = (fieldValues.segments && fieldValues.segments.length > 0)
     ? fieldValues.segments.map((s: any) => ({
         title: s.title,
@@ -49,14 +47,15 @@ export function Component({ fieldValues }: any) {
     : defaultSegments;
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
         background: 'var(--gradient-hero)',
         backgroundImage: 'var(--pattern-dots)',
         backgroundSize: 'var(--pattern-dots-size)',
-        ...animationStyles.subtleSlideUp(isVisible),
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
@@ -73,7 +72,7 @@ export function Component({ fieldValues }: any) {
             {fieldValues.heading || 'Mentorship connects people to careers.'}
           </h2>
           <p style={{
-            fontSize: '1.15rem',
+            fontSize: 'var(--font-size-body-lg)',
             color: 'var(--text-secondary)',
             maxWidth: 'var(--max-width-prose)',
             margin: '0 auto',
@@ -108,8 +107,9 @@ export function Component({ fieldValues }: any) {
                 cursor: 'pointer',
                 position: 'relative',
                 overflow: 'hidden',
-                ...animationStyles.staggeredSubtle(isVisible, index * 0.1),
               }}
+              className="scroll-animate"
+              data-delay={index * 100}
             >
               {/* Icon */}
               <div style={{
@@ -128,7 +128,7 @@ export function Component({ fieldValues }: any) {
               </div>
 
               <h3 style={{
-                fontSize: '1.5rem',
+                fontSize: 'var(--font-size-h3)',
                 fontWeight: 500,
                 color: 'var(--text-primary)',
                 marginBottom: 'var(--spacing-md)',
@@ -138,7 +138,7 @@ export function Component({ fieldValues }: any) {
               </h3>
 
               <p style={{
-                fontSize: '1rem',
+                fontSize: 'var(--font-size-base)',
                 color: 'var(--text-secondary)',
                 lineHeight: 1.7,
                 marginBottom: 'var(--spacing-lg)',
@@ -151,21 +151,22 @@ export function Component({ fieldValues }: any) {
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.5rem',
+                  gap: 'var(--spacing-xs)',
                   color: 'var(--text-coral)',
                   textDecoration: 'none',
-                  fontSize: '1rem',
+                  fontSize: 'var(--font-size-base)',
                   fontWeight: 600,
                   transition: 'var(--transition-medium)',
                 }}
               >
-                {segment.link_text} <span style={{ fontSize: '1.25rem' }}>→</span>
+                {segment.link_text} <span style={{ fontSize: 'var(--font-size-body-lg)' }}>→</span>
               </a>
             </div>
           ))}
         </div>
       </div>
     </section>
+    </>
   );
 }
 

@@ -5,8 +5,9 @@ export const DemoModal: React.FC = () => {
     <>
       <style>{`
         .demo-submit-btn:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: 0 12px 32px rgba(239, 71, 111, 0.4) !important;
+          background: var(--white) !important;
+          color: var(--primary-coral) !important;
+          border-color: var(--primary-coral) !important;
         }
 
         @media (max-width: 768px) {
@@ -25,12 +26,12 @@ export const DemoModal: React.FC = () => {
 
           .demo-modal-container {
             max-height: 95vh !important;
-            margin: 10px !important;
+            margin: var(--spacing-xs) !important;
           }
 
           .demo-form-row {
             grid-template-columns: 1fr !important;
-            gap: 20px !important;
+            gap: var(--spacing-md) !important;
           }
 
           .demo-modal-close {
@@ -276,7 +277,7 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 9999,
-    padding: '10px',
+    padding: 'var(--spacing-xs)',
     backdropFilter: 'blur(4px)',
     overflowY: 'auto',
   },
@@ -292,13 +293,13 @@ const styles: Record<string, React.CSSProperties> = {
   },
   closeButton: {
     position: 'absolute',
-    top: '20px',
-    right: '20px',
+    top: 'var(--spacing-md)',
+    right: 'var(--spacing-md)',
     background: 'transparent',
     border: 'none',
     cursor: 'pointer',
-    color: '#666',
-    padding: '8px',
+    color: 'var(--text-secondary)',
+    padding: 'var(--spacing-xs)',
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
@@ -307,13 +308,13 @@ const styles: Record<string, React.CSSProperties> = {
     zIndex: 1,
   },
   modalContent: {
-    padding: '50px',
+    padding: 'var(--spacing-xl)',
   },
   title: {
     fontSize: '36px',
     fontFamily: 'var(--font-headline, "Ginto Nord", sans-serif)',
     fontWeight: 700,
-    marginBottom: '10px',
+    marginBottom: 'var(--spacing-xs)',
     background: 'var(--gradient-text)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
@@ -321,18 +322,18 @@ const styles: Record<string, React.CSSProperties> = {
   },
   subtitle: {
     fontSize: '16px',
-    color: '#666',
+    color: 'var(--text-secondary)',
     marginBottom: '30px',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '20px',
+    gap: 'var(--spacing-md)',
   },
   row: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: '20px',
+    gap: 'var(--spacing-md)',
   },
   inputGroup: {
     display: 'flex',
@@ -341,51 +342,51 @@ const styles: Record<string, React.CSSProperties> = {
   label: {
     fontSize: '14px',
     fontWeight: 600,
-    marginBottom: '8px',
-    color: '#333',
+    marginBottom: 'var(--spacing-xs)',
+    color: 'var(--text-primary)',
   },
   input: {
-    padding: '12px 16px',
+    padding: 'var(--spacing-sm) var(--spacing-md)',
     fontSize: '16px',
-    border: '2px solid #E0E0E0',
-    borderRadius: '8px',
+    border: '2px solid var(--border-medium)',
+    borderRadius: 'var(--spacing-xs)',
     transition: 'border-color 0.2s ease',
     fontFamily: 'inherit',
   },
   textarea: {
-    padding: '12px 16px',
+    padding: 'var(--spacing-sm) var(--spacing-md)',
     fontSize: '16px',
-    border: '2px solid #E0E0E0',
-    borderRadius: '8px',
+    border: '2px solid var(--border-medium)',
+    borderRadius: 'var(--spacing-xs)',
     resize: 'vertical',
     fontFamily: 'inherit',
     transition: 'border-color 0.2s ease',
   },
   submitButton: {
-    background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
+    background: 'var(--gradient-coral)',
     color: 'white',
-    border: 'none',
-    padding: '16px 32px',
+    border: '2px solid transparent',
+    padding: 'var(--btn-padding-sm)',
     fontSize: '16px',
     fontWeight: 600,
-    borderRadius: '12px',
+    borderRadius: 'var(--radius-full)',
     cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    marginTop: '10px',
+    transition: 'all 0.25s ease',
+    marginTop: 'var(--spacing-xs)',
   },
   privacy: {
     fontSize: '12px',
-    color: '#999',
+    color: 'var(--text-muted)',
     textAlign: 'center',
-    marginTop: '10px',
+    marginTop: 'var(--spacing-xs)',
   },
   link: {
-    color: '#EF476F',
+    color: 'var(--primary-coral)',
     textDecoration: 'none',
   },
   successMessage: {
     textAlign: 'center',
-    padding: '40px 0',
+    padding: 'var(--spacing-xl) 0',
   },
   checkmark: {
     width: '80px',
@@ -397,16 +398,16 @@ const styles: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '0 auto 20px',
+    margin: '0 auto var(--spacing-md)',
   },
   successTitle: {
     fontSize: '28px',
     fontWeight: 700,
-    marginBottom: '10px',
-    color: '#333',
+    marginBottom: 'var(--spacing-xs)',
+    color: 'var(--text-primary)',
   },
   successText: {
     fontSize: '16px',
-    color: '#666',
+    color: 'var(--text-secondary)',
   },
 };

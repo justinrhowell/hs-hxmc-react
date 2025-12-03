@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 export function Component() {
   // Design tokens organized by category
@@ -259,6 +260,7 @@ export function Component() {
 
   return (
     <>
+      <ScrollAnimationScript />
       <style>{`
         @media (max-width: 768px) {
           .style-guide-grid {
@@ -649,102 +651,24 @@ export function Component() {
 
             <h3 style={styles.subsectionTitle}>Button Variants (Hover to see effects)</h3>
             <div style={{ display: 'flex', gap: 'var(--spacing-lg)', flexWrap: 'wrap', alignItems: 'center' }}>
-              <button
-                style={{
-                  background: 'var(--gradient-coral)',
-                  color: 'var(--text-white)',
-                  padding: 'var(--btn-padding)',
-                  borderRadius: 'var(--radius-full)',
-                  border: 'none',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  boxShadow: 'var(--shadow-coral-sm)',
-                  transition: 'var(--transition-medium)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-coral)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-coral-sm)';
-                }}
-              >
+              <button className="btn-primary-coral">
                 Primary (Coral)
               </button>
-              <button
-                style={{
-                  background: 'var(--primary-navy)',
-                  color: 'var(--text-white)',
-                  padding: 'var(--btn-padding)',
-                  borderRadius: 'var(--radius-full)',
-                  border: 'none',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  boxShadow: 'var(--shadow-md)',
-                  transition: 'var(--transition-medium)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-                }}
-              >
+              <button className="btn-primary-navy">
                 Primary (Navy)
               </button>
-              <button
-                style={{
-                  background: 'transparent',
-                  color: 'var(--text-primary)',
-                  padding: 'var(--btn-padding)',
-                  borderRadius: 'var(--radius-full)',
-                  border: '2px solid var(--border-medium)',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'var(--transition-medium)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'var(--bg-light-coral)';
-                  e.currentTarget.style.borderColor = 'var(--primary-coral)';
-                  e.currentTarget.style.color = 'var(--text-coral)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.borderColor = 'var(--border-medium)';
-                  e.currentTarget.style.color = 'var(--text-primary)';
-                }}
-              >
+              <button className="btn-outlined">
                 Outlined
               </button>
-              <button
-                style={{
-                  background: 'transparent',
-                  color: 'var(--text-coral)',
-                  padding: 'var(--btn-padding)',
-                  borderRadius: 'var(--radius-full)',
-                  border: 'none',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'var(--transition-medium)',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 'var(--spacing-xs)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.gap = 'var(--spacing-sm)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.gap = 'var(--spacing-xs)';
-                }}
-              >
+              <button className="btn-outlined-navy">
+                Outlined Navy
+              </button>
+              <button className="btn-text">
                 Text Button <span>→</span>
               </button>
             </div>
 
-            <h3 style={styles.subsectionTitle}>Hover State Patterns</h3>
+            <h3 style={styles.subsectionTitle}>Button CSS Classes</h3>
             <div style={{
               background: 'var(--bg-secondary)',
               padding: 'var(--spacing-lg)',
@@ -756,44 +680,33 @@ export function Component() {
               whiteSpace: 'pre-wrap',
               marginBottom: 'var(--spacing-lg)',
             }}>
-{`// Primary Button (Coral) Hover
-onMouseEnter: {
-  transform: 'translateY(-2px)'
-  boxShadow: 'var(--shadow-coral)'  // from --shadow-coral-sm
-}
-onMouseLeave: {
-  transform: 'translateY(0)'
-  boxShadow: 'var(--shadow-coral-sm)'
+{`/* Button CSS classes with inverse hover effects */
+
+.btn-primary-coral   /* Coral gradient → white bg + coral outline */
+.btn-primary-navy    /* Navy solid → white bg + navy outline */
+.btn-outlined        /* Coral outline → coral filled */
+.btn-outlined-navy   /* Navy outline → navy filled */
+.btn-text            /* Text with arrow → color change + arrow shift */
+.btn-white           /* White bg → transparent + white outline */
+
+/* Size modifiers */
+.btn-sm              /* Small button padding */
+.btn-lg              /* Large button padding */
+
+/* Example usage: */
+<button className="btn-primary-coral">Get Started</button>
+<button className="btn-outlined btn-sm">Learn More</button>
+
+/* Hover effects invert the button style */
+.btn-primary-coral:hover {
+  background: white;
+  color: coral;
+  border-color: coral;
 }
 
-// Primary Button (Navy) Hover
-onMouseEnter: {
-  transform: 'translateY(-2px)'
-  boxShadow: 'var(--shadow-lg)'  // from --shadow-md
-}
-onMouseLeave: {
-  transform: 'translateY(0)'
-  boxShadow: 'var(--shadow-md)'
-}
-
-// Outlined Button Hover
-onMouseEnter: {
-  background: 'var(--bg-light-coral)'
-  borderColor: 'var(--primary-coral)'
-  color: 'var(--text-coral)'
-}
-onMouseLeave: {
-  background: 'transparent'
-  borderColor: 'var(--border-medium)'
-  color: 'var(--text-primary)'
-}
-
-// Text Button Hover
-onMouseEnter: {
-  gap: 'var(--spacing-sm)'  // arrow moves right
-}
-onMouseLeave: {
-  gap: 'var(--spacing-xs)'
+.btn-outlined:hover {
+  background: coral;
+  color: white;
 }`}
             </div>
 
@@ -891,27 +804,14 @@ onMouseLeave: {
                 display: 'inline-flex',
                 alignItems: 'center',
                 padding: 'var(--spacing-xs) var(--spacing-md)',
-                background: 'var(--bg-light-teal)',
+                background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
                 borderRadius: 'var(--radius-full)',
                 fontSize: 'var(--font-size-small)',
                 fontWeight: 600,
-                color: 'var(--text-teal)',
-                border: '1px solid var(--border-medium)',
+                color: 'white',
+                border: '1px solid #1a1a2e',
               }}>
-                Teal Badge
-              </div>
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: 'var(--spacing-xs) var(--spacing-md)',
-                background: 'rgba(17, 138, 178, 0.1)',
-                borderRadius: 'var(--radius-full)',
-                fontSize: 'var(--font-size-small)',
-                fontWeight: 600,
-                color: 'var(--text-blue)',
-                border: '1px solid var(--border-medium)',
-              }}>
-                Blue Badge
+                Navy Badge
               </div>
             </div>
 
@@ -996,6 +896,791 @@ border: '1px solid var(--border-light)'`}
     margin: 0 auto !important;
   }
 }`}
+            </div>
+          </div>
+
+          {/* Scroll Animations Section */}
+          <div style={styles.card}>
+            <h2 style={styles.sectionTitle}>Scroll Animations</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-lg)', lineHeight: 'var(--line-height-relaxed)' }}>
+              Elements animate into view when scrolled into the viewport using vanilla JavaScript and CSS.
+              This approach works reliably with HubSpot's server-side rendering.
+            </p>
+
+            <h3 style={styles.subsectionTitle}>How It Works</h3>
+            <div style={{
+              background: 'var(--bg-secondary)',
+              padding: 'var(--spacing-lg)',
+              borderRadius: 'var(--radius-lg)',
+              fontFamily: 'monospace',
+              fontSize: 'var(--font-size-small)',
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              whiteSpace: 'pre-wrap',
+              marginBottom: 'var(--spacing-xl)',
+            }}>
+{`// 1. Import the scroll animation script
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
+
+// 2. Include the script once in your component (before closing tag)
+<ScrollAnimationScript />
+
+// 3. Add class to elements that should animate
+<div className="scroll-animate">
+  This content will fade in when scrolled into view
+</div>
+
+// 4. Optional: Add staggered delays for multiple items
+{items.map((item, index) => (
+  <div
+    className="scroll-animate"
+    data-delay={index * 100}
+  >
+    {item.content}
+  </div>
+))}`}
+            </div>
+
+            <h3 style={styles.subsectionTitle}>CSS Animation Classes</h3>
+            <div style={{
+              background: 'var(--bg-secondary)',
+              padding: 'var(--spacing-lg)',
+              borderRadius: 'var(--radius-lg)',
+              fontFamily: 'monospace',
+              fontSize: 'var(--font-size-small)',
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              whiteSpace: 'pre-wrap',
+              marginBottom: 'var(--spacing-xl)',
+            }}>
+{`/* Base state - elements start hidden */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Visible state - animate in */
+.scroll-animate.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}`}
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Live Demo</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-lg)', marginBottom: 'var(--spacing-xl)' }}>
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={i}
+                  className="scroll-animate"
+                  data-delay={i * 150}
+                  style={{
+                    background: 'var(--gradient-coral)',
+                    color: 'var(--text-white)',
+                    padding: 'var(--spacing-xl)',
+                    borderRadius: 'var(--radius-xl)',
+                    textAlign: 'center',
+                    fontWeight: 600,
+                  }}
+                >
+                  Card {i + 1}
+                  <div style={{ fontSize: 'var(--font-size-small)', opacity: 0.8, marginTop: 'var(--spacing-xs)' }}>
+                    delay: {i * 150}ms
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Best Practices</h3>
+            <ul style={{
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              paddingLeft: 'var(--spacing-lg)',
+            }}>
+              <li>Include <code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>&lt;ScrollAnimationScript /&gt;</code> once per section/module</li>
+              <li>Use <code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>data-delay</code> for staggered animations (values in milliseconds)</li>
+              <li>Apply to major content blocks, not individual text elements</li>
+              <li>Keep delays reasonable (100-200ms increments) for smooth flow</li>
+              <li>The observer uses <code style={{ background: 'var(--bg-secondary)', padding: '2px 6px', borderRadius: '4px' }}>threshold: 0.1</code> to trigger when 10% visible</li>
+            </ul>
+          </div>
+
+          {/* Dark Section Layouts */}
+          <div style={styles.card}>
+            <h2 style={styles.sectionTitle}>Dark Section Layouts</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-lg)', lineHeight: 'var(--line-height-relaxed)' }}>
+              Dark backgrounds create visual contrast and emphasis. Use the navy gradient for premium sections.
+            </p>
+
+            <h3 style={styles.subsectionTitle}>Dark Background with Cards</h3>
+            <p style={{ color: 'var(--text-muted)', marginBottom: 'var(--spacing-lg)', fontSize: 'var(--font-size-small)' }}>
+              Navy gradient background with light-colored content cards. Great for highlighting features or benefits.
+            </p>
+
+            {/* Live Example - Dark Background with Cards */}
+            <div style={{
+              background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+              borderRadius: 'var(--radius-xl)',
+              padding: 'var(--spacing-2xl)',
+              marginBottom: 'var(--spacing-xl)',
+            }}>
+              <h3 style={{
+                color: 'white',
+                fontFamily: 'var(--font-headline)',
+                fontSize: 'var(--font-size-h3)',
+                fontWeight: 500,
+                marginBottom: 'var(--spacing-lg)',
+                textAlign: 'center',
+              }}>
+                Section Heading on Dark Background
+              </h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-lg)' }}>
+                {['Feature One', 'Feature Two', 'Feature Three'].map((title, i) => (
+                  <div key={i} style={{
+                    background: 'var(--bg-white)',
+                    borderRadius: 'var(--radius-lg)',
+                    padding: 'var(--spacing-lg)',
+                    boxShadow: 'var(--shadow-md)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}>
+                    {/* Coral top accent bar */}
+                    <div style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '4px',
+                      background: 'var(--gradient-coral)',
+                    }} />
+                    <h4 style={{
+                      fontFamily: 'var(--font-headline)',
+                      fontSize: 'var(--font-size-h5)',
+                      fontWeight: 500,
+                      color: 'var(--text-coral)',
+                      marginBottom: 'var(--spacing-sm)',
+                    }}>
+                      {title}
+                    </h4>
+                    <p style={{
+                      fontSize: 'var(--font-size-small)',
+                      color: 'var(--text-secondary)',
+                      lineHeight: 'var(--line-height-normal)',
+                      margin: 0,
+                    }}>
+                      Card content sits on white background with coral accent titles and top border.
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Code Example</h3>
+            <div style={{
+              background: 'var(--bg-secondary)',
+              padding: 'var(--spacing-lg)',
+              borderRadius: 'var(--radius-lg)',
+              fontFamily: 'monospace',
+              fontSize: 'var(--font-size-small)',
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              whiteSpace: 'pre-wrap',
+            }}>
+{`<section style={{
+  background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+  padding: 'var(--section-padding-lg) var(--spacing-lg)',
+}}>
+  <h2 style={{ color: 'white' }}>Section Title</h2>
+  <div style={{ display: 'grid', gap: 'var(--spacing-lg)' }}>
+    <div style={{
+      background: 'var(--bg-white)',
+      borderRadius: 'var(--radius-lg)',
+      padding: 'var(--spacing-lg)',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      {/* Coral top accent bar */}
+      <div style={{
+        position: 'absolute',
+        top: 0, left: 0, right: 0,
+        height: '4px',
+        background: 'var(--gradient-coral)',
+      }} />
+      <h3 style={{ color: 'var(--text-coral)' }}>Card Title</h3>
+      <p>Card content...</p>
+    </div>
+  </div>
+</section>`}
+            </div>
+          </div>
+
+          {/* Dark Card Pattern */}
+          <div style={styles.card}>
+            <h2 style={styles.sectionTitle}>Dark Card Pattern</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-lg)', lineHeight: 'var(--line-height-relaxed)' }}>
+              Dark navy cards with white and coral text create a premium, high-contrast look. Perfect for featured content, stats, or quotes.
+            </p>
+
+            <h3 style={styles.subsectionTitle}>Dark Card with White + Coral Text</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-xl)', marginBottom: 'var(--spacing-xl)' }}>
+              {/* Dark Card Example */}
+              <div style={{
+                background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+                borderRadius: 'var(--radius-xl)',
+                padding: 'var(--spacing-2xl)',
+                boxShadow: 'var(--shadow-lg)',
+              }}>
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0.5rem 1rem',
+                  background: 'rgba(239, 71, 111, 0.2)',
+                  borderRadius: 'var(--radius-full)',
+                  fontSize: 'var(--font-size-xs)',
+                  fontWeight: 700,
+                  color: 'var(--text-coral)',
+                  marginBottom: 'var(--spacing-lg)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                }}>
+                  Featured
+                </div>
+                <p style={{
+                  fontSize: 'var(--font-size-h3)',
+                  color: 'white',
+                  lineHeight: 'var(--line-height-tight)',
+                  fontWeight: 700,
+                  fontFamily: 'var(--font-headline)',
+                  marginBottom: 'var(--spacing-md)',
+                }}>
+                  A world where mentorship isn't a program.
+                </p>
+                <p style={{
+                  fontSize: 'var(--font-size-h2)',
+                  color: 'var(--text-coral)',
+                  lineHeight: 1,
+                  fontWeight: 700,
+                  fontFamily: 'var(--font-headline)',
+                  margin: 0,
+                }}>
+                  It's infrastructure.
+                </p>
+              </div>
+
+              {/* Light Card for Contrast */}
+              <div style={{
+                background: 'var(--bg-white)',
+                borderRadius: 'var(--radius-xl)',
+                padding: 'var(--spacing-2xl)',
+                boxShadow: 'var(--shadow-lg)',
+                border: '2px solid var(--border-light)',
+              }}>
+                <div style={{
+                  position: 'relative',
+                  paddingLeft: 'var(--spacing-lg)',
+                  borderLeft: '4px solid var(--text-coral)',
+                }}>
+                  <p style={{
+                    fontSize: 'var(--font-size-h4)',
+                    color: 'var(--text-primary)',
+                    lineHeight: 'var(--line-height-relaxed)',
+                    fontWeight: 500,
+                    margin: 0,
+                  }}>
+                    Light card variant with coral accent border for comparison. Use when you need contrast without full dark background.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Dark Stats Card</h3>
+            <div style={{
+              background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+              borderRadius: 'var(--radius-xl)',
+              padding: 'var(--spacing-2xl)',
+              marginBottom: 'var(--spacing-xl)',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center' }}>
+                {[
+                  { value: '+6%', label: 'Retention' },
+                  { value: '+19%', label: 'Belonging' },
+                  { value: '+30%', label: 'Confidence' },
+                ].map((stat, i) => (
+                  <div key={i}>
+                    <div style={{
+                      fontSize: 'var(--font-size-h1)',
+                      fontWeight: 700,
+                      color: 'var(--text-coral)',
+                      fontFamily: 'var(--font-headline)',
+                      lineHeight: 1,
+                      marginBottom: 'var(--spacing-xs)',
+                    }}>
+                      {stat.value}
+                    </div>
+                    <div style={{
+                      fontSize: 'var(--font-size-small)',
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      fontWeight: 500,
+                    }}>
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Code Example</h3>
+            <div style={{
+              background: 'var(--bg-secondary)',
+              padding: 'var(--spacing-lg)',
+              borderRadius: 'var(--radius-lg)',
+              fontFamily: 'monospace',
+              fontSize: 'var(--font-size-small)',
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              whiteSpace: 'pre-wrap',
+            }}>
+{`<div style={{
+  background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+  borderRadius: 'var(--radius-xl)',
+  padding: 'var(--spacing-2xl)',
+}}>
+  {/* Badge */}
+  <div style={{
+    background: 'rgba(239, 71, 111, 0.2)',
+    color: 'var(--text-coral)',
+    padding: '0.5rem 1rem',
+    borderRadius: 'var(--radius-full)',
+  }}>
+    Featured
+  </div>
+
+  {/* White headline */}
+  <p style={{ color: 'white', fontWeight: 700 }}>
+    Main headline text
+  </p>
+
+  {/* Coral accent text */}
+  <p style={{ color: 'var(--text-coral)', fontWeight: 700 }}>
+    Accent text
+  </p>
+</div>`}
+            </div>
+          </div>
+
+          {/* Form Inputs Section */}
+          <div style={styles.card}>
+            <h2 style={styles.sectionTitle}>Form Inputs</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-lg)', lineHeight: 'var(--line-height-relaxed)' }}>
+              Consistent form input styles used across the site including the demo modal and ROI calculator.
+            </p>
+
+            <h3 style={styles.subsectionTitle}>Text Inputs & Labels</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-lg)', marginBottom: 'var(--spacing-xl)' }}>
+              <div>
+                <label style={{
+                  fontSize: 'var(--font-size-small)',
+                  fontWeight: 600,
+                  marginBottom: 'var(--spacing-xs)',
+                  display: 'block',
+                  color: 'var(--text-primary)',
+                }}>
+                  Label Text *
+                </label>
+                <input
+                  type="text"
+                  placeholder="Input placeholder"
+                  style={{
+                    padding: 'var(--spacing-sm) var(--spacing-md)',
+                    fontSize: 'var(--font-size-body)',
+                    border: '2px solid var(--border-medium)',
+                    borderRadius: 'var(--radius-sm)',
+                    width: '100%',
+                    fontFamily: 'inherit',
+                    outline: 'none',
+                  }}
+                />
+              </div>
+              <div>
+                <label style={{
+                  fontSize: 'var(--font-size-small)',
+                  fontWeight: 600,
+                  marginBottom: 'var(--spacing-xs)',
+                  display: 'block',
+                  color: 'var(--text-secondary)',
+                }}>
+                  ROI Calculator Style
+                </label>
+                <input
+                  type="text"
+                  defaultValue="1,000"
+                  style={{
+                    fontSize: 'var(--font-size-body-lg)',
+                    fontWeight: 600,
+                    color: 'var(--primary-navy)',
+                    border: '1px solid var(--text-muted)',
+                    padding: 'var(--spacing-xs) var(--spacing-sm)',
+                    borderRadius: 'var(--radius-md)',
+                    width: '100%',
+                    outline: 'none',
+                  }}
+                />
+              </div>
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Textarea</h3>
+            <div style={{ marginBottom: 'var(--spacing-xl)' }}>
+              <label style={{
+                fontSize: 'var(--font-size-small)',
+                fontWeight: 600,
+                marginBottom: 'var(--spacing-xs)',
+                display: 'block',
+                color: 'var(--text-primary)',
+              }}>
+                Message
+              </label>
+              <textarea
+                rows={3}
+                placeholder="Enter your message..."
+                style={{
+                  padding: 'var(--spacing-sm) var(--spacing-md)',
+                  fontSize: 'var(--font-size-body)',
+                  border: '2px solid var(--border-medium)',
+                  borderRadius: 'var(--radius-sm)',
+                  width: '100%',
+                  resize: 'vertical',
+                  fontFamily: 'inherit',
+                  outline: 'none',
+                }}
+              />
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Code Example</h3>
+            <div style={{
+              background: 'var(--bg-secondary)',
+              padding: 'var(--spacing-lg)',
+              borderRadius: 'var(--radius-lg)',
+              fontFamily: 'monospace',
+              fontSize: 'var(--font-size-small)',
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              whiteSpace: 'pre-wrap',
+            }}>
+{`/* Standard form input */
+label {
+  fontSize: 'var(--font-size-small)',
+  fontWeight: 600,
+  color: 'var(--text-primary)',
+  marginBottom: 'var(--spacing-xs)',
+}
+
+input, textarea {
+  padding: 'var(--spacing-sm) var(--spacing-md)',
+  fontSize: 'var(--font-size-body)',
+  border: '2px solid var(--border-medium)',
+  borderRadius: 'var(--radius-sm)',
+  fontFamily: 'inherit',
+}
+
+input:focus, textarea:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(74, 158, 170, 0.15);
+}
+
+/* ROI Calculator style (bold values) */
+input {
+  fontSize: 'var(--font-size-body-lg)',
+  fontWeight: 600,
+  color: 'var(--primary-navy)',
+  border: '1px solid var(--text-muted)',
+  borderRadius: 'var(--radius-md)',
+}`}
+            </div>
+          </div>
+
+          {/* Tab Navigation Pattern */}
+          <div style={styles.card}>
+            <h2 style={styles.sectionTitle}>Tab Navigation</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-lg)', lineHeight: 'var(--line-height-relaxed)' }}>
+              Tabbed interfaces for switching between content panels. Uses dark navy for active state.
+            </p>
+
+            <h3 style={styles.subsectionTitle}>Horizontal Tabs</h3>
+            <div style={{
+              background: 'var(--bg-light)',
+              padding: 'var(--spacing-xs)',
+              borderRadius: 'var(--radius-lg)',
+              display: 'flex',
+              gap: 'var(--spacing-xs)',
+              flexWrap: 'wrap',
+              marginBottom: 'var(--spacing-xl)',
+            }}>
+              <button style={{
+                padding: 'var(--spacing-sm) var(--spacing-lg)',
+                borderRadius: 'var(--radius-md)',
+                fontSize: 'var(--font-size-body)',
+                border: 'none',
+                cursor: 'pointer',
+                background: 'var(--primary-blue)',
+                color: 'var(--text-white)',
+                fontWeight: 600,
+                boxShadow: 'var(--shadow-md)',
+              }} type="button">
+                Active Tab
+              </button>
+              <button style={{
+                padding: 'var(--spacing-sm) var(--spacing-lg)',
+                borderRadius: 'var(--radius-md)',
+                fontSize: 'var(--font-size-body)',
+                border: 'none',
+                cursor: 'pointer',
+                background: 'transparent',
+                color: 'var(--text-primary)',
+                fontWeight: 500,
+              }} type="button">
+                Inactive Tab
+              </button>
+              <button style={{
+                padding: 'var(--spacing-sm) var(--spacing-lg)',
+                borderRadius: 'var(--radius-md)',
+                fontSize: 'var(--font-size-body)',
+                border: 'none',
+                cursor: 'pointer',
+                background: 'transparent',
+                color: 'var(--text-primary)',
+                fontWeight: 500,
+              }} type="button">
+                Another Tab
+              </button>
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Segmented Control (ROI Calculator Style)</h3>
+            <div style={{
+              display: 'flex',
+              gap: 0,
+              marginBottom: 'var(--spacing-xl)',
+            }}>
+              <button style={{
+                padding: 'var(--spacing-sm) var(--spacing-lg)',
+                fontSize: 'var(--font-size-body)',
+                fontWeight: 600,
+                border: '1px solid var(--primary-navy)',
+                borderRadius: 'var(--radius-sm) 0 0 var(--radius-sm)',
+                background: 'var(--primary-navy)',
+                color: 'var(--text-white)',
+                cursor: 'pointer',
+              }} type="button">
+                Option A
+              </button>
+              <button style={{
+                padding: 'var(--spacing-sm) var(--spacing-lg)',
+                fontSize: 'var(--font-size-body)',
+                fontWeight: 600,
+                border: '1px solid var(--text-muted)',
+                borderLeft: 'none',
+                borderRadius: 0,
+                background: 'var(--bg-white)',
+                color: 'var(--text-secondary)',
+                cursor: 'pointer',
+              }} type="button">
+                Option B
+              </button>
+              <button style={{
+                padding: 'var(--spacing-sm) var(--spacing-lg)',
+                fontSize: 'var(--font-size-body)',
+                fontWeight: 600,
+                border: '1px solid var(--text-muted)',
+                borderLeft: 'none',
+                borderRadius: '0 var(--radius-sm) var(--radius-sm) 0',
+                background: 'var(--bg-white)',
+                color: 'var(--text-secondary)',
+                cursor: 'pointer',
+              }} type="button">
+                Option C
+              </button>
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Code Example</h3>
+            <div style={{
+              background: 'var(--bg-secondary)',
+              padding: 'var(--spacing-lg)',
+              borderRadius: 'var(--radius-lg)',
+              fontFamily: 'monospace',
+              fontSize: 'var(--font-size-small)',
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              whiteSpace: 'pre-wrap',
+            }}>
+{`/* Tab container */
+.tabs {
+  background: 'var(--bg-light)',
+  padding: 'var(--spacing-xs)',
+  borderRadius: 'var(--radius-lg)',
+  display: 'flex',
+  gap: 'var(--spacing-xs)',
+}
+
+/* Active tab */
+.tab-active {
+  background: 'var(--primary-blue)',
+  color: 'var(--text-white)',
+  fontWeight: 600,
+  boxShadow: 'var(--shadow-md)',
+}
+
+/* Inactive tab */
+.tab-inactive {
+  background: 'transparent',
+  color: 'var(--text-primary)',
+  fontWeight: 500,
+}`}
+            </div>
+          </div>
+
+          {/* Hero Image Composition */}
+          <div style={styles.card}>
+            <h2 style={styles.sectionTitle}>Hero Image Composition</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-lg)', lineHeight: 'var(--line-height-relaxed)' }}>
+              Hero images use decorative SVG elements (blue arrows and yellow star) positioned around the main image.
+            </p>
+
+            <h3 style={styles.subsectionTitle}>Decorative Elements</h3>
+            <div style={{ display: 'flex', gap: 'var(--spacing-xl)', alignItems: 'flex-start', marginBottom: 'var(--spacing-xl)', flexWrap: 'wrap' }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{
+                  width: '100px',
+                  height: '80px',
+                  background: 'var(--bg-secondary)',
+                  borderRadius: 'var(--radius-md)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 'var(--spacing-sm)',
+                }}>
+                  <span style={{ fontSize: '2rem' }}>↗↗</span>
+                </div>
+                <div style={styles.tokenName}>blue-arrows.svg</div>
+                <div style={styles.colorDesc}>Top-left position</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{
+                  width: '80px',
+                  height: '80px',
+                  background: 'var(--bg-secondary)',
+                  borderRadius: 'var(--radius-md)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: 'var(--spacing-sm)',
+                }}>
+                  <span style={{ fontSize: '2.5rem', color: 'var(--secondary-yellow)' }}>✦</span>
+                </div>
+                <div style={styles.tokenName}>yellow-star.svg</div>
+                <div style={styles.colorDesc}>Bottom-right position</div>
+              </div>
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Layout Pattern</h3>
+            <div style={{
+              position: 'relative',
+              padding: '30px 20px 20px',
+              background: 'var(--bg-secondary)',
+              borderRadius: 'var(--radius-xl)',
+              marginBottom: 'var(--spacing-xl)',
+              maxWidth: '400px',
+            }}>
+              {/* Blue arrows indicator */}
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: '-10px',
+                fontSize: '1.5rem',
+                color: 'var(--secondary-blue)',
+              }}>↗↗</div>
+
+              {/* Image placeholder */}
+              <div style={{
+                background: 'var(--gradient-coral)',
+                borderRadius: '24px',
+                height: '200px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontWeight: 600,
+              }}>
+                Hero Image
+              </div>
+
+              {/* Yellow star indicator */}
+              <div style={{
+                position: 'absolute',
+                bottom: '-10px',
+                right: '-10px',
+                fontSize: '2rem',
+                color: 'var(--secondary-yellow)',
+              }}>✦</div>
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Code Example</h3>
+            <div style={{
+              background: 'var(--bg-secondary)',
+              padding: 'var(--spacing-lg)',
+              borderRadius: 'var(--radius-lg)',
+              fontFamily: 'monospace',
+              fontSize: 'var(--font-size-small)',
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              whiteSpace: 'pre-wrap',
+            }}>
+{`<div style={{
+  position: 'relative',
+  paddingTop: '30px',
+  paddingRight: '20px',
+  paddingLeft: '20px',
+  paddingBottom: '20px',
+}}>
+  {/* Blue arrows - top left */}
+  <img
+    src={blueArrows}
+    alt=""
+    aria-hidden="true"
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: '-10px',
+      width: '120px',
+      zIndex: 1,
+    }}
+  />
+
+  {/* Main image */}
+  <img
+    src={heroImage}
+    style={{
+      width: '100%',
+      borderRadius: '24px',
+      position: 'relative',
+      zIndex: 2,
+      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
+    }}
+  />
+
+  {/* Yellow star - bottom right */}
+  <img
+    src={yellowStar}
+    alt=""
+    aria-hidden="true"
+    style={{
+      position: 'absolute',
+      bottom: '-20px',
+      right: '-20px',
+      width: '100px',
+      zIndex: 3,
+    }}
+  />
+</div>`}
             </div>
           </div>
 

@@ -24,7 +24,7 @@ export function Component({ fieldValues }: any) {
       backdropFilter: 'blur(20px)',
       boxShadow: 'var(--shadow-sm)',
       zIndex: 'var(--z-modal)',
-      padding: 'var(--spacing-sm) 0',
+      padding: '12px 0',
       transition: 'var(--transition-smooth)',
       overflow: 'visible',
     },
@@ -39,10 +39,10 @@ export function Component({ fieldValues }: any) {
       alignItems: 'center',
     },
     logo: {
-      height: '32px',
+      height: '28px',
       display: 'flex',
       alignItems: 'center',
-      maxWidth: '180px',
+      maxWidth: '160px',
       transition: 'var(--transition-smooth)',
     },
     logoImg: {
@@ -54,28 +54,16 @@ export function Component({ fieldValues }: any) {
     desktopMenu: {
       display: 'flex',
       alignItems: 'center',
-      gap: 'var(--spacing-lg)',
+      gap: 'var(--spacing-md)',
     },
     menuLink: {
       fontFamily: 'var(--font-body)',
-      fontSize: 'var(--font-size-body)',
+      fontSize: 'var(--font-size-small)',
       fontWeight: 500,
       color: 'var(--text-primary)',
       textDecoration: 'none',
       padding: 'var(--spacing-xs) 0',
       transition: 'var(--transition-fast)',
-    },
-    ctaButton: {
-      background: 'var(--gradient-coral)',
-      color: 'var(--text-white)',
-      padding: 'var(--btn-padding-sm)',
-      borderRadius: 'var(--radius-full)',
-      fontSize: 'var(--font-size-body)',
-      fontWeight: 600,
-      border: 'none',
-      cursor: 'pointer',
-      boxShadow: 'var(--shadow-md)',
-      transition: 'var(--transition-medium)',
     },
     hamburger: {
       display: 'none',
@@ -99,23 +87,34 @@ export function Component({ fieldValues }: any) {
             display: flex !important;
           }
 
+          .nav-logo {
+            height: 24px !important;
+          }
+
           .mobile-menu {
-            padding: 70px 20px 20px !important;
+            padding: 70px var(--spacing-md) var(--spacing-md) !important;
+          }
+
+          .mobile-menu a {
+            font-size: var(--font-size-body) !important;
           }
         }
 
         @media (max-width: 480px) {
+          .nav-logo {
+            height: 22px !important;
+          }
+
           .mobile-menu {
-            padding: 60px 16px 16px !important;
+            padding: 60px var(--spacing-sm) var(--spacing-sm) !important;
           }
 
           .mobile-menu a {
-            font-size: 1.1rem !important;
+            font-size: var(--font-size-small) !important;
           }
         }
 
         @media (max-height: 600px) {
-          /* For short screens, reduce top padding */
           .mobile-menu {
             padding-top: 60px !important;
           }
@@ -143,14 +142,14 @@ export function Component({ fieldValues }: any) {
 
               if (currentScrollY > 50) {
                 // Scrolled state - smaller, more shadow
-                nav.style.padding = '0.75rem 0';
-                nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
-                logo.style.height = '28px';
+                nav.style.padding = '8px 0';
+                nav.style.boxShadow = 'var(--shadow-md)';
+                logo.style.height = '24px';
               } else {
                 // Top of page - larger, less shadow
-                nav.style.padding = '1.25rem 0';
-                nav.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.05)';
-                logo.style.height = '32px';
+                nav.style.padding = '12px 0';
+                nav.style.boxShadow = 'var(--shadow-sm)';
+                logo.style.height = '28px';
               }
             }
 
@@ -397,18 +396,9 @@ export function Component({ fieldValues }: any) {
                 </div>
               ))}
               <button
-                className="demo-request-btn"
-                style={styles.ctaButton}
+                className="demo-request-btn btn-primary-coral btn-sm"
                 type="button"
                 aria-label="Request a demo"
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-coral)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-                }}
               >
                 Request a Demo
               </button>
@@ -425,11 +415,11 @@ export function Component({ fieldValues }: any) {
               type="button"
               aria-label="Toggle menu"
             >
-              <svg className="hamburger-icon" width="32" height="32" viewBox="0 0 24 24" fill="none">
-                <path d="M3 12H21M3 6H21M3 18H21" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round"/>
+              <svg className="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 12H21M3 6H21M3 18H21" stroke="var(--text-primary)" strokeWidth="2" strokeLinecap="round"/>
               </svg>
-              <svg className="close-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" style={{ display: 'none' }}>
-                <path d="M18 6L6 18M6 6L18 18" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round"/>
+              <svg className="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ display: 'none' }}>
+                <path d="M18 6L6 18M6 6L18 18" stroke="var(--text-primary)" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </button>
           </div>
@@ -444,7 +434,7 @@ export function Component({ fieldValues }: any) {
           bottom: 0,
           backgroundColor: 'var(--bg-white)',
           zIndex: 10000,
-          padding: '80px 20px 20px',
+          padding: '70px var(--spacing-md) var(--spacing-md)',
           transform: 'translateX(100%)',
           transition: 'var(--transition-medium)',
           overflowY: 'auto',
@@ -453,14 +443,14 @@ export function Component({ fieldValues }: any) {
           <div style={{
             display: 'flex',
             flexDirection: 'column' as const,
-            gap: 'var(--spacing-md)',
+            gap: 'var(--spacing-sm)',
           }}>
             {menuItems.map((item, index) => (
               <a
                 key={index}
                 href={item.href || '#'}
                 style={{
-                  fontSize: 'var(--font-size-body-lg)',
+                  fontSize: 'var(--font-size-body)',
                   fontWeight: 500,
                   color: 'var(--text-primary)',
                   textDecoration: 'none',
@@ -471,30 +461,9 @@ export function Component({ fieldValues }: any) {
               </a>
             ))}
             <button
-              className="demo-request-btn"
-              style={{
-                background: 'var(--gradient-coral)',
-                color: 'var(--text-white)',
-                padding: 'var(--btn-padding-sm)',
-                borderRadius: 'var(--radius-full)',
-                fontSize: 'var(--font-size-body)',
-                fontWeight: 600,
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: 'var(--shadow-md)',
-                width: '100%',
-                marginTop: 'var(--spacing-sm)',
-                transition: 'var(--transition-medium)',
-              }}
+              className="demo-request-btn btn-primary-coral btn-sm"
+              style={{ width: '100%', marginTop: 'var(--spacing-sm)' }}
               type="button"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = 'var(--shadow-coral)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-              }}
             >
               Request a Demo
             </button>

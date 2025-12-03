@@ -61,13 +61,13 @@ export function Component({ fieldValues }: any) {
         @media (max-width: 768px) {
           .contact-layout-split {
             grid-template-columns: 1fr !important;
-            gap: 3rem !important;
+            gap: var(--spacing-xl) !important;
           }
         }
       `}} />
 
       <section style={{
-        padding: '80px 20px',
+        padding: 'var(--section-padding-lg) var(--spacing-md)',
         background: 'linear-gradient(180deg, #FFFFFF 0%, #FFFBF8 100%)',
       }}>
         <div style={{
@@ -77,23 +77,23 @@ export function Component({ fieldValues }: any) {
           {/* Header */}
           <div style={{
             textAlign: layout === 'centered' ? 'center' : 'left',
-            marginBottom: '3rem',
+            marginBottom: 'var(--spacing-xl)',
             maxWidth: layout === 'centered' ? '700px' : '100%',
-            margin: layout === 'centered' ? '0 auto 3rem' : '0 0 3rem 0',
+            margin: layout === 'centered' ? '0 auto var(--spacing-xl)' : '0 0 var(--spacing-xl) 0',
           }}>
             <h2 style={{
               fontSize: 'clamp(2rem, 4vw, 3rem)',
               fontWeight: 500,
-              marginBottom: '1rem',
-              color: '#1a1a1a',
+              marginBottom: 'var(--spacing-sm)',
+              color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)',
             }}>
               {heading}
             </h2>
             <p style={{
-              fontSize: '1.15rem',
+              fontSize: 'var(--font-size-body-lg)',
               lineHeight: 1.7,
-              color: '#6B7280',
+              color: 'var(--text-secondary)',
             }}>
               {description}
             </p>
@@ -105,7 +105,7 @@ export function Component({ fieldValues }: any) {
             style={{
               display: 'grid',
               gridTemplateColumns: layout === 'split' ? '1fr 1.5fr' : '1fr',
-              gap: '4rem',
+              gap: 'var(--spacing-2xl)',
               alignItems: 'start',
             }}
           >
@@ -113,20 +113,20 @@ export function Component({ fieldValues }: any) {
             {layout === 'split' && showContactInfo && (
               <div>
                 <h3 style={{
-                  fontSize: '1.5rem',
+                  fontSize: 'var(--spacing-md)',
                   fontWeight: 500,
-                  marginBottom: '1.5rem',
-                  color: '#1a1a1a',
+                  marginBottom: 'var(--spacing-md)',
+                  color: 'var(--text-primary)',
                   fontFamily: 'var(--font-headline)',
                 }}>
                   Contact Information
                 </h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
                   {contactInfo.map((item, index) => (
                     <div key={index} style={{
                       display: 'flex',
                       alignItems: 'flex-start',
-                      gap: '1rem',
+                      gap: 'var(--spacing-sm)',
                     }}>
                       <div style={{
                         width: '48px',
@@ -143,19 +143,19 @@ export function Component({ fieldValues }: any) {
                       </div>
                       <div>
                         <div style={{
-                          fontSize: '0.85rem',
+                          fontSize: 'var(--font-size-small)',
                           fontWeight: 600,
-                          color: '#9CA3AF',
+                          color: 'var(--text-muted)',
                           textTransform: 'uppercase',
                           letterSpacing: '0.05em',
-                          marginBottom: '0.25rem',
+                          marginBottom: 'var(--spacing-xs)',
                         }}>
                           {item.label}
                         </div>
                         {item.link ? (
                           <a href={item.link} style={{
-                            fontSize: '1rem',
-                            color: '#1a1a1a',
+                            fontSize: 'var(--font-size-base)',
+                            color: 'var(--text-primary)',
                             textDecoration: 'none',
                             transition: 'color 0.3s ease',
                           }}>
@@ -163,8 +163,8 @@ export function Component({ fieldValues }: any) {
                           </a>
                         ) : (
                           <div style={{
-                            fontSize: '1rem',
-                            color: '#1a1a1a',
+                            fontSize: 'var(--font-size-base)',
+                            color: 'var(--text-primary)',
                           }}>
                             {item.value}
                           </div>
@@ -179,7 +179,7 @@ export function Component({ fieldValues }: any) {
             {/* Form */}
             <div style={{
               background: 'white',
-              padding: '3rem',
+              padding: 'var(--spacing-xl)',
               borderRadius: 'var(--radius-xl)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
               border: '1px solid rgba(239, 71, 111, 0.08)',
@@ -189,16 +189,16 @@ export function Component({ fieldValues }: any) {
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: '1fr 1fr',
-                  gap: '1rem',
-                  marginBottom: '1.5rem',
+                  gap: 'var(--spacing-sm)',
+                  marginBottom: 'var(--spacing-md)',
                 }}>
                   <div>
                     <label style={{
                       display: 'block',
-                      fontSize: '0.9rem',
+                      fontSize: 'var(--font-size-base)',
                       fontWeight: 600,
-                      color: '#374151',
-                      marginBottom: '0.5rem',
+                      color: 'var(--text-primary)',
+                      marginBottom: 'var(--spacing-sm)',
                     }}>
                       First Name *
                     </label>
@@ -208,10 +208,10 @@ export function Component({ fieldValues }: any) {
                       className="contact-input"
                       style={{
                         width: '100%',
-                        padding: '0.875rem 1rem',
-                        border: '2px solid #E5E7EB',
+                        padding: '0.875rem var(--spacing-sm)',
+                        border: '2px solid var(--border-light)',
                         borderRadius: 'var(--radius-md)',
-                        fontSize: '1rem',
+                        fontSize: 'var(--font-size-base)',
                         outline: 'none',
                         transition: 'var(--transition-medium)',
                       }}
@@ -220,10 +220,10 @@ export function Component({ fieldValues }: any) {
                   <div>
                     <label style={{
                       display: 'block',
-                      fontSize: '0.9rem',
+                      fontSize: 'var(--font-size-base)',
                       fontWeight: 600,
-                      color: '#374151',
-                      marginBottom: '0.5rem',
+                      color: 'var(--text-primary)',
+                      marginBottom: 'var(--spacing-sm)',
                     }}>
                       Last Name *
                     </label>
@@ -233,10 +233,10 @@ export function Component({ fieldValues }: any) {
                       className="contact-input"
                       style={{
                         width: '100%',
-                        padding: '0.875rem 1rem',
-                        border: '2px solid #E5E7EB',
+                        padding: '0.875rem var(--spacing-sm)',
+                        border: '2px solid var(--border-light)',
                         borderRadius: 'var(--radius-md)',
-                        fontSize: '1rem',
+                        fontSize: 'var(--font-size-base)',
                         outline: 'none',
                         transition: 'var(--transition-medium)',
                       }}
@@ -245,13 +245,13 @@ export function Component({ fieldValues }: any) {
                 </div>
 
                 {/* Email */}
-                <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ marginBottom: 'var(--spacing-md)' }}>
                   <label style={{
                     display: 'block',
-                    fontSize: '0.9rem',
+                    fontSize: 'var(--font-size-base)',
                     fontWeight: 600,
-                    color: '#374151',
-                    marginBottom: '0.5rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: 'var(--spacing-sm)',
                   }}>
                     Email Address *
                   </label>
@@ -261,10 +261,10 @@ export function Component({ fieldValues }: any) {
                     className="contact-input"
                     style={{
                       width: '100%',
-                      padding: '0.875rem 1rem',
-                      border: '2px solid #E5E7EB',
+                      padding: '0.875rem var(--spacing-sm)',
+                      border: '2px solid var(--border-light)',
                       borderRadius: 'var(--radius-md)',
-                      fontSize: '1rem',
+                      fontSize: 'var(--font-size-base)',
                       outline: 'none',
                       transition: 'var(--transition-medium)',
                     }}
@@ -272,13 +272,13 @@ export function Component({ fieldValues }: any) {
                 </div>
 
                 {/* Subject */}
-                <div style={{ marginBottom: '1.5rem' }}>
+                <div style={{ marginBottom: 'var(--spacing-md)' }}>
                   <label style={{
                     display: 'block',
-                    fontSize: '0.9rem',
+                    fontSize: 'var(--font-size-base)',
                     fontWeight: 600,
-                    color: '#374151',
-                    marginBottom: '0.5rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: 'var(--spacing-sm)',
                   }}>
                     Subject
                   </label>
@@ -287,10 +287,10 @@ export function Component({ fieldValues }: any) {
                     className="contact-input"
                     style={{
                       width: '100%',
-                      padding: '0.875rem 1rem',
-                      border: '2px solid #E5E7EB',
+                      padding: '0.875rem var(--spacing-sm)',
+                      border: '2px solid var(--border-light)',
                       borderRadius: 'var(--radius-md)',
-                      fontSize: '1rem',
+                      fontSize: 'var(--font-size-base)',
                       outline: 'none',
                       transition: 'var(--transition-medium)',
                     }}
@@ -298,13 +298,13 @@ export function Component({ fieldValues }: any) {
                 </div>
 
                 {/* Message */}
-                <div style={{ marginBottom: '2rem' }}>
+                <div style={{ marginBottom: 'var(--spacing-lg)' }}>
                   <label style={{
                     display: 'block',
-                    fontSize: '0.9rem',
+                    fontSize: 'var(--font-size-base)',
                     fontWeight: 600,
-                    color: '#374151',
-                    marginBottom: '0.5rem',
+                    color: 'var(--text-primary)',
+                    marginBottom: 'var(--spacing-sm)',
                   }}>
                     Message *
                   </label>
@@ -314,10 +314,10 @@ export function Component({ fieldValues }: any) {
                     className="contact-textarea"
                     style={{
                       width: '100%',
-                      padding: '0.875rem 1rem',
-                      border: '2px solid #E5E7EB',
+                      padding: '0.875rem var(--spacing-sm)',
+                      border: '2px solid var(--border-light)',
                       borderRadius: 'var(--radius-md)',
-                      fontSize: '1rem',
+                      fontSize: 'var(--font-size-base)',
                       outline: 'none',
                       transition: 'var(--transition-medium)',
                       resize: 'vertical',
@@ -337,14 +337,14 @@ export function Component({ fieldValues }: any) {
                     padding: 'var(--btn-padding)',
                     borderRadius: 'var(--radius-full)',
                     border: 'none',
-                    fontSize: '1rem',
+                    fontSize: 'var(--font-size-base)',
                     fontWeight: 600,
                     cursor: 'pointer',
                     transition: 'var(--transition-medium)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '0.5rem',
+                    gap: 'var(--spacing-sm)',
                   }}
                 >
                   Send Message

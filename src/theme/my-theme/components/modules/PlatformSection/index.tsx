@@ -1,9 +1,10 @@
+import React from 'react';
 import {
   ModuleFields,
   TextField,
   ImageField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface Feature {
   icon: string;
@@ -12,8 +13,6 @@ interface Feature {
 }
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
-
   const features: Feature[] = fieldValues.features || [
     {
       icon: '⚡',
@@ -33,12 +32,14 @@ export function Component({ fieldValues }: any) {
   ];
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      id="platform"
+      className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
         background: 'var(--bg-white)',
-        ...animationStyles.subtleSlideUp(isVisible),
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
@@ -50,34 +51,32 @@ export function Component({ fieldValues }: any) {
         }} className="platform-content">
           {/* Left Column - Text Content */}
           <div>
-            {/* Badge */}
-            <div style={{
-              display: 'inline-block',
-              padding: '0.4rem 1rem',
-              background: 'var(--primary-navy)',
-              color: 'var(--text-white)',
-              borderRadius: 'var(--radius-full)',
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              marginBottom: 'var(--spacing-xl)',
-            }}>
-              {fieldValues.badge || 'The Platform'}
-            </div>
-
+            {/* Section Title */}
             <h2 style={{
               fontSize: 'var(--font-size-h2)',
               fontWeight: 500,
               lineHeight: 'var(--line-height-tight)',
               letterSpacing: 'var(--letter-spacing-tight)',
+              marginBottom: 'var(--spacing-sm)',
+              color: 'var(--text-coral)',
+              fontFamily: 'var(--font-headline)',
+            }}>
+              {fieldValues.badge || 'The Platform'}
+            </h2>
+
+            <p style={{
+              fontSize: 'var(--font-size-h3)',
+              fontWeight: 500,
+              lineHeight: 'var(--line-height-tight)',
               marginBottom: 'var(--spacing-lg)',
               color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)',
             }}>
               {fieldValues.title || 'Scale without the administrative burden.'}
-            </h2>
+            </p>
 
             <p style={{
-              fontSize: '1.1rem',
+              fontSize: 'var(--font-size-large)',
               color: 'var(--text-secondary)',
               lineHeight: 'var(--line-height-relaxed)',
               marginBottom: 'var(--spacing-2xl)',
@@ -91,7 +90,7 @@ export function Component({ fieldValues }: any) {
               {features.map((feature, index) => (
                 <div key={index} style={{ display: 'flex', gap: 'var(--spacing-md)', alignItems: 'flex-start' }}>
                   <div style={{
-                    fontSize: '1.5rem',
+                    fontSize: 'var(--font-size-h3)',
                     flexShrink: 0,
                     width: '40px',
                     height: '40px',
@@ -105,16 +104,16 @@ export function Component({ fieldValues }: any) {
                   </div>
                   <div>
                     <h3 style={{
-                      fontSize: '1.15rem',
+                      fontSize: 'var(--font-size-large)',
                       fontWeight: 500,
                       color: 'var(--text-primary)',
-                      marginBottom: '0.5rem',
+                      marginBottom: 'var(--spacing-sm)',
                       fontFamily: 'var(--font-headline)',
                     }}>
                       {feature.title}
                     </h3>
                     <p style={{
-                      fontSize: '0.95rem',
+                      fontSize: 'var(--font-size-base)',
                       color: 'var(--text-muted)',
                       lineHeight: 'var(--line-height-normal)',
                       margin: 0,
@@ -128,9 +127,7 @@ export function Component({ fieldValues }: any) {
           </div>
 
           {/* Right Column - Visual/Card */}
-          <div style={{
-            ...animationStyles.staggeredSubtle(isVisible, 0.2),
-          }}>
+          <div className="scroll-animate" data-delay="200">
             {/* Workflow Automation Card */}
             <div style={{
               background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 251, 248, 0.9) 100%)',
@@ -147,7 +144,7 @@ export function Component({ fieldValues }: any) {
                 marginBottom: 'var(--spacing-xl)',
               }}>
                 <h3 style={{
-                  fontSize: '1.25rem',
+                  fontSize: 'var(--font-size-h3)',
                   fontWeight: 500,
                   color: 'var(--text-primary)',
                   margin: 0,
@@ -160,7 +157,7 @@ export function Component({ fieldValues }: any) {
                   background: 'rgba(6, 214, 160, 0.1)',
                   color: '#06D6A0',
                   borderRadius: 'var(--radius-md)',
-                  fontSize: '0.75rem',
+                  fontSize: 'var(--font-size-xs)',
                   fontWeight: 600,
                 }}>
                   Active
@@ -192,23 +189,23 @@ export function Component({ fieldValues }: any) {
                         justifyContent: 'center',
                         background: 'rgba(239, 71, 111, 0.08)',
                         borderRadius: 'var(--radius-circle)',
-                        fontSize: '0.875rem',
+                        fontSize: 'var(--font-size-small)',
                         fontWeight: 600,
                         color: 'var(--text-coral)',
                       }}>
                         {item.num}
                       </span>
                       <div>
-                        <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>
+                        <div style={{ fontWeight: 600, fontSize: 'var(--font-size-base)', color: 'var(--text-primary)' }}>
                           {item.title}
                         </div>
-                        <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                        <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)' }}>
                           {item.time}
                         </div>
                       </div>
                     </div>
                     <span style={{
-                      fontSize: '0.8rem',
+                      fontSize: 'var(--font-size-xs)',
                       fontWeight: 600,
                       color: idx === 1 ? '#06D6A0' : idx === 2 ? '#FFD166' : 'var(--text-muted)',
                     }}>
@@ -227,7 +224,7 @@ export function Component({ fieldValues }: any) {
                 borderRadius: 'var(--radius-md)',
               }}>
                 <p style={{
-                  fontSize: '0.9rem',
+                  fontSize: 'var(--font-size-base)',
                   fontStyle: 'italic',
                   color: 'var(--text-secondary)',
                   margin: '0 0 var(--spacing-sm) 0',
@@ -236,10 +233,10 @@ export function Component({ fieldValues }: any) {
                   "The scalable technology and personalized matching have significantly reduced our administrative burdens."
                 </p>
                 <div>
-                  <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+                  <div style={{ fontSize: 'var(--font-size-small)', fontWeight: 600, color: 'var(--text-primary)' }}>
                     J. Checo Colón-Gaud
                   </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)' }}>
                     Georgia Southern University
                   </div>
                 </div>
@@ -249,6 +246,7 @@ export function Component({ fieldValues }: any) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

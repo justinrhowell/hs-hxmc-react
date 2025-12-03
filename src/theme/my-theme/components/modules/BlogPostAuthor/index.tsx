@@ -17,7 +17,7 @@ export function Component({ fieldValues }: any) {
   return (
     <section style={{
       padding: '60px 20px',
-      background: 'linear-gradient(180deg, #FFFFFF 0%, #FFFBF8 100%)',
+      background: 'var(--gradient-hero)',
     }}>
       <div style={{
         maxWidth: '750px',
@@ -26,11 +26,11 @@ export function Component({ fieldValues }: any) {
         <div style={{
           background: 'white',
           borderRadius: 'var(--radius-xl)',
-          padding: '2.5rem',
+          padding: 'var(--spacing-xl)',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.06)',
           border: '2px solid rgba(239, 71, 111, 0.08)',
           display: 'flex',
-          gap: '2rem',
+          gap: 'var(--spacing-xl)',
           alignItems: 'flex-start',
           flexWrap: 'wrap',
         }}>
@@ -53,12 +53,12 @@ export function Component({ fieldValues }: any) {
                 width: '100px',
                 height: '100px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
+                background: 'var(--gradient-coral)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: 'white',
-                fontSize: '2.5rem',
+                fontSize: 'var(--font-size-h1)',
                 fontWeight: 600,
               }}>
                 {name.charAt(0).toUpperCase()}
@@ -69,37 +69,37 @@ export function Component({ fieldValues }: any) {
           {/* Author Info */}
           <div style={{ flex: 1, minWidth: '250px' }}>
             <div style={{
-              fontSize: '0.75rem',
+              fontSize: 'var(--font-size-xs)',
               fontWeight: 600,
-              color: '#EF476F',
+              color: 'var(--text-coral)',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
-              marginBottom: '0.5rem',
+              marginBottom: 'var(--spacing-xs)',
             }}>
               Written by
             </div>
             <h3 style={{
-              fontSize: '1.5rem',
+              fontSize: 'var(--font-size-h3)',
               fontWeight: 500,
-              color: '#1a1a1a',
-              marginBottom: '0.25rem',
+              color: 'var(--text-primary)',
+              marginBottom: 'var(--spacing-xs)',
               fontFamily: 'var(--font-headline)',
             }}>
               {name}
             </h3>
             <div style={{
-              fontSize: '0.95rem',
-              color: '#6B7280',
-              marginBottom: '1rem',
+              fontSize: 'var(--font-size-body)',
+              color: 'var(--text-muted)',
+              marginBottom: 'var(--spacing-md)',
             }}>
               {title}
             </div>
             <div
               style={{
-                fontSize: '0.95rem',
+                fontSize: 'var(--font-size-body)',
                 lineHeight: 1.7,
-                color: '#4B5563',
-                marginBottom: '1.25rem',
+                color: 'var(--text-secondary)',
+                marginBottom: 'var(--spacing-md)',
               }}
               dangerouslySetInnerHTML={{ __html: bio }}
             />
@@ -108,7 +108,7 @@ export function Component({ fieldValues }: any) {
             {(twitterUrl || linkedinUrl || websiteUrl) && (
               <div style={{
                 display: 'flex',
-                gap: '0.75rem',
+                gap: 'var(--spacing-sm)',
               }}>
                 {twitterUrl && (
                   <a
@@ -123,7 +123,7 @@ export function Component({ fieldValues }: any) {
                       height: '36px',
                       borderRadius: '50%',
                       background: 'rgba(239, 71, 111, 0.1)',
-                      color: '#EF476F',
+                      color: 'var(--text-coral)',
                       transition: 'var(--transition-medium)',
                     }}
                     aria-label="Twitter"
@@ -146,7 +146,7 @@ export function Component({ fieldValues }: any) {
                       height: '36px',
                       borderRadius: '50%',
                       background: 'rgba(239, 71, 111, 0.1)',
-                      color: '#EF476F',
+                      color: 'var(--text-coral)',
                       transition: 'var(--transition-medium)',
                     }}
                     aria-label="LinkedIn"
@@ -169,7 +169,7 @@ export function Component({ fieldValues }: any) {
                       height: '36px',
                       borderRadius: '50%',
                       background: 'rgba(239, 71, 111, 0.1)',
-                      color: '#EF476F',
+                      color: 'var(--text-coral)',
                       transition: 'var(--transition-medium)',
                     }}
                     aria-label="Website"

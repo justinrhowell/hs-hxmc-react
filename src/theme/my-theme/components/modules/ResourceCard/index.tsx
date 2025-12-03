@@ -15,12 +15,12 @@ export function Component({ fieldValues }: any) {
   const readTime = fieldValues.read_time || '5 min read';
 
   const typeColors: Record<string, { bg: string; text: string }> = {
-    article: { bg: 'rgba(239, 71, 111, 0.1)', text: '#EF476F' },
-    guide: { bg: 'rgba(6, 214, 160, 0.1)', text: '#06D6A0' },
-    case_study: { bg: 'rgba(17, 138, 178, 0.1)', text: '#118AB2' },
-    ebook: { bg: 'rgba(255, 209, 102, 0.1)', text: '#FFD166' },
-    video: { bg: 'rgba(239, 71, 111, 0.1)', text: '#EF476F' },
-    webinar: { bg: 'rgba(17, 138, 178, 0.1)', text: '#118AB2' }
+    article: { bg: 'var(--bg-light-coral)', text: 'var(--text-coral)' },
+    guide: { bg: 'var(--bg-light-teal)', text: 'var(--text-teal)' },
+    case_study: { bg: 'rgba(17, 138, 178, 0.1)', text: 'var(--text-blue)' }, // Keep blue rgba background as-is
+    ebook: { bg: 'rgba(255, 209, 102, 0.1)', text: 'var(--secondary-yellow)' }, // Keep yellow rgba background as-is
+    video: { bg: 'var(--bg-light-coral)', text: 'var(--text-coral)' },
+    webinar: { bg: 'rgba(17, 138, 178, 0.1)', text: 'var(--text-blue)' } // Keep blue rgba background as-is
   };
 
   const typeLabels: Record<string, string> = {
@@ -71,13 +71,13 @@ export function Component({ fieldValues }: any) {
         {/* Type Badge */}
         <div style={{
           position: 'absolute',
-          top: '1rem',
-          left: '1rem',
+          top: 'var(--spacing-md)',
+          left: 'var(--spacing-md)',
           background: colors.bg,
           color: colors.text,
           padding: '0.375rem 0.875rem',
           borderRadius: 'var(--radius-full)',
-          fontSize: '0.75rem',
+          fontSize: 'var(--font-size-xs)',
           fontWeight: 600,
           textTransform: 'uppercase',
           letterSpacing: '0.05em',
@@ -89,15 +89,15 @@ export function Component({ fieldValues }: any) {
 
       {/* Content */}
       <div style={{
-        padding: '1.5rem',
+        padding: 'var(--spacing-lg)',
         display: 'flex',
         flexDirection: 'column',
         flex: 1,
       }}>
         <h3 style={{
-          fontSize: '1.25rem',
+          fontSize: 'var(--font-size-h3)',
           fontWeight: 500,
-          color: '#1a1a1a',
+          color: 'var(--text-primary)',
           marginBottom: '0.75rem',
           fontFamily: 'var(--font-headline)',
           lineHeight: 1.3,
@@ -106,8 +106,8 @@ export function Component({ fieldValues }: any) {
         </h3>
 
         <p style={{
-          fontSize: '0.95rem',
-          color: '#6B7280',
+          fontSize: 'var(--font-size-base)',
+          color: 'var(--text-muted)',
           lineHeight: 1.6,
           marginBottom: '1.25rem',
           flex: 1,
@@ -121,11 +121,11 @@ export function Component({ fieldValues }: any) {
           alignItems: 'center',
           justifyContent: 'space-between',
           paddingTop: '1rem',
-          borderTop: '1px solid #E5E7EB',
+          borderTop: '1px solid var(--border-light)',
         }}>
           <span style={{
-            fontSize: '0.85rem',
-            color: '#9CA3AF',
+            fontSize: 'var(--font-size-small)',
+            color: 'var(--text-muted)',
           }}>
             {readTime}
           </span>
@@ -136,14 +136,14 @@ export function Component({ fieldValues }: any) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.5rem',
-              color: '#EF476F',
+              color: 'var(--text-coral)',
               textDecoration: 'none',
-              fontSize: '0.9rem',
+              fontSize: 'var(--font-size-base)',
               fontWeight: 600,
               transition: 'gap 0.3s ease',
             }}
           >
-            {linkText} <span style={{ fontSize: '1.1rem' }}>→</span>
+            {linkText} <span style={{ fontSize: 'var(--font-size-body-lg)' }}>→</span>
           </a>
         </div>
       </div>

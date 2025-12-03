@@ -1,8 +1,10 @@
+import React from 'react';
 import {
   ModuleFields,
   TextField,
   RepeatedFieldGroup,
 } from '@hubspot/cms-components/fields';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 export function Component({ fieldValues }: any) {
   const testimonials = fieldValues.testimonials || [
@@ -10,18 +12,23 @@ export function Component({ fieldValues }: any) {
   ];
 
   return (
-    <section style={{
-      padding: '80px 20px',
-      background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.05) 0%, rgba(248, 159, 123, 0.05) 100%)',
-    }}>
+    <>
+    <ScrollAnimationScript />
+    <section
+      className="scroll-animate"
+      style={{
+        padding: '80px 20px',
+        background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.05) 0%, rgba(248, 159, 123, 0.05) 100%)',
+      }}
+    >
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         {fieldValues.heading && (
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 3rem)',
             fontWeight: 500,
             textAlign: 'center',
-            marginBottom: '1.5rem',
-            color: '#1a1a1a',
+            marginBottom: 'var(--spacing-lg)',
+            color: 'var(--text-primary)',
             fontFamily: 'var(--font-headline)',
           }}>
             {fieldValues.heading}
@@ -30,13 +37,13 @@ export function Component({ fieldValues }: any) {
 
         {fieldValues.subtitle && (
           <p style={{
-            fontSize: '1.15rem',
+            fontSize: 'var(--font-size-body-lg)',
             textAlign: 'center',
             color: 'var(--text-primary)',
             lineHeight: 1.7,
-            marginBottom: '4rem',
+            marginBottom: 'var(--spacing-2xl)',
             maxWidth: '800px',
-            margin: '0 auto 4rem',
+            margin: '0 auto var(--spacing-2xl)',
           }}>
             {fieldValues.subtitle}
           </p>
@@ -45,40 +52,40 @@ export function Component({ fieldValues }: any) {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '2rem',
+          gap: 'var(--spacing-xl)',
         }}>
           {testimonials.map((testimonial: any, index: number) => (
             <div
               key={index}
               style={{
                 background: 'white',
-                padding: '2rem',
+                padding: 'var(--spacing-xl)',
                 borderRadius: 'var(--radius-lg)',
-                borderLeft: '4px solid #EF476F',
+                borderLeft: '4px solid var(--primary-coral)',
                 boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)',
               }}
             >
               <p style={{
-                fontSize: '1.05rem',
+                fontSize: 'var(--font-size-body)',
                 lineHeight: 1.7,
-                color: '#333',
-                marginBottom: '1rem',
+                color: 'var(--text-primary)',
+                marginBottom: 'var(--spacing-md)',
                 fontStyle: 'italic',
               }}>
                 "{testimonial.quote}"
               </p>
               <p style={{
-                fontSize: '0.9rem',
-                color: '#666',
+                fontSize: 'var(--font-size-small)',
+                color: 'var(--text-secondary)',
                 fontWeight: 600,
-                marginBottom: '0.25rem',
+                marginBottom: 'var(--spacing-xxs)',
               }}>
                 {testimonial.author}
               </p>
               {testimonial.role && (
                 <p style={{
-                  fontSize: '0.85rem',
-                  color: '#999',
+                  fontSize: 'var(--font-size-small)',
+                  color: 'var(--text-muted)',
                 }}>
                   {testimonial.role}
                 </p>
@@ -88,6 +95,7 @@ export function Component({ fieldValues }: any) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

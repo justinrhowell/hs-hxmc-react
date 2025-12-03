@@ -5,7 +5,7 @@ import {
 
 export function Component({ fieldValues }: any) {
   const style = fieldValues.style || 'solid';
-  const color = fieldValues.color || '#EF476F';
+  const color = fieldValues.color || 'var(--primary-coral)';
 
   const styleMap: Record<string, string> = {
     solid: 'solid',
@@ -23,7 +23,7 @@ export function Component({ fieldValues }: any) {
       {style === 'gradient' ? (
         <div style={{
           height: '2px',
-          background: 'linear-gradient(90deg, transparent 0%, #EF476F 50%, transparent 100%)',
+          background: `linear-gradient(90deg, transparent 0%, var(--primary-coral) 50%, transparent 100%)`,
         }} />
       ) : (
         <hr style={{

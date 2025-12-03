@@ -10,7 +10,7 @@ import groupImg from '../../../assets/group.png';
 import girlOfficeImg from '../../../assets/girl-in-office.png';
 import starSvg from '../../../assets/Star.svg';
 import fourLeafSvg from '../../../assets/four-leaf-graphic.svg';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface Stat {
   number: string;
@@ -32,8 +32,6 @@ interface ResultsSectionProps {
 }
 
 export function Component({ fieldValues }: ResultsSectionProps) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
-
   const stats: Stat[] = [
     { number: fieldValues.stat1_number || '+6%', label: fieldValues.stat1_label || 'retention lift for program participants' },
     { number: fieldValues.stat2_number || '+8–19%', label: fieldValues.stat2_label || 'boost in sense of belonging' },
@@ -42,8 +40,9 @@ export function Component({ fieldValues }: ResultsSectionProps) {
   ];
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
         background: 'var(--gradient-hero)',
@@ -51,12 +50,11 @@ export function Component({ fieldValues }: ResultsSectionProps) {
         backgroundSize: 'var(--pattern-dots-size)',
         position: 'relative',
         overflow: 'hidden',
-        ...animationStyles.subtleSlideUp(isVisible),
       }}
       aria-labelledby="results-heading"
     >
-      <div style={{ maxWidth: 'var(--max-width-lg)', margin: '0 auto', padding: '0 var(--container-padding)', position: 'relative', zIndex: 'var(--z-base)' }}>
-        <div className="results-content" style={{ display: 'grid', gridTemplateColumns: '0.95fr 1.05fr', gap: 'var(--spacing-3xl)', alignItems: 'center' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 var(--spacing-lg)', position: 'relative', zIndex: 'var(--z-base)' }}>
+        <div className="results-content scroll-animate" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-3xl)', alignItems: 'center' }}>
           <div style={{
             position: 'relative',
             height: '550px',
@@ -182,7 +180,8 @@ export function Component({ fieldValues }: ResultsSectionProps) {
               {stats.map((stat, index) => (
                 <div
                   key={index}
-                  className="stat-card"
+                  className="stat-card scroll-animate"
+                  data-delay={index * 100}
                   style={{
                     padding: 'var(--card-padding)',
                     background: 'rgba(255, 255, 255, 0.9)',
@@ -194,7 +193,6 @@ export function Component({ fieldValues }: ResultsSectionProps) {
                     position: 'relative',
                     overflow: 'hidden',
                     backdropFilter: 'blur(10px)',
-                    ...animationStyles.staggeredSubtle(isVisible, index * 0.15),
                   }}
                   role="group"
                   aria-label={`${stat.number} ${stat.label}`}
@@ -239,6 +237,7 @@ export function Component({ fieldValues }: ResultsSectionProps) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
   ModuleFields,
   TextField,
@@ -10,10 +10,9 @@ import logo4 from '../../../assets/Logo-4.png';
 import logo5 from '../../../assets/Logo-5.png';
 import logo6 from '../../../assets/Logo-6.png';
 import logo from '../../../assets/Logo.png';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 });
   // Map logo keys to imported assets
   const logoAssetMap: Record<string, string> = {
     logo: logo,
@@ -63,7 +62,7 @@ export function Component({ fieldValues }: any) {
       padding: '0 var(--container-padding)',
     },
     heading: {
-      fontSize: '1.5rem',
+      fontSize: 'var(--font-size-h3)',
       marginBottom: 'var(--spacing-2xl)',
       color: 'var(--text-primary)',
       textAlign: 'center' as const,
@@ -107,6 +106,7 @@ export function Component({ fieldValues }: any) {
 
   return (
     <>
+      <ScrollAnimationScript />
       <style>{`
         @keyframes scroll {
           0% {
@@ -129,11 +129,8 @@ export function Component({ fieldValues }: any) {
       `}</style>
 
       <section
-        ref={elementRef as React.RefObject<HTMLElement>}
-        style={{
-          ...styles.section,
-          ...animationStyles.subtleSlideUp(isVisible),
-        }}
+        className="scroll-animate"
+        style={styles.section}
       >
         <div style={styles.container}>
           <h2 style={styles.heading}>

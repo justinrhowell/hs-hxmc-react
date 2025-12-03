@@ -94,7 +94,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             background: COLORS.background.white,
             borderRadius: DIMENSIONS.card.borderRadius,
             boxShadow: SHADOWS.lg,
-            border: '2px solid rgba(239, 71, 111, 0.2)',
+            border: '2px solid var(--border-medium)',
             textAlign: 'center',
           }}
         >
@@ -102,13 +102,13 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             style={{
               width: '64px',
               height: '64px',
-              margin: '0 auto 1.5rem',
-              background: 'rgba(239, 71, 111, 0.1)',
+              margin: '0 auto var(--spacing-lg)',
+              background: 'var(--bg-light-coral)',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: '2rem',
+              fontSize: 'var(--font-size-h2)',
             }}
           >
             !
@@ -116,10 +116,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
           <h2
             style={{
-              fontSize: '1.5rem',
+              fontSize: 'var(--font-size-h3)',
               fontWeight: 600,
               color: COLORS.text.primary,
-              marginBottom: '0.75rem',
+              marginBottom: 'var(--spacing-sm)',
               fontFamily: 'var(--font-headline)',
             }}
           >
@@ -128,9 +128,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
           <p
             style={{
-              fontSize: '1rem',
+              fontSize: 'var(--font-size-body)',
               color: COLORS.text.muted,
-              marginBottom: '1.5rem',
+              marginBottom: 'var(--spacing-lg)',
               lineHeight: 1.6,
             }}
           >
@@ -146,14 +146,14 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               color: COLORS.text.white,
               border: 'none',
               borderRadius: '8px',
-              fontSize: '1rem',
+              fontSize: 'var(--font-size-body)',
               fontWeight: 600,
               cursor: 'pointer',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(239, 71, 111, 0.3)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-coral-sm)';
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
@@ -166,12 +166,12 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
           {showDetails && error && (
             <details
               style={{
-                marginTop: '2rem',
+                marginTop: 'var(--spacing-xl)',
                 textAlign: 'left',
-                padding: '1rem',
-                background: 'rgba(0, 0, 0, 0.02)',
+                padding: 'var(--spacing-md)',
+                background: 'var(--bg-secondary)',
                 borderRadius: '8px',
-                fontSize: '0.875rem',
+                fontSize: 'var(--font-size-small)',
               }}
             >
               <summary
@@ -179,7 +179,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                   cursor: 'pointer',
                   fontWeight: 600,
                   color: COLORS.text.secondary,
-                  marginBottom: '0.5rem',
+                  marginBottom: 'var(--spacing-sm)',
                 }}
               >
                 Error Details (Development Only)
@@ -187,11 +187,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               <pre
                 style={{
                   overflow: 'auto',
-                  padding: '1rem',
-                  background: 'rgba(0, 0, 0, 0.05)',
+                  padding: 'var(--spacing-md)',
+                  background: 'var(--bg-secondary)',
                   borderRadius: '4px',
-                  fontSize: '0.75rem',
-                  color: '#EF476F',
+                  fontSize: 'var(--font-size-xs)',
+                  color: 'var(--text-coral)',
                   whiteSpace: 'pre-wrap',
                   wordBreak: 'break-word',
                 }}
@@ -241,14 +241,14 @@ export function ErrorFallback({
     <div
       role="alert"
       style={{
-        padding: '2rem',
+        padding: 'var(--spacing-xl)',
         textAlign: 'center',
-        background: 'rgba(239, 71, 111, 0.05)',
+        background: 'var(--bg-light-coral)',
         borderRadius: '12px',
-        border: '1px solid rgba(239, 71, 111, 0.1)',
+        border: '1px solid var(--border-light)',
       }}
     >
-      <p style={{ color: COLORS.text.muted, marginBottom: onRetry ? '1rem' : 0 }}>{message}</p>
+      <p style={{ color: COLORS.text.muted, marginBottom: onRetry ? 'var(--spacing-md)' : 0 }}>{message}</p>
       {onRetry && (
         <button
           onClick={onRetry}
@@ -259,7 +259,7 @@ export function ErrorFallback({
             border: '1px solid currentColor',
             borderRadius: '6px',
             cursor: 'pointer',
-            fontSize: '0.875rem',
+            fontSize: 'var(--font-size-small)',
           }}
         >
           Retry

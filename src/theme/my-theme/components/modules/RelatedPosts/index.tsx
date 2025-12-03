@@ -74,7 +74,7 @@ export function Component({ fieldValues }: any) {
       `}} />
 
       <section style={{
-        padding: '80px 20px',
+        padding: 'var(--spacing-3xl) var(--spacing-md)',
         background: 'linear-gradient(180deg, #FFFBF8 0%, #FFFFFF 100%)',
       }}>
         <div style={{
@@ -84,12 +84,12 @@ export function Component({ fieldValues }: any) {
           {/* Header */}
           <div style={{
             textAlign: 'center',
-            marginBottom: '3rem',
+            marginBottom: 'var(--spacing-2xl)',
           }}>
             <h2 style={{
               fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
               fontWeight: 500,
-              color: '#1a1a1a',
+              color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)',
             }}>
               {heading}
@@ -102,7 +102,7 @@ export function Component({ fieldValues }: any) {
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '2rem',
+              gap: 'var(--spacing-xl)',
             }}
           >
             {posts.map((post: any, index: number) => {
@@ -153,7 +153,7 @@ export function Component({ fieldValues }: any) {
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        color: '#EF476F',
+                        color: 'var(--color-primary)',
                         opacity: 0.3,
                       }}>
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -166,13 +166,13 @@ export function Component({ fieldValues }: any) {
                     {/* Category Badge */}
                     <div style={{
                       position: 'absolute',
-                      top: '1rem',
-                      left: '1rem',
+                      top: 'var(--spacing-sm)',
+                      left: 'var(--spacing-sm)',
                       background: colors.bg,
                       color: colors.text,
                       padding: '0.35rem 0.75rem',
                       borderRadius: 'var(--radius-full)',
-                      fontSize: '0.7rem',
+                      fontSize: 'var(--font-size-xs)',
                       fontWeight: 600,
                       textTransform: 'uppercase',
                       letterSpacing: '0.05em',
@@ -184,26 +184,26 @@ export function Component({ fieldValues }: any) {
 
                   {/* Content */}
                   <div style={{
-                    padding: '1.5rem',
+                    padding: 'var(--spacing-lg)',
                     display: 'flex',
                     flexDirection: 'column',
                     flex: 1,
                   }}>
                     <h3 style={{
-                      fontSize: '1.15rem',
+                      fontSize: 'var(--font-size-lg)',
                       fontWeight: 500,
-                      color: '#1a1a1a',
-                      marginBottom: '0.5rem',
+                      color: 'var(--text-primary)',
+                      marginBottom: 'var(--spacing-xs)',
                       fontFamily: 'var(--font-headline)',
                       lineHeight: 1.3,
                     }}>
                       {post.title}
                     </h3>
                     <p style={{
-                      fontSize: '0.9rem',
-                      color: '#6B7280',
+                      fontSize: 'var(--font-size-base)',
+                      color: 'var(--text-secondary)',
                       lineHeight: 1.6,
-                      marginBottom: '1rem',
+                      marginBottom: 'var(--spacing-sm)',
                       flex: 1,
                     }}>
                       {post.description}
@@ -212,22 +212,22 @@ export function Component({ fieldValues }: any) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      paddingTop: '1rem',
-                      borderTop: '1px solid #E5E7EB',
+                      paddingTop: 'var(--spacing-sm)',
+                      borderTop: '1px solid var(--border-light)',
                     }}>
                       <span style={{
-                        fontSize: '0.8rem',
-                        color: '#9CA3AF',
+                        fontSize: 'var(--font-size-sm)',
+                        color: 'var(--text-muted)',
                       }}>
                         {post.read_time}
                       </span>
                       <span style={{
-                        fontSize: '0.85rem',
-                        color: '#EF476F',
+                        fontSize: 'var(--font-size-sm)',
+                        color: 'var(--color-primary)',
                         fontWeight: 600,
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '0.25rem',
+                        gap: 'var(--spacing-2xs)',
                       }}>
                         Read more
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

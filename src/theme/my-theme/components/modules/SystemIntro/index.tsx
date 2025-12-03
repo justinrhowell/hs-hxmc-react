@@ -35,8 +35,8 @@ export function Component({ fieldValues }: any) {
           fontSize: 'clamp(2rem, 4vw, 3rem)',
           fontWeight: 500,
           textAlign: 'center',
-          marginBottom: '1.5rem',
-          color: '#1a1a1a',
+          marginBottom: 'var(--spacing-lg)',
+          color: 'var(--text-primary)',
           fontFamily: 'var(--font-headline)',
           lineHeight: 1.2,
         }}>
@@ -44,13 +44,13 @@ export function Component({ fieldValues }: any) {
         </h2>
 
         <p style={{
-          fontSize: '1.15rem',
+          fontSize: 'var(--font-size-body-lg)',
           textAlign: 'center',
           color: 'var(--text-primary)',
           lineHeight: 1.7,
-          marginBottom: '4rem',
+          marginBottom: 'var(--spacing-2xl)',
           maxWidth: '900px',
-          margin: '0 auto 4rem',
+          margin: '0 auto var(--spacing-2xl)',
         }}>
           {fieldValues.subtitle}
         </p>
@@ -58,48 +58,55 @@ export function Component({ fieldValues }: any) {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '2rem',
-          marginBottom: '3rem',
+          gap: 'var(--spacing-xl)',
+          marginBottom: 'var(--spacing-2xl)',
         }}>
           {pillars.map((pillar, index) => (
             <div
               key={index}
               style={{
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 251, 248, 0.9) 100%)',
-                padding: '2.5rem',
+                background: 'var(--bg-glass)',
+                padding: 'var(--spacing-xl)',
                 borderRadius: 'var(--radius-lg)',
-                border: '2px solid rgba(239, 71, 111, 0.1)',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
+                border: '2px solid var(--border-light)',
+                boxShadow: 'var(--shadow-md)',
                 transition: 'all 0.3s ease',
               }}
             >
               <h3 style={{
-                fontSize: '1.5rem',
+                fontSize: 'var(--font-size-h3)',
                 fontWeight: 500,
-                marginBottom: '1rem',
-                color: '#EF476F',
+                marginBottom: 'var(--spacing-md)',
+                color: 'var(--text-coral)',
                 fontFamily: 'var(--font-headline)',
               }}>
                 {pillar.title}
               </h3>
               <p style={{
-                fontSize: '1.05rem',
+                fontSize: 'var(--font-size-base)',
                 lineHeight: 1.7,
-                color: '#6B7280',
-                marginBottom: '1.5rem',
+                color: 'var(--text-muted)',
+                marginBottom: 'var(--spacing-lg)',
               }}>
                 {pillar.description}
               </p>
               <a
                 href={pillar.linkUrl}
                 style={{
-                  color: '#EF476F',
+                  color: 'var(--text-coral)',
                   textDecoration: 'none',
-                  fontSize: '1rem',
+                  fontSize: 'var(--font-size-base)',
                   fontWeight: 600,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  transition: 'gap 0.3s ease',
                 }}
               >
                 {pillar.linkText}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ transform: 'rotate(90deg)' }}>
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </a>
             </div>
           ))}
@@ -107,10 +114,10 @@ export function Component({ fieldValues }: any) {
 
         <div style={{ textAlign: 'center' }}>
           <p style={{
-            fontSize: '1.5rem',
+            fontSize: 'var(--font-size-h3)',
             fontWeight: 500,
-            marginBottom: '2rem',
-            color: '#1a1a1a',
+            marginBottom: 'var(--spacing-xl)',
+            color: 'var(--text-primary)',
           }}>
             {fieldValues.tagline}
           </p>
@@ -119,14 +126,14 @@ export function Component({ fieldValues }: any) {
             style={{
               display: 'inline-block',
               padding: 'var(--btn-padding)',
-              background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
+              background: 'var(--gradient-coral)',
               color: 'white',
               border: 'none',
               borderRadius: 'var(--radius-full)',
-              fontSize: '1rem',
+              fontSize: 'var(--font-size-base)',
               fontWeight: 600,
               textDecoration: 'none',
-              boxShadow: '0 8px 24px rgba(239, 71, 111, 0.3)',
+              boxShadow: 'var(--shadow-coral-sm)',
               transition: 'var(--transition-medium)',
             }}
             aria-label={fieldValues.button_text}

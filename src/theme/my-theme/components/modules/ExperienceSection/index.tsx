@@ -1,9 +1,10 @@
+import React from 'react';
 import {
   ModuleFields,
   TextField,
   ImageField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface Feature {
   icon: string;
@@ -12,8 +13,6 @@ interface Feature {
 }
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
-
   const features: Feature[] = fieldValues.features || [
     {
       icon: '◉',
@@ -33,14 +32,16 @@ export function Component({ fieldValues }: any) {
   ];
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      id="experience"
+      className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
-        background: 'linear-gradient(135deg, #FFFFFF 0%, #FFFBF8 100%)',
+        background: 'var(--gradient-hero)',
         backgroundImage: 'var(--pattern-dots)',
         backgroundSize: 'var(--pattern-dots-size)',
-        ...animationStyles.subtleSlideUp(isVisible),
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
@@ -51,12 +52,10 @@ export function Component({ fieldValues }: any) {
           alignItems: 'center',
         }} className="experience-content">
           {/* Left Column - Visual Elements */}
-          <div style={{
-            ...animationStyles.staggeredSubtle(isVisible, 0.1),
-          }}>
+          <div>
             {/* Conversation Sparks Card */}
             <div style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 251, 248, 0.9) 100%)',
+              background: 'var(--gradient-hero)',
               borderRadius: 'var(--radius-xl)',
               padding: 'var(--spacing-2xl)',
               boxShadow: '0 16px 48px rgba(0, 0, 0, 0.12)',
@@ -78,13 +77,13 @@ export function Component({ fieldValues }: any) {
                   justifyContent: 'center',
                   background: 'rgba(239, 71, 111, 0.08)',
                   borderRadius: 'var(--radius-md)',
-                  fontSize: '1.5rem',
+                  fontSize: 'var(--font-size-h3)',
                 }}>
                   💬
                 </div>
                 <div>
                   <h3 style={{
-                    fontSize: '1.25rem',
+                    fontSize: 'var(--font-size-h4)',
                     fontWeight: 500,
                     color: 'var(--text-primary)',
                     margin: 0,
@@ -93,7 +92,7 @@ export function Component({ fieldValues }: any) {
                     Conversation Sparks
                   </h3>
                   <p style={{
-                    fontSize: '0.875rem',
+                    fontSize: 'var(--font-size-small)',
                     color: 'var(--text-muted)',
                     margin: 0,
                   }}>
@@ -109,7 +108,7 @@ export function Component({ fieldValues }: any) {
                 border: '1px solid var(--border-light)',
               }}>
                 <p style={{
-                  fontSize: '0.95rem',
+                  fontSize: 'var(--font-size-base)',
                   color: 'var(--text-secondary)',
                   lineHeight: 'var(--line-height-normal)',
                   margin: 0,
@@ -133,15 +132,15 @@ export function Component({ fieldValues }: any) {
               }}>
                 <div>
                   <div style={{
-                    fontSize: '0.875rem',
+                    fontSize: 'var(--font-size-small)',
                     fontWeight: 600,
                     color: 'var(--text-muted)',
-                    marginBottom: '0.5rem',
+                    marginBottom: 'var(--spacing-xs)',
                   }}>
                     Match Score
                   </div>
                   <div style={{
-                    fontSize: '3rem',
+                    fontSize: 'var(--font-size-h1)',
                     fontWeight: 700,
                     color: 'var(--text-teal)',
                     lineHeight: 1,
@@ -168,7 +167,7 @@ export function Component({ fieldValues }: any) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: '1.5rem',
+                    fontSize: 'var(--font-size-h3)',
                   }}>
                     ✓
                   </div>
@@ -179,34 +178,32 @@ export function Component({ fieldValues }: any) {
 
           {/* Right Column - Text Content */}
           <div>
-            {/* Badge */}
-            <div style={{
-              display: 'inline-block',
-              padding: '0.4rem 1rem',
-              background: 'var(--primary-navy)',
-              color: 'var(--text-white)',
-              borderRadius: 'var(--radius-full)',
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              marginBottom: 'var(--spacing-xl)',
-            }}>
-              {fieldValues.badge || 'The Experience'}
-            </div>
-
+            {/* Section Title */}
             <h2 style={{
               fontSize: 'var(--font-size-h2)',
               fontWeight: 500,
               lineHeight: 'var(--line-height-tight)',
               letterSpacing: 'var(--letter-spacing-tight)',
+              marginBottom: 'var(--spacing-sm)',
+              color: 'var(--text-coral)',
+              fontFamily: 'var(--font-headline)',
+            }}>
+              {fieldValues.badge || 'The Experience'}
+            </h2>
+
+            <p style={{
+              fontSize: 'var(--font-size-h3)',
+              fontWeight: 500,
+              lineHeight: 'var(--line-height-tight)',
               marginBottom: 'var(--spacing-lg)',
               color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)',
             }}>
               {fieldValues.title || 'Deepen engagement with AI-guided journeys.'}
-            </h2>
+            </p>
 
             <p style={{
-              fontSize: '1.1rem',
+              fontSize: 'var(--font-size-body-lg)',
               color: 'var(--text-secondary)',
               lineHeight: 'var(--line-height-relaxed)',
               marginBottom: 'var(--spacing-2xl)',
@@ -228,7 +225,7 @@ export function Component({ fieldValues }: any) {
                     background: 'rgba(6, 214, 160, 0.1)',
                     borderRadius: 'var(--radius-circle)',
                     color: 'var(--text-teal)',
-                    fontSize: '1rem',
+                    fontSize: 'var(--font-size-base)',
                     fontWeight: 600,
                     flexShrink: 0,
                   }}>
@@ -236,16 +233,16 @@ export function Component({ fieldValues }: any) {
                   </div>
                   <div>
                     <h3 style={{
-                      fontSize: '1.15rem',
+                      fontSize: 'var(--font-size-body-lg)',
                       fontWeight: 500,
                       color: 'var(--text-primary)',
-                      marginBottom: '0.5rem',
+                      marginBottom: 'var(--spacing-xs)',
                       fontFamily: 'var(--font-headline)',
                     }}>
                       {feature.title}
                     </h3>
                     <p style={{
-                      fontSize: '0.95rem',
+                      fontSize: 'var(--font-size-base)',
                       color: 'var(--text-muted)',
                       lineHeight: 'var(--line-height-normal)',
                       margin: 0,
@@ -260,6 +257,7 @@ export function Component({ fieldValues }: any) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

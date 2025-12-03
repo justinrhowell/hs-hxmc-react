@@ -85,9 +85,9 @@ const getPaddingStyles = (padding: CardPadding): React.CSSProperties => {
     case 'none':
       return { padding: 0 };
     case 'sm':
-      return { padding: '1rem' };
+      return { padding: 'var(--spacing-sm)' };
     case 'lg':
-      return { padding: '2.5rem' };
+      return { padding: 'var(--card-padding-lg)' };
     case 'md':
     default:
       return { padding: DIMENSIONS.card.padding };
@@ -168,8 +168,8 @@ export function CardHeader({ children, className, style }: CardHeaderProps) {
     <div
       className={className}
       style={{
-        marginBottom: '1rem',
-        paddingBottom: '1rem',
+        marginBottom: 'var(--spacing-sm)',
+        paddingBottom: 'var(--spacing-sm)',
         borderBottom: `1px solid ${COLORS.border.light}`,
         ...style,
       }}
@@ -210,8 +210,8 @@ export function CardFooter({ children, className, style }: CardFooterProps) {
     <div
       className={className}
       style={{
-        marginTop: '1rem',
-        paddingTop: '1rem',
+        marginTop: 'var(--spacing-sm)',
+        paddingTop: 'var(--spacing-sm)',
         borderTop: `1px solid ${COLORS.border.light}`,
         ...style,
       }}

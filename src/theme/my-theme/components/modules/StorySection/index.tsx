@@ -1,8 +1,9 @@
+import React from 'react';
 import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface Stat {
   value: string;
@@ -10,8 +11,6 @@ interface Stat {
 }
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
-
   const stats: Stat[] = fieldValues.stats || [
     { value: '+6%', label: 'Retention Lift' },
     { value: '19%', label: 'Boost in Belonging' },
@@ -19,12 +18,13 @@ export function Component({ fieldValues }: any) {
   ];
 
   return (
+    <>
+    <ScrollAnimationScript />
     <section
-      ref={elementRef as React.RefObject<HTMLElement>}
+      className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
         background: 'var(--bg-white)',
-        ...animationStyles.subtleSlideUp(isVisible),
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
@@ -49,7 +49,7 @@ export function Component({ fieldValues }: any) {
             </h2>
 
             <p style={{
-              fontSize: '1.05rem',
+              fontSize: 'var(--font-size-base)',
               color: 'var(--text-secondary)',
               lineHeight: 'var(--line-height-relaxed)',
               marginBottom: 'var(--spacing-2xl)',
@@ -67,7 +67,7 @@ export function Component({ fieldValues }: any) {
               marginBottom: 'var(--spacing-xl)',
             }}>
               <p style={{
-                fontSize: '1.15rem',
+                fontSize: 'var(--font-size-body-lg)',
                 fontStyle: 'italic',
                 color: 'var(--text-secondary)',
                 lineHeight: 'var(--line-height-relaxed)',
@@ -88,7 +88,7 @@ export function Component({ fieldValues }: any) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1.5rem',
+                  fontSize: 'var(--font-size-h3)',
                   fontWeight: 600,
                   color: 'var(--text-white)',
                   fontFamily: 'var(--font-headline)',
@@ -97,15 +97,15 @@ export function Component({ fieldValues }: any) {
                 </div>
                 <div>
                   <div style={{
-                    fontSize: '1rem',
+                    fontSize: 'var(--font-size-base)',
                     fontWeight: 600,
                     color: 'var(--text-primary)',
-                    marginBottom: '0.25rem',
+                    marginBottom: 'var(--spacing-xs)',
                   }}>
                     {fieldValues.author_name || 'Noah'}
                   </div>
                   <div style={{
-                    fontSize: '0.875rem',
+                    fontSize: 'var(--font-size-small)',
                     color: 'var(--text-muted)',
                   }}>
                     {fieldValues.author_title || 'Mentee, UPCEA 2024'}
@@ -120,8 +120,9 @@ export function Component({ fieldValues }: any) {
             display: 'flex',
             flexDirection: 'column',
             gap: 'var(--spacing-lg)',
-            ...animationStyles.staggeredSubtle(isVisible, 0.2),
-          }}>
+          }}
+          className="scroll-animate"
+          data-delay="200">
             {stats.map((stat, index) => (
               <div
                 key={index}
@@ -137,7 +138,7 @@ export function Component({ fieldValues }: any) {
                 }}
               >
                 <div style={{
-                  fontSize: '3rem',
+                  fontSize: 'var(--font-size-h1)',
                   fontWeight: 700,
                   color: 'var(--text-coral)',
                   lineHeight: 1,
@@ -147,7 +148,7 @@ export function Component({ fieldValues }: any) {
                   {stat.value}
                 </div>
                 <div style={{
-                  fontSize: '0.95rem',
+                  fontSize: 'var(--font-size-base)',
                   color: 'var(--text-secondary)',
                   fontWeight: 500,
                   lineHeight: 'var(--line-height-normal)',
@@ -160,6 +161,7 @@ export function Component({ fieldValues }: any) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

@@ -4,23 +4,22 @@ import {
   TextField,
 } from '@hubspot/cms-components/fields';
 import { DemoModal } from '../../shared/DemoModal';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 export function Component({ fieldValues }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   return (
     <>
+      <ScrollAnimationScript />
       <section
-        ref={elementRef as React.RefObject<HTMLElement>}
+        className="scroll-animate"
         style={{
           padding: 'var(--section-padding-lg) var(--spacing-lg)',
           background: 'var(--gradient-hero)',
           backgroundImage: 'var(--pattern-dots)',
           backgroundSize: 'var(--pattern-dots-size)',
           position: 'relative',
-          ...animationStyles.fadeInUp(isVisible),
         }}
         aria-labelledby="cta-heading"
       >
@@ -98,26 +97,7 @@ export function Component({ fieldValues }: any) {
               </p>
               <button
                 onClick={() => setIsModalOpen(true)}
-                style={{
-                  padding: 'var(--btn-padding)',
-                  background: 'var(--bg-white)',
-                  color: 'var(--text-coral)',
-                  border: 'none',
-                  borderRadius: 'var(--radius-full)',
-                  fontSize: 'var(--font-size-body)',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  boxShadow: 'var(--shadow-lg)',
-                  transition: 'var(--transition-medium)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-hover)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
-                }}
+                className="btn-white"
                 aria-label="Request a demo"
               >
                 Request a Demo

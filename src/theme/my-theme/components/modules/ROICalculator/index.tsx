@@ -3,16 +3,15 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   const inputStyle = {
     fontSize: 'var(--font-size-body-lg)',
     fontWeight: 600,
-    color: 'var(--primary-blue)',
-    border: '2px solid var(--border-light)',
+    color: 'var(--primary-navy)',
+    border: '1px solid var(--text-muted)',
     padding: 'var(--spacing-xs) var(--spacing-sm)',
     borderRadius: 'var(--radius-md)',
     width: '100%',
@@ -20,8 +19,8 @@ export function Component({ fieldValues }: any) {
   };
 
   const labelStyle = {
-    fontSize: 'var(--font-size-label)',
-    color: 'var(--text-muted)',
+    fontSize: 'var(--font-size-small)',
+    color: 'var(--text-secondary)',
     marginBottom: 'var(--spacing-xs)',
     display: 'block',
     fontWeight: 600
@@ -35,8 +34,10 @@ export function Component({ fieldValues }: any) {
             // Toggle elements
             const heToggle = document.getElementById('roi-toggle-he');
             const corpToggle = document.getElementById('roi-toggle-corp');
+            const emToggle = document.getElementById('roi-toggle-em');
             const heCalculator = document.getElementById('roi-calculator-he');
             const corpCalculator = document.getElementById('roi-calculator-corp');
+            const emCalculator = document.getElementById('roi-calculator-em');
 
             // HE inputs
             const studentsServedInput = document.getElementById('students-served');
@@ -64,6 +65,16 @@ export function Component({ fieldValues }: any) {
             const revenueSavingsCorpElement = document.getElementById('revenue-savings-value-corp');
             const totalROICorpElement = document.getElementById('total-roi-value-corp');
 
+            // Emerging Market inputs
+            const emEmployeesInput = document.getElementById('em-employees');
+            const emTurnoverRateInput = document.getElementById('em-turnover-rate');
+            const emAvgSalaryInput = document.getElementById('em-avg-salary');
+            const emMentorshipIncreaseInput = document.getElementById('em-mentorship-increase');
+
+            // Emerging Market outputs
+            const emTurnoverCostElement = document.getElementById('em-turnover-cost-value');
+            const emSavingsElement = document.getElementById('em-savings-value');
+
             function formatCurrency(value) {
               return new Intl.NumberFormat('en-US', {
                 style: 'currency',
@@ -79,16 +90,32 @@ export function Component({ fieldValues }: any) {
 
             // Toggle handler
             function handleToggle(mode) {
-              if (mode === 'he') {
-                heToggle.classList.add('active');
-                corpToggle.classList.remove('active');
-                heCalculator.style.display = 'block';
-                corpCalculator.style.display = 'none';
-              } else {
-                corpToggle.classList.add('active');
+              // Reset all buttons
+              if (heToggle) {
                 heToggle.classList.remove('active');
-                corpCalculator.style.display = 'block';
-                heCalculator.style.display = 'none';
+              }
+              if (corpToggle) {
+                corpToggle.classList.remove('active');
+              }
+              if (emToggle) {
+                emToggle.classList.remove('active');
+              }
+
+              // Hide all calculators
+              if (heCalculator) heCalculator.style.display = 'none';
+              if (corpCalculator) corpCalculator.style.display = 'none';
+              if (emCalculator) emCalculator.style.display = 'none';
+
+              // Show selected
+              if (mode === 'he') {
+                if (heToggle) heToggle.classList.add('active');
+                if (heCalculator) heCalculator.style.display = 'block';
+              } else if (mode === 'corp') {
+                if (corpToggle) corpToggle.classList.add('active');
+                if (corpCalculator) corpCalculator.style.display = 'block';
+              } else if (mode === 'em') {
+                if (emToggle) emToggle.classList.add('active');
+                if (emCalculator) emCalculator.style.display = 'block';
               }
             }
 
@@ -97,6 +124,9 @@ export function Component({ fieldValues }: any) {
             }
             if (corpToggle) {
               corpToggle.addEventListener('click', function() { handleToggle('corp'); });
+            }
+            if (emToggle) {
+              emToggle.addEventListener('click', function() { handleToggle('em'); });
             }
 
             // HE Calculator
@@ -149,6 +179,24 @@ export function Component({ fieldValues }: any) {
               if (totalROICorpElement) totalROICorpElement.textContent = formatCurrency(totalROI);
             }
 
+            // Emerging Market Calculator
+            function calculateEMROI() {
+              const employees = parseInt((emEmployeesInput.value || '').replace(/[^0-9]/g, '')) || 0;
+              const turnoverRate = parseFloat(emTurnoverRateInput.value) || 0;
+              const avgSalary = parseInt((emAvgSalaryInput.value || '').replace(/[^0-9]/g, '')) || 0;
+              const mentorshipIncrease = parseFloat(emMentorshipIncreaseInput.value) || 0;
+              const costOfTurnover = 0.60; // Fixed at 60%
+
+              // Cost of employee turnover = employees × turnover_rate × salary × cost_of_turnover
+              const turnoverCost = Math.round(employees * (turnoverRate / 100) * avgSalary * costOfTurnover);
+
+              // Savings = turnover_cost × mentorship_increase
+              const savings = Math.round(turnoverCost * (mentorshipIncrease / 100));
+
+              if (emTurnoverCostElement) emTurnoverCostElement.textContent = formatCurrency(turnoverCost);
+              if (emSavingsElement) emSavingsElement.textContent = formatCurrency(savings);
+            }
+
             function handleNumberInput(e, calcFn) {
               let value = e.target.value.replace(/[^0-9]/g, '');
               if (value) {
@@ -189,9 +237,16 @@ export function Component({ fieldValues }: any) {
             if (turnoverRateInput) turnoverRateInput.addEventListener('input', calculateCorpROI);
             if (retentionIncreaseCorpInput) retentionIncreaseCorpInput.addEventListener('input', calculateCorpROI);
 
+            // Emerging Market event listeners
+            if (emEmployeesInput) emEmployeesInput.addEventListener('input', function(e) { handleNumberInput(e, calculateEMROI); });
+            if (emTurnoverRateInput) emTurnoverRateInput.addEventListener('input', calculateEMROI);
+            if (emAvgSalaryInput) emAvgSalaryInput.addEventListener('input', function(e) { handleCurrencyInput(e, calculateEMROI); });
+            if (emMentorshipIncreaseInput) emMentorshipIncreaseInput.addEventListener('input', calculateEMROI);
+
             // Initial calculations
             calculateHEROI();
             calculateCorpROI();
+            calculateEMROI();
           }
 
           if (document.readyState === 'loading') {
@@ -210,10 +265,10 @@ export function Component({ fieldValues }: any) {
           margin-bottom: var(--spacing-xl);
         }
         .roi-toggle-btn {
-          padding: var(--spacing-sm) var(--spacing-xl);
+          padding: var(--spacing-sm) var(--spacing-lg);
           font-size: var(--font-size-body);
           font-weight: 600;
-          border: 2px solid var(--border-light);
+          border: 1px solid var(--text-muted);
           background: var(--bg-white);
           color: var(--text-secondary);
           cursor: pointer;
@@ -221,22 +276,26 @@ export function Component({ fieldValues }: any) {
         }
         .roi-toggle-btn:first-child {
           border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-          border-right: 1px solid var(--border-light);
+          border-right: none;
+        }
+        .roi-toggle-btn:nth-child(2) {
+          border-radius: 0;
+          border-right: none;
         }
         .roi-toggle-btn:last-child {
           border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-          border-left: 1px solid var(--border-light);
         }
         .roi-toggle-btn:hover {
-          background: var(--bg-light-coral);
+          background: var(--bg-cream);
         }
         .roi-toggle-btn.active {
-          background: var(--gradient-teal);
+          background: var(--primary-navy);
           color: var(--text-white);
-          border-color: var(--primary-blue);
+          border-color: var(--primary-navy);
         }
         #roi-calculator-he input:focus,
-        #roi-calculator-corp input:focus {
+        #roi-calculator-corp input:focus,
+        #roi-calculator-em input:focus {
           border-color: var(--primary-blue) !important;
           box-shadow: 0 0 0 3px rgba(74, 158, 170, 0.15) !important;
         }
@@ -244,17 +303,41 @@ export function Component({ fieldValues }: any) {
           outline: none !important;
           box-shadow: 0 0 0 3px rgba(74, 158, 170, 0.3) !important;
         }
+        @media (max-width: 640px) {
+          .roi-toggle-container {
+            flex-wrap: wrap;
+          }
+          .roi-toggle-btn {
+            flex: 1 1 auto;
+            min-width: 120px;
+          }
+          .roi-toggle-btn:first-child {
+            border-radius: var(--radius-sm) 0 0 0;
+            border-right: none;
+            border-bottom: none;
+          }
+          .roi-toggle-btn:nth-child(2) {
+            border-radius: 0 var(--radius-sm) 0 0;
+            border-right: 1px solid var(--text-muted);
+            border-bottom: none;
+          }
+          .roi-toggle-btn:last-child {
+            border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+            flex-basis: 100%;
+            border-top: 1px solid var(--text-muted);
+          }
+        }
       `}} />
 
+      <ScrollAnimationScript />
       <section
-        ref={elementRef as React.RefObject<HTMLElement>}
+        className="scroll-animate"
         style={{
           padding: 'var(--section-padding-md) var(--spacing-lg)',
           background: 'var(--gradient-warm)',
           backgroundImage: 'var(--pattern-dots)',
           backgroundSize: 'var(--pattern-dots-size)',
           position: 'relative',
-          ...animationStyles.fadeInUp(isVisible),
         }}
       >
         <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
@@ -297,6 +380,9 @@ export function Component({ fieldValues }: any) {
               </button>
               <button id="roi-toggle-corp" className="roi-toggle-btn" type="button">
                 Corporate
+              </button>
+              <button id="roi-toggle-em" className="roi-toggle-btn" type="button">
+                Emerging Market
               </button>
             </div>
 
@@ -351,31 +437,31 @@ export function Component({ fieldValues }: any) {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-lg)' }}>
-                <div style={{ padding: 'var(--spacing-md)', background: 'var(--gradient-blue-light)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-medium)' }}>
-                  <div style={{ fontSize: 'var(--font-size-label)', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 'var(--spacing-xs)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-md)' }}>
+                <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', background: 'var(--bg-cream)', borderRadius: 'var(--radius-md)', border: '1px solid var(--text-muted)' }}>
+                  <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Staff Savings
                   </div>
-                  <div id="staff-savings-value-he" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--primary-blue)' }}>
+                  <div id="staff-savings-value-he" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
                     $23,408
                   </div>
                 </div>
 
-                <div style={{ padding: 'var(--spacing-md)', background: 'var(--gradient-blue-light)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-medium)' }}>
-                  <div style={{ fontSize: 'var(--font-size-label)', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 'var(--spacing-xs)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
+                <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', background: 'var(--bg-cream)', borderRadius: 'var(--radius-md)', border: '1px solid var(--text-muted)' }}>
+                  <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Revenue Retained
                   </div>
-                  <div id="revenue-savings-value-he" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--primary-blue)' }}>
+                  <div id="revenue-savings-value-he" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
                     $845,700
                   </div>
                 </div>
               </div>
 
-              <div style={{ padding: 'var(--spacing-xl)', background: 'var(--gradient-teal)', borderRadius: 'var(--radius-lg)', textAlign: 'center', boxShadow: 'var(--shadow-lg)' }}>
-                <div style={{ fontSize: 'var(--font-size-small)', fontWeight: 600, color: 'var(--text-white-soft)', marginBottom: 'var(--spacing-sm)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
+              <div style={{ padding: 'var(--spacing-md) var(--spacing-lg)', background: 'var(--primary-navy)', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'rgba(255,255,255,0.7)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                   Total Annual ROI
                 </div>
-                <div id="total-roi-value-he" style={{ fontSize: 'var(--font-size-h1)', fontWeight: 900, color: 'var(--text-white)', lineHeight: 1 }}>
+                <div id="total-roi-value-he" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--text-white)', lineHeight: 1 }}>
                   $869,108
                 </div>
               </div>
@@ -432,44 +518,114 @@ export function Component({ fieldValues }: any) {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-lg)' }}>
-                <div style={{ padding: 'var(--spacing-md)', background: 'var(--gradient-blue-light)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-medium)' }}>
-                  <div style={{ fontSize: 'var(--font-size-label)', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 'var(--spacing-xs)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-md)' }}>
+                <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', background: 'var(--bg-cream)', borderRadius: 'var(--radius-md)', border: '1px solid var(--text-muted)' }}>
+                  <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Staff Savings
                   </div>
-                  <div id="staff-savings-value-corp" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--primary-blue)' }}>
+                  <div id="staff-savings-value-corp" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
                     $37,917
                   </div>
                 </div>
 
-                <div style={{ padding: 'var(--spacing-md)', background: 'var(--gradient-blue-light)', borderRadius: 'var(--radius-lg)', border: '2px solid var(--border-medium)' }}>
-                  <div style={{ fontSize: 'var(--font-size-label)', fontWeight: 600, color: 'var(--text-muted)', marginBottom: 'var(--spacing-xs)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
+                <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', background: 'var(--bg-cream)', borderRadius: 'var(--radius-md)', border: '1px solid var(--text-muted)' }}>
+                  <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Revenue Retained
                   </div>
-                  <div id="revenue-savings-value-corp" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--primary-blue)' }}>
+                  <div id="revenue-savings-value-corp" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
                     $3,375,000
                   </div>
                 </div>
               </div>
 
-              <div style={{ padding: 'var(--spacing-xl)', background: 'var(--gradient-teal)', borderRadius: 'var(--radius-lg)', textAlign: 'center', boxShadow: 'var(--shadow-lg)' }}>
-                <div style={{ fontSize: 'var(--font-size-small)', fontWeight: 600, color: 'var(--text-white-soft)', marginBottom: 'var(--spacing-sm)', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
+              <div style={{ padding: 'var(--spacing-md) var(--spacing-lg)', background: 'var(--primary-navy)', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
+                <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'rgba(255,255,255,0.7)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                   Total Annual ROI
                 </div>
-                <div id="total-roi-value-corp" style={{ fontSize: 'var(--font-size-h1)', fontWeight: 900, color: 'var(--text-white)', lineHeight: 1 }}>
+                <div id="total-roi-value-corp" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--text-white)', lineHeight: 1 }}>
                   $3,412,917
                 </div>
               </div>
             </div>
 
-            <div style={{ marginTop: 'var(--spacing-lg)', textAlign: 'center', fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', fontStyle: 'italic' }}>
-              *Estimates based on your inputs and industry benchmarks
+            {/* Emerging Market Calculator */}
+            <div id="roi-calculator-em" style={{ display: 'none' }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: 'var(--spacing-md)',
+                marginBottom: 'var(--spacing-lg)'
+              }} className="roi-inputs-grid">
+                <div>
+                  <label htmlFor="em-employees" style={labelStyle}>
+                    How Many Employees
+                  </label>
+                  <input id="em-employees" type="text" defaultValue="100" placeholder="Enter Number" style={inputStyle} />
+                </div>
+
+                <div>
+                  <label htmlFor="em-turnover-rate" style={labelStyle}>
+                    Average Turnover Rate (%)
+                  </label>
+                  <input id="em-turnover-rate" type="number" defaultValue="10" placeholder="%" min="0" max="100" step="0.1" style={inputStyle} />
+                </div>
+
+                <div>
+                  <label htmlFor="em-avg-salary" style={labelStyle}>
+                    Average Salary
+                  </label>
+                  <input id="em-avg-salary" type="text" defaultValue="$50,000" placeholder="Enter Amount" style={inputStyle} />
+                </div>
+
+                <div>
+                  <label style={labelStyle}>
+                    Cost of Turnover*
+                  </label>
+                  <div style={{
+                    ...inputStyle,
+                    background: 'var(--bg-cream)',
+                    color: 'var(--text-muted)',
+                    cursor: 'not-allowed'
+                  }}>
+                    60%
+                  </div>
+                </div>
+
+                <div style={{ gridColumn: '1 / -1' }}>
+                  <label htmlFor="em-mentorship-increase" style={labelStyle}>
+                    Estimated Mentorship Retention Increase (%)
+                  </label>
+                  <input id="em-mentorship-increase" type="number" defaultValue="30" placeholder="%" min="0" max="100" step="0.1" style={inputStyle} />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-md)' }}>
+                <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', background: 'var(--bg-cream)', borderRadius: 'var(--radius-md)', border: '1px solid var(--text-muted)' }}>
+                  <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
+                    Cost of Employee Turnover
+                  </div>
+                  <div id="em-turnover-cost-value" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
+                    $300,000
+                  </div>
+                </div>
+
+                <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', background: 'var(--bg-cream)', borderRadius: 'var(--radius-md)', border: '1px solid var(--text-muted)' }}>
+                  <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
+                    Savings with Mentor Collective
+                  </div>
+                  <div id="em-savings-value" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
+                    $90,000
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', fontStyle: 'italic', marginBottom: 'var(--spacing-md)' }}>
+                *Average cost of turnover = 60% of annual salary
+              </div>
             </div>
 
-            <div style={{ marginTop: 'var(--spacing-lg)', textAlign: 'center' }}>
-              <a href={fieldValues.link_url || '#'} style={{ color: 'var(--primary-blue)', textDecoration: 'none', fontSize: 'var(--font-size-body)', fontWeight: 600 }}>
-                {fieldValues.link_text || 'Learn more'} →
-              </a>
+            <div style={{ marginTop: 'var(--spacing-md)', textAlign: 'center', fontSize: 'var(--font-size-xs)', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+              *Estimates based on your inputs and industry benchmarks
             </div>
           </div>
         </div>

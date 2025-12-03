@@ -85,7 +85,7 @@ export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElemen
  * Get variant styles
  */
 const getVariantStyles = (variant: InputVariant, hasError: boolean, isFocused: boolean): React.CSSProperties => {
-  const errorBorder = '2px solid #EF476F';
+  const errorBorder = '2px solid var(--primary-coral)';
   const focusBorder = '2px solid var(--primary-coral)';
 
   switch (variant) {
@@ -121,21 +121,21 @@ const getSizeStyles = (size: InputSize): React.CSSProperties => {
     case 'sm':
       return {
         height: '36px',
-        padding: '0 0.75rem',
-        fontSize: '0.875rem',
+        padding: '0 var(--spacing-xs)',
+        fontSize: 'var(--font-size-small)',
       };
     case 'lg':
       return {
         height: '56px',
-        padding: '0 1.25rem',
-        fontSize: '1.125rem',
+        padding: '0 var(--spacing-sm)',
+        fontSize: 'var(--font-size-body-lg)',
       };
     case 'md':
     default:
       return {
         height: DIMENSIONS.input.height,
         padding: `0 ${DIMENSIONS.input.paddingX}`,
-        fontSize: '1rem',
+        fontSize: 'var(--font-size-body)',
       };
   }
 };
@@ -152,14 +152,14 @@ const Label: React.FC<{ htmlFor?: string; required?: boolean; children: React.Re
     htmlFor={htmlFor}
     style={{
       display: 'block',
-      marginBottom: '0.5rem',
-      fontSize: '0.875rem',
+      marginBottom: 'var(--spacing-sm)',
+      fontSize: 'var(--font-size-small)',
       fontWeight: 600,
       color: COLORS.text.primary,
     }}
   >
     {children}
-    {required && <span style={{ color: '#EF476F', marginLeft: '0.25rem' }}>*</span>}
+    {required && <span style={{ color: 'var(--text-coral)', marginLeft: 'var(--spacing-xxs)' }}>*</span>}
   </label>
 );
 
@@ -170,9 +170,9 @@ const HelperText: React.FC<{ error?: boolean; children: React.ReactNode }> = ({ 
   <span
     style={{
       display: 'block',
-      marginTop: '0.5rem',
-      fontSize: '0.75rem',
-      color: error ? '#EF476F' : COLORS.text.muted,
+      marginTop: 'var(--spacing-sm)',
+      fontSize: 'var(--font-size-xs)',
+      color: error ? 'var(--text-coral)' : COLORS.text.muted,
     }}
     role={error ? 'alert' : undefined}
   >
@@ -261,7 +261,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           }}
         >
           {leftAddon && (
-            <span style={{ paddingLeft: '1rem', color: COLORS.text.muted }}>{leftAddon}</span>
+            <span style={{ paddingLeft: 'var(--spacing-sm)', color: COLORS.text.muted }}>{leftAddon}</span>
           )}
           <input
             ref={ref}
@@ -286,7 +286,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightAddon && (
-            <span style={{ paddingRight: '1rem', color: COLORS.text.muted }}>{rightAddon}</span>
+            <span style={{ paddingRight: 'var(--spacing-sm)', color: COLORS.text.muted }}>{rightAddon}</span>
           )}
         </div>
         {(error || helperText) && (
@@ -370,9 +370,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           onBlur={handleBlur}
           style={{
             width: '100%',
-            padding: '1rem',
+            padding: 'var(--spacing-sm)',
             fontFamily: 'var(--font-body)',
-            fontSize: '1rem',
+            fontSize: 'var(--font-size-body)',
             color: COLORS.text.primary,
             resize: 'vertical',
             minHeight: '120px',
@@ -478,9 +478,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             appearance: 'none',
             backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
             backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right 1rem center',
-            backgroundSize: '1rem',
-            paddingRight: '2.5rem',
+            backgroundPosition: 'right var(--spacing-sm) center',
+            backgroundSize: 'var(--spacing-sm)',
+            paddingRight: 'var(--spacing-xl)',
             ...getVariantStyles(variant, !!error, isFocused),
             ...getSizeStyles(size),
             ...style,

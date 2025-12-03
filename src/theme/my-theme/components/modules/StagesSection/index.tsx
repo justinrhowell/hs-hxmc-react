@@ -8,9 +8,16 @@ import groupImg from '../../../assets/group.png';
 import techImg from '../../../assets/tech.png';
 import scienceGirlImg from '../../../assets/science-girl.png';
 import pizzaImg from '../../../assets/pizza.png';
-import wedgeSvg from '../../../assets/Wedge.svg';
-import starSvg from '../../../assets/Star.svg';
-import { useScrollAnimation, animationStyles } from '../../hooks/useScrollAnimation';
+// Stories images for tabs
+import storiesCollegeImg from '../../../assets/stories-college.jpg';
+import storiesTalentImg from '../../../assets/stories-talent.jpg';
+import storiesProfDevImg from '../../../assets/stories-profdev.jpg';
+import storiesDeiImg from '../../../assets/stories-dei.jpg';
+import storiesWorkforceImg from '../../../assets/stories-workforce.jpg';
+// Decorative elements
+import blueArrows from '../../../assets/blue-arrows.svg';
+import yellowStar from '../../../assets/yellow-star.svg';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface StageContent {
   title: string;
@@ -19,11 +26,11 @@ interface StageContent {
   subtitle: string;
   stats: string;
   cta: string;
+  ctaUrl?: string;
   image: string;
 }
 
 export function Component({ fieldValues }: any) {
-  const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.2 });
   // No React state - using vanilla JS and CSS for tabs
 
   // Map image keys to imported image assets
@@ -49,48 +56,53 @@ export function Component({ fieldValues }: any) {
     : [
         {
           title: 'College Success Ready',
-          heading: 'From First Day to Graduation Day',
-          description: 'Build confidence and belonging early. Use mentorship to bridge the gap from high school to college and ensure every learner persists. Students paired with mentors in their first year show higher retention rates and stronger sense of community.',
-          subtitle: 'First-Year Success Starts Here',
-          stats: 'Students with first-year mentors are 2.3x more likely to persist to graduation and report 42% higher sense of belonging.',
-          cta: 'See college success stories →',
-          image: groupImg
+          heading: 'Anya Transforms Her Struggle into Success',
+          description: 'Build confidence and belonging for all learners, increasing retention, belonging and career readiness.\n\nAnya, a working mother attending community college classes afterhours, felt invisible and isolated. Juggling coursework and a family, she couldn\'t attend regular 9-to-5 advising sessions. Joining her school\'s mentorship program connected her with a mentor who could see Anya and her daily struggle, becoming Anya\'s personal lifeline. Anya moved from fearing she was "failing as both a student and a parent" to celebrating graduation day with her family one year later.',
+          subtitle: 'Quantifying Persistence',
+          stats: 'Mentorship delivers a +6% retention lift for program participants. Students rank "more personal support and one-on-one interaction" as the second most effective way to improve the overall student experience. Learners engaged in peer mentoring are 86% likely to expect to re-enroll the next year.',
+          cta: 'Explore more stories →',
+          ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
+          image: storiesCollegeImg
         },
         {
           title: 'Talent Acquisition',
           heading: 'Mentorship Made Maya Job-Ready',
-          description: 'Embed mentorship into internships, apprenticeships, and project-based learning to grow your own talent pipeline. Maya, a recent college graduate, did everything right—good grades and a polished résumé. Yet after 100+ applications she had no offers, saying, "I don\'t think I\'ll ever ever get a job." Her new mentorship relationship provided the clear path and crucial social network she needed, transforming her despair into confident success.',
+          description: 'Embed mentorship into internships, apprenticeships, and project-based learning to grow your own talent pipeline.\n\nMaya, a recent college graduate, did everything right—good grades and a polished résumé. Yet after 100+ applications she had no offers, saying, "I don\'t think I\'ll ever ever get a job." Her new mentorship relationship provided the clear path and crucial social network she needed, transforming her despair into confident success.',
           subtitle: 'Connection is the Missing Link',
           stats: 'Mentees see a 21% increase in comfort asking for help from established professionals and an 18% boost in self-efficacy. Intern-to-full-time conversion rates increase by 42%.',
-          cta: 'Anya, Nic, Jordan. Explore more stories →',
-          image: girlInOfficeImg
+          cta: 'Explore more stories →',
+          ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
+          image: storiesTalentImg
         },
         {
           title: 'Professional Development',
-          heading: 'Leadership for the AI Era',
-          description: 'Develop durable skills and leadership for the AI era through continuous mentorship and data-proven insights. As automation transforms work, human skills—communication, critical thinking, adaptability—become your competitive advantage. Our platform helps professionals at every level strengthen these irreplaceable capabilities.',
-          subtitle: 'Skills That Can\'t Be Automated',
-          stats: 'Professionals in mentorship programs report 35% improvement in leadership capabilities and 28% increase in cross-functional collaboration skills.',
-          cta: 'Explore professional development →',
-          image: techImg
+          heading: 'Future-Proofing Sara\'s Career',
+          description: 'Develop durable skills and leadership for the AI era through continuous mentorship and data-proven insights.\n\nSara, an early-career researcher in a fast-paced lab, excelled technically but struggled to transition into a leadership role. Her supervisor recognized that Sara needed to develop distinctly human skills—such as ethical reasoning and complex problem solving—that her technical training did not address. To support her growth, the lab instituted a mentorship program, providing Sara with the structured guidance she needed to cultivate these durable skills. She rose through the ranks to become a confident team leader, winning a top research award in her field.',
+          subtitle: 'Retain Your Employees Through Mentorship',
+          stats: 'Mentorship can lead to a +6% retention lift and a +30% increase in career confidence. Professionals with access to mentorship at their organizations are more likely to report high job satisfaction, creating resilient leaders for the future.',
+          cta: 'Explore more stories →',
+          ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
+          image: storiesProfDevImg
         },
         {
           title: 'DEI',
-          heading: 'From Inclusion to Belonging',
-          description: 'Transform inclusion into measurable belonging with identity-aligned matching. Equalize access to social capital to support first-generation, working learners, and underrepresented talent. Our platform ensures everyone has access to the networks and guidance that drive career success.',
+          heading: 'Identity-Aligned Mentorship Moved Jordan Forward',
+          description: 'Transform inclusion into measurable belonging with identity-aligned matching.\n\nJordan, a first-generation Black-Latino student, felt overwhelmed and intimidated. Unsure of campus resources and hesitant to seek help, he worried he didn\'t belong. Joining the mentorship program gave him a relatable anchor—he could see himself in his mentor, who taught him how to navigate "the hidden curriculum". His mentor transformed his uncertainty into confident, connected engagement.',
           subtitle: 'Belonging You Can Measure',
-          stats: 'First-generation and underrepresented students paired with identity-aligned mentors show 47% higher engagement and 3.2x improvement in feeling "they belong" at their institution.',
-          cta: 'Learn about equity in mentorship →',
-          image: scienceGirlImg
+          stats: 'Mentorship leads to a +8–19% boost in sense of belonging and a +18% boost in self-efficacy. Mentors who reflect students\' identities and experiences can be a powerful catalyst for fostering a sense of belonging.',
+          cta: 'Explore more stories →',
+          ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
+          image: storiesDeiImg
         },
         {
           title: 'Workforce Development',
-          heading: 'Reskilling That Scales',
-          description: 'Power apprenticeships, reskilling, and career advancement with scalable mentorship that connects learners to industry expertise. Whether transitioning careers, upskilling in new technologies, or advancing within their field, workers gain practical guidance from those who\'ve walked the path.',
-          subtitle: 'Bridge Skills Gaps with Human Connection',
-          stats: 'Workforce development programs with embedded mentorship see 56% faster time-to-productivity and 89% participant satisfaction rates.',
-          cta: 'See workforce transformation stories →',
-          image: pizzaImg
+          heading: 'Nic\'s Path from Apprentice to Team Lead',
+          description: 'Accelerate apprenticeships, reskilling, and career advancement with scalable mentorship that connects learners to industry expertise.\n\nNic, a skilled apprentice in a high-demand trade, risked becoming just a number in a transactional workforce. His on-the-ground supervisors lacked the time to help him develop the durable skills necessary for long-term career growth. By being paired with a mentor, Nic gained the essential support he needed, transforming his communication skills and setting him on a path to become the organization\'s youngest Project Manager.',
+          subtitle: 'Drive Work-Based Conversion',
+          stats: 'Mentorship accelerates the conversion of early-career talent, delivering a 42% increase in intern-to-full-time conversion for our Fortune 100 partner. Interns who connect with a mentor are 86% more likely to cite mentorship as the primary factor in accepting a job offer.',
+          cta: 'Explore more stories →',
+          ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
+          image: storiesWorkforceImg
         }
       ];
 
@@ -108,16 +120,16 @@ export function Component({ fieldValues }: any) {
               btn.onclick = function() {
                 buttons.forEach(b => {
                   b.style.background = 'transparent';
-                  b.style.color = 'var(--text-muted)';
+                  b.style.color = 'var(--text-primary)';
                   b.style.boxShadow = 'none';
                   b.style.fontWeight = '500';
                 });
 
                 contents.forEach(c => c.style.display = 'none');
 
-                btn.style.background = 'var(--gradient-coral)';
+                btn.style.background = 'var(--primary-blue)';
                 btn.style.color = 'var(--text-white)';
-                btn.style.boxShadow = 'var(--shadow-coral)';
+                btn.style.boxShadow = 'var(--shadow-md)';
                 btn.style.fontWeight = '600';
 
                 if (contents[idx]) contents[idx].style.display = 'grid';
@@ -135,19 +147,48 @@ export function Component({ fieldValues }: any) {
         })();
       `}} />
 
+      <ScrollAnimationScript />
       <section
-        ref={elementRef as React.RefObject<HTMLElement>}
-        className="stages-section"
+        className="stages-section scroll-animate"
         style={{
           padding: 'var(--section-padding-lg) var(--spacing-lg)',
           background: 'var(--bg-white)',
-          ...animationStyles.subtleSlideUp(isVisible),
         }}
       >
         <style>{`
           .stage-tab-btn:focus {
             outline: none !important;
             box-shadow: none !important;
+          }
+          @media (max-width: 968px) {
+            .stages-section .tabs {
+              flex-direction: column !important;
+              gap: 0.5rem !important;
+              padding: 0.75rem !important;
+            }
+            .stages-section .stage-tab-btn {
+              width: 100% !important;
+              text-align: center !important;
+              padding: 0.75rem 1rem !important;
+            }
+            .stages-section .stage-content {
+              grid-template-columns: 1fr !important;
+              gap: 2rem !important;
+              padding: 1rem 0 !important;
+            }
+            .stages-section .stage-content > div:last-child {
+              order: -1 !important;
+              padding: 20px 10px !important;
+            }
+            .stages-section .stage-content > div:last-child img[aria-hidden="true"]:first-of-type {
+              width: 80px !important;
+              left: 0 !important;
+            }
+            .stages-section .stage-content > div:last-child img[aria-hidden="true"]:last-of-type {
+              width: 70px !important;
+              bottom: -10px !important;
+              right: 0 !important;
+            }
           }
           @media (max-width: 768px) {
             .stages-section h2 {
@@ -159,16 +200,16 @@ export function Component({ fieldValues }: any) {
               margin-bottom: 2rem !important;
             }
             .stages-section .tabs {
-              margin-bottom: 2rem !important;
+              margin-bottom: 1.5rem !important;
             }
             .panel-title {
-              font-size: 1.75rem !important;
+              font-size: 1.5rem !important;
             }
             .panel-description {
               font-size: 0.95rem !important;
             }
             .panel-subtitle {
-              font-size: 1.25rem !important;
+              font-size: 1.15rem !important;
               margin: 1.5rem 0 1rem !important;
             }
             .panel-more {
@@ -176,8 +217,19 @@ export function Component({ fieldValues }: any) {
               font-size: 0.95rem !important;
             }
           }
+          @media (max-width: 480px) {
+            .stages-section h2 {
+              font-size: 1.75rem !important;
+            }
+            .panel-title {
+              font-size: 1.35rem !important;
+            }
+            .stages-section .stage-tab-btn {
+              font-size: 0.9rem !important;
+            }
+          }
         `}</style>
-        <div style={{ maxWidth: 'var(--max-width-lg)', margin: '0 auto', padding: '0 var(--container-padding)' }}>
+        <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 var(--spacing-lg)' }}>
         <h2 style={{
           fontSize: 'var(--font-size-h2)',
           fontWeight: 500,
@@ -201,7 +253,7 @@ export function Component({ fieldValues }: any) {
           {fieldValues.subtitle || 'From first-year students to experienced professionals, our platform scales mentorship to drive growth, belonging, and opportunity.'}
         </p>
         <div className="tabs" style={{
-          background: 'var(--bg-light-coral)',
+          background: 'var(--bg-light)',
           padding: 'var(--spacing-xs)',
           borderRadius: 'var(--radius-lg)',
           marginBottom: 'var(--spacing-2xl)',
@@ -223,10 +275,10 @@ export function Component({ fieldValues }: any) {
                 fontSize: 'var(--font-size-body)',
                 border: 'none',
                 cursor: 'pointer',
-                background: index === 0 ? 'var(--gradient-coral)' : 'transparent',
-                color: index === 0 ? 'var(--text-white)' : 'var(--text-muted)',
+                background: index === 0 ? 'var(--primary-blue)' : 'transparent',
+                color: index === 0 ? 'var(--text-white)' : 'var(--text-primary)',
                 transition: 'var(--transition-medium)',
-                boxShadow: index === 0 ? 'var(--shadow-coral-sm)' : 'none',
+                boxShadow: index === 0 ? 'var(--shadow-md)' : 'none',
                 fontWeight: index === 0 ? 600 : 500,
               }}
             >
@@ -243,12 +295,12 @@ export function Component({ fieldValues }: any) {
             data-content-index={index}
             style={{
               display: index === 0 ? 'grid' : 'none',
-              gridTemplateColumns: index % 2 === 0 ? '1.1fr 0.9fr' : '0.9fr 1.1fr',
+              gridTemplateColumns: '1fr 1fr',
               gap: 'var(--spacing-3xl)',
               alignItems: 'center',
-              maxWidth: 'var(--max-width-lg)',
+              maxWidth: '1440px',
               margin: '0 auto',
-              padding: '0 var(--container-padding)',
+              padding: 'var(--spacing-xl) 0',
               transition: 'var(--transition-medium)'
             }}
           >
@@ -266,7 +318,7 @@ export function Component({ fieldValues }: any) {
                 {content.stats}
               </p>
               <div style={{ marginTop: 'var(--spacing-xl)' }}>
-                <a href="#" className="panel-more" style={{
+                <a href={content.ctaUrl || '#'} className="panel-more" style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 'var(--spacing-xs)',
@@ -286,63 +338,54 @@ export function Component({ fieldValues }: any) {
             </div>
             <div style={{
               position: 'relative',
-              height: '500px',
+              paddingTop: '30px',
+              paddingRight: '20px',
+              paddingLeft: '20px',
+              paddingBottom: '20px',
             }}>
-              {/* Star decorative element */}
+              {/* Blue arrows - top left */}
               <img
-                src={starSvg}
+                src={blueArrows}
                 alt=""
-                role="presentation"
-                loading="lazy"
+                aria-hidden="true"
                 style={{
                   position: 'absolute',
-                  top: '-15px',
-                  right: '-15px',
-                  width: '60px',
-                  height: '60px',
-                  zIndex: 2,
-                  opacity: 'var(--opacity-hover)',
+                  top: 0,
+                  left: '-10px',
+                  width: '120px',
+                  height: 'auto',
+                  zIndex: 1,
                 }}
               />
 
-              {/* Polaroid-style frame */}
-              <div
-                className="polaroid-frame"
-                style={{
-                  background: 'var(--bg-white)',
-                  padding: 'var(--spacing-md)',
-                  boxShadow: 'var(--shadow-lg)',
-                  borderRadius: 'var(--radius-sm)',
-                  height: '100%',
-                  transform: index % 2 === 0 ? 'rotate(-1deg)' : 'rotate(1deg)',
-                  transition: 'var(--transition-smooth)',
-                }}>
-                <img
-                  src={content.image}
-                  alt={content.title}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    borderRadius: 'var(--radius-sm)'
-                  }}
-                />
-              </div>
-
-              {/* Wedge decorative element */}
+              {/* Main image */}
               <img
-                src={wedgeSvg}
-                alt=""
-                role="presentation"
+                src={content.image}
+                alt={content.title}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  borderRadius: '24px',
+                  display: 'block',
+                  position: 'relative',
+                  zIndex: 2,
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
+                }}
                 loading="lazy"
+              />
+
+              {/* Yellow star - bottom right */}
+              <img
+                src={yellowStar}
+                alt=""
+                aria-hidden="true"
                 style={{
                   position: 'absolute',
-                  bottom: '-10px',
-                  left: '-10px',
-                  width: '80px',
-                  height: '80px',
-                  opacity: 'var(--opacity-disabled)',
-                  zIndex: 1,
+                  bottom: '-20px',
+                  right: '-20px',
+                  width: '100px',
+                  height: 'auto',
+                  zIndex: 3,
                 }}
               />
             </div>
