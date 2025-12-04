@@ -10,10 +10,9 @@ export function Component({ fieldValues }: any) {
   const menuItems = [
     { label: 'Mentorship OS', hasDropdown: false, href: '/product' },
     { label: 'Network', hasDropdown: false, href: '/network' },
-    { label: 'Outcomes', hasDropdown: false, href: '/outcomes' },
     { label: 'Resources', hasDropdown: false, href: '/resources' },
     { label: 'Company', hasDropdown: false, href: '/about' },
-    { label: 'Log In', hasDropdown: false, href: '/login' }
+    { label: 'Log In', hasDropdown: false, href: 'https://app.mentorcollective.org/sign_in', external: true }
   ];
 
   const styles: Record<string, React.CSSProperties> = {
@@ -286,6 +285,8 @@ export function Component({ fieldValues }: any) {
                     style={styles.menuLink}
                     aria-label={item.label}
                     aria-haspopup={item.hasDropdown}
+                    target={item.external ? '_blank' : undefined}
+                    rel={item.external ? 'noopener noreferrer' : undefined}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.color = 'var(--text-coral)';
                     }}
@@ -449,6 +450,8 @@ export function Component({ fieldValues }: any) {
               <a
                 key={index}
                 href={item.href || '#'}
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noopener noreferrer' : undefined}
                 style={{
                   fontSize: 'var(--font-size-body)',
                   fontWeight: 500,

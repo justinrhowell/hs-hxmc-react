@@ -6,6 +6,69 @@
 -->
 {% extends "./layouts/base.hubl.html" %}
 
+{% block schema %}
+{# SoftwareApplication Schema for the Product/Platform #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Mentor Collective Mentorship OS",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web-based",
+  "description": "AI-powered mentorship operating system that reveals connection gaps, sparks engagement with personalized prompts, scales mentorship through automation, and fuels programs with real-time insights.",
+  "url": "https://www.mentorcollective.org/product",
+  "provider": {
+    "@type": "Organization",
+    "name": "Mentor Collective",
+    "url": "https://www.mentorcollective.org"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Contact for pricing"
+  },
+  "featureList": [
+    "AI-powered mentor matching with 80+ variables",
+    "Conversation Sparks - personalized engagement prompts",
+    "Real-time analytics and insights dashboard",
+    "Automated program management",
+    "Identity-aligned matching for equity",
+    "SSO and CRM integrations",
+    "Mobile-friendly participant experience"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "200",
+    "bestRating": "5"
+  }
+}
+</script>
+
+{# BreadcrumbList Schema #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.mentorcollective.org"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Mentorship OS",
+      "item": "https://www.mentorcollective.org/product"
+    }
+  ]
+}
+</script>
+{% endblock schema %}
+
 {% block body %}
 
   {% module "navigation" path="../components/modules/Navigation" %}

@@ -5,6 +5,86 @@
 -->
 {% extends "./layouts/base.hubl.html" %}
 
+{% block schema %}
+{# CollectionPage Schema for Network/Solutions page #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Mentor Collective Network - Solutions by Segment",
+  "description": "Explore mentorship solutions for higher education, emerging markets, and strategic partnerships. Discover how Mentor Collective drives retention and career mobility across different sectors.",
+  "url": "https://www.mentorcollective.org/network",
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "Mentorship Solutions",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Service",
+          "name": "Higher Education Mentorship",
+          "description": "Drive student retention, belonging, and career readiness with AI-powered peer mentorship programs for colleges and universities.",
+          "provider": {
+            "@type": "Organization",
+            "name": "Mentor Collective"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Service",
+          "name": "Workforce Development",
+          "description": "Improve early talent retention and engagement through structured mentorship programs for employers and workforce boards.",
+          "provider": {
+            "@type": "Organization",
+            "name": "Mentor Collective"
+          }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Service",
+          "name": "Strategic Partnerships",
+          "description": "Power regional talent pipelines and statewide workforce initiatives through scalable mentorship infrastructure.",
+          "provider": {
+            "@type": "Organization",
+            "name": "Mentor Collective"
+          }
+        }
+      }
+    ]
+  }
+}
+</script>
+
+{# BreadcrumbList Schema #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.mentorcollective.org"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Network",
+      "item": "https://www.mentorcollective.org/network"
+    }
+  ]
+}
+</script>
+{% endblock schema %}
+
 {% block body %}
 
   {% module "navigation" path="../components/modules/Navigation" %}

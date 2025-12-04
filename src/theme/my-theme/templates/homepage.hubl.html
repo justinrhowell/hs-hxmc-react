@@ -5,6 +5,77 @@
 -->
 {% extends "./layouts/base.hubl.html" %}
 
+{% block schema %}
+{# Homepage-specific WebPage Schema #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Mentor Collective - AI-Powered Mentorship Platform",
+  "description": "Scale human connection with our AI-powered mentorship operating system. Drive retention, belonging, and career mobility for higher education and workforce organizations.",
+  "url": "https://www.mentorcollective.org",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Mentor Collective"
+  },
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [".hero-headline", ".hero-description"]
+  },
+  "specialty": "AI-Powered Mentorship Solutions"
+}
+</script>
+
+{# Service Schema - helps AI understand what you offer #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "AI-Powered Mentorship Platform",
+  "provider": {
+    "@type": "Organization",
+    "name": "Mentor Collective"
+  },
+  "description": "Enterprise mentorship operating system that uses AI to match mentors and mentees, guide conversations with personalized prompts, and deliver measurable outcomes at scale.",
+  "serviceType": "Mentorship Platform",
+  "areaServed": {
+    "@type": "Country",
+    "name": "United States"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Mentorship Solutions",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Higher Education Mentorship",
+          "description": "Student retention and career readiness programs for colleges and universities"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Workforce Mentorship",
+          "description": "Early talent retention and development programs for employers"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Alumni Network Activation",
+          "description": "Connect students and alumni for career mentorship at scale"
+        }
+      }
+    ]
+  }
+}
+</script>
+{% endblock schema %}
+
 {% block body %}
 
   {% module

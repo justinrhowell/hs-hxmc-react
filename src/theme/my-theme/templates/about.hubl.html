@@ -5,6 +5,85 @@
 -->
 {% extends "./layouts/base.hubl.html" %}
 
+{% block schema %}
+{# Enhanced Organization Schema for About Page #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Mentor Collective",
+  "alternateName": "MC",
+  "url": "https://www.mentorcollective.org",
+  "logo": "https://www.mentorcollective.org/hubfs/MentorCollective-Primary-Logo.svg",
+  "description": "Mentor Collective is an AI-powered mentorship platform that scales human connection to drive retention, belonging, and career mobility for higher education institutions, employers, and workforce organizations.",
+  "foundingDate": "2014",
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "minValue": 50,
+    "maxValue": 200
+  },
+  "slogan": "Scale Human Connection",
+  "knowsAbout": [
+    "Mentorship Programs",
+    "Student Retention",
+    "Career Readiness",
+    "Higher Education",
+    "Workforce Development",
+    "AI-Powered Matching",
+    "Employee Engagement"
+  ],
+  "areaServed": {
+    "@type": "Country",
+    "name": "United States"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/company/mentor-collective",
+    "https://twitter.com/mentorcollectiv"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "sales",
+      "url": "https://www.mentorcollective.org/contact",
+      "availableLanguage": "English"
+    },
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "url": "https://www.mentorcollective.org/contact",
+      "availableLanguage": "English"
+    }
+  ],
+  "award": [
+    "200+ Partner Organizations",
+    "Serving Higher Education and Workforce Ecosystems"
+  ]
+}
+</script>
+
+{# BreadcrumbList Schema #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.mentorcollective.org"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "About Us",
+      "item": "https://www.mentorcollective.org/about"
+    }
+  ]
+}
+</script>
+{% endblock schema %}
+
 {% block body %}
 
   {% module "navigation" path="../components/modules/Navigation" %}

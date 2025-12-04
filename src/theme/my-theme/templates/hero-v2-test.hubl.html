@@ -1,0 +1,25 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Hero V2 Test
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {% module
+    "navigation"
+    path="../components/modules/Navigation"
+  %}
+
+  {% module
+    "hero_v2"
+    path="../components/modules/HeroDiagramV2"
+  %}
+
+  {% module
+    "footer"
+    path="../components/modules/Footer"
+  %}
+
+{% endblock body %}

@@ -6,9 +6,8 @@ import {
 } from '@hubspot/cms-components/fields';
 import girlMicroscopeImg from '../../../assets/girl-looking-into-microscope.png';
 import scienceGirlImg from '../../../assets/science-girl.png';
-import groupImg from '../../../assets/group.png';
-import girlOfficeImg from '../../../assets/girl-in-office.png';
-import starSvg from '../../../assets/Star.svg';
+import blueArrows from '../../../assets/blue-arrows.svg';
+import yellowStar from '../../../assets/yellow-star.svg';
 import fourLeafSvg from '../../../assets/four-leaf-graphic.svg';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
@@ -41,6 +40,54 @@ export function Component({ fieldValues }: ResultsSectionProps) {
 
   return (
     <>
+    <style>{`
+      @media (max-width: 968px) {
+        .results-content {
+          grid-template-columns: 1fr !important;
+        }
+        .results-images {
+          height: 420px !important;
+          max-width: 480px !important;
+          margin: 0 auto var(--spacing-xl) !important;
+        }
+        .results-images .photo-back {
+          width: 320px !important;
+          height: 230px !important;
+          left: 40px !important;
+        }
+        .results-images .photo-front {
+          width: 300px !important;
+          height: 240px !important;
+          top: 170px !important;
+          left: 100px !important;
+        }
+      }
+      @media (max-width: 480px) {
+        .results-images {
+          height: 340px !important;
+        }
+        .results-images .photo-back {
+          width: 250px !important;
+          height: 180px !important;
+          left: 20px !important;
+        }
+        .results-images .photo-front {
+          width: 230px !important;
+          height: 190px !important;
+          top: 135px !important;
+          left: 70px !important;
+        }
+        .results-images .decor-arrows {
+          width: 80px !important;
+        }
+        .results-images .decor-star {
+          width: 40px !important;
+        }
+        .results-images .decor-leaf {
+          width: 60px !important;
+        }
+      }
+    `}</style>
     <ScrollAnimationScript />
     <section
       style={{
@@ -53,27 +100,71 @@ export function Component({ fieldValues }: ResultsSectionProps) {
       }}
       aria-labelledby="results-heading"
     >
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 var(--spacing-lg)', position: 'relative', zIndex: 'var(--z-base)' }}>
+      <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto', padding: '0 var(--spacing-lg)', position: 'relative', zIndex: 'var(--z-base)' }}>
         <div className="results-content scroll-animate" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-3xl)', alignItems: 'center' }}>
-          <div style={{
-            position: 'relative',
-            height: '550px',
-            width: '100%',
-          }}>
-            {/* Star graphic - top left corner */}
+          <div
+            className="results-images"
+            style={{
+              position: 'relative',
+              height: '560px',
+              width: '100%',
+              paddingLeft: 'var(--spacing-xl)',
+              paddingTop: 'var(--spacing-lg)',
+            }}
+          >
+            {/* Blue arrows - top left */}
             <img
-              src={starSvg}
+              src={blueArrows}
               alt=""
-              role="presentation"
+              aria-hidden="true"
+              className="decor-arrows"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '120px',
+                height: 'auto',
+                zIndex: 1,
+              }}
+            />
+
+            {/* Photo 1 - Girl with microscope - BACK/TOP */}
+            <img
+              src={girlMicroscopeImg}
+              alt="Mentorship in action - student using microscope"
               loading="lazy"
+              className="photo-back"
               style={{
                 position: 'absolute',
                 top: 'var(--spacing-lg)',
-                left: 'var(--spacing-lg)',
-                width: '50px',
-                height: '50px',
-                zIndex: 1,
-                opacity: 'var(--opacity-hover)',
+                left: 'var(--spacing-2xl)',
+                width: '400px',
+                height: '280px',
+                objectFit: 'cover',
+                borderRadius: 'var(--radius-xl)',
+                boxShadow: 'var(--shadow-lg)',
+                zIndex: 2,
+                transform: 'rotate(-3deg)',
+              }}
+            />
+
+            {/* Photo 2 - Science girl - FRONT/BOTTOM - overlapping */}
+            <img
+              src={scienceGirlImg}
+              alt="Student in science program"
+              loading="lazy"
+              className="photo-front"
+              style={{
+                position: 'absolute',
+                top: '220px',
+                left: '120px',
+                width: '380px',
+                height: '300px',
+                objectFit: 'cover',
+                borderRadius: 'var(--radius-xl)',
+                boxShadow: 'var(--shadow-xl)',
+                zIndex: 3,
+                transform: 'rotate(2deg)',
               }}
             />
 
@@ -81,72 +172,33 @@ export function Component({ fieldValues }: ResultsSectionProps) {
             <img
               src={fourLeafSvg}
               alt=""
-              role="presentation"
-              loading="lazy"
+              aria-hidden="true"
+              className="decor-leaf"
               style={{
                 position: 'absolute',
-                bottom: 'var(--spacing-lg)',
-                left: 'var(--spacing-lg)',
-                width: '100px',
-                height: '100px',
-                zIndex: 1,
-                opacity: 'var(--opacity-hover)',
+                bottom: 'var(--spacing-md)',
+                left: 'var(--spacing-md)',
+                width: '90px',
+                height: 'auto',
+                zIndex: 4,
               }}
             />
 
-            {/* Photo 1 - Girl with microscope - BACK/LEFT - larger, more prominent */}
-            <div style={{
-              position: 'absolute',
-              top: 'var(--spacing-2xl)',
-              left: 'var(--spacing-2xl)',
-              width: '420px',
-              height: '340px',
-              background: 'var(--bg-white)',
-              padding: 'var(--spacing-md)',
-              boxShadow: 'var(--shadow-lg)',
-              borderRadius: 'var(--radius-sm)',
-              zIndex: 2,
-              transform: 'rotate(-2deg)',
-            }}>
-              <img
-                src={girlMicroscopeImg}
-                alt="Mentorship in action - student using microscope"
-                loading="lazy"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: 'var(--radius-sm)',
-                }}
-              />
-            </div>
-
-            {/* Photo 2 - Science girl - FRONT/RIGHT - cleaner overlap */}
-            <div style={{
-              position: 'absolute',
-              top: '180px',
-              right: 'var(--spacing-2xl)',
-              width: '340px',
-              height: '340px',
-              background: 'var(--bg-white)',
-              padding: 'var(--spacing-md)',
-              boxShadow: 'var(--shadow-hover)',
-              borderRadius: 'var(--radius-sm)',
-              zIndex: 3,
-              transform: 'rotate(2deg)',
-            }}>
-              <img
-                src={scienceGirlImg}
-                alt="Student in science program"
-                loading="lazy"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: 'var(--radius-sm)',
-                }}
-              />
-            </div>
+            {/* Yellow star - top right area */}
+            <img
+              src={yellowStar}
+              alt=""
+              aria-hidden="true"
+              className="decor-star"
+              style={{
+                position: 'absolute',
+                top: 'var(--spacing-xs)',
+                right: 'var(--spacing-2xl)',
+                width: '60px',
+                height: 'auto',
+                zIndex: 4,
+              }}
+            />
           </div>
           <div>
             <h2
@@ -184,9 +236,9 @@ export function Component({ fieldValues }: ResultsSectionProps) {
                   data-delay={index * 100}
                   style={{
                     padding: 'var(--card-padding)',
-                    background: 'rgba(255, 255, 255, 0.9)',
+                    background: 'var(--bg-glass)',
                     borderRadius: 'var(--radius-xl)',
-                    border: '2px solid rgba(239, 71, 111, 0.15)',
+                    border: '2px solid var(--border-medium)',
                     boxShadow: 'var(--shadow-md)',
                     transition: 'var(--transition-smooth)',
                     cursor: 'pointer',

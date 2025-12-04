@@ -184,7 +184,7 @@ export function Component({ fieldValues }: any) {
   // Use custom mentors if provided, otherwise fall back to defaults
   const customMentors = fieldValues.mentors || [];
 
-  const mentorProfiles: MentorProfile[] = customMentors.length === 3 ? customMentors.map((m: any) => ({
+  const mentorProfiles: MentorProfile[] = customMentors.length >= 5 ? customMentors.slice(0, 5).map((m: any) => ({
     name: m.mentor_name,
     role: m.role,
     image: mentorImageMap[m.image_key] || heroImg01,
@@ -230,6 +230,30 @@ export function Component({ fieldValues }: any) {
         { label: 'Mentees', value: '38' },
         { label: 'Publications', value: '12' },
         { label: 'Impact Score', value: '96%' }
+      ]
+    },
+    {
+      name: 'Jordan Williams',
+      role: 'First-Gen Graduate',
+      image: heroImg01,
+      bio: 'Identity-aligned mentorship helped me navigate the hidden curriculum and find my place on campus.',
+      expertise: ['Student Success', 'Belonging', 'First-Gen Support'],
+      stats: [
+        { label: 'GPA Increase', value: '+0.8' },
+        { label: 'Campus Groups', value: '4' },
+        { label: 'Belonging', value: '+19%' }
+      ]
+    },
+    {
+      name: 'Toccara Davis',
+      role: 'College Success Story',
+      image: heroImg02,
+      bio: 'Peer mentorship transformed my isolation into belonging, leading me to graduate four years later.',
+      expertise: ['Campus Resources', 'Peer Support', 'Persistence'],
+      stats: [
+        { label: 'Resources Used', value: '12' },
+        { label: 'Mentor Sessions', value: '45' },
+        { label: 'Re-enrollment', value: '86%' }
       ]
     }
   ];
@@ -297,12 +321,10 @@ export function Component({ fieldValues }: any) {
           width: '60px',
           height: '60px',
           borderRadius: 'var(--radius-circle)',
-          background: isExpanded
-            ? 'linear-gradient(135deg, #E35D7A 0%, #F89F7B 100%)'
-            : 'linear-gradient(135deg, #E35D7A 0%, #F89F7B 100%)',
+          background: 'var(--gradient-coral)',
           boxShadow: isExpanded
-            ? '0 12px 40px rgba(239, 71, 111, 0.4)'
-            : '0 8px 24px rgba(239, 71, 111, 0.3)',
+            ? 'var(--shadow-coral)'
+            : 'var(--shadow-coral-sm)',
           cursor: 'pointer',
           transition: 'var(--transition-medium)',
           zIndex: isExpanded ? 250 : 10,
@@ -320,8 +342,8 @@ export function Component({ fieldValues }: any) {
           alignItems: 'center',
           justifyContent: 'center',
           color: 'var(--text-white)',
-          fontWeight: 700,
-          fontSize: '24px',
+          fontWeight: 600,
+          fontSize: 'var(--font-size-h3)',
           transition: 'var(--transition-medium)',
           transform: isExpanded ? 'rotate(45deg)' : 'rotate(0deg)'
         }}>
@@ -396,7 +418,7 @@ export function Component({ fieldValues }: any) {
               flexWrap: 'wrap'
             }}>
               <strong style={{
-                fontSize: 'var(--font-size-h2)',
+                fontSize: 'var(--font-size-h4)',
                 fontWeight: 600,
                 color: 'var(--text-white)',
                 fontFamily: 'var(--font-headline)',
@@ -405,7 +427,7 @@ export function Component({ fieldValues }: any) {
                 {data.tooltipStat}
               </strong>
               <span style={{
-                fontSize: 'var(--font-size-body)',
+                fontSize: 'var(--font-size-small)',
                 color: 'var(--text-white)',
                 fontWeight: 500,
                 opacity: 0.9
@@ -1089,25 +1111,25 @@ export function Component({ fieldValues }: any) {
                   {renderNode('organizations', nodeData.organizations)}
                   {renderNode('partnerships', nodeData.partnerships)}
 
-                  {/* Center Avatars - Floating constellation arrangement */}
+                  {/* Center Avatars - Pentagon arrangement for 5 avatars */}
                   <div style={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '420px',
-                    height: '420px',
+                    width: '380px',
+                    height: '380px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     zIndex: 150
                   }}>
-                    {mentorProfiles.map((mentor, index) => {
-                      // Triangular arrangement - well spaced to avoid overlap
+                    {mentorProfiles.slice(0, 3).map((mentor, index) => {
+                      // Triangle arrangement - 3 avatars
                       const positions = [
-                        { top: '0px', left: '140px' },     // Avatar 1 - top center
-                        { top: '160px', left: '0px' },     // Avatar 2 - bottom left
-                        { top: '200px', left: '250px' }    // Avatar 3 - bottom right
+                        { top: '0px', left: '105px' },      // Avatar 1 - top center
+                        { top: '165px', left: '0px' },      // Avatar 2 - bottom left
+                        { top: '165px', left: '210px' }     // Avatar 3 - bottom right
                       ];
 
                       const isHovered = hoveredAvatar === index;
@@ -1140,9 +1162,9 @@ export function Component({ fieldValues }: any) {
                               width: '145px',
                               height: '145px',
                               borderRadius: 'var(--radius-circle)',
-                              border: '4px solid var(--bg-white)',
+                              border: '3px solid var(--bg-white)',
                               boxShadow: isHovered
-                                ? '0 8px 24px rgba(239, 71, 111, 0.4), 0 0 0 4px rgba(239, 71, 111, 0.5)'
+                                ? '0 8px 24px rgba(239, 71, 111, 0.4), 0 0 0 3px rgba(239, 71, 111, 0.5)'
                                 : '0 4px 12px rgba(239, 71, 111, 0.25), 0 0 0 2px rgba(239, 71, 111, 0.3)',
                               overflow: 'hidden',
                               background: 'var(--bg-light)',
@@ -1166,15 +1188,15 @@ export function Component({ fieldValues }: any) {
                             className={`avatar-tooltip-${index}`}
                             style={{
                               position: 'absolute',
-                              top: '160px',
+                              top: '120px',
                               left: '50%',
                               transform: 'translateX(-50%)',
                               background: 'var(--bg-white)',
                               borderRadius: 'var(--radius-lg)',
-                              padding: 'var(--spacing-lg) var(--spacing-lg)',
+                              padding: 'var(--spacing-md) var(--spacing-md)',
                               boxShadow: 'var(--shadow-lg)',
                               zIndex: 600,
-                              minWidth: '240px',
+                              minWidth: '220px',
                               textAlign: 'center' as const,
                               pointerEvents: 'none',
                               opacity: 0,
@@ -1182,7 +1204,7 @@ export function Component({ fieldValues }: any) {
                               transition: 'var(--transition-medium)',
                             }}>
                             <div style={{
-                              fontSize: 'var(--font-size-h4)',
+                              fontSize: 'var(--font-size-body-lg)',
                               fontWeight: 500,
                               color: 'var(--text-primary)',
                               marginBottom: '2px',
@@ -1192,10 +1214,10 @@ export function Component({ fieldValues }: any) {
                               {mentor.name}
                             </div>
                             <div style={{
-                              fontSize: 'var(--font-size-body)',
+                              fontSize: 'var(--font-size-small)',
                               fontWeight: 600,
                               color: 'var(--text-primary)',
-                              marginBottom: 'var(--spacing-sm)',
+                              marginBottom: 'var(--spacing-xs)',
                               fontFamily: 'var(--font-body)',
                             }}>
                               {mentor.role}
@@ -1203,7 +1225,7 @@ export function Component({ fieldValues }: any) {
                             <div style={{
                               fontSize: 'var(--font-size-small)',
                               fontWeight: 500,
-                              color: 'var(--text-coral)',
+                              color: 'var(--text-secondary)',
                               fontFamily: 'var(--font-body)',
                               lineHeight: 'var(--line-height-normal)',
                             }}>

@@ -16,18 +16,25 @@ export function Component({ fieldValues }: any) {
         .resource-hero-category:hover {
           background: var(--primary-blue) !important;
           color: white !important;
-          border-color: var(--primary-blue) !important;
+          box-shadow: var(--shadow-md) !important;
+        }
+        .resource-hero-category:focus {
+          outline: none !important;
+          box-shadow: none !important;
         }
         @media (max-width: 768px) {
           .resource-hero h1 {
             font-size: var(--font-size-h2) !important;
           }
           .resource-hero-categories {
-            gap: var(--spacing-xs) !important;
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+            padding: 0.75rem !important;
           }
           .resource-hero-category {
-            padding: var(--spacing-xs) var(--spacing-sm) !important;
-            font-size: var(--font-size-xs) !important;
+            width: 100% !important;
+            text-align: center !important;
+            padding: 0.75rem 1rem !important;
           }
         }
       `}</style>
@@ -90,16 +97,19 @@ export function Component({ fieldValues }: any) {
             {description}
           </p>
 
-          {/* Category Pills */}
+          {/* Category Tabs */}
           <div
             className="scroll-animate resource-hero-categories"
             data-delay="300"
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: 'var(--spacing-sm)',
+              gap: 'var(--spacing-xs)',
               flexWrap: 'wrap',
+              background: 'var(--bg-light)',
+              padding: 'var(--spacing-xs)',
+              borderRadius: 'var(--radius-lg)',
             }}
           >
             {['All Resources', 'Articles', 'Case Studies', 'Guides', 'Webinars'].map((category, index) => (
@@ -108,15 +118,16 @@ export function Component({ fieldValues }: any) {
                 type="button"
                 className="resource-hero-category"
                 style={{
-                  padding: 'var(--spacing-xs) var(--spacing-md)',
-                  background: index === 0 ? 'var(--primary-blue)' : 'var(--bg-white)',
-                  border: index === 0 ? '1px solid var(--primary-blue)' : '1px solid var(--border-light)',
-                  borderRadius: 'var(--radius-full)',
-                  fontSize: 'var(--font-size-small)',
-                  fontWeight: 500,
-                  color: index === 0 ? 'var(--text-white)' : 'var(--text-secondary)',
+                  padding: 'var(--spacing-sm) var(--spacing-lg)',
+                  background: index === 0 ? 'var(--primary-blue)' : 'transparent',
+                  border: 'none',
+                  borderRadius: 'var(--radius-md)',
+                  fontSize: 'var(--font-size-body)',
+                  fontWeight: index === 0 ? 600 : 500,
+                  color: index === 0 ? 'var(--text-white)' : 'var(--text-primary)',
                   cursor: 'pointer',
                   transition: 'var(--transition-medium)',
+                  boxShadow: index === 0 ? 'var(--shadow-md)' : 'none',
                 }}
               >
                 {category}

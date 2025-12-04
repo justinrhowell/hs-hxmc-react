@@ -5,15 +5,102 @@
 <html lang="{{ html_lang }}" {{ html_lang_dir }}>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {# Page Title - HubSpot handles this from page settings #}
     {% if page_meta.html_title or pageTitle %}
       <title>{{ page_meta.html_title or pageTitle }}</title>
     {% endif %}
+
+    {# Favicon #}
     {% if brand_settings.primaryFavicon.src %}
       <link rel="shortcut icon" href="{{ brand_settings.primaryFavicon.src }}" />
     {% endif %}
+
+    {# Primary Meta Tags #}
     <meta name="description" content="{{ page_meta.meta_description }}" />
+    {% if page_meta.meta_keywords %}
+      <meta name="keywords" content="{{ page_meta.meta_keywords }}" />
+    {% endif %}
+
+    {# Robots - respect HubSpot page settings #}
+    {% if page_meta.canonical_url %}
+      <link rel="canonical" href="{{ page_meta.canonical_url }}" />
+    {% else %}
+      <link rel="canonical" href="{{ request.full_url | split('?') | first }}" />
+    {% endif %}
+
+    {# Open Graph / Facebook #}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.full_url | split('?') | first }}" />
+    <meta property="og:title" content="{{ page_meta.html_title or pageTitle }}" />
+    <meta property="og:description" content="{{ page_meta.meta_description }}" />
+    {% if page_meta.featured_image %}
+      <meta property="og:image" content="{{ page_meta.featured_image }}" />
+    {% elif content.featured_image %}
+      <meta property="og:image" content="{{ content.featured_image }}" />
+    {% endif %}
+    <meta property="og:site_name" content="Mentor Collective" />
+    <meta property="og:locale" content="{{ html_lang | default('en_US') }}" />
+
+    {# Twitter Card #}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="{{ request.full_url | split('?') | first }}" />
+    <meta name="twitter:title" content="{{ page_meta.html_title or pageTitle }}" />
+    <meta name="twitter:description" content="{{ page_meta.meta_description }}" />
+    {% if page_meta.featured_image %}
+      <meta name="twitter:image" content="{{ page_meta.featured_image }}" />
+    {% elif content.featured_image %}
+      <meta name="twitter:image" content="{{ content.featured_image }}" />
+    {% endif %}
+
+    {# Additional SEO Meta Tags #}
+    <meta name="author" content="Mentor Collective" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    {# Organization Schema - appears on all pages #}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Mentor Collective",
+      "url": "https://www.mentorcollective.org",
+      "logo": "https://www.mentorcollective.org/hubfs/MentorCollective-Primary-Logo.svg",
+      "description": "AI-powered mentorship platform that scales human connection to drive retention, belonging, and career mobility.",
+      "sameAs": [
+        "https://www.linkedin.com/company/mentor-collective",
+        "https://twitter.com/mentorcollectiv"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "url": "https://www.mentorcollective.org/contact"
+      }
+    }
+    </script>
+
+    {# WebSite Schema for sitelinks search box #}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Mentor Collective",
+      "url": "https://www.mentorcollective.org",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.mentorcollective.org/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    {# Block for page-specific schema #}
+    {% block schema %}{% endblock schema %}
+
+    {# Styles #}
     {{ require_css(get_asset_url("../../styles/global.css")) }}
-    {# To see a full list of what is included via standard_footer_includes please reference this article: https://developers.hubspot.com/docs/cms/hubl/variables#required-page-template-variables #}
+
+    {# HubSpot standard header includes #}
     {{ standard_header_includes }}
   </head>
   <body>
@@ -21,7 +108,8 @@
       {% block body %}
       {% endblock body %}
     </div>
-    {# To see a full list of what is included via standard_footer_includes please reference this article: https://developers.hubspot.com/docs/cms/hubl/variables#required-page-template-variables #}
+
+    {# HubSpot standard footer includes #}
     {{ standard_footer_includes }}
   </body>
 </html>

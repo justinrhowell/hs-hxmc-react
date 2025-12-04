@@ -56,10 +56,20 @@ export function Component({ fieldValues }: any) {
     : [
         {
           title: 'College Success Ready',
+          heading: 'Toccara - College Career Success',
+          description: 'Build confidence and belonging early. Use mentorship to bridge the gap from high school to college and ensure every learner persists.\n\nToccara\'s college dream quickly turned into a nightmare as she became profoundly homesick after moving cross-country. Six months in, feeling isolated and ready to transfer back home, a friend mentioned she should join the mentorship program for first-years. Matched with a relatable peer mentor who understood her struggles, Toccara received guidance on the myriad of campus resources available and clubs that matched her interests. The simple act of peer support transformed isolation into belonging, ultimately leading Toccara to graduate four years later.',
+          subtitle: 'Activating Campus Resources',
+          stats: 'Mentorship delivers a +8–19% boost in sense of belonging, addressing key concerns like academic struggles and homesickness. Mentees are +45% more likely to engage with campus resources.',
+          cta: 'Explore more stories →',
+          ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
+          image: storiesTalentImg
+        },
+        {
+          title: 'Adult Learner Success',
           heading: 'Anya Transforms Her Struggle into Success',
-          description: 'Build confidence and belonging for all learners, increasing retention, belonging and career readiness.\n\nAnya, a working mother attending community college classes afterhours, felt invisible and isolated. Juggling coursework and a family, she couldn\'t attend regular 9-to-5 advising sessions. Joining her school\'s mentorship program connected her with a mentor who could see Anya and her daily struggle, becoming Anya\'s personal lifeline. Anya moved from fearing she was "failing as both a student and a parent" to celebrating graduation day with her family one year later.',
+          description: 'Empower adult learners by providing accessible, AI-supported human connections that respect their time.\n\nAnya, a working mother attending community college classes after hours, felt invisible and isolated. Juggling coursework and a family, she couldn\'t attend regular 9-to-5 advising sessions. Joining her school\'s mentorship program connected her with a mentor who could see Anya and her daily struggle, becoming Anya\'s personal lifeline. Anya moved from fearing she was "failing as both a student and a parent" to celebrating graduation day with her family one year later.',
           subtitle: 'Quantifying Persistence',
-          stats: 'Mentorship delivers a +6% retention lift for program participants. Students rank "more personal support and one-on-one interaction" as the second most effective way to improve the overall student experience. Learners engaged in peer mentoring are 86% likely to expect to re-enroll the next year.',
+          stats: 'Students rank "more personal support and one-on-one interaction" as the second most effective way to improve the overall student experience. Learners engaged in peer mentoring are 86% likely to expect to re-enroll the next year.',
           cta: 'Explore more stories →',
           ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
           image: storiesCollegeImg
@@ -252,39 +262,41 @@ export function Component({ fieldValues }: any) {
         }}>
           {fieldValues.subtitle || 'From first-year students to experienced professionals, our platform scales mentorship to drive growth, belonging, and opportunity.'}
         </p>
-        <div className="tabs" style={{
-          background: 'var(--bg-light)',
-          padding: 'var(--spacing-xs)',
-          borderRadius: 'var(--radius-lg)',
-          marginBottom: 'var(--spacing-2xl)',
-          display: 'flex',
-          gap: 'var(--spacing-xs)',
-          justifyContent: 'center',
-          flexWrap: 'wrap'
-        }}>
-          {stages.map((stage, index) => (
-            <button
-              key={index}
-              type="button"
-              className="stage-tab-btn"
-              data-tab-index={index}
-              style={{
-                padding: 'var(--spacing-sm) var(--spacing-lg)',
-                borderRadius: 'var(--radius-md)',
-                fontFamily: 'var(--font-body)',
-                fontSize: 'var(--font-size-body)',
-                border: 'none',
-                cursor: 'pointer',
-                background: index === 0 ? 'var(--primary-blue)' : 'transparent',
-                color: index === 0 ? 'var(--text-white)' : 'var(--text-primary)',
-                transition: 'var(--transition-medium)',
-                boxShadow: index === 0 ? 'var(--shadow-md)' : 'none',
-                fontWeight: index === 0 ? 600 : 500,
-              }}
-            >
-              {stage}
-            </button>
-          ))}
+        <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)' }}>
+          <div className="tabs" style={{
+            background: 'var(--bg-light)',
+            padding: 'var(--spacing-xs)',
+            borderRadius: 'var(--radius-lg)',
+            display: 'inline-flex',
+            gap: '4px',
+            justifyContent: 'center',
+            flexWrap: 'nowrap',
+          }}>
+            {stages.map((stage, index) => (
+              <button
+                key={index}
+                type="button"
+                className="stage-tab-btn"
+                data-tab-index={index}
+                style={{
+                  padding: 'var(--spacing-sm) var(--spacing-md)',
+                  borderRadius: 'var(--radius-md)',
+                  fontFamily: 'var(--font-body)',
+                  fontSize: 'var(--font-size-small)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  background: index === 0 ? 'var(--primary-blue)' : 'transparent',
+                  color: index === 0 ? 'var(--text-white)' : 'var(--text-primary)',
+                  transition: 'var(--transition-medium)',
+                  boxShadow: index === 0 ? 'var(--shadow-md)' : 'none',
+                  fontWeight: index === 0 ? 600 : 500,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {stage}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Render ALL content sections - vanilla JS will show/hide them */}
@@ -308,8 +320,13 @@ export function Component({ fieldValues }: any) {
               <h3 className="panel-title" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 500, marginBottom: 'var(--spacing-md)', color: 'var(--text-primary)', fontFamily: 'var(--font-headline)', lineHeight: 'var(--line-height-normal)', letterSpacing: 'var(--letter-spacing-tight)' }}>
                 {content.heading}
               </h3>
+              {/* Lead-in paragraph - first line stands out */}
+              <p className="panel-lead" style={{ fontSize: 'var(--font-size-body-lg)', lineHeight: 'var(--line-height-relaxed)', color: 'var(--text-secondary)', marginBottom: 'var(--spacing-md)', maxWidth: 'var(--max-width-prose)', fontWeight: 500 }}>
+                {content.description.split('\n\n')[0]}
+              </p>
+              {/* Story paragraph */}
               <p className="panel-description" style={{ fontSize: 'var(--font-size-body)', lineHeight: 'var(--line-height-relaxed)', color: 'var(--text-muted)', marginBottom: 'var(--spacing-xl)', maxWidth: 'var(--max-width-prose)' }}>
-                {content.description}
+                {content.description.split('\n\n').slice(1).join('\n\n')}
               </p>
               <h4 className="panel-subtitle" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 500, margin: 'var(--spacing-xl) 0 var(--spacing-md)', color: 'var(--text-primary)', fontFamily: 'var(--font-headline)' }}>
                 {content.subtitle}
