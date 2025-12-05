@@ -1,0 +1,21 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Backups
+backups
+
+# Build artifacts
+.cache
+dist
+
+# OS files
+.DS_Store
+**/.DS_Store
+
+# IDE
+.idea
+.vscode
+
+# Git
+.git

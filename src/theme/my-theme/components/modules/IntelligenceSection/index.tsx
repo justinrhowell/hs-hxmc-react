@@ -4,24 +4,32 @@ import {
   TextField,
 } from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
+import revealIcon from '../../../assets/reveal-icon.svg';
+import sparkIcon from '../../../assets/spark-icon.svg';
+import scaleIcon from '../../../assets/scale-icon.svg';
+import fuelIcon from '../../../assets/fuel-icon.svg';
 
 export function Component({ fieldValues }: any) {
   const features = [
     {
+      icon: revealIcon,
       title: fieldValues.feature1_title || 'Real-Time Analytics',
-      description: fieldValues.feature1_description || 'Monitor program health at a glance',
+      description: fieldValues.feature1_description || 'Monitor program health at a glance with live dashboards and instant visibility into engagement metrics.',
     },
     {
+      icon: sparkIcon,
       title: fieldValues.feature2_title || 'Configurable Reporting',
-      description: fieldValues.feature2_description || 'Generate custom reports for different stakeholders',
+      description: fieldValues.feature2_description || 'Generate custom reports for different stakeholders with flexible data exports and visualizations.',
     },
     {
+      icon: scaleIcon,
       title: fieldValues.feature3_title || 'Early Alerts',
-      description: fieldValues.feature3_description || 'Surface struggling mentorships before they fail',
+      description: fieldValues.feature3_description || 'Surface struggling mentorships before they fail with AI-powered risk detection and intervention prompts.',
     },
     {
+      icon: fuelIcon,
       title: fieldValues.feature4_title || 'Outcome Measurement',
-      description: fieldValues.feature4_description || 'Connect mentorship activity directly to institutional outcomes',
+      description: fieldValues.feature4_description || 'Connect mentorship activity directly to institutional outcomes with ROI tracking and impact reports.',
     },
   ];
 
@@ -33,34 +41,185 @@ export function Component({ fieldValues }: any) {
 
   return (
     <>
+    <style>{`
+      @media (max-width: 768px) {
+        .intelligence-stats-grid {
+          grid-template-columns: 1fr !important;
+        }
+        .intelligence-features-grid {
+          grid-template-columns: 1fr !important;
+        }
+      }
+    `}</style>
     <ScrollAnimationScript />
-    <section id="intelligence" className="scroll-animate" style={{ padding: '100px 20px', background: 'var(--bg-white)' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: 'var(--font-size-h2)', fontWeight: 500, marginBottom: 'var(--spacing-sm)', color: 'var(--text-coral)', fontFamily: 'var(--font-headline)' }}>
-          {fieldValues.heading || 'The Intelligence'}
-        </h2>
-        <p style={{ fontSize: 'var(--font-size-h3)', fontWeight: 500, color: 'var(--text-primary)', lineHeight: 'var(--line-height-tight)', marginBottom: 'var(--spacing-lg)', maxWidth: '900px', fontFamily: 'var(--font-headline)' }}>
-          {fieldValues.subtitle || 'Transform human connection into measurable outcomes.'}
-        </p>
+    <section
+      id="intelligence"
+      className="scroll-animate"
+      style={{
+        padding: 'var(--section-padding-lg) var(--spacing-lg)',
+        background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 100%)',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)' }}>
+          <h2 style={{
+            fontSize: 'var(--font-size-h2)',
+            fontWeight: 500,
+            marginBottom: 'var(--spacing-sm)',
+            color: 'var(--text-white)',
+            fontFamily: 'var(--font-headline)',
+            lineHeight: 'var(--line-height-tight)',
+            letterSpacing: 'var(--letter-spacing-tight)',
+          }}>
+            {fieldValues.heading || 'The Intelligence'}
+          </h2>
+          <p style={{
+            fontSize: 'var(--font-size-body-lg)',
+            color: 'rgba(255, 255, 255, 0.8)',
+            lineHeight: 'var(--line-height-relaxed)',
+            maxWidth: 'var(--max-width-prose)',
+            margin: '0 auto',
+          }}>
+            {fieldValues.subtitle || 'Transform human connection into measurable outcomes.'}
+          </p>
+        </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--spacing-xl)', marginBottom: 'var(--spacing-2xl)' }}>
+        <div
+          className="intelligence-features-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: 'var(--spacing-xl)',
+            marginBottom: 'var(--spacing-2xl)',
+            maxWidth: '1100px',
+            margin: '0 auto var(--spacing-2xl)',
+          }}
+        >
           {features.map((feature, index) => (
-            <div key={index} style={{ background: 'white', padding: 'var(--spacing-xl)', borderRadius: 'var(--radius-lg)', border: '2px solid rgba(239, 71, 111, 0.1)' }}>
-              <h3 style={{ fontSize: 'var(--font-size-xl)', fontWeight: 500, marginBottom: 'var(--spacing-md)', color: 'var(--color-primary)' }}>{feature.title}</h3>
-              <p style={{ fontSize: 'var(--font-size-base)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{feature.description}</p>
+            <div
+              key={index}
+              className="feature-card scroll-animate"
+              data-delay={index * 100}
+              style={{
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 251, 248, 0.95) 100%)',
+                padding: 'var(--card-padding-lg)',
+                borderRadius: 'var(--radius-xl)',
+                boxShadow: 'var(--shadow-lg)',
+                border: '1px solid var(--border-light)',
+                transition: 'var(--transition-bounce)',
+                position: 'relative',
+                overflow: 'hidden',
+              }}
+            >
+              <div style={{
+                marginBottom: 'var(--spacing-lg)',
+                height: '60px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+              }}>
+                <img
+                  src={feature.icon}
+                  alt={`${feature.title} icon`}
+                  style={{
+                    height: '100%',
+                    width: 'auto',
+                    filter: 'drop-shadow(0 4px 8px rgba(239, 71, 111, 0.15))'
+                  }}
+                />
+              </div>
+              <h3 style={{
+                fontSize: 'var(--font-size-h3)',
+                fontWeight: 500,
+                marginBottom: 'var(--spacing-sm)',
+                color: 'var(--text-primary)',
+                fontFamily: 'var(--font-headline)',
+                lineHeight: 'var(--line-height-normal)',
+              }}>
+                {feature.title}
+              </h3>
+              <p style={{
+                fontSize: 'var(--font-size-body)',
+                lineHeight: 'var(--line-height-relaxed)',
+                color: 'var(--text-muted)',
+                fontFamily: 'var(--font-body)',
+                margin: 0,
+              }}>
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>
 
-        <div style={{ background: 'white', padding: 'var(--spacing-2xl)', borderRadius: 'var(--radius-lg)' }}>
-          <p style={{ fontSize: 'var(--font-size-xl)', fontWeight: 600, textAlign: 'center', marginBottom: 'var(--spacing-xl)', color: 'var(--text-primary)' }}>
-            {fieldValues.stats_heading}
+        <div style={{
+          padding: 'var(--spacing-2xl) 0',
+          marginTop: 'var(--spacing-xl)',
+        }}>
+          <p style={{
+            fontSize: 'var(--font-size-h3)',
+            fontWeight: 500,
+            textAlign: 'center',
+            marginBottom: 'var(--spacing-xl)',
+            color: 'var(--text-white)',
+            fontFamily: 'var(--font-headline)',
+          }}>
+            {fieldValues.stats_heading || 'Measurable Impact Across Key Outcomes'}
           </p>
-          <div style={{ display: 'flex', gap: 'var(--spacing-2xl)', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--spacing-lg)' }} className="intelligence-stats-grid">
             {stats.map((stat, index) => (
-              <div key={index} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 'var(--font-size-4xl)', fontWeight: 800, color: 'var(--color-primary)', marginBottom: 'var(--spacing-xs)' }}>{stat.value}</div>
-                <div style={{ fontSize: 'var(--font-size-base)', color: 'var(--text-secondary)', fontWeight: 500 }}>{stat.label}</div>
+              <div
+                key={index}
+                className="stat-card scroll-animate"
+                data-delay={index * 100}
+                style={{
+                  padding: 'var(--card-padding)',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  borderRadius: 'var(--radius-xl)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                  transition: 'var(--transition-smooth)',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  backdropFilter: 'blur(10px)',
+                  textAlign: 'center',
+                }}
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: '-50%',
+                  right: '-20%',
+                  width: '150px',
+                  height: '150px',
+                  background: 'radial-gradient(circle, rgba(239, 71, 111, 0.15) 0%, transparent 70%)',
+                  borderRadius: 'var(--radius-circle)'
+                }} />
+                <div style={{
+                  fontSize: 'var(--font-size-h1)',
+                  fontWeight: 800,
+                  background: 'var(--gradient-coral-peach)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  letterSpacing: 'var(--letter-spacing-tight)',
+                  marginBottom: 'var(--spacing-sm)',
+                  position: 'relative',
+                  zIndex: 'var(--z-base)',
+                  fontFamily: 'var(--font-headline)',
+                }}>
+                  {stat.value}
+                </div>
+                <div style={{
+                  fontSize: 'var(--font-size-body)',
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  fontWeight: 500,
+                  lineHeight: 'var(--line-height-normal)',
+                  position: 'relative',
+                  zIndex: 'var(--z-base)',
+                }}>
+                  {stat.label}
+                </div>
               </div>
             ))}
           </div>

@@ -27,8 +27,9 @@ export function Component({ fieldValues }: any) {
 
   return (
     <section style={{
-      padding: '100px 20px',
-      background: 'white',
+      padding: 'var(--section-padding-md) var(--spacing-lg)',
+      paddingBottom: 'var(--spacing-lg)',
+      background: 'var(--bg-white)',
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <h2 style={{

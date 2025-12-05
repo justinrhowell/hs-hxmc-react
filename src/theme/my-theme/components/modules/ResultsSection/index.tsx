@@ -5,7 +5,7 @@ import {
   NumberField,
 } from '@hubspot/cms-components/fields';
 import girlMicroscopeImg from '../../../assets/girl-looking-into-microscope.png';
-import scienceGirlImg from '../../../assets/science-girl.png';
+import scienceGirlImg from '../../../assets/science-girl.jpg';
 import blueArrows from '../../../assets/blue-arrows.svg';
 import yellowStar from '../../../assets/yellow-star.svg';
 import fourLeafSvg from '../../../assets/four-leaf-graphic.svg';

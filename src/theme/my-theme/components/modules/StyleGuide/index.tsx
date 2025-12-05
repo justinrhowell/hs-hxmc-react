@@ -1538,6 +1538,87 @@ input {
             </div>
           </div>
 
+          {/* Section Dividers */}
+          <div style={styles.card}>
+            <h2 style={styles.sectionTitle}>Section Dividers</h2>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--spacing-lg)', lineHeight: 'var(--line-height-relaxed)' }}>
+              Thin line dividers for separating sections with matching backgrounds. Creates visual separation without heavy borders.
+            </p>
+
+            <h3 style={styles.subsectionTitle}>Divider Variants</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)', marginBottom: 'var(--spacing-xl)' }}>
+              {/* Light variant */}
+              <div>
+                <div style={{ fontSize: 'var(--font-size-small)', color: 'var(--text-muted)', marginBottom: 'var(--spacing-sm)' }}>
+                  Light (for white backgrounds)
+                </div>
+                <div style={{
+                  maxWidth: 'var(--max-width-lg)',
+                  padding: 'var(--spacing-lg) 0',
+                  background: 'var(--bg-white)',
+                }}>
+                  <div style={{
+                    height: '1px',
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(239, 71, 111, 0.2) 15%, rgba(239, 71, 111, 0.35) 50%, rgba(239, 71, 111, 0.2) 85%, transparent 100%)',
+                  }} />
+                </div>
+              </div>
+
+              {/* Dark variant */}
+              <div>
+                <div style={{ fontSize: 'var(--font-size-small)', color: 'var(--text-muted)', marginBottom: 'var(--spacing-sm)' }}>
+                  Dark (for dark backgrounds)
+                </div>
+                <div style={{
+                  maxWidth: 'var(--max-width-lg)',
+                  padding: 'var(--spacing-lg) 0',
+                  background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+                  borderRadius: 'var(--radius-md)',
+                }}>
+                  <div style={{
+                    height: '1px',
+                    background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 15%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0.2) 85%, transparent 100%)',
+                  }} />
+                </div>
+              </div>
+
+              {/* Coral variant */}
+              <div>
+                <div style={{ fontSize: 'var(--font-size-small)', color: 'var(--text-muted)', marginBottom: 'var(--spacing-sm)' }}>
+                  Coral (solid accent line)
+                </div>
+                <div style={{
+                  maxWidth: 'var(--max-width-lg)',
+                  padding: 'var(--spacing-lg) 0',
+                  background: 'var(--bg-white)',
+                }}>
+                  <div style={{
+                    height: '1px',
+                    background: 'linear-gradient(90deg, transparent 0%, var(--primary-coral) 15%, var(--primary-coral) 85%, transparent 100%)',
+                  }} />
+                </div>
+              </div>
+            </div>
+
+            <h3 style={styles.subsectionTitle}>Usage in HubL Templates</h3>
+            <div style={{
+              background: 'var(--bg-secondary)',
+              padding: 'var(--spacing-lg)',
+              borderRadius: 'var(--radius-lg)',
+              fontFamily: 'monospace',
+              fontSize: 'var(--font-size-small)',
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              whiteSpace: 'pre-wrap',
+            }}>
+{`{% module "divider"
+    path="../components/modules/SectionDivider"
+    variant="light"   // light | dark | coral
+    spacing="sm"      // sm | md | lg
+%}`}
+            </div>
+          </div>
+
           {/* Hero Image Composition */}
           <div style={styles.card}>
             <h2 style={styles.sectionTitle}>Hero Image Composition</h2>

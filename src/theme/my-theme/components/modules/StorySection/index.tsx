@@ -4,19 +4,9 @@ import {
   TextField,
 } from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
-
-interface Stat {
-  value: string;
-  label: string;
-}
+import mentorProfilesSvg from '../../../assets/Mentor Profiles.svg';
 
 export function Component({ fieldValues }: any) {
-  const stats: Stat[] = fieldValues.stats || [
-    { value: '+6%', label: 'Retention Lift' },
-    { value: '19%', label: 'Boost in Belonging' },
-    { value: '30%', label: 'Increase in Career Confidence' },
-  ];
-
   return (
     <>
     <ScrollAnimationScript />
@@ -115,48 +105,26 @@ export function Component({ fieldValues }: any) {
             </div>
           </div>
 
-          {/* Right Column - Stat Cards */}
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 'var(--spacing-lg)',
-          }}
-          className="scroll-animate"
-          data-delay="200">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 251, 248, 0.95) 100%)',
-                  padding: 'var(--spacing-xl)',
-                  borderRadius: 'var(--radius-xl)',
-                  border: '2px solid rgba(239, 71, 111, 0.1)',
-                  boxShadow: 'var(--shadow-md)',
-                  textAlign: 'center',
-                  backdropFilter: 'blur(10px)',
-                  transition: 'var(--transition-medium)',
-                }}
-              >
-                <div style={{
-                  fontSize: 'var(--font-size-h1)',
-                  fontWeight: 700,
-                  color: 'var(--text-coral)',
-                  lineHeight: 1,
-                  marginBottom: 'var(--spacing-sm)',
-                  fontFamily: 'var(--font-headline)',
-                }}>
-                  {stat.value}
-                </div>
-                <div style={{
-                  fontSize: 'var(--font-size-base)',
-                  color: 'var(--text-secondary)',
-                  fontWeight: 500,
-                  lineHeight: 'var(--line-height-normal)',
-                }}>
-                  {stat.label}
-                </div>
-              </div>
-            ))}
+          {/* Right Column - Mentor Profiles Illustration */}
+          <div
+            className="scroll-animate"
+            data-delay="200"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <img
+              src={mentorProfilesSvg}
+              alt="Mentor profiles illustration showing mentor-mentee connections"
+              style={{
+                width: '100%',
+                height: 'auto',
+                maxWidth: '450px',
+                display: 'block',
+              }}
+            />
           </div>
         </div>
       </div>

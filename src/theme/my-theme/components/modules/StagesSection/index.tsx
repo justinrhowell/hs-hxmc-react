@@ -3,10 +3,10 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import girlInOfficeImg from '../../../assets/girl-in-office.png';
+import girlInOfficeImg from '../../../assets/girl-in-office.jpg';
 import groupImg from '../../../assets/group.png';
 import techImg from '../../../assets/tech.png';
-import scienceGirlImg from '../../../assets/science-girl.png';
+import scienceGirlImg from '../../../assets/science-girl.jpg';
 import pizzaImg from '../../../assets/pizza.png';
 // Stories images for tabs
 import storiesCollegeImg from '../../../assets/stories-college.jpg';
@@ -14,6 +14,8 @@ import storiesTalentImg from '../../../assets/stories-talent.jpg';
 import storiesProfDevImg from '../../../assets/stories-profdev.jpg';
 import storiesDeiImg from '../../../assets/stories-dei.jpg';
 import storiesWorkforceImg from '../../../assets/stories-workforce.jpg';
+import toccaraImg from '../../../assets/Toccara - College Career Success.jpg';
+import storiesNicImg from '../../../assets/Stories_Nic.jpg';
 // Decorative elements
 import blueArrows from '../../../assets/blue-arrows.svg';
 import yellowStar from '../../../assets/yellow-star.svg';
@@ -62,7 +64,7 @@ export function Component({ fieldValues }: any) {
           stats: 'Mentorship delivers a +8–19% boost in sense of belonging, addressing key concerns like academic struggles and homesickness. Mentees are +45% more likely to engage with campus resources.',
           cta: 'Explore more stories →',
           ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
-          image: storiesTalentImg
+          image: toccaraImg
         },
         {
           title: 'Adult Learner Success',
@@ -112,7 +114,7 @@ export function Component({ fieldValues }: any) {
           stats: 'Mentorship accelerates the conversion of early-career talent, delivering a 42% increase in intern-to-full-time conversion for our Fortune 100 partner. Interns who connect with a mentor are 86% more likely to cite mentorship as the primary factor in accepting a job offer.',
           cta: 'Explore more stories →',
           ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
-          image: storiesWorkforceImg
+          image: storiesNicImg
         }
       ];
 

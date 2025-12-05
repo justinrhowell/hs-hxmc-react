@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import heroImg01 from '../../../assets/Hero_Img_01.png';
-import heroImg02 from '../../../assets/Hero_Img_02.png';
-import heroImg03 from '../../../assets/Hero_Img_03.png';
+import heroImg01 from '../../../assets/Hero_Img_01.jpg';
+import heroImg02 from '../../../assets/Hero_Img_02.jpg';
+import heroImg03 from '../../../assets/Hero_Img_03.jpg';
 import { DemoModal } from '../../shared/DemoModal';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 

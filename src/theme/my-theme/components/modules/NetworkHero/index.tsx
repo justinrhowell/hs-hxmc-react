@@ -6,7 +6,7 @@ import {
 } from '@hubspot/cms-components/fields';
 import { DemoModal } from '../../shared/DemoModal';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
-import defaultHeroImage from '../../../assets/network-hero.png';
+import defaultHeroImage from '../../../assets/network-hero.jpg';
 import blueArrows from '../../../assets/blue-arrows.svg';
 import yellowStar from '../../../assets/yellow-star.svg';
 

@@ -334,10 +334,9 @@ export function Component({ fieldValues }: any) {
         className="scroll-animate"
         style={{
           padding: 'var(--section-padding-md) var(--spacing-lg)',
-          background: 'var(--gradient-warm)',
-          backgroundImage: 'var(--pattern-dots)',
-          backgroundSize: 'var(--pattern-dots-size)',
+          background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 100%)',
           position: 'relative',
+          overflow: 'hidden',
         }}
       >
         <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
@@ -349,14 +348,14 @@ export function Component({ fieldValues }: any) {
               marginBottom: 'var(--spacing-sm)',
               fontFamily: 'var(--font-headline)',
               fontWeight: 500,
-              color: 'var(--text-primary)'
+              color: 'var(--text-white)'
             }}>
               {fieldValues.heading || 'Measure What Matters'}
             </h2>
             <p style={{
               fontSize: 'var(--font-size-body-lg)',
               lineHeight: 'var(--line-height-relaxed)',
-              color: 'var(--text-secondary)',
+              color: 'rgba(255, 255, 255, 0.8)',
               maxWidth: 'var(--max-width-prose)',
               margin: '0 auto'
             }}>

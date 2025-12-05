@@ -5,7 +5,7 @@ import {
   ImageField,
 } from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
-import defaultHeroImage from '../../../assets/about-us-hero.png';
+import defaultHeroImage from '../../../assets/about-us-hero.jpg';
 import blueArrows from '../../../assets/blue-arrows.svg';
 import yellowStar from '../../../assets/yellow-star.svg';
 
