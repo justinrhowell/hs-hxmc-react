@@ -4,6 +4,7 @@ import {
   TextField,
 } from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
+import mentorProfilesSvg from '../../../assets/Mentor Profiles.svg';
 
 const defaultPillars = [
   {
@@ -28,6 +29,26 @@ const defaultPillars = [
   },
 ];
 
+// Geometric shape icons matching brand style
+const pillarIcons = [
+  // Circle - Human Connection
+  <svg key="circle" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <circle cx="10" cy="10" r="8" stroke="var(--text-coral)" strokeWidth="2.5" fill="none" />
+  </svg>,
+  // Diamond - Peer Insights
+  <svg key="diamond" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <rect x="10" y="2" width="11" height="11" rx="2" transform="rotate(45 10 2)" stroke="var(--text-coral)" strokeWidth="2.5" fill="none" />
+  </svg>,
+  // Triangle - Robust Assessment
+  <svg key="triangle" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <path d="M10 3L18 17H2L10 3Z" stroke="var(--text-coral)" strokeWidth="2.5" strokeLinejoin="round" fill="none" />
+  </svg>,
+  // Square - Administrative Capacity
+  <svg key="square" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <rect x="3" y="3" width="14" height="14" rx="2" stroke="var(--text-coral)" strokeWidth="2.5" fill="none" />
+  </svg>,
+];
+
 export function Component({ fieldValues }: any) {
   const pillars = (fieldValues.pillars && fieldValues.pillars.length > 0)
     ? fieldValues.pillars.map((p: any) => ({
@@ -37,140 +58,201 @@ export function Component({ fieldValues }: any) {
       }))
     : defaultPillars;
 
+  const imagePosition = fieldValues.image_position || 'right';
+  const showTestimonial = fieldValues.show_testimonial !== false;
+  const testimonialQuote = fieldValues.testimonial_quote || '10+ years of mentorship data: 500K learners, 200K mentors, 200 partners.';
+  const testimonialAuthor = fieldValues.testimonial_author || '';
+
   return (
     <>
+    <style>{`
+      @media (max-width: 968px) {
+        .pillars-content {
+          grid-template-columns: 1fr !important;
+        }
+        .pillars-left-col,
+        .pillars-right-col {
+          order: unset !important;
+        }
+        .pillars-image-col {
+          order: -1 !important;
+        }
+      }
+    `}</style>
     <ScrollAnimationScript />
     <section
       className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
-        background: 'linear-gradient(180deg, white 0%, #FFFBF8 50%, white 100%)',
-        backgroundImage: 'var(--pattern-dots)',
-        backgroundSize: 'var(--pattern-dots-size)',
+        background: 'var(--bg-white)',
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-3xl)' }}>
-          <h2 style={{
-            fontSize: 'var(--font-size-h2)',
-            fontWeight: 500,
-            color: 'var(--text-primary)',
-            marginBottom: 'var(--spacing-md)',
-            fontFamily: 'var(--font-headline)',
-            lineHeight: 'var(--line-height-tight)',
-          }}>
-            {fieldValues.heading || 'The Proven Engine: Four Pillars of Value'}
-          </h2>
-          <p style={{
-            fontSize: 'var(--font-size-body-lg)',
-            color: 'var(--text-secondary)',
-            maxWidth: 'var(--max-width-prose)',
-            margin: '0 auto',
-          }}>
-            {fieldValues.subtitle || 'Mentorship at scale becomes a strategic advantage.'}
-          </p>
-        </div>
-
-        {/* Table-style layout */}
         <div style={{
-          background: 'var(--bg-white)',
-          borderRadius: 'var(--radius-xl)',
-          boxShadow: 'var(--shadow-lg)',
-          overflow: 'hidden',
-          border: '1px solid var(--border-light)',
-        }}>
-          {/* Table Header */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 2fr 1.5fr',
-            background: 'linear-gradient(135deg, #EF476F 0%, #F89F7B 100%)',
-            padding: 'var(--spacing-lg) var(--spacing-xl)',
-            gap: 'var(--spacing-lg)',
-          }}>
-            <div style={{
-              color: 'white',
-              fontWeight: 700,
-              fontSize: 'var(--font-size-base)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 'var(--spacing-3xl)',
+          alignItems: 'start',
+        }} className="pillars-content">
+          {/* Text Column */}
+          <div
+            className={imagePosition === 'left' ? 'pillars-right-col' : 'pillars-left-col'}
+            style={{ order: imagePosition === 'left' ? 2 : 1 }}
+          >
+            {/* Section Title */}
+            <h2 style={{
+              fontSize: 'var(--font-size-h2)',
+              fontWeight: 500,
+              lineHeight: 'var(--line-height-tight)',
+              letterSpacing: 'var(--letter-spacing-tight)',
+              marginBottom: 'var(--spacing-sm)',
+              color: 'var(--text-primary)',
+              fontFamily: 'var(--font-headline)',
             }}>
-              Pillar
-            </div>
-            <div style={{
-              color: 'white',
-              fontWeight: 700,
-              fontSize: 'var(--font-size-base)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
+              {fieldValues.heading || 'The Proven Engine: Four Pillars of Value'}
+            </h2>
+
+            <p style={{
+              fontSize: 'var(--font-size-body-lg)',
+              fontWeight: 500,
+              lineHeight: 'var(--line-height-normal)',
+              marginBottom: 'var(--spacing-xl)',
+              color: 'var(--text-secondary)',
+              fontFamily: 'var(--font-headline)',
             }}>
-              Mechanism & Value
-            </div>
-            <div style={{
-              color: 'white',
-              fontWeight: 700,
-              fontSize: 'var(--font-size-base)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-            }}>
-              Outcome
+              {fieldValues.subtitle || 'Mentorship at scale becomes a strategic advantage.'}
+            </p>
+
+            {/* Pillars List */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xl)' }}>
+              {pillars.map((pillar: any, index: number) => (
+                <div
+                  key={index}
+                  style={{ display: 'flex', gap: 'var(--spacing-md)', alignItems: 'flex-start' }}
+                  className="scroll-animate"
+                  data-delay={index * 100}
+                >
+                  <div style={{
+                    flexShrink: 0,
+                    width: '40px',
+                    height: '40px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(239, 71, 111, 0.08)',
+                    borderRadius: 'var(--radius-md)',
+                  }}>
+                    {pillarIcons[index % pillarIcons.length]}
+                  </div>
+                  <div>
+                    <h3 style={{
+                      fontSize: 'var(--font-size-large)',
+                      fontWeight: 500,
+                      color: 'var(--text-primary)',
+                      marginBottom: 'var(--spacing-xs)',
+                      fontFamily: 'var(--font-headline)',
+                    }}>
+                      {pillar.title}
+                    </h3>
+                    <p style={{
+                      fontSize: 'var(--font-size-base)',
+                      color: 'var(--text-muted)',
+                      lineHeight: 'var(--line-height-normal)',
+                      margin: 0,
+                      marginBottom: 'var(--spacing-sm)',
+                    }}>
+                      {pillar.mechanism}
+                    </p>
+                    {/* Outcome as styled bullet point */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: 'var(--spacing-sm)',
+                    }}>
+                      <span style={{
+                        color: 'var(--text-coral)',
+                        fontWeight: 700,
+                        fontSize: 'var(--font-size-body-lg)',
+                        lineHeight: 1,
+                      }}>→</span>
+                      <span style={{
+                        fontSize: 'var(--font-size-base)',
+                        fontWeight: 600,
+                        color: 'var(--text-coral)',
+                        lineHeight: 'var(--line-height-tight)',
+                      }}>
+                        {pillar.value}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Table Rows */}
-          {pillars.map((pillar: any, index: number) => (
-            <div
-              key={index}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 2fr 1.5fr',
-                padding: 'var(--spacing-xl)',
-                gap: 'var(--spacing-lg)',
-                borderBottom: index < pillars.length - 1 ? '1px solid var(--border-light)' : 'none',
-                background: index % 2 === 0 ? 'white' : 'rgba(255, 251, 248, 0.5)',
-                transition: 'var(--transition-medium)',
-              }}
-              className="scroll-animate"
-              data-delay={index * 100}
-            >
-              <div>
-                <h3 style={{
-                  fontSize: 'var(--font-size-h5)',
-                  fontWeight: 500,
+          {/* Image Column */}
+          <div
+            className={`pillars-image-col ${imagePosition === 'left' ? 'pillars-left-col' : 'pillars-right-col'}`}
+            style={{
+              order: imagePosition === 'left' ? 1 : 2,
+              textAlign: 'center',
+            }}
+          >
+            <div className="scroll-animate" data-delay="200">
+              <img
+                src={mentorProfilesSvg}
+                alt="Mentor profiles illustration showing diverse mentors and mentees connected through the platform"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxWidth: '500px',
+                  display: 'block',
+                  margin: '0 auto',
+                }}
+              />
+            </div>
+
+            {/* Testimonial/Stat Card */}
+            {showTestimonial && (
+              <div
+                className="scroll-animate"
+                data-delay="300"
+                style={{
+                  background: 'var(--gradient-hero)',
+                  borderRadius: 'var(--radius-xl)',
+                  padding: 'var(--spacing-xl)',
+                  marginTop: 'var(--spacing-xl)',
+                  maxWidth: '450px',
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                  textAlign: 'center',
+                }}
+              >
+                <p style={{
+                  fontSize: 'var(--font-size-body)',
+                  fontWeight: 600,
                   color: 'var(--text-coral)',
+                  lineHeight: 'var(--line-height-relaxed)',
                   fontFamily: 'var(--font-headline)',
                   margin: 0,
+                  fontStyle: testimonialAuthor ? 'italic' : 'normal',
                 }}>
-                  {pillar.title}
-                </h3>
-              </div>
-              <div>
-                <p style={{
-                  fontSize: 'var(--font-size-base)',
-                  color: 'var(--text-secondary)',
-                  lineHeight: 1.6,
-                  margin: 0,
-                }}>
-                  {pillar.mechanism}
+                  {testimonialAuthor ? `"${testimonialQuote}"` : testimonialQuote}
                 </p>
+                {testimonialAuthor && (
+                  <p style={{
+                    fontSize: 'var(--font-size-small)',
+                    fontWeight: 600,
+                    color: 'var(--text-muted)',
+                    marginTop: 'var(--spacing-md)',
+                    margin: 'var(--spacing-md) 0 0 0',
+                  }}>
+                    {testimonialAuthor}
+                  </p>
+                )}
               </div>
-              <div>
-                <p style={{
-                  fontSize: 'var(--font-size-base)',
-                  color: 'var(--text-primary)',
-                  fontWeight: 600,
-                  lineHeight: 1.6,
-                  margin: 0,
-                  background: 'rgba(239, 71, 111, 0.08)',
-                  padding: 'var(--spacing-sm) var(--spacing-md)',
-                  borderRadius: 'var(--radius-md)',
-                  borderLeft: '3px solid var(--text-coral)',
-                }}>
-                  {pillar.value}
-                </p>
-              </div>
-            </div>
-          ))}
+            )}
+          </div>
         </div>
       </div>
     </section>
@@ -190,6 +272,34 @@ export const fields: any = [
     name: 'subtitle',
     label: 'Subtitle',
     default: 'Mentorship at scale becomes a strategic advantage.',
+  },
+  {
+    type: 'choice',
+    name: 'image_position',
+    label: 'Image Position',
+    choices: [
+      ['left', 'Left'],
+      ['right', 'Right'],
+    ],
+    default: 'right',
+  },
+  {
+    type: 'boolean',
+    name: 'show_testimonial',
+    label: 'Show Testimonial/Stat Card',
+    default: true,
+  },
+  {
+    type: 'text',
+    name: 'testimonial_quote',
+    label: 'Testimonial/Stat Text',
+    default: '10+ years of mentorship data: 500K learners, 200K mentors, 200 partners.',
+  },
+  {
+    type: 'text',
+    name: 'testimonial_author',
+    label: 'Author (leave empty for stat display)',
+    default: '',
   },
   {
     type: 'group',

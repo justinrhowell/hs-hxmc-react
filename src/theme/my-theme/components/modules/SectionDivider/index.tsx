@@ -1,8 +1,4 @@
 import React from 'react';
-import {
-  ModuleFields,
-  ChoiceField,
-} from '@hubspot/cms-components/fields';
 
 export function Component({ fieldValues }: any) {
   const variant = fieldValues.variant || 'light';
@@ -20,11 +16,15 @@ export function Component({ fieldValues }: any) {
     coral: 'linear-gradient(90deg, transparent 0%, var(--primary-coral) 15%, var(--primary-coral) 85%, transparent 100%)',
   };
 
+  const bgStyle = fieldValues.transparent_bg
+    ? 'var(--gradient-hero)'
+    : '#FFFFFF';
+
   return (
     <div
       style={{
         width: '100%',
-        background: '#FFFFFF',
+        background: bgStyle,
         padding: `${spacingMap[spacing]} var(--spacing-lg)`,
       }}
     >
@@ -45,30 +45,36 @@ export function Component({ fieldValues }: any) {
   );
 }
 
-export const fields = (
-  <ModuleFields>
-    <ChoiceField
-      name="variant"
-      label="Divider Style"
-      choices={[
-        ['light', 'Light (coral tint, for white backgrounds)'],
-        ['dark', 'Dark (white tint, for dark backgrounds)'],
-        ['coral', 'Coral (solid coral line)'],
-      ]}
-      default="light"
-    />
-    <ChoiceField
-      name="spacing"
-      label="Vertical Spacing"
-      choices={[
-        ['sm', 'Small (32px)'],
-        ['md', 'Medium (48px)'],
-        ['lg', 'Large (64px)'],
-      ]}
-      default="md"
-    />
-  </ModuleFields>
-);
+export const fields: any = [
+  {
+    type: 'choice',
+    name: 'variant',
+    label: 'Divider Style',
+    choices: [
+      ['light', 'Light (coral tint, for white backgrounds)'],
+      ['dark', 'Dark (white tint, for dark backgrounds)'],
+      ['coral', 'Coral (solid coral line)'],
+    ],
+    default: 'light',
+  },
+  {
+    type: 'choice',
+    name: 'spacing',
+    label: 'Vertical Spacing',
+    choices: [
+      ['sm', 'Small (32px)'],
+      ['md', 'Medium (48px)'],
+      ['lg', 'Large (64px)'],
+    ],
+    default: 'md',
+  },
+  {
+    type: 'boolean',
+    name: 'transparent_bg',
+    label: 'Transparent Background',
+    default: false,
+  },
+];
 
 export const meta = {
   label: 'Section Divider',

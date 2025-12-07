@@ -4,40 +4,148 @@ import {
   ChoiceField,
 } from '@hubspot/cms-components/fields';
 
+// HubSpot Form Configuration
+const HUBSPOT_PORTAL_ID = '512371';
+const DEFAULT_FORM_ID = 'ac828e91-31fb-4234-8f34-979725ec0340';
+
 export function Component({ fieldValues }: any) {
   const heading = fieldValues.heading || 'Stay in the Loop';
   const description = fieldValues.description || 'Get insights on mentorship, retention strategies, and AI-powered education delivered to your inbox.';
-  const placeholder = fieldValues.placeholder || 'Enter your email address';
-  const buttonText = fieldValues.button_text || 'Subscribe';
   const layout = fieldValues.layout || 'horizontal';
-  const showIcons = fieldValues.show_icons !== 'false';
+  const formId = fieldValues.form_id || DEFAULT_FORM_ID;
 
   return (
     <>
       <style dangerouslySetInnerHTML={{__html: `
-        .newsletter-input:focus {
-          border-color: var(--primary-coral) !important;
-          box-shadow: 0 0 0 3px var(--bg-light-coral) !important;
+        /* HubSpot Newsletter form styling */
+        .newsletter-hs-form .hs-form {
+          font-family: var(--font-body) !important;
         }
 
-        .newsletter-button:hover {
-          transform: translateY(-2px);
-          box-shadow: var(--shadow-coral) !important;
+        .newsletter-hs-form .hs-form-field {
+          margin-bottom: 0 !important;
+        }
+
+        .newsletter-hs-form .hs-form-field label {
+          display: none !important;
+        }
+
+        .newsletter-hs-form .hs-input {
+          width: 100% !important;
+          padding: 12px 16px !important;
+          border: 2px solid var(--border-light) !important;
+          border-radius: 8px !important;
+          font-size: 16px !important;
+          transition: border-color 0.2s ease !important;
+          font-family: inherit !important;
+          background: white !important;
+        }
+
+        .newsletter-hs-form .hs-input:focus {
+          border-color: var(--text-coral) !important;
+          outline: none !important;
+          box-shadow: 0 0 0 3px rgba(239, 71, 111, 0.1) !important;
+        }
+
+        .newsletter-hs-form .hs-button {
+          background: var(--gradient-coral) !important;
+          color: white !important;
+          padding: 12px 24px !important;
+          border: none !important;
+          border-radius: 100px !important;
+          font-weight: 600 !important;
+          font-size: 16px !important;
+          cursor: pointer !important;
+          transition: all 0.2s ease !important;
+          white-space: nowrap !important;
+        }
+
+        .newsletter-hs-form .hs-button:hover {
+          transform: translateY(-2px) !important;
+          box-shadow: 0 8px 20px rgba(239, 71, 111, 0.3) !important;
+        }
+
+        .newsletter-hs-form .hs-error-msgs {
+          color: #dc2626 !important;
+          font-size: 13px !important;
+          margin-top: 4px !important;
+        }
+
+        .newsletter-hs-form .submitted-message {
+          text-align: center !important;
+          padding: 20px !important;
+          color: var(--text-primary) !important;
+          font-weight: 500 !important;
+        }
+
+        /* Horizontal layout adjustments */
+        .newsletter-hs-form.layout-horizontal .hs-form {
+          display: flex !important;
+          gap: 8px !important;
+          align-items: flex-start !important;
+        }
+
+        .newsletter-hs-form.layout-horizontal .hs-form-field {
+          flex: 1 !important;
+        }
+
+        .newsletter-hs-form.layout-horizontal .hs-submit {
+          flex-shrink: 0 !important;
         }
 
         @media (max-width: 768px) {
-          .newsletter-form-horizontal {
+          .newsletter-hs-form.layout-horizontal .hs-form {
             flex-direction: column !important;
-            gap: 1rem !important;
           }
-          .newsletter-input-horizontal {
-            padding: 1rem !important;
-          }
-          .newsletter-button-horizontal {
+          .newsletter-hs-form.layout-horizontal .hs-button {
             width: 100% !important;
-            justify-content: center !important;
           }
         }
+      `}} />
+
+      <script dangerouslySetInnerHTML={{__html: `
+        (function() {
+          var portalId = "${HUBSPOT_PORTAL_ID}";
+          var formId = "${formId}";
+          var formLoaded = false;
+
+          function loadHubSpotScript(callback) {
+            if (window.hbspt && window.hbspt.forms) {
+              callback();
+              return;
+            }
+            var script = document.createElement('script');
+            script.src = '//js.hsforms.net/forms/embed/v2.js';
+            script.charset = 'utf-8';
+            script.onload = callback;
+            document.head.appendChild(script);
+          }
+
+          function createNewsletterForm() {
+            var target = document.getElementById('newsletter-hs-form');
+            if (!target || formLoaded) return;
+
+            target.innerHTML = '';
+
+            window.hbspt.forms.create({
+              region: "na1",
+              portalId: portalId,
+              formId: formId,
+              target: "#newsletter-hs-form"
+            });
+            formLoaded = true;
+          }
+
+          function initNewsletter() {
+            loadHubSpotScript(createNewsletterForm);
+          }
+
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initNewsletter);
+          } else {
+            setTimeout(initNewsletter, 100);
+          }
+        })();
       `}} />
 
       <section style={{
@@ -92,104 +200,20 @@ export function Component({ fieldValues }: any) {
           {description}
         </p>
 
-        {/* Form */}
-        {layout === 'horizontal' ? (
-          <div
-            className="newsletter-form-horizontal"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--spacing-xs)',
-              maxWidth: 'var(--max-width-sm)',
-            }}
-          >
-            <input
-              type="email"
-              placeholder={placeholder}
-              className="newsletter-input newsletter-input-horizontal"
-              style={{
-                flex: 1,
-                padding: 'var(--spacing-sm) var(--spacing-md)',
-                border: '2px solid var(--border-light)',
-                borderRadius: 'var(--radius-md)',
-                fontSize: 'var(--font-size-body)',
-                outline: 'none',
-                transition: 'var(--transition-medium)',
-              }}
-            />
-            <button
-              type="button"
-              className="newsletter-button newsletter-button-horizontal"
-              style={{
-                background: 'var(--gradient-coral)',
-                color: 'var(--text-white)',
-                padding: 'var(--btn-padding-sm)',
-                borderRadius: 'var(--radius-full)',
-                border: 'none',
-                fontSize: 'var(--font-size-body)',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'var(--transition-medium)',
-                whiteSpace: 'nowrap',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--spacing-xs)',
-              }}
-            >
-              {buttonText}
-              {showIcons && (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              )}
-            </button>
+        {/* HubSpot Form */}
+        <div
+          id="newsletter-hs-form"
+          className={`newsletter-hs-form ${layout === 'horizontal' ? 'layout-horizontal' : ''}`}
+          style={{ maxWidth: layout === 'vertical' ? '500px' : '100%', margin: layout === 'vertical' ? '0 auto' : '0' }}
+        >
+          <div style={{
+            padding: '20px',
+            textAlign: 'center',
+            color: 'var(--text-muted)',
+          }}>
+            <p>Loading form...</p>
           </div>
-        ) : (
-          <div style={{ maxWidth: '500px', margin: layout === 'vertical' ? '0 auto' : '0' }}>
-            <input
-              type="email"
-              placeholder={placeholder}
-              className="newsletter-input"
-              style={{
-                width: '100%',
-                padding: 'var(--spacing-sm) var(--spacing-md)',
-                border: '2px solid var(--border-light)',
-                borderRadius: 'var(--radius-full)',
-                fontSize: 'var(--font-size-body)',
-                outline: 'none',
-                transition: 'var(--transition-medium)',
-                marginBottom: 'var(--spacing-sm)',
-              }}
-            />
-            <button
-              type="button"
-              className="newsletter-button"
-              style={{
-                width: '100%',
-                background: 'var(--gradient-coral)',
-                color: 'var(--text-white)',
-                padding: 'var(--btn-padding)',
-                borderRadius: 'var(--radius-full)',
-                border: 'none',
-                fontSize: 'var(--font-size-body)',
-                fontWeight: 600,
-                cursor: 'pointer',
-                transition: 'var(--transition-medium)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 'var(--spacing-xs)',
-              }}
-            >
-              {buttonText}
-              {showIcons && (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              )}
-            </button>
-          </div>
-        )}
+        </div>
 
         {/* Privacy Note */}
         <p style={{
@@ -218,14 +242,9 @@ export const fields = (
       default="Get insights on mentorship, retention strategies, and AI-powered education delivered to your inbox."
     />
     <TextField
-      name="placeholder"
-      label="Email Placeholder"
-      default="Enter your email address"
-    />
-    <TextField
-      name="button_text"
-      label="Button Text"
-      default="Subscribe"
+      name="form_id"
+      label="HubSpot Form ID"
+      default="ac828e91-31fb-4234-8f34-979725ec0340"
     />
     <ChoiceField
       name="layout"
@@ -237,15 +256,6 @@ export const fields = (
         ['wide', 'Wide (full width)'],
       ]}
       default="horizontal"
-    />
-    <ChoiceField
-      name="show_icons"
-      label="Show Arrow Icon"
-      choices={[
-        ['true', 'Yes'],
-        ['false', 'No'],
-      ]}
-      default="true"
     />
   </ModuleFields>
 );

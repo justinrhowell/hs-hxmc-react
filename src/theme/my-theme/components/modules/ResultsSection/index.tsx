@@ -1,9 +1,4 @@
 import React from 'react';
-import {
-  ModuleFields,
-  TextField,
-  NumberField,
-} from '@hubspot/cms-components/fields';
 import girlMicroscopeImg from '../../../assets/girl-looking-into-microscope.png';
 import scienceGirlImg from '../../../assets/science-girl.jpg';
 import blueArrows from '../../../assets/blue-arrows.svg';
@@ -16,27 +11,23 @@ interface Stat {
   label: string;
 }
 
-interface ResultsSectionProps {
-  fieldValues: {
-    heading: string;
-    stat1_number: string;
-    stat1_label: string;
-    stat2_number: string;
-    stat2_label: string;
-    stat3_number: string;
-    stat3_label: string;
-    stat4_number: string;
-    stat4_label: string;
-  };
-}
-
-export function Component({ fieldValues }: ResultsSectionProps) {
-  const stats: Stat[] = [
-    { number: fieldValues.stat1_number || '+6%', label: fieldValues.stat1_label || 'retention lift for program participants' },
-    { number: fieldValues.stat2_number || '+8–19%', label: fieldValues.stat2_label || 'boost in sense of belonging' },
-    { number: fieldValues.stat3_number || '+30%', label: fieldValues.stat3_label || 'increase in career confidence' },
-    { number: fieldValues.stat4_number || '+42%', label: fieldValues.stat4_label || 'increase in intern-to-full-time conversion' }
+export function Component({ fieldValues }: any) {
+  // Default stats
+  const defaultStats: Stat[] = [
+    { number: '+6%', label: 'retention lift for program participants' },
+    { number: '+8–19%', label: 'boost in sense of belonging' },
+    { number: '+30%', label: 'increase in career confidence' },
+    { number: '+42%', label: 'increase in intern-to-full-time conversion' }
   ];
+
+  // Use custom stats if provided, otherwise fall back to defaults
+  const customStats = fieldValues.stats || [];
+  const stats: Stat[] = customStats.length > 0
+    ? customStats.map((s: any) => ({
+        number: s.number || '+0%',
+        label: s.stat_label || 'metric',
+      }))
+    : defaultStats;
 
   return (
     <>
@@ -293,60 +284,45 @@ export function Component({ fieldValues }: ResultsSectionProps) {
   );
 }
 
-export const fields = (
-  <ModuleFields>
-    <TextField
-      name="heading"
-      label="Section Heading"
-      default="Real Results, Real Impact"
-    />
-    <TextField
-      name="subtitle"
-      label="Subtitle"
-      default="Our platform delivers measurable outcomes across every cohort—learners, mentors, educators, and employers."
-    />
-    <TextField
-      name="stat1_number"
-      label="Stat 1 Number"
-      default="+6%"
-    />
-    <TextField
-      name="stat1_label"
-      label="Stat 1 Label"
-      default="retention lift for program participants"
-    />
-    <TextField
-      name="stat2_number"
-      label="Stat 2 Number"
-      default="+8–19%"
-    />
-    <TextField
-      name="stat2_label"
-      label="Stat 2 Label"
-      default="boost in sense of belonging"
-    />
-    <TextField
-      name="stat3_number"
-      label="Stat 3 Number"
-      default="+30%"
-    />
-    <TextField
-      name="stat3_label"
-      label="Stat 3 Label"
-      default="increase in career confidence"
-    />
-    <TextField
-      name="stat4_number"
-      label="Stat 4 Number"
-      default="+42%"
-    />
-    <TextField
-      name="stat4_label"
-      label="Stat 4 Label"
-      default="increase in intern-to-full-time conversion"
-    />
-  </ModuleFields>
-);
+export const fields: any = [
+  {
+    type: 'text',
+    name: 'heading',
+    label: 'Section Heading',
+    default: 'Real Results, Real Impact',
+  },
+  {
+    type: 'text',
+    name: 'subtitle',
+    label: 'Subtitle',
+    default: 'Our platform delivers measurable outcomes across every cohort—learners, mentors, educators, and employers.',
+  },
+  {
+    type: 'group',
+    name: 'stats',
+    label: 'Statistics',
+    help_text: 'Edit the stat cards. Leave empty to use defaults.',
+    occurrence: {
+      min: 0,
+      max: 8,
+      default: 0,
+    },
+    children: [
+      {
+        type: 'text',
+        name: 'number',
+        label: 'Stat Number/Value',
+        default: '+6%',
+      },
+      {
+        type: 'text',
+        name: 'stat_label',
+        label: 'Stat Label',
+        default: 'retention lift for program participants',
+      },
+    ],
+  },
+];
 
 export const meta = {
   label: 'Results Section',

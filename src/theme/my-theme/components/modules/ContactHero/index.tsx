@@ -47,10 +47,9 @@ export function Component({ fieldValues }: any) {
       <section
         className="scroll-animate"
         style={{
-          minHeight: '50vh',
           display: 'flex',
           alignItems: 'center',
-          padding: 'var(--spacing-3xl) var(--spacing-lg)',
+          padding: 'var(--spacing-xl) var(--spacing-lg) var(--spacing-lg)',
           background: 'var(--gradient-hero)',
           backgroundImage: 'var(--pattern-dots)',
           backgroundSize: 'var(--pattern-dots-size)',
@@ -107,15 +106,6 @@ export function Component({ fieldValues }: any) {
             }}>
               {fieldValues.title || 'Let\'s Start a Conversation'}
             </h1>
-
-            <p style={{
-              fontSize: 'var(--font-size-body-lg)',
-              color: 'var(--text-coral)',
-              fontWeight: 600,
-              marginBottom: 'var(--spacing-md)',
-            }}>
-              {fieldValues.tagline || 'We\'re here to help you transform mentorship at scale.'}
-            </p>
 
             <p style={{
               fontSize: 'var(--font-size-body-lg)',
@@ -200,11 +190,6 @@ export const fields = (
       name="title"
       label="Hero Title"
       default="Let's Start a Conversation"
-    />
-    <TextField
-      name="tagline"
-      label="Tagline"
-      default="We're here to help you transform mentorship at scale."
     />
     <TextField
       name="description"

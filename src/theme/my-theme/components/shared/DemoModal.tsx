@@ -1,13 +1,101 @@
 import React from 'react';
 
+// HubSpot Form Configuration for Request a Demo
+const HUBSPOT_PORTAL_ID = '512371';
+const HUBSPOT_FORM_ID = '3c350305-6fab-4671-b04e-fa54be40a813';
+
 export const DemoModal: React.FC = () => {
   return (
     <>
       <style>{`
-        .demo-submit-btn:hover:not(:disabled) {
-          background: var(--white) !important;
-          color: var(--primary-coral) !important;
-          border-color: var(--primary-coral) !important;
+        .demo-modal-content {
+          min-height: 400px;
+        }
+
+        /* HubSpot form styling */
+        .demo-hs-form-container .hs-form {
+          font-family: var(--font-body) !important;
+        }
+
+        .demo-hs-form-container .hs-form-field {
+          margin-bottom: 16px !important;
+        }
+
+        .demo-hs-form-container .hs-form-field label {
+          font-weight: 600 !important;
+          color: var(--text-primary) !important;
+          margin-bottom: 8px !important;
+          display: block !important;
+          font-size: 14px !important;
+        }
+
+        .demo-hs-form-container .hs-input {
+          width: 100% !important;
+          padding: 12px 16px !important;
+          border: 2px solid var(--border-medium) !important;
+          border-radius: 8px !important;
+          font-size: 16px !important;
+          transition: border-color 0.2s ease !important;
+          font-family: inherit !important;
+        }
+
+        .demo-hs-form-container .hs-input:focus {
+          border-color: var(--text-coral) !important;
+          outline: none !important;
+          box-shadow: 0 0 0 3px rgba(239, 71, 111, 0.1) !important;
+        }
+
+        .demo-hs-form-container select.hs-input {
+          appearance: none !important;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E") !important;
+          background-repeat: no-repeat !important;
+          background-position: right 16px center !important;
+          padding-right: 40px !important;
+        }
+
+        .demo-hs-form-container textarea.hs-input {
+          min-height: 100px !important;
+          resize: vertical !important;
+        }
+
+        .demo-hs-form-container .hs-button {
+          background: var(--gradient-coral) !important;
+          color: white !important;
+          padding: 14px 32px !important;
+          border: none !important;
+          border-radius: 100px !important;
+          font-weight: 600 !important;
+          font-size: 16px !important;
+          cursor: pointer !important;
+          transition: all 0.2s ease !important;
+          width: 100% !important;
+          margin-top: 8px !important;
+        }
+
+        .demo-hs-form-container .hs-button:hover {
+          transform: translateY(-2px) !important;
+          box-shadow: 0 8px 20px rgba(239, 71, 111, 0.3) !important;
+        }
+
+        .demo-hs-form-container .hs-error-msgs {
+          color: #dc2626 !important;
+          font-size: 13px !important;
+          margin-top: 4px !important;
+        }
+
+        .demo-hs-form-container .hs-form-required {
+          color: var(--text-coral) !important;
+        }
+
+        .demo-hs-form-container .submitted-message {
+          text-align: center !important;
+          padding: 40px 20px !important;
+          color: var(--text-primary) !important;
+        }
+
+        .demo-hs-form-container .submitted-message h3,
+        .demo-hs-form-container .submitted-message p {
+          margin: 0 0 8px 0 !important;
         }
 
         @media (max-width: 768px) {
@@ -29,11 +117,6 @@ export const DemoModal: React.FC = () => {
             margin: var(--spacing-xs) !important;
           }
 
-          .demo-form-row {
-            grid-template-columns: 1fr !important;
-            gap: var(--spacing-md) !important;
-          }
-
           .demo-modal-close {
             top: 16px !important;
             right: 16px !important;
@@ -52,23 +135,68 @@ export const DemoModal: React.FC = () => {
       `}</style>
       <script dangerouslySetInnerHTML={{__html: `
         (function() {
-          function initDemoModal() {
-            const modal = document.querySelector('.demo-modal');
-            const closeBtn = document.querySelector('.demo-modal-close');
-            const overlay = document.querySelector('.demo-modal-overlay');
-            const form = document.querySelector('.demo-form');
-            const successMsg = document.querySelector('.demo-success');
-            const submitBtn = document.querySelector('.demo-submit-btn');
+          var portalId = "${HUBSPOT_PORTAL_ID}";
+          var formId = "${HUBSPOT_FORM_ID}";
+          var formLoaded = false;
 
-            function closeModal() {
-              if (modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'unset';
-                if (form) form.style.display = 'flex';
-                if (successMsg) successMsg.style.display = 'none';
-                if (form) form.reset();
-              }
+          function loadHubSpotScript(callback) {
+            if (window.hbspt && window.hbspt.forms) {
+              callback();
+              return;
             }
+            var script = document.createElement('script');
+            script.src = '//js.hsforms.net/forms/embed/v2.js';
+            script.charset = 'utf-8';
+            script.onload = callback;
+            document.head.appendChild(script);
+          }
+
+          function createDemoForm() {
+            var target = document.getElementById('demo-hs-form');
+            if (!target || formLoaded) return;
+
+            // Clear any existing content
+            target.innerHTML = '';
+
+            window.hbspt.forms.create({
+              region: "na1",
+              portalId: portalId,
+              formId: formId,
+              target: "#demo-hs-form",
+              onFormSubmitted: function() {
+                // Auto-close modal after submission success message shows
+                setTimeout(function() {
+                  closeModal();
+                }, 3000);
+              }
+            });
+            formLoaded = true;
+          }
+
+          function closeModal() {
+            var modal = document.querySelector('.demo-modal');
+            if (modal) {
+              modal.style.display = 'none';
+              document.body.style.overflow = 'unset';
+              // Reset form state for next open
+              formLoaded = false;
+            }
+          }
+
+          function openModal() {
+            var modal = document.querySelector('.demo-modal');
+            if (modal) {
+              modal.style.display = 'flex';
+              document.body.style.overflow = 'hidden';
+              // Load form when modal opens
+              loadHubSpotScript(createDemoForm);
+            }
+          }
+
+          function initDemoModal() {
+            var modal = document.querySelector('.demo-modal');
+            var closeBtn = document.querySelector('.demo-modal-close');
+            var overlay = document.querySelector('.demo-modal-overlay');
 
             if (closeBtn) {
               closeBtn.onclick = closeModal;
@@ -88,33 +216,8 @@ export const DemoModal: React.FC = () => {
               }
             });
 
-            if (form) {
-              form.onsubmit = function(e) {
-                e.preventDefault();
-                if (submitBtn) {
-                  submitBtn.disabled = true;
-                  submitBtn.textContent = 'Submitting...';
-                  submitBtn.style.opacity = '0.7';
-                  submitBtn.style.cursor = 'not-allowed';
-                }
-
-                // Simulate form submission
-                setTimeout(function() {
-                  if (form) form.style.display = 'none';
-                  if (successMsg) successMsg.style.display = 'flex';
-
-                  setTimeout(function() {
-                    closeModal();
-                    if (submitBtn) {
-                      submitBtn.disabled = false;
-                      submitBtn.textContent = 'Request Demo';
-                      submitBtn.style.opacity = '1';
-                      submitBtn.style.cursor = 'pointer';
-                    }
-                  }, 2000);
-                }, 1500);
-              };
-            }
+            // Make openDemoModal globally available
+            window.openDemoModal = openModal;
           }
 
           if (document.readyState === 'loading') {
@@ -156,108 +259,17 @@ export const DemoModal: React.FC = () => {
               See how Mentor Collective can transform your mentorship program
             </p>
 
-            <div className="demo-success" style={{ ...styles.successMessage, display: 'none' }}>
-              <div style={styles.checkmark}>✓</div>
-              <h3 style={styles.successTitle}>Thank you!</h3>
-              <p style={styles.successText}>We'll be in touch shortly.</p>
+            <div id="demo-hs-form" className="demo-hs-form-container">
+              {/* HubSpot form will be loaded here */}
+              <div style={styles.loadingPlaceholder}>
+                <p>Loading form...</p>
+              </div>
             </div>
 
-            <form className="demo-form" style={styles.form}>
-              <div className="demo-form-row" style={styles.row}>
-                <div style={styles.inputGroup}>
-                  <label htmlFor="firstName" style={styles.label}>
-                    First Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    required
-                    style={styles.input}
-                    aria-required="true"
-                  />
-                </div>
-
-                <div style={styles.inputGroup}>
-                  <label htmlFor="lastName" style={styles.label}>
-                    Last Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    required
-                    style={styles.input}
-                    aria-required="true"
-                  />
-                </div>
-              </div>
-
-              <div style={styles.inputGroup}>
-                <label htmlFor="email" style={styles.label}>
-                  Work Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  style={styles.input}
-                  aria-required="true"
-                />
-              </div>
-
-              <div style={styles.inputGroup}>
-                <label htmlFor="company" style={styles.label}>
-                  Company/Organization *
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  required
-                  style={styles.input}
-                  aria-required="true"
-                />
-              </div>
-
-              <div style={styles.inputGroup}>
-                <label htmlFor="phone" style={styles.label}>
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  style={styles.input}
-                />
-              </div>
-
-              <div style={styles.inputGroup}>
-                <label htmlFor="message" style={styles.label}>
-                  What would you like to discuss?
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  style={styles.textarea}
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="demo-submit-btn"
-                style={styles.submitButton}
-              >
-                Request Demo
-              </button>
-
-              <p style={styles.privacy}>
-                By submitting this form, you agree to our{' '}
-                <a href="/privacy-policy" style={styles.link}>Privacy Policy</a>
-              </p>
-            </form>
+            <p style={styles.privacy}>
+              By submitting this form, you agree to our{' '}
+              <a href="/privacy-policy" style={styles.link}>Privacy Policy</a>
+            </p>
           </div>
         </div>
       </div>
@@ -323,91 +335,21 @@ const styles: Record<string, React.CSSProperties> = {
   subtitle: {
     fontSize: '16px',
     color: 'var(--text-secondary)',
-    marginBottom: '30px',
+    marginBottom: '24px',
   },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 'var(--spacing-md)',
-  },
-  row: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: 'var(--spacing-md)',
-  },
-  inputGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  label: {
-    fontSize: '14px',
-    fontWeight: 600,
-    marginBottom: 'var(--spacing-xs)',
-    color: 'var(--text-primary)',
-  },
-  input: {
-    padding: 'var(--spacing-sm) var(--spacing-md)',
-    fontSize: '16px',
-    border: '2px solid var(--border-medium)',
-    borderRadius: 'var(--spacing-xs)',
-    transition: 'border-color 0.2s ease',
-    fontFamily: 'inherit',
-  },
-  textarea: {
-    padding: 'var(--spacing-sm) var(--spacing-md)',
-    fontSize: '16px',
-    border: '2px solid var(--border-medium)',
-    borderRadius: 'var(--spacing-xs)',
-    resize: 'vertical',
-    fontFamily: 'inherit',
-    transition: 'border-color 0.2s ease',
-  },
-  submitButton: {
-    background: 'var(--gradient-coral)',
-    color: 'white',
-    border: '2px solid transparent',
-    padding: 'var(--btn-padding-sm)',
-    fontSize: '16px',
-    fontWeight: 600,
-    borderRadius: 'var(--radius-full)',
-    cursor: 'pointer',
-    transition: 'all 0.25s ease',
-    marginTop: 'var(--spacing-xs)',
+  loadingPlaceholder: {
+    padding: '40px',
+    textAlign: 'center',
+    color: 'var(--text-muted)',
   },
   privacy: {
     fontSize: '12px',
     color: 'var(--text-muted)',
     textAlign: 'center',
-    marginTop: 'var(--spacing-xs)',
+    marginTop: '16px',
   },
   link: {
     color: 'var(--primary-coral)',
     textDecoration: 'none',
-  },
-  successMessage: {
-    textAlign: 'center',
-    padding: 'var(--spacing-xl) 0',
-  },
-  checkmark: {
-    width: '80px',
-    height: '80px',
-    borderRadius: '50%',
-    background: 'linear-gradient(135deg, #10B981 0%, #34D399 100%)',
-    color: 'white',
-    fontSize: '48px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: '0 auto var(--spacing-md)',
-  },
-  successTitle: {
-    fontSize: '28px',
-    fontWeight: 700,
-    marginBottom: 'var(--spacing-xs)',
-    color: 'var(--text-primary)',
-  },
-  successText: {
-    fontSize: '16px',
-    color: 'var(--text-secondary)',
   },
 };

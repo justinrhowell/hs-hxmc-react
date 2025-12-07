@@ -96,7 +96,7 @@ export function Component({ fieldValues }: any) {
               marginBottom: 'var(--spacing-lg)',
               border: '1px solid var(--border-medium)',
             }}>
-              {fieldValues.badge || 'New: AI-Powered Mentorship Intelligence'}
+              {fieldValues.badge || 'MENTOR COLLECTIVE'}
             </div>
 
             <h1 style={{
@@ -108,7 +108,7 @@ export function Component({ fieldValues }: any) {
               color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)',
             }}>
-              {fieldValues.title || 'AI Mentorship Operating System'}
+              {fieldValues.title || 'Mentorship, Reinvented as AI Infrastructure'}
             </h1>
 
             <p style={{
@@ -118,10 +118,10 @@ export function Component({ fieldValues }: any) {
               marginBottom: 'var(--spacing-xl)',
               maxWidth: 'var(--max-width-prose)',
             }}>
-              {fieldValues.subtitle || 'Technology built to fuel human connection, not replace it. The essential infrastructure for measurable success in retention, belonging, and career outcomes.'}
+              {fieldValues.subtitle || 'The Mentorship OS powers belonging, career readiness, and talent development across the entire education-to-workforce ecosystem. Built on human relationships, accelerated by AI, and proven at scale, this technology fuels human connection rather than replacing it.'}
             </p>
 
-            {/* CTA Buttons */}
+            {/* CTA Button */}
             <div
               className="product-hero-buttons"
               style={{
@@ -140,14 +140,6 @@ export function Component({ fieldValues }: any) {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-              </a>
-
-              <a
-                href={fieldValues.secondary_button_url || '#'}
-                className="btn-outlined-navy"
-                aria-label={fieldValues.secondary_button_text}
-              >
-                {fieldValues.secondary_button_text || 'View Case Studies'}
               </a>
             </div>
           </div>
@@ -219,17 +211,17 @@ export const fields = (
     <TextField
       name="badge"
       label="Badge Text"
-      default="New: AI-Powered Mentorship Intelligence"
+      default="MENTOR COLLECTIVE"
     />
     <TextField
       name="title"
       label="Hero Title"
-      default="AI Mentorship Operating System"
+      default="Mentorship, Reinvented as AI Infrastructure"
     />
     <TextField
       name="subtitle"
       label="Subtitle"
-      default="Technology built to fuel human connection, not replace it. The essential infrastructure for measurable success in retention, belonging, and career outcomes."
+      default="The Mentorship OS powers belonging, career readiness, and talent development across the entire education-to-workforce ecosystem. Built on human relationships, accelerated by AI, and proven at scale, this technology fuels human connection rather than replacing it."
     />
     <TextField
       name="primary_button_text"
@@ -240,16 +232,6 @@ export const fields = (
       name="primary_button_url"
       label="Primary Button URL"
       default="#contact"
-    />
-    <TextField
-      name="secondary_button_text"
-      label="Secondary Button Text"
-      default="View Case Studies"
-    />
-    <TextField
-      name="secondary_button_url"
-      label="Secondary Button URL"
-      default="#case-studies"
     />
     <ImageField
       name="hero_image"

@@ -1,9 +1,4 @@
 import React from 'react';
-import {
-  ModuleFields,
-  TextField,
-  ImageField,
-} from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 import smartMatchingSvg from '../../../assets/Smart Matching.svg';
 
@@ -30,23 +25,32 @@ export function Component({ fieldValues }: any) {
     </svg>,
   ];
 
-  const features: Feature[] = fieldValues.features || [
-    {
-      icon: 'circle',
-      title: 'Seamless Onboarding',
-      description: 'Mobilize your mentor and mentee populations with data-informed recruitment and research-backed training.',
-    },
-    {
-      icon: 'diamond',
-      title: 'Smart Matching',
-      description: 'Optimize our proprietary matching algorithm based on a decade of data to ensure the strongest possible fit.',
-    },
-    {
-      icon: 'triangle',
-      title: 'Sustained Engagement',
-      description: 'Eliminate barriers with AI-powered prompts, nudges, and resources that keep the conversation going.',
-    },
-  ];
+  // Use custom features if provided, otherwise fall back to defaults
+  const customFeatures = fieldValues.features || [];
+
+  const features: Feature[] = customFeatures.length > 0
+    ? customFeatures.map((f: any) => ({
+        icon: f.icon || 'circle',
+        title: f.title || 'Feature',
+        description: f.description || 'Feature description',
+      }))
+    : [
+        {
+          icon: 'circle',
+          title: 'Seamless Onboarding',
+          description: 'Mobilize your mentor and mentee populations with data-informed, intuitive recruitment, and ensure their readiness with research-backed training.',
+        },
+        {
+          icon: 'diamond',
+          title: 'Smart Matching',
+          description: 'Optimize our proprietary matching algorithm based on a decade of data. Ensure the strongest possible fit and outcomes based on shared identity, goals, and experience.',
+        },
+        {
+          icon: 'triangle',
+          title: 'Sustained Engagement',
+          description: 'Eliminate the #1 barrier to engagement—"I don\'t know what to talk about"—with AI-powered prompts, nudges, and resources.',
+        },
+      ];
 
   return (
     <>
@@ -91,31 +95,22 @@ export function Component({ fieldValues }: any) {
               lineHeight: 'var(--line-height-tight)',
               letterSpacing: 'var(--letter-spacing-tight)',
               marginBottom: 'var(--spacing-sm)',
-              color: 'var(--text-coral)',
+              color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)',
+              fontFeatureSettings: '"liga" 1, "clig" 1',
             }}>
-              {fieldValues.badge || 'The Experience'}
+              {fieldValues.section_title || 'The Experience'}
             </h2>
 
             <p style={{
-              fontSize: 'var(--font-size-h3)',
+              fontSize: 'var(--font-size-body-lg)',
               fontWeight: 500,
-              lineHeight: 'var(--line-height-tight)',
-              marginBottom: 'var(--spacing-lg)',
-              color: 'var(--text-primary)',
+              lineHeight: 'var(--line-height-normal)',
+              marginBottom: 'var(--spacing-xl)',
+              color: 'var(--text-secondary)',
               fontFamily: 'var(--font-headline)',
             }}>
               {fieldValues.title || 'Deepen engagement with AI-guided journeys.'}
-            </p>
-
-            <p style={{
-              fontSize: 'var(--font-size-body-lg)',
-              color: 'var(--text-secondary)',
-              lineHeight: 'var(--line-height-relaxed)',
-              marginBottom: 'var(--spacing-2xl)',
-              maxWidth: 'var(--max-width-prose)',
-            }}>
-              {fieldValues.subtitle || 'An AI-guided journey that maximizes program quality and deepens essential human connection, designed for participants and optimized for data generation.'}
             </p>
 
             {/* Feature List */}
@@ -139,7 +134,7 @@ export function Component({ fieldValues }: any) {
                       fontSize: 'var(--font-size-body-lg)',
                       fontWeight: 500,
                       color: 'var(--text-primary)',
-                      marginBottom: 'var(--spacing-xs)',
+                      marginBottom: '4px',
                       fontFamily: 'var(--font-headline)',
                     }}>
                       {feature.title}
@@ -156,6 +151,26 @@ export function Component({ fieldValues }: any) {
                 </div>
               ))}
             </div>
+
+            {/* Benefit Statement Card */}
+            <div style={{
+              background: 'var(--bg-white)',
+              borderRadius: 'var(--radius-xl)',
+              padding: 'var(--spacing-xl)',
+              marginTop: 'var(--spacing-2xl)',
+              textAlign: 'center',
+            }}>
+              <p style={{
+                fontSize: 'var(--font-size-body)',
+                fontWeight: 500,
+                color: 'var(--text-secondary)',
+                lineHeight: 'var(--line-height-relaxed)',
+                fontFamily: 'var(--font-headline)',
+                margin: 0,
+              }}>
+                {fieldValues.benefit_text || 'We go beyond simply matching. This is the AI-guided experience that fosters lasting bonds and measurable growth for every mentor and mentee.'}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -164,25 +179,62 @@ export function Component({ fieldValues }: any) {
   );
 }
 
-export const fields = (
-  <ModuleFields>
-    <TextField
-      name="badge"
-      label="Badge Text"
-      default="The Experience"
-    />
-    <TextField
-      name="title"
-      label="Section Title"
-      default="Deepen engagement with AI-guided journeys."
-    />
-    <TextField
-      name="subtitle"
-      label="Subtitle"
-      default="An AI-guided journey that maximizes program quality and deepens essential human connection, designed for participants and optimized for data generation."
-    />
-  </ModuleFields>
-);
+export const fields: any = [
+  {
+    type: 'text',
+    name: 'section_title',
+    label: 'Section Title (H2)',
+    default: 'The Experience',
+  },
+  {
+    type: 'text',
+    name: 'title',
+    label: 'Tagline',
+    default: 'Deepen engagement with AI-guided journeys.',
+  },
+  {
+    type: 'group',
+    name: 'features',
+    label: 'Experience Features',
+    help_text: 'Edit the feature list. Leave empty to use defaults.',
+    occurrence: {
+      min: 0,
+      max: 6,
+      default: 0,
+    },
+    children: [
+      {
+        type: 'choice',
+        name: 'icon',
+        label: 'Icon Shape',
+        choices: [
+          ['circle', 'Circle'],
+          ['diamond', 'Diamond'],
+          ['triangle', 'Triangle'],
+        ],
+        default: 'circle',
+      },
+      {
+        type: 'text',
+        name: 'title',
+        label: 'Feature Title',
+        default: 'Feature Title',
+      },
+      {
+        type: 'text',
+        name: 'description',
+        label: 'Feature Description',
+        default: 'Feature description goes here.',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    name: 'benefit_text',
+    label: 'Benefit Statement',
+    default: 'We go beyond simply matching. This is the AI-guided experience that fosters lasting bonds and measurable growth for every mentor and mentee.',
+  },
+];
 
 export const meta = {
   label: 'Experience Section',

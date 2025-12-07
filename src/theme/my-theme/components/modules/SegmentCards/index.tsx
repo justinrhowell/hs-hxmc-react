@@ -54,13 +54,14 @@ export function Component({ fieldValues }: any) {
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
         background: 'var(--gradient-hero)',
-        backgroundImage: 'var(--pattern-dots)',
-        backgroundSize: 'var(--pattern-dots-size)',
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-3xl)' }}>
+        {/* Header - Centered */}
+        <div style={{
+          textAlign: 'center',
+          marginBottom: 'var(--spacing-xl)',
+        }}>
           <h2 style={{
             fontSize: 'var(--font-size-h2)',
             fontWeight: 500,
@@ -74,6 +75,7 @@ export function Component({ fieldValues }: any) {
           <p style={{
             fontSize: 'var(--font-size-body-lg)',
             color: 'var(--text-secondary)',
+            lineHeight: 'var(--line-height-relaxed)',
             maxWidth: 'var(--max-width-prose)',
             margin: '0 auto',
           }}>
@@ -102,7 +104,7 @@ export function Component({ fieldValues }: any) {
                 borderRadius: 'var(--radius-xl)',
                 padding: 'var(--card-padding-lg)',
                 boxShadow: 'var(--shadow-md)',
-                border: '2px solid var(--border-light)',
+                border: '1px solid var(--border-light)',
                 transition: 'var(--transition-bounce)',
                 cursor: 'pointer',
                 position: 'relative',

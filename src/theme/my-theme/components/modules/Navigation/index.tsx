@@ -2,18 +2,40 @@ import React from 'react';
 import {
   ModuleFields,
   TextField,
+  BooleanField,
+  ImageField,
 } from '@hubspot/cms-components/fields';
 import mcLogo from '../../../assets/MentorCollective-Primary-Logo.svg';
 import { DemoModal } from '../../shared/DemoModal';
 
+interface MenuItem {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
+const defaultMenuItems: MenuItem[] = [
+  { label: 'Mentorship OS', href: '/product' },
+  { label: 'Network', href: '/network' },
+  { label: 'Resources', href: '/resources' },
+  { label: 'Company', href: '/about' },
+  { label: 'Log In', href: 'https://app.mentorcollective.org/sign_in', external: true }
+];
+
 export function Component({ fieldValues }: any) {
-  const menuItems = [
-    { label: 'Mentorship OS', hasDropdown: false, href: '/product' },
-    { label: 'Network', hasDropdown: false, href: '/network' },
-    { label: 'Resources', hasDropdown: false, href: '/resources' },
-    { label: 'Company', hasDropdown: false, href: '/about' },
-    { label: 'Log In', hasDropdown: false, href: 'https://app.mentorcollective.org/sign_in', external: true }
-  ];
+  // Build menu items from field values or use defaults
+  const menuItems: MenuItem[] = (fieldValues.menu_items && fieldValues.menu_items.length > 0)
+    ? fieldValues.menu_items.map((item: any) => ({
+        label: item.menu_label || 'Menu Item',
+        href: item.href || '#',
+        external: item.external === 'true' || item.external === true,
+      }))
+    : defaultMenuItems;
+
+  const logoSrc = fieldValues.logo?.src || mcLogo;
+  const logoAlt = fieldValues.logo?.alt || 'Mentor Collective';
+  const ctaText = fieldValues.cta_text || 'Request a Demo';
+  const showCta = fieldValues.show_cta !== false;
 
   const styles: Record<string, React.CSSProperties> = {
     nav: {
@@ -122,10 +144,7 @@ export function Component({ fieldValues }: any) {
       <script dangerouslySetInnerHTML={{__html: `
         (function() {
           function initMegaMenu() {
-            let currentOpenMenu = null;
-            let closeTimeout = null;
             let lastScrollY = window.scrollY;
-            let scrollingDown = false;
 
             // Scroll effect for navigation
             function handleScroll() {
@@ -135,24 +154,19 @@ export function Component({ fieldValues }: any) {
 
               if (!nav || !logo) return;
 
-              // Determine scroll direction
-              scrollingDown = currentScrollY > lastScrollY;
               lastScrollY = currentScrollY;
 
               if (currentScrollY > 50) {
-                // Scrolled state - smaller, more shadow
                 nav.style.padding = '8px 0';
                 nav.style.boxShadow = 'var(--shadow-md)';
                 logo.style.height = '24px';
               } else {
-                // Top of page - larger, less shadow
                 nav.style.padding = '12px 0';
                 nav.style.boxShadow = 'var(--shadow-sm)';
                 logo.style.height = '28px';
               }
             }
 
-            // Throttled scroll handler
             let scrollTimeout;
             window.addEventListener('scroll', function() {
               if (scrollTimeout) {
@@ -160,62 +174,6 @@ export function Component({ fieldValues }: any) {
               }
               scrollTimeout = window.requestAnimationFrame(handleScroll);
             }, { passive: true });
-
-            const navItems = document.querySelectorAll('.nav-item-wrapper');
-
-            navItems.forEach((wrapper) => {
-              const megaMenu = wrapper.querySelector('.mega-menu');
-
-              if (!megaMenu) return;
-
-              wrapper.addEventListener('mouseenter', function() {
-                if (closeTimeout) {
-                  clearTimeout(closeTimeout);
-                  closeTimeout = null;
-                }
-
-                // Close any currently open menu
-                if (currentOpenMenu && currentOpenMenu !== megaMenu) {
-                  currentOpenMenu.style.opacity = '0';
-                  currentOpenMenu.style.visibility = 'hidden';
-                  currentOpenMenu.style.transform = 'translateY(-20px)';
-                }
-
-                // Open this menu with fade in animation
-                megaMenu.style.opacity = '1';
-                megaMenu.style.visibility = 'visible';
-                megaMenu.style.transform = 'translateY(0)';
-                currentOpenMenu = megaMenu;
-              });
-
-              wrapper.addEventListener('mouseleave', function() {
-                closeTimeout = setTimeout(function() {
-                  megaMenu.style.opacity = '0';
-                  megaMenu.style.visibility = 'hidden';
-                  megaMenu.style.transform = 'translateY(-20px)';
-                  currentOpenMenu = null;
-                }, 200);
-              });
-
-              // Also close when leaving the mega menu itself
-              if (megaMenu) {
-                megaMenu.addEventListener('mouseenter', function() {
-                  if (closeTimeout) {
-                    clearTimeout(closeTimeout);
-                    closeTimeout = null;
-                  }
-                });
-
-                megaMenu.addEventListener('mouseleave', function() {
-                  closeTimeout = setTimeout(function() {
-                    megaMenu.style.opacity = '0';
-                    megaMenu.style.visibility = 'hidden';
-                    megaMenu.style.transform = 'translateY(-20px)';
-                    currentOpenMenu = null;
-                  }, 200);
-                });
-              }
-            });
 
             // Mobile menu toggle
             const hamburger = document.querySelector('.mobile-hamburger');
@@ -267,10 +225,10 @@ export function Component({ fieldValues }: any) {
         <div style={styles.container}>
           <div style={styles.flexContainer}>
             <div style={styles.logo} className="nav-logo">
-              <a href="/" aria-label="Mentor Collective Home" style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+              <a href="/" aria-label={logoAlt} style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                 <img
-                  src={mcLogo}
-                  alt="Mentor Collective"
+                  src={logoSrc}
+                  alt={logoAlt}
                   style={styles.logoImg}
                 />
               </a>
@@ -284,7 +242,6 @@ export function Component({ fieldValues }: any) {
                     href={item.href || '#'}
                     style={styles.menuLink}
                     aria-label={item.label}
-                    aria-haspopup={item.hasDropdown}
                     target={item.external ? '_blank' : undefined}
                     rel={item.external ? 'noopener noreferrer' : undefined}
                     onMouseEnter={(e) => {
@@ -295,114 +252,18 @@ export function Component({ fieldValues }: any) {
                     }}
                   >
                     {item.label}
-                    {item.hasDropdown && <span style={{ fontSize: 'var(--font-size-xs)', marginLeft: 'var(--spacing-xxs)', opacity: 0.5 }}>▼</span>}
                   </a>
-
-                  {/* Mega Menu Dropdown */}
-                  {item.hasDropdown && item.megaMenu && (
-                    <>
-                      <div
-                        className="mega-menu"
-                        style={{
-                          position: 'fixed',
-                          top: '100%',
-                          left: 0,
-                          right: 0,
-                          background: 'var(--bg-white)',
-                          borderTop: '1px solid var(--border-light)',
-                          boxShadow: 'var(--shadow-xl)',
-                          padding: 'var(--spacing-xl) 0',
-                          opacity: 0,
-                          visibility: 'hidden',
-                          transform: 'translateY(-10px)',
-                          transition: 'var(--transition-smooth)',
-                          zIndex: 999,
-                        }}
-                      >
-                        <div style={{
-                          maxWidth: 'var(--max-width-xl)',
-                          margin: '0 auto',
-                          padding: '0 var(--container-padding)',
-                        }}>
-                          <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: item.megaMenu.sections.length === 2 ? '1fr 1fr' : 'repeat(3, 1fr)',
-                            gap: 'var(--spacing-2xl)',
-                          }}>
-                            {item.megaMenu.sections.map((section, sectionIndex) => (
-                              <div key={sectionIndex}>
-                                <h3 style={{
-                                  fontSize: 'var(--font-size-label)',
-                                  fontWeight: 500,
-                                  color: 'var(--text-muted)',
-                                  textTransform: 'uppercase',
-                                  letterSpacing: 'var(--letter-spacing-wide)',
-                                  marginBottom: 'var(--spacing-md)',
-                                }}>
-                                  {section.title}
-                                </h3>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-xxs)' }}>
-                                  {section.items.map((menuItem, itemIndex) => (
-                                    <a
-                                      key={itemIndex}
-                                      href="#"
-                                      style={{
-                                        display: 'flex',
-                                        alignItems: 'flex-start',
-                                        gap: 'var(--spacing-sm)',
-                                        padding: 'var(--spacing-sm)',
-                                        borderRadius: 'var(--radius-md)',
-                                        textDecoration: 'none',
-                                        transition: 'var(--transition-fast)',
-                                      }}
-                                      onMouseEnter={(e) => {
-                                        e.currentTarget.style.background = 'var(--bg-light-coral)';
-                                        e.currentTarget.style.transform = 'translateX(4px)';
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        e.currentTarget.style.background = 'transparent';
-                                        e.currentTarget.style.transform = 'translateX(0)';
-                                      }}
-                                    >
-                                      <span style={{ fontSize: 'var(--font-size-h3)', flexShrink: 0 }}>
-                                        {menuItem.icon}
-                                      </span>
-                                      <div style={{ flex: 1 }}>
-                                        <div style={{
-                                          fontSize: 'var(--font-size-body)',
-                                          fontWeight: 600,
-                                          color: 'var(--text-primary)',
-                                          marginBottom: 'var(--spacing-xxs)',
-                                        }}>
-                                          {menuItem.label}
-                                        </div>
-                                        <div style={{
-                                          fontSize: 'var(--font-size-small)',
-                                          color: 'var(--text-muted)',
-                                          lineHeight: 'var(--line-height-normal)',
-                                        }}>
-                                          {menuItem.description}
-                                        </div>
-                                      </div>
-                                    </a>
-                                  ))}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  )}
                 </div>
               ))}
-              <button
-                className="demo-request-btn btn-primary-coral btn-sm"
-                type="button"
-                aria-label="Request a demo"
-              >
-                Request a Demo
-              </button>
+              {showCta && (
+                <button
+                  className="demo-request-btn btn-primary-coral btn-sm"
+                  type="button"
+                  aria-label={ctaText}
+                >
+                  {ctaText}
+                </button>
+              )}
             </div>
 
             {/* Mobile Hamburger */}
@@ -463,13 +324,15 @@ export function Component({ fieldValues }: any) {
                 {item.label}
               </a>
             ))}
-            <button
-              className="demo-request-btn btn-primary-coral btn-sm"
-              style={{ width: '100%', marginTop: 'var(--spacing-sm)' }}
-              type="button"
-            >
-              Request a Demo
-            </button>
+            {showCta && (
+              <button
+                className="demo-request-btn btn-primary-coral btn-sm"
+                style={{ width: '100%', marginTop: 'var(--spacing-sm)' }}
+                type="button"
+              >
+                {ctaText}
+              </button>
+            )}
           </div>
         </div>
       </nav>
@@ -479,15 +342,70 @@ export function Component({ fieldValues }: any) {
   );
 }
 
-export const fields = (
-  <ModuleFields>
-    <TextField
-      name="logoText"
-      label="Logo Text"
-      default="Mentor Collective"
-    />
-  </ModuleFields>
-);
+export const fields: any = [
+  {
+    type: 'image',
+    name: 'logo',
+    label: 'Logo Image',
+    default: {
+      src: '',
+      alt: 'Mentor Collective',
+    },
+  },
+  {
+    type: 'group',
+    name: 'menu_items',
+    label: 'Menu Items',
+    occurrence: {
+      min: 1,
+      max: 10,
+      default: 5,
+    },
+    default: [
+      { label: 'Mentorship OS', href: '/product', external: 'false' },
+      { label: 'Network', href: '/network', external: 'false' },
+      { label: 'Resources', href: '/resources', external: 'false' },
+      { label: 'Company', href: '/about', external: 'false' },
+      { label: 'Log In', href: 'https://app.mentorcollective.org/sign_in', external: 'true' },
+    ],
+    children: [
+      {
+        type: 'text',
+        name: 'menu_label',
+        label: 'Menu Label',
+        default: 'Menu Item',
+      },
+      {
+        type: 'text',
+        name: 'href',
+        label: 'Link URL',
+        default: '#',
+      },
+      {
+        type: 'choice',
+        name: 'external',
+        label: 'Open in New Tab?',
+        choices: [
+          ['false', 'No'],
+          ['true', 'Yes'],
+        ],
+        default: 'false',
+      },
+    ],
+  },
+  {
+    type: 'boolean',
+    name: 'show_cta',
+    label: 'Show CTA Button',
+    default: true,
+  },
+  {
+    type: 'text',
+    name: 'cta_text',
+    label: 'CTA Button Text',
+    default: 'Request a Demo',
+  },
+];
 
 export const meta = {
   label: 'Navigation',

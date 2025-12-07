@@ -1,26 +1,22 @@
 import React from 'react';
-import {
-  ModuleFields,
-  TextField,
-} from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 const defaultFeatures = [
   {
-    title: 'Strategic Infrastructure',
-    description: 'Secure the only enterprise system for truly comprehensive success.',
+    title: 'Social capital for career mobility',
+    description: 'Talent is distributed, but networks are not. The Network closes this gap, connecting learners with people who open doors, building essential social capital.',
   },
   {
-    title: 'Predictive Intelligence',
-    description: 'Prevent potential issues and attrition risks with real-time, actionable data.',
+    title: 'Workforce readiness needs real relationships',
+    description: 'Skill-building thrives through guided conversations. The Network is the mentorship infrastructure that powers your education-to-workforce pipeline.',
   },
   {
-    title: 'Measurable ROI',
-    description: 'Turn every interaction into actionable data for predicting retention and driving strategy.',
+    title: 'Actionable intelligence and measurable ROI',
+    description: 'Turn mentor-mentee interaction into real-time program insights. Quantify value through retention and belonging analytics.',
   },
   {
-    title: 'Human-Centered Scale',
-    description: 'Use AI to amplify, not replace, the irreplaceable value of human connection.',
+    title: 'AI-powered mentorship at scale',
+    description: 'Our AI mentorship platform uses mentor matching and engagement automation to amplify human connection.',
   },
 ];
 
@@ -32,14 +28,6 @@ export function Component({ fieldValues }: any) {
       }))
     : defaultFeatures;
 
-  // Position features at different points around the constellation
-  const positions = [
-    { top: '15%', left: '15%' },
-    { top: '15%', right: '15%' },
-    { bottom: '20%', left: '10%' },
-    { bottom: '20%', right: '10%' },
-  ];
-
   return (
     <>
     <ScrollAnimationScript />
@@ -47,181 +35,149 @@ export function Component({ fieldValues }: any) {
       className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
-        background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 100%)',
-        position: 'relative',
-        overflow: 'hidden',
-        minHeight: '700px',
+        background: 'var(--gradient-hero)',
       }}
     >
-      {/* Constellation SVG Background */}
-      <svg
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '100%',
-          height: '100%',
-          maxWidth: '1000px',
-          opacity: 0.6,
-          pointerEvents: 'none',
-        }}
-        viewBox="0 0 800 600"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <defs>
-          <linearGradient id="lineGradientDark" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style={{ stopColor: '#EF476F', stopOpacity: 0.6 }} />
-            <stop offset="100%" style={{ stopColor: '#F89F7B', stopOpacity: 0.3 }} />
-          </linearGradient>
-          <filter id="glowDark">
-            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-
-        {/* Constellation lines */}
-        <line x1="100" y1="150" x2="400" y2="300" stroke="url(#lineGradientDark)" strokeWidth="1.5">
-          <animate attributeName="opacity" values="0.3;0.7;0.3" dur="4s" repeatCount="indefinite" />
-        </line>
-        <line x1="700" y1="150" x2="400" y2="300" stroke="url(#lineGradientDark)" strokeWidth="1.5">
-          <animate attributeName="opacity" values="0.4;0.8;0.4" dur="5s" repeatCount="indefinite" />
-        </line>
-        <line x1="100" y1="450" x2="400" y2="300" stroke="url(#lineGradientDark)" strokeWidth="1.5">
-          <animate attributeName="opacity" values="0.3;0.6;0.3" dur="4.5s" repeatCount="indefinite" />
-        </line>
-        <line x1="700" y1="450" x2="400" y2="300" stroke="url(#lineGradientDark)" strokeWidth="1.5">
-          <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.5s" repeatCount="indefinite" />
-        </line>
-        <line x1="100" y1="150" x2="100" y2="450" stroke="url(#lineGradientDark)" strokeWidth="1">
-          <animate attributeName="opacity" values="0.2;0.5;0.2" dur="6s" repeatCount="indefinite" />
-        </line>
-        <line x1="700" y1="150" x2="700" y2="450" stroke="url(#lineGradientDark)" strokeWidth="1">
-          <animate attributeName="opacity" values="0.2;0.5;0.2" dur="5.5s" repeatCount="indefinite" />
-        </line>
-        <line x1="100" y1="150" x2="700" y2="150" stroke="url(#lineGradientDark)" strokeWidth="1">
-          <animate attributeName="opacity" values="0.2;0.4;0.2" dur="7s" repeatCount="indefinite" />
-        </line>
-        <line x1="100" y1="450" x2="700" y2="450" stroke="url(#lineGradientDark)" strokeWidth="1">
-          <animate attributeName="opacity" values="0.2;0.4;0.2" dur="6.5s" repeatCount="indefinite" />
-        </line>
-
-        {/* Star nodes */}
-        <circle cx="100" cy="150" r="8" fill="#EF476F" filter="url(#glowDark)">
-          <animate attributeName="r" values="6;10;6" dur="3s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="700" cy="150" r="8" fill="#F89F7B" filter="url(#glowDark)">
-          <animate attributeName="r" values="7;11;7" dur="4s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="100" cy="450" r="8" fill="#F89F7B" filter="url(#glowDark)">
-          <animate attributeName="r" values="6;9;6" dur="3.5s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="700" cy="450" r="8" fill="#EF476F" filter="url(#glowDark)">
-          <animate attributeName="r" values="7;10;7" dur="4.5s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="400" cy="300" r="12" fill="#FED700" filter="url(#glowDark)">
-          <animate attributeName="r" values="10;16;10" dur="5s" repeatCount="indefinite" />
-        </circle>
-
-        {/* Additional small stars */}
-        <circle cx="250" cy="220" r="3" fill="#ffffff" opacity="0.6">
-          <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="550" cy="220" r="3" fill="#ffffff" opacity="0.6">
-          <animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="250" cy="380" r="3" fill="#ffffff" opacity="0.6">
-          <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="550" cy="380" r="3" fill="#ffffff" opacity="0.6">
-          <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2.2s" repeatCount="indefinite" />
-        </circle>
-      </svg>
-
-      <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-3xl)' }}>
-          <h2 style={{
-            fontSize: 'var(--font-size-h2)',
-            fontWeight: 500,
-            color: 'white',
-            marginBottom: 'var(--spacing-md)',
-            fontFamily: 'var(--font-headline)',
-            lineHeight: 'var(--line-height-tight)',
-          }}>
-            {fieldValues.heading || 'Why Choose Mentor Collective?'}
-          </h2>
-          <p style={{
-            fontSize: 'var(--font-size-body-lg)',
-            color: 'rgba(255, 255, 255, 0.8)',
-            maxWidth: 'var(--max-width-prose)',
-            margin: '0 auto',
-          }}>
-            {fieldValues.subtitle || 'We are the Essential Infrastructure built to scale human skills in an AI-driven world.'}
-          </p>
-        </div>
-
-        {/* Feature Cards positioned around constellation */}
+      <style>{`
+        @media (max-width: 968px) {
+          .why-choose-main-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .why-choose-image-column {
+            order: -1;
+            max-width: 400px !important;
+            margin: 0 auto var(--spacing-xl) !important;
+          }
+        }
+      `}</style>
+      <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
+        {/* Two Column Layout */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: 'var(--spacing-2xl)',
-          maxWidth: '1000px',
-          margin: '0 auto',
-          padding: '0 var(--spacing-lg)',
-        }}>
-          {features.map((feature: any, index: number) => (
-            <div
-              key={index}
-              style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: 'var(--radius-xl)',
-                padding: 'var(--card-padding-lg)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                transition: 'var(--transition-medium)',
-              }}
-              className="scroll-animate"
-              data-delay={index * 100}
-            >
-              {/* Star icon */}
+          gridTemplateColumns: '1fr 1fr',
+          gap: 'var(--spacing-3xl)',
+          alignItems: 'center',
+        }} className="why-choose-main-grid">
+          {/* Left Column - Content */}
+          <div>
+            {/* Section Header */}
+            <div style={{ marginBottom: 'var(--spacing-md)' }}>
+              <h2 style={{
+                fontSize: 'var(--font-size-h2)',
+                fontWeight: 500,
+                color: 'var(--text-primary)',
+                marginBottom: 'var(--spacing-md)',
+                fontFamily: 'var(--font-headline)',
+                lineHeight: 'var(--line-height-tight)',
+              }}>
+                {fieldValues.heading || 'Why Choose Mentor Collective?'}
+              </h2>
+              <p style={{
+                fontSize: 'var(--font-size-body-lg)',
+                fontWeight: 500,
+                lineHeight: 'var(--line-height-normal)',
+                color: 'var(--text-secondary)',
+                fontFamily: 'var(--font-headline)',
+              }}>
+                {fieldValues.subtitle || 'We are the Essential Infrastructure built to scale human skills in an AI-driven world.'}
+              </p>
+            </div>
+
+            {/* Features List */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
+              {features.map((feature: any, index: number) => (
+                <div
+                  key={index}
+                  style={{
+                    display: 'flex',
+                    gap: 'var(--spacing-md)',
+                    alignItems: 'flex-start',
+                  }}
+                  className="scroll-animate"
+                  data-delay={index * 100}
+                >
+                  {/* Number badge */}
+                  <div style={{
+                    width: '36px',
+                    height: '36px',
+                    minWidth: '36px',
+                    background: 'var(--gradient-coral)',
+                    borderRadius: 'var(--radius-md)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontWeight: 700,
+                    fontSize: 'var(--font-size-body)',
+                    fontFamily: 'var(--font-headline)',
+                  }}>
+                    {index + 1}
+                  </div>
+                  <div>
+                    <h3 style={{
+                      fontSize: 'var(--font-size-body-lg)',
+                      fontWeight: 500,
+                      color: 'var(--text-primary)',
+                      marginBottom: '4px',
+                      fontFamily: 'var(--font-headline)',
+                    }}>
+                      {feature.title}
+                    </h3>
+                    <p style={{
+                      fontSize: 'var(--font-size-base)',
+                      lineHeight: 'var(--line-height-normal)',
+                      color: 'var(--text-muted)',
+                      margin: 0,
+                    }}>
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column - Image */}
+          <div
+            className="why-choose-image-column scroll-animate"
+            data-delay="200"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {fieldValues.image?.src ? (
+              <img
+                src={fieldValues.image.src}
+                alt={fieldValues.image.alt || 'Why Choose Mentor Collective'}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxWidth: '450px',
+                  borderRadius: 'var(--radius-xl)',
+                  display: 'block',
+                }}
+              />
+            ) : (
               <div style={{
-                width: '48px',
-                height: '48px',
-                background: 'var(--gradient-coral)',
-                borderRadius: 'var(--radius-md)',
+                width: '100%',
+                maxWidth: '450px',
+                aspectRatio: '4/3',
+                background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(248, 159, 123, 0.1) 100%)',
+                borderRadius: 'var(--radius-xl)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                marginBottom: 'var(--spacing-md)',
-                boxShadow: '0 4px 16px rgba(239, 71, 111, 0.3)',
               }}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--text-coral)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.5 }}>
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <polyline points="21 15 16 10 5 21"/>
                 </svg>
               </div>
-
-              <h3 style={{
-                fontSize: 'var(--font-size-h4)',
-                fontWeight: 500,
-                color: 'white',
-                marginBottom: 'var(--spacing-sm)',
-                fontFamily: 'var(--font-headline)',
-              }}>
-                {feature.title}
-              </h3>
-              <p style={{
-                fontSize: 'var(--font-size-base)',
-                color: 'rgba(255, 255, 255, 0.7)',
-                lineHeight: 1.6,
-              }}>
-                {feature.description}
-              </p>
-            </div>
-          ))}
+            )}
+          </div>
         </div>
       </div>
     </section>
@@ -243,12 +199,17 @@ export const fields: any = [
     default: 'We are the Essential Infrastructure built to scale human skills in an AI-driven world.',
   },
   {
+    type: 'image',
+    name: 'image',
+    label: 'Section Image',
+  },
+  {
     type: 'group',
     name: 'features',
     label: 'Features',
     occurrence: {
       min: 0,
-      max: 4,
+      max: 6,
       default: 0,
     },
     children: [

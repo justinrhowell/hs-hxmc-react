@@ -7,7 +7,6 @@ interface Testimonial {
   author: string;
   role: string;
   company: string;
-  avatar?: string;
 }
 
 interface TestimonialsCarouselProps {
@@ -138,14 +137,6 @@ export const Component: React.FC<TestimonialsCarouselProps> = ({
                   <p style={styles.quote}>{testimonial.quote}</p>
 
                   <div style={styles.authorSection}>
-                    {testimonial.avatar && (
-                      <img
-                        src={testimonial.avatar}
-                        alt={testimonial.author}
-                        style={styles.avatar}
-                        loading="lazy"
-                      />
-                    )}
                     <div>
                       <p style={styles.author}>{testimonial.author}</p>
                       <p style={styles.role}>
@@ -278,12 +269,6 @@ const styles: Record<string, React.CSSProperties> = {
     paddingTop: 'var(--spacing-md)',
     borderTop: '1px solid var(--border-light)',
   },
-  avatar: {
-    width: '48px',
-    height: '48px',
-    borderRadius: 'var(--radius-circle)',
-    objectFit: 'cover',
-  },
   author: {
     fontSize: 'var(--font-size-body)',
     fontWeight: 600,
@@ -356,11 +341,6 @@ export const fields: ModuleFields = [
         name: 'company',
         label: 'Company/Organization',
         default: 'University of Example',
-      },
-      {
-        type: 'image',
-        name: 'avatar',
-        label: 'Avatar Image',
       },
     ],
   },

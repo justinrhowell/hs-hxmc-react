@@ -1,0 +1,26 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Request a Demo
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {% module
+    "navigation"
+    path="../components/modules/Navigation"
+  %}
+
+  {% module
+    "demo_hero"
+    path="../components/modules/DemoHero"
+    label="Demo Hero with Form"
+  %}
+
+  {% module
+    "footer"
+    path="../components/modules/Footer"
+  %}
+
+{% endblock body %}

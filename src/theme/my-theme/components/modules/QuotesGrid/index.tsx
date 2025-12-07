@@ -1,8 +1,4 @@
 import React from 'react';
-import {
-  ModuleFields,
-  TextField,
-} from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 interface Quote {
@@ -14,27 +10,15 @@ interface Quote {
 
 const defaultQuotes: Quote[] = [
   {
-    quote: "It can make the world of a difference to a student's experience and mental health; being able to talk to someone with experience, especially in a college and university environment.",
-    author: "Genevieve Allotey-Pappoe",
-    role: "Mentee, Temple University",
+    quote: "My mentor has been a great help in my professional development. He's helped me with my resume, my LinkedIn, and my general networking skills. It's a lot less scary to reach out to people when you have someone in your corner to encourage you.",
+    author: "Mentee",
+    role: "MC Participant, 2024",
     type: 'mentee',
   },
   {
-    quote: "For many students, I'm the first professional Black woman they've interacted with. I'm proud to be able to help them see what's possible.",
-    author: "Eva Kubu",
-    role: "Mentor, George Mason University",
-    type: 'mentor',
-  },
-  {
-    quote: "Everything I've faced in higher education, my mentor had also faced those same things. She was really just there for me.",
+    quote: "I learned a lot from my mentor about how to navigate my career path and build my professional network. She helped me identify people to reach out to and even reviewed the emails I sent. I wouldn't have known where to start without her.",
     author: "Mentee",
-    role: "University Partner",
-    type: 'mentee',
-  },
-  {
-    quote: "My mentors met me where I was. They helped me discover what I really wanted — and believed in me before I believed in myself.",
-    author: "Mentee",
-    role: "Workforce Partner",
+    role: "MC Participant, 2025",
     type: 'mentee',
   },
 ];
@@ -60,22 +44,8 @@ export function Component({ fieldValues }: any) {
       }}
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-3xl)' }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            padding: '0.5rem 1.25rem',
-            background: 'rgba(239, 71, 111, 0.1)',
-            borderRadius: 'var(--radius-full)',
-            fontSize: 'var(--font-size-small)',
-            fontWeight: 600,
-            color: 'var(--text-coral)',
-            marginBottom: 'var(--spacing-lg)',
-            border: '1px solid rgba(239, 71, 111, 0.2)',
-          }}>
-            Voices from Our Network
-          </div>
+        {/* Header - No pill */}
+        <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-xl)' }}>
           <h2 style={{
             fontSize: 'var(--font-size-h2)',
             fontWeight: 500,
@@ -84,19 +54,11 @@ export function Component({ fieldValues }: any) {
             fontFamily: 'var(--font-headline)',
             lineHeight: 'var(--line-height-tight)',
           }}>
-            {fieldValues.heading || 'Real Stories, Real Impact'}
+            {fieldValues.heading || 'What Mentees Have to Say'}
           </h2>
-          <p style={{
-            fontSize: 'var(--font-size-body-lg)',
-            color: 'var(--text-secondary)',
-            maxWidth: 'var(--max-width-prose)',
-            margin: '0 auto',
-          }}>
-            {fieldValues.subheading || 'Hear from mentees and mentors whose lives have been transformed through meaningful connections.'}
-          </p>
         </div>
 
-        {/* Quotes Grid */}
+        {/* Quotes Grid - styled like SegmentDetail testimonials */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(2, 1fr)',
@@ -113,98 +75,54 @@ export function Component({ fieldValues }: any) {
           {quotes.map((quote: Quote, index: number) => (
             <div
               key={index}
+              className="scroll-animate"
+              data-delay={index * 100}
               style={{
-                background: quote.type === 'mentor'
-                  ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)'
-                  : 'var(--bg-white)',
+                background: 'var(--bg-white)',
                 borderRadius: 'var(--radius-xl)',
-                padding: 'var(--spacing-2xl)',
-                boxShadow: 'var(--shadow-lg)',
-                border: quote.type === 'mentor'
-                  ? 'none'
-                  : '1px solid var(--border-light)',
-                position: 'relative',
-                display: 'flex',
-                flexDirection: 'column',
+                padding: 'var(--spacing-xl)',
+                textAlign: 'left',
+                borderLeft: '4px solid var(--text-coral)',
+                boxShadow: 'var(--shadow-md)',
               }}
             >
-              {/* Quote mark */}
-              <div style={{
-                fontSize: 'var(--font-size-display)',
-                color: quote.type === 'mentor' ? 'var(--secondary-yellow)' : 'rgba(239, 71, 111, 0.15)',
-                fontFamily: 'Georgia, serif',
-                lineHeight: 1,
-                marginBottom: 'var(--spacing-sm)',
-                marginTop: '-0.5rem',
-              }}>
-                "
-              </div>
-
               {/* Quote text */}
               <p style={{
-                fontSize: 'var(--font-size-body-lg)',
-                color: quote.type === 'mentor' ? 'rgba(255, 255, 255, 0.9)' : 'var(--text-secondary)',
-                lineHeight: 1.7,
+                fontSize: 'var(--font-size-body)',
+                color: 'var(--text-secondary)',
+                lineHeight: 'var(--line-height-relaxed)',
                 fontStyle: 'italic',
-                flex: 1,
-                marginBottom: 'var(--spacing-xl)',
+                margin: 0,
+                marginBottom: 'var(--spacing-md)',
               }}>
-                {quote.quote}
+                "{quote.quote}"
               </p>
 
               {/* Author */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 'var(--spacing-md)',
+                justifyContent: 'space-between',
               }}>
-                {/* Avatar placeholder */}
-                <div style={{
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: 'var(--radius-full)',
-                  background: quote.type === 'mentor'
-                    ? 'linear-gradient(135deg, var(--secondary-yellow) 0%, rgba(239, 71, 111, 0.3) 100%)'
-                    : 'linear-gradient(135deg, rgba(239, 71, 111, 0.15) 0%, var(--secondary-yellow) 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill={quote.type === 'mentor' ? 'var(--secondary-yellow)' : 'var(--text-coral)'}>
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
-                </div>
-
                 <div>
                   <p style={{
-                    fontSize: 'var(--font-size-body)',
-                    fontWeight: 700,
-                    color: quote.type === 'mentor' ? 'white' : 'var(--text-primary)',
-                    margin: 0,
-                  }}>
-                    {quote.author}
-                  </p>
-                  <p style={{
                     fontSize: 'var(--font-size-small)',
-                    color: quote.type === 'mentor' ? 'rgba(255, 255, 255, 0.6)' : 'var(--text-muted)',
+                    fontWeight: 600,
+                    color: 'var(--text-muted)',
                     margin: 0,
                   }}>
-                    {quote.role}
+                    {quote.author} — {quote.role}
                   </p>
                 </div>
 
                 {/* Type badge */}
                 <div style={{
-                  marginLeft: 'auto',
                   padding: '0.25rem 0.75rem',
-                  background: quote.type === 'mentor'
-                    ? 'var(--secondary-yellow)'
-                    : 'rgba(239, 71, 111, 0.1)',
+                  background: 'rgba(239, 71, 111, 0.1)',
                   borderRadius: 'var(--radius-full)',
                   fontSize: 'var(--font-size-xs)',
                   fontWeight: 600,
-                  color: quote.type === 'mentor' ? 'var(--secondary-yellow)' : 'var(--text-coral)',
+                  color: 'var(--text-coral)',
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
                 }}>
@@ -225,13 +143,7 @@ export const fields: any = [
     type: 'text',
     name: 'heading',
     label: 'Section Heading',
-    default: 'Real Stories, Real Impact',
-  },
-  {
-    type: 'text',
-    name: 'subheading',
-    label: 'Section Subheading',
-    default: 'Hear from mentees and mentors whose lives have been transformed through meaningful connections.',
+    default: 'What Mentees Have to Say',
   },
   {
     type: 'group',

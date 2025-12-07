@@ -1,8 +1,4 @@
 import React from 'react';
-import {
-  ModuleFields,
-  TextField,
-} from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 import revealIcon from '../../../assets/reveal-icon.svg';
 import sparkIcon from '../../../assets/spark-icon.svg';
@@ -10,34 +6,61 @@ import scaleIcon from '../../../assets/scale-icon.svg';
 import fuelIcon from '../../../assets/fuel-icon.svg';
 
 export function Component({ fieldValues }: any) {
-  const features = [
-    {
-      icon: revealIcon,
-      title: fieldValues.feature1_title || 'Real-Time Analytics',
-      description: fieldValues.feature1_description || 'Monitor program health at a glance with live dashboards and instant visibility into engagement metrics.',
-    },
-    {
-      icon: sparkIcon,
-      title: fieldValues.feature2_title || 'Configurable Reporting',
-      description: fieldValues.feature2_description || 'Generate custom reports for different stakeholders with flexible data exports and visualizations.',
-    },
-    {
-      icon: scaleIcon,
-      title: fieldValues.feature3_title || 'Early Alerts',
-      description: fieldValues.feature3_description || 'Surface struggling mentorships before they fail with AI-powered risk detection and intervention prompts.',
-    },
-    {
-      icon: fuelIcon,
-      title: fieldValues.feature4_title || 'Outcome Measurement',
-      description: fieldValues.feature4_description || 'Connect mentorship activity directly to institutional outcomes with ROI tracking and impact reports.',
-    },
+  // Map icon keys to imported assets
+  const iconMap: Record<string, string> = {
+    reveal: revealIcon,
+    spark: sparkIcon,
+    scale: scaleIcon,
+    fuel: fuelIcon,
+  };
+
+  // Default features
+  const defaultFeatures = [
+    { icon: 'reveal', title: 'Participant Insights', description: 'Capture an incredible wealth of self-reported data into a strategic asset, revealing authentic mentee needs, goals, and interests to apply key learnings to your larger population.' },
+    { icon: 'spark', title: 'Configurable Reporting', description: 'Integrate existing cohort data into the platform and instantly disaggregate standard visualizations by specific populations for strategic analysis.' },
+    { icon: 'scale', title: 'Early Alerts', description: 'Spot critical issues before they escalate. Monitor potential retention or performance risks as they are reported and intervene proactively.' },
+    { icon: 'fuel', title: 'Outcome Measurement', description: 'Formalized, continuous surveys collect the insights required to quantify ROI across success indicators like belonging, career confidence, and retention.' },
   ];
 
-  const stats = [
-    { value: fieldValues.stat1_value || '+6%', label: fieldValues.stat1_label || 'retention improvement' },
-    { value: fieldValues.stat2_value || '+8-19%', label: fieldValues.stat2_label || 'increase in belonging' },
-    { value: fieldValues.stat3_value || '+30%', label: fieldValues.stat3_label || 'career confidence boost' },
+  // Default stats
+  const defaultStats = [
+    { value: '+6%', label: 'retention lift' },
+    { value: '+8-19%', label: 'boost in sense of belonging' },
+    { value: '+30%', label: 'increase in career confidence' },
   ];
+
+  // Default testimonials
+  const defaultTestimonials = [
+    { quote: "One of the things that we were really pleased with, that we were receiving very early on through the flags...that early indicator that would allow us for an early intervention, I think it's pretty powerful.", author: '–Jennifer Ebinger, Senior Director, Office of Engaged Learning, Southern Methodist University' },
+    { quote: 'The real time tracking allows us to make shifts throughout the year to adapt the mentoring experience to the realities of the student experience.', author: '– Rebecca Goldstein, Director of Student Affairs Assessment & Research, Florida Atlantic University' },
+    { quote: "One of the challenges over the last several years since we intensely went after student success as a top institutional priority was how do we measure sense of belonging. The tools of Mentor Collective have really been invaluable in finding ways we actually could measure a student's self-perception of belonging.", author: '– Dr. Maria Cuzzo, Provost, University of Wisconsin, Superior' },
+  ];
+
+  // Use custom or defaults
+  const customFeatures = fieldValues.features || [];
+  const features = customFeatures.length > 0
+    ? customFeatures.map((f: any) => ({
+        icon: iconMap[f.icon_key] || revealIcon,
+        title: f.title || 'Feature',
+        description: f.description || 'Feature description',
+      }))
+    : defaultFeatures.map(f => ({ ...f, icon: iconMap[f.icon] }));
+
+  const customStats = fieldValues.stats || [];
+  const stats = customStats.length > 0
+    ? customStats.map((s: any) => ({
+        value: s.value || '+0%',
+        label: s.stat_label || 'metric',
+      }))
+    : defaultStats;
+
+  const customTestimonials = fieldValues.testimonials || [];
+  const testimonials = customTestimonials.length > 0
+    ? customTestimonials.map((t: any) => ({
+        quote: t.quote || 'Testimonial quote',
+        author: t.author || '– Author Name',
+      }))
+    : defaultTestimonials;
 
   return (
     <>
@@ -223,6 +246,52 @@ export function Component({ fieldValues }: any) {
               </div>
             ))}
           </div>
+
+          {/* Testimonials Grid */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: `repeat(${Math.min(testimonials.length, 3)}, 1fr)`,
+            gap: 'var(--spacing-lg)',
+            marginTop: 'var(--spacing-2xl)',
+          }} className="intelligence-testimonials-grid">
+            <style>{`
+              @media (max-width: 768px) {
+                .intelligence-testimonials-grid {
+                  grid-template-columns: 1fr !important;
+                }
+              }
+            `}</style>
+
+            {testimonials.map((testimonial: any, index: number) => (
+              <div
+                key={index}
+                style={{
+                  padding: 'var(--spacing-lg)',
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  borderRadius: 'var(--radius-lg)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                }}
+              >
+                <p style={{
+                  fontSize: 'var(--font-size-small)',
+                  fontStyle: 'italic',
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  lineHeight: 'var(--line-height-relaxed)',
+                  marginBottom: 'var(--spacing-md)',
+                }}>
+                  "{testimonial.quote}"
+                </p>
+                <p style={{
+                  fontSize: 'var(--font-size-xs)',
+                  fontWeight: 600,
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  margin: 0,
+                }}>
+                  {testimonial.author}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -230,27 +299,113 @@ export function Component({ fieldValues }: any) {
   );
 }
 
-export const fields = (
-  <ModuleFields>
-    <TextField name="heading" label="Section Heading" default="The Intelligence" />
-    <TextField name="subtitle" label="Subtitle" default="Transform human connection into measurable outcomes" />
-    <TextField name="feature1_title" label="Feature 1 Title" default="Real-Time Analytics" />
-    <TextField name="feature1_description" label="Feature 1 Description" default="Monitor program health at a glance" />
-    <TextField name="feature2_title" label="Feature 2 Title" default="Configurable Reporting" />
-    <TextField name="feature2_description" label="Feature 2 Description" default="Generate custom reports for different stakeholders" />
-    <TextField name="feature3_title" label="Feature 3 Title" default="Early Alerts" />
-    <TextField name="feature3_description" label="Feature 3 Description" default="Surface struggling mentorships before they fail" />
-    <TextField name="feature4_title" label="Feature 4 Title" default="Outcome Measurement" />
-    <TextField name="feature4_description" label="Feature 4 Description" default="Connect mentorship activity directly to institutional outcomes" />
-    <TextField name="stats_heading" label="Stats Heading" default="Measurable Impact Across Key Outcomes" />
-    <TextField name="stat1_value" label="Stat 1 Value" default="+6%" />
-    <TextField name="stat1_label" label="Stat 1 Label" default="retention improvement" />
-    <TextField name="stat2_value" label="Stat 2 Value" default="+8-19%" />
-    <TextField name="stat2_label" label="Stat 2 Label" default="increase in belonging" />
-    <TextField name="stat3_value" label="Stat 3 Value" default="+30%" />
-    <TextField name="stat3_label" label="Stat 3 Label" default="career confidence boost" />
-  </ModuleFields>
-);
+export const fields: any = [
+  {
+    type: 'text',
+    name: 'heading',
+    label: 'Section Heading',
+    default: 'The Intelligence',
+  },
+  {
+    type: 'text',
+    name: 'subtitle',
+    label: 'Subtitle',
+    default: 'Transform human connection into measurable outcomes.',
+  },
+  {
+    type: 'group',
+    name: 'features',
+    label: 'Features',
+    help_text: 'Edit the feature cards. Leave empty to use defaults.',
+    occurrence: {
+      min: 0,
+      max: 6,
+      default: 0,
+    },
+    children: [
+      {
+        type: 'choice',
+        name: 'icon_key',
+        label: 'Icon',
+        choices: [
+          ['reveal', 'Reveal (Insights)'],
+          ['spark', 'Spark (Reporting)'],
+          ['scale', 'Scale (Alerts)'],
+          ['fuel', 'Fuel (Measurement)'],
+        ],
+        default: 'reveal',
+      },
+      {
+        type: 'text',
+        name: 'title',
+        label: 'Feature Title',
+        default: 'Feature Title',
+      },
+      {
+        type: 'text',
+        name: 'description',
+        label: 'Feature Description',
+        default: 'Feature description goes here.',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    name: 'stats_heading',
+    label: 'Stats Heading',
+    default: 'Measurable Impact Across Key Outcomes',
+  },
+  {
+    type: 'group',
+    name: 'stats',
+    label: 'Statistics',
+    help_text: 'Edit the stat cards. Leave empty to use defaults.',
+    occurrence: {
+      min: 0,
+      max: 6,
+      default: 0,
+    },
+    children: [
+      {
+        type: 'text',
+        name: 'value',
+        label: 'Stat Value',
+        default: '+6%',
+      },
+      {
+        type: 'text',
+        name: 'stat_label',
+        label: 'Stat Label',
+        default: 'retention lift',
+      },
+    ],
+  },
+  {
+    type: 'group',
+    name: 'testimonials',
+    label: 'Testimonials',
+    help_text: 'Edit testimonials. Leave empty to use defaults.',
+    occurrence: {
+      min: 0,
+      max: 6,
+      default: 0,
+    },
+    children: [
+      {
+        type: 'text',
+        name: 'quote',
+        label: 'Quote',
+        default: 'Testimonial quote goes here.',
+      },
+      {
+        type: 'text',
+        name: 'author',
+        label: 'Author',
+        default: '– Author Name, Title, Organization',
+      },
+    ],
+  },
+];
 
 export const meta = {
   label: 'Intelligence Section',

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import heroImg01 from '../../../assets/Hero_Img_01.jpg';
-import heroImg02 from '../../../assets/Hero_Img_02.jpg';
-import heroImg03 from '../../../assets/Hero_Img_03.jpg';
+import heroToccara from '../../../assets/Hero_Toccara.jpg';
+import heroSara from '../../../assets/Hero_Sara.jpg';
+import heroNic from '../../../assets/Hero_Nic.jpg';
 import { DemoModal } from '../../shared/DemoModal';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
@@ -91,85 +91,46 @@ export function Component({ fieldValues }: any) {
     }
   ];
 
-  // Mentor profiles - 6 total: 3 large, 3 small (matching reference layout)
+  // Mentor profiles - 3 main characters for homepage: Toccara (top), Sara, Nic
   const mentorProfiles: MentorProfile[] = [
     {
-      name: 'Nic Hayes',
-      role: 'Apprentice to Project Manager',
-      image: heroImg01,
-      bio: 'Mentorship developed durable skills that transformed my career trajectory.',
-      expertise: ['Project Management', 'Durable Skills', 'Career Growth'],
+      name: 'Toccara Richards',
+      role: 'First Year Student',
+      image: heroToccara,
+      bio: 'Mentorship improved her sense of belonging.',
+      expertise: ['Campus Resources', 'Peer Support', 'Persistence'],
       stats: [
-        { label: 'Mentees', value: '24' },
-        { label: 'Years Growth', value: '3' },
-        { label: 'Success Rate', value: '92%' }
-      ],
-      size: 'large'
-    },
-    {
-      name: 'Maya Rodriguez',
-      role: 'Early-Career Talent',
-      image: heroImg02,
-      bio: 'Mentorship increased her social capital, opening doors to opportunities.',
-      expertise: ['Networking', 'Social Capital', 'Career Development'],
-      stats: [
-        { label: 'Connections', value: '45' },
-        { label: 'New Opportunities', value: '8' },
-        { label: 'Confidence', value: '+40%' }
+        { label: 'Belonging', value: '+19%' },
+        { label: 'Campus Engagement', value: '+45%' },
+        { label: 'Graduated', value: '4 Years' }
       ],
       size: 'large'
     },
     {
       name: 'Sara Chen',
       role: 'Award Winning Researcher',
-      image: heroImg03,
-      bio: 'Mentorship developed human skills in the AI Era.',
+      image: heroSara,
+      bio: 'Mentorship developed human skills in AI Era.',
       expertise: ['AI Research', 'Human Skills', 'Leadership'],
       stats: [
-        { label: 'Mentees', value: '38' },
-        { label: 'Publications', value: '12' },
-        { label: 'Impact Score', value: '96%' }
+        { label: 'Retention', value: '+6%' },
+        { label: 'Career Confidence', value: '+30%' },
+        { label: 'Team Lead', value: 'Yes' }
       ],
       size: 'large'
     },
     {
-      name: 'Jordan Williams',
-      role: 'First-Gen Graduate',
-      image: heroImg01,
-      bio: 'Identity-aligned mentorship helped me navigate the hidden curriculum.',
-      expertise: ['Student Success', 'Belonging', 'First-Gen Support'],
+      name: 'Nic Hayes',
+      role: 'Apprentice to Project Manager',
+      image: heroNic,
+      bio: 'Mentorship developed durable skills.',
+      expertise: ['Project Management', 'Durable Skills', 'Career Growth'],
       stats: [
-        { label: 'GPA Increase', value: '+0.8' },
-        { label: 'Campus Groups', value: '4' },
-        { label: 'Belonging', value: '+19%' }
+        { label: 'Conversion', value: '+42%' },
+        { label: 'Promotion', value: 'Youngest PM' },
+        { label: 'Mentor Impact', value: '86%' }
       ],
-      size: 'small'
-    },
-    {
-      name: 'Toccara Davis',
-      role: 'College Success Story',
-      image: heroImg02,
-      bio: 'Peer mentorship transformed my isolation into belonging.',
-      expertise: ['Campus Resources', 'Peer Support', 'Persistence'],
-      stats: [
-        { label: 'Resources Used', value: '12' },
-        { label: 'Mentor Sessions', value: '45' },
-        { label: 'Re-enrollment', value: '86%' }
-      ],
-      size: 'small'
-    },
-    {
-      name: 'Alex Kim',
-      role: 'Tech Industry Mentor',
-      image: heroImg03,
-      bio: 'Helping early-career professionals navigate the tech landscape.',
-      expertise: ['Tech Careers', 'Networking', 'Industry Insights'],
-      stats: [
-        { label: 'Mentees', value: '52' },
-        { label: 'Years', value: '8' },
-        { label: 'Placements', value: '34' }
-      ],
-      size: 'small'
+      size: 'large'
     }
   ];
 
@@ -191,18 +152,12 @@ export function Component({ fieldValues }: any) {
     }
   };
 
-  // Non-overlapping positions for 6 avatars matching reference:
-  // Row 1: 2 large (top left, top right)
-  // Row 2: 3 small (middle row)
-  // Row 3: 1 large (bottom center)
+  // Triangle arrangement for 3 avatars: Toccara (top), Sara (bottom left), Nic (bottom right)
   // Container is 340px x 340px
   const avatarPositions = [
-    { top: '70px', left: '70px' },      // Large 1 - top left
-    { top: '70px', left: '270px' },     // Large 2 - top right
-    { top: '270px', left: '170px' },    // Large 3 - bottom center
-    { top: '170px', left: '50px' },     // Small 1 - middle left
-    { top: '170px', left: '170px' },    // Small 2 - middle center
-    { top: '170px', left: '290px' },    // Small 3 - middle right
+    { top: '50px', left: '170px' },     // Toccara - top center
+    { top: '220px', left: '70px' },     // Sara - bottom left
+    { top: '220px', left: '270px' },    // Nic - bottom right
   ];
 
   const handleNodeClick = (index: number) => {
@@ -666,7 +621,7 @@ export function Component({ fieldValues }: any) {
                 height: '340px',
                 zIndex: 100,
               }}>
-                {mentorProfiles.slice(0, 6).map((mentor, index) => {
+                {mentorProfiles.slice(0, 3).map((mentor, index) => {
                   const size = getAvatarSize(mentor.size);
                   const pos = avatarPositions[index];
 

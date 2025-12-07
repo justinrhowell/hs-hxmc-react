@@ -29,8 +29,9 @@ export function Component({ fieldValues }: any) {
 
   const logos = customLogos.length > 0
     ? customLogos.map((logoItem: any) => ({
-        src: logoItem.logo_url || logoAssetMap[logoItem.logo_key] || logo,
-        alt: logoItem.alt_text || 'Partner Logo'
+        // Support image upload, custom URL, or preset key
+        src: logoItem.logo_image?.src || logoItem.logo_url || logoAssetMap[logoItem.logo_key] || logo,
+        alt: logoItem.logo_image?.alt || logoItem.alt_text || 'Partner Logo'
       }))
     : [
         { src: logo, alt: 'Partner Logo' },
@@ -180,10 +181,20 @@ export const fields: any = [
     },
     children: [
       {
+        type: 'image',
+        name: 'logo_image',
+        label: 'Logo Image (Upload)',
+        help_text: 'Upload a custom logo image. If not uploaded, falls back to preset or URL below.',
+        default: {
+          src: '',
+          alt: 'Partner Logo',
+        },
+      },
+      {
         type: 'choice',
         name: 'logo_key',
         label: 'Preset Logo (optional)',
-        help_text: 'Select a preset logo, or leave blank to use custom URL',
+        help_text: 'Select a preset logo, or leave blank to use custom URL. Only used if no image uploaded.',
         choices: [
           ['', 'None (use custom URL)'],
           ['logo', 'Logo'],
@@ -200,7 +211,7 @@ export const fields: any = [
         type: 'text',
         name: 'logo_url',
         label: 'Custom Logo URL (optional)',
-        help_text: 'Use this to upload your own logo image',
+        help_text: 'Use this as a fallback if no image is uploaded or preset selected',
         default: '',
       },
       {

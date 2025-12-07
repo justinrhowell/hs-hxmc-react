@@ -1,29 +1,36 @@
-import {
-  ModuleFields,
-  TextField,
-} from '@hubspot/cms-components/fields';
-
 export function Component({ fieldValues }: any) {
-  const pillars = [
+  // Default pillars
+  const defaultPillars = [
     {
-      title: fieldValues.pillar1_title || 'The Platform',
-      description: fieldValues.pillar1_description || 'Scale mentorship with the infrastructure to streamline program launch and automate logistics.',
-      linkText: fieldValues.pillar1_link_text || 'Learn more',
-      linkUrl: fieldValues.pillar1_link_url || '#platform',
+      title: 'The Platform',
+      description: 'Scale mentorship with the infrastructure to streamline program launch and automate logistics.',
+      linkText: 'Learn more',
+      linkUrl: '#platform',
     },
     {
-      title: fieldValues.pillar2_title || 'The Experience',
-      description: fieldValues.pillar2_description || 'Deepen and sustain engagement with relevant matches and AI-guided conversations.',
-      linkText: fieldValues.pillar2_link_text || 'Learn more',
-      linkUrl: fieldValues.pillar2_link_url || '#experience',
+      title: 'The Experience',
+      description: 'Deepen and sustain engagement with relevant matches and AI-guided conversations.',
+      linkText: 'Learn more',
+      linkUrl: '#experience',
     },
     {
-      title: fieldValues.pillar3_title || 'The Intelligence',
-      description: fieldValues.pillar3_description || 'Prove ROI by transforming human interaction into measurable, real-time insights.',
-      linkText: fieldValues.pillar3_link_text || 'Learn more',
-      linkUrl: fieldValues.pillar3_link_url || '#intelligence',
+      title: 'The Intelligence',
+      description: 'Prove ROI by transforming human interaction into measurable, real-time insights.',
+      linkText: 'Learn more',
+      linkUrl: '#intelligence',
     },
   ];
+
+  // Use custom pillars if provided, otherwise fall back to defaults
+  const customPillars = fieldValues.pillars || [];
+  const pillars = customPillars.length > 0
+    ? customPillars.map((p: any) => ({
+        title: p.title || 'Pillar Title',
+        description: p.description || 'Pillar description',
+        linkText: p.link_text || 'Learn more',
+        linkUrl: p.link_url || '#',
+      }))
+    : defaultPillars;
 
   return (
     <section style={{
@@ -115,10 +122,12 @@ export function Component({ fieldValues }: any) {
 
         <div style={{ textAlign: 'center' }}>
           <p style={{
-            fontSize: 'var(--font-size-h3)',
+            fontSize: 'var(--font-size-body-lg)',
             fontWeight: 500,
+            lineHeight: 'var(--line-height-normal)',
             marginBottom: 'var(--spacing-xl)',
-            color: 'var(--text-primary)',
+            color: 'var(--text-secondary)',
+            fontFamily: 'var(--font-headline)',
           }}>
             {fieldValues.tagline}
           </p>
@@ -147,31 +156,75 @@ export function Component({ fieldValues }: any) {
   );
 }
 
-export const fields = (
-  <ModuleFields>
-    <TextField name="heading" label="Section Heading" default="The Essential Infrastructure for Measurable Success" />
-    <TextField name="subtitle" label="Subtitle" default="The world is changing, and human connection is your most powerful asset. The Mentor Collective OS transforms that connection into a strategic, scalable engine for retention, belonging, and career outcomes." />
-
-    <TextField name="pillar1_title" label="Pillar 1 Title" default="The Platform" />
-    <TextField name="pillar1_description" label="Pillar 1 Description" default="Scale mentorship with the infrastructure to streamline program launch and automate logistics." />
-    <TextField name="pillar1_link_text" label="Pillar 1 Link Text" default="Learn more" />
-    <TextField name="pillar1_link_url" label="Pillar 1 Link URL" default="#platform" />
-
-    <TextField name="pillar2_title" label="Pillar 2 Title" default="The Experience" />
-    <TextField name="pillar2_description" label="Pillar 2 Description" default="Deepen and sustain engagement with relevant matches and AI-guided conversations." />
-    <TextField name="pillar2_link_text" label="Pillar 2 Link Text" default="Learn more" />
-    <TextField name="pillar2_link_url" label="Pillar 2 Link URL" default="#experience" />
-
-    <TextField name="pillar3_title" label="Pillar 3 Title" default="The Intelligence" />
-    <TextField name="pillar3_description" label="Pillar 3 Description" default="Prove ROI by transforming human interaction into measurable, real-time insights." />
-    <TextField name="pillar3_link_text" label="Pillar 3 Link Text" default="Learn more" />
-    <TextField name="pillar3_link_url" label="Pillar 3 Link URL" default="#intelligence" />
-
-    <TextField name="tagline" label="Bottom Tagline" default="We don't just match people. We move them forward." />
-    <TextField name="button_text" label="Button Text" default="Request a Demo" />
-    <TextField name="button_url" label="Button URL" default="#contact" />
-  </ModuleFields>
-);
+export const fields: any = [
+  {
+    type: 'text',
+    name: 'heading',
+    label: 'Section Heading',
+    default: 'The Essential Infrastructure for Measurable Success',
+  },
+  {
+    type: 'text',
+    name: 'subtitle',
+    label: 'Subtitle',
+    default: 'The world is changing, and human connection is your most powerful asset. The Mentor Collective OS transforms that connection into a strategic, scalable engine for retention, belonging, and career outcomes.',
+  },
+  {
+    type: 'group',
+    name: 'pillars',
+    label: 'Pillars',
+    help_text: 'Edit the pillar cards. Leave empty to use defaults.',
+    occurrence: {
+      min: 0,
+      max: 6,
+      default: 0,
+    },
+    children: [
+      {
+        type: 'text',
+        name: 'title',
+        label: 'Pillar Title',
+        default: 'The Platform',
+      },
+      {
+        type: 'text',
+        name: 'description',
+        label: 'Pillar Description',
+        default: 'Scale mentorship with the infrastructure to streamline program launch and automate logistics.',
+      },
+      {
+        type: 'text',
+        name: 'link_text',
+        label: 'Link Text',
+        default: 'Learn more',
+      },
+      {
+        type: 'text',
+        name: 'link_url',
+        label: 'Link URL',
+        default: '#platform',
+      },
+    ],
+  },
+  {
+    type: 'text',
+    name: 'tagline',
+    label: 'Bottom Tagline',
+    default: "We don't just match people. We move them forward.",
+  },
+  {
+    type: 'text',
+    name: 'button_text',
+    label: 'Button Text',
+    default: 'Request a Demo',
+  },
+  {
+    type: 'text',
+    name: 'button_url',
+    label: 'Button URL',
+    default: '#contact',
+  },
+];
 
 export const meta = {
   label: 'System Intro',

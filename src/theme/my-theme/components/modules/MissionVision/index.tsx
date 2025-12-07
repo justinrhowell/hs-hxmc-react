@@ -1,16 +1,12 @@
 import React from 'react';
-import {
-  ModuleFields,
-  TextField,
-} from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 const defaultPartners = [
-  'Credential providers',
+  'Employers and talent acquisition teams',
   'Higher education institutions',
-  'Workforce boards and regional networks',
-  'Intermediaries and nonprofits',
-  'Employers and early-talent teams',
+  'Workforce boards and Nonprofits',
+  'Regional networks',
+  'Credential providers',
 ];
 
 export function Component({ fieldValues }: any) {
@@ -25,216 +21,128 @@ export function Component({ fieldValues }: any) {
       className="scroll-animate"
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
-        background: 'var(--gradient-hero)',
+        background: 'var(--bg-white)',
       }}
     >
+      <style>{`
+        @media (max-width: 968px) {
+          .vision-main-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
-        {/* Mission & Vision Cards */}
+        {/* Two Column Layout */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: 'var(--spacing-2xl)',
-          marginBottom: 'var(--spacing-3xl)',
-        }} className="mission-vision-grid">
-          <style>{`
-            @media (max-width: 768px) {
-              .mission-vision-grid {
-                grid-template-columns: 1fr !important;
-              }
-            }
-          `}</style>
-
-          {/* Mission Card */}
-          <div style={{
-            background: 'var(--bg-white)',
-            borderRadius: 'var(--radius-xl)',
-            padding: 'var(--spacing-2xl)',
-            boxShadow: 'var(--shadow-lg)',
-            border: '2px solid var(--border-light)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '4px',
-              background: 'var(--gradient-coral)',
-            }} />
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              padding: '0.5rem 1rem',
-              background: 'rgba(239, 71, 111, 0.1)',
-              borderRadius: 'var(--radius-full)',
-              fontSize: 'var(--font-size-xs)',
-              fontWeight: 700,
-              color: 'var(--text-coral)',
-              marginBottom: 'var(--spacing-lg)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-            }}>
-              Our Mission
-            </div>
-            <p style={{
-              fontSize: 'var(--font-size-h4)',
-              color: 'var(--text-primary)',
-              lineHeight: 'var(--line-height-relaxed)',
-              fontWeight: 500,
-              margin: 0,
-            }}>
-              {fieldValues.mission || "To ensure every learner has the connections, confidence, and support to realize their full potential — not by chance, but by design."}
-            </p>
-          </div>
-
-          {/* Vision Card */}
-          <div style={{
-            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
-            borderRadius: 'var(--radius-xl)',
-            padding: 'var(--spacing-2xl)',
-            boxShadow: 'var(--shadow-lg)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              padding: '0.5rem 1rem',
-              background: 'rgba(239, 71, 111, 0.2)',
-              borderRadius: 'var(--radius-full)',
-              fontSize: 'var(--font-size-xs)',
-              fontWeight: 700,
-              color: 'var(--text-coral)',
-              marginBottom: 'var(--spacing-lg)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.1em',
-            }}>
-              Our Vision
-            </div>
-            <p style={{
-              fontSize: 'var(--font-size-h3)',
-              color: 'white',
-              lineHeight: 'var(--line-height-tight)',
-              fontWeight: 700,
-              fontFamily: 'var(--font-headline)',
-              marginBottom: 'var(--spacing-md)',
-            }}>
-              {fieldValues.vision_headline || "A world where mentorship isn't a program."}
-            </p>
-            <p style={{
-              fontSize: 'var(--font-size-h2)',
-              color: 'var(--text-coral)',
-              lineHeight: 1,
-              fontWeight: 700,
-              fontFamily: 'var(--font-headline)',
-              margin: 0,
-            }}>
-              {fieldValues.vision_tagline || "It's infrastructure."}
-            </p>
-          </div>
-        </div>
-
-        {/* Vision Explanation */}
-        <div style={{
-          background: 'var(--bg-white)',
-          borderRadius: 'var(--radius-xl)',
-          padding: 'var(--spacing-3xl)',
-          boxShadow: 'var(--shadow-md)',
-          border: '1px solid var(--border-light)',
-        }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 'var(--spacing-3xl)',
-            alignItems: 'center',
-          }} className="vision-content-grid">
-            <style>{`
-              @media (max-width: 900px) {
-                .vision-content-grid {
-                  grid-template-columns: 1fr !important;
-                }
-              }
-            `}</style>
-
-            <div>
-              <p style={{
-                fontSize: 'var(--font-size-body-lg)',
-                color: 'var(--text-secondary)',
-                lineHeight: 'var(--line-height-relaxed)',
-                marginBottom: 'var(--spacing-lg)',
-              }}>
-                {fieldValues.vision_description || "For decades, mentorship lived in pockets — siloed, manual, and dependent on heroic staff lift. Today's learners and workers need something different: reliable, accessible, AI-supported connections that meet them where they are."}
-              </p>
-              <p style={{
-                fontSize: 'var(--font-size-body-lg)',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 'var(--spacing-3xl)',
+          alignItems: 'start',
+        }} className="vision-main-grid">
+          {/* Left Column - Content */}
+          <div>
+            {/* Section Header */}
+            <div style={{ marginBottom: 'var(--spacing-md)' }}>
+              <h2 style={{
+                fontSize: 'var(--font-size-h2)',
+                fontWeight: 500,
                 color: 'var(--text-primary)',
-                lineHeight: 'var(--line-height-relaxed)',
-                fontWeight: 600,
+                marginBottom: 'var(--spacing-md)',
+                fontFamily: 'var(--font-headline)',
+                lineHeight: 'var(--line-height-tight)',
               }}>
-                {fieldValues.vision_statement || "We're building the AI-Powered Mentorship Operating System that unites:"}
+                {fieldValues.heading || "Our Vision"}
+              </h2>
+              <p style={{
+                fontSize: 'var(--font-size-body-lg)',
+                fontWeight: 500,
+                lineHeight: 'var(--line-height-normal)',
+                color: 'var(--text-secondary)',
+                fontFamily: 'var(--font-headline)',
+              }}>
+                {fieldValues.subtitle || "A world where mentorship isn't a program. It's infrastructure."}
               </p>
             </div>
 
-            <div>
-              <ul style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: 0,
-              }}>
-                {partners.map((partner: string, index: number) => (
-                  <li
-                    key={index}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 'var(--spacing-md)',
-                      padding: 'var(--spacing-md) 0',
-                      borderBottom: index < partners.length - 1 ? '1px solid var(--border-light)' : 'none',
-                    }}
-                  >
-                    <div style={{
-                      width: '32px',
-                      height: '32px',
-                      background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(248, 159, 123, 0.1) 100%)',
-                      borderRadius: 'var(--radius-md)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0,
-                    }}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--text-coral)">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
-                      </svg>
-                    </div>
-                    <span style={{
-                      fontSize: 'var(--font-size-body)',
-                      color: 'var(--text-primary)',
-                      fontWeight: 500,
-                    }}>
-                      {partner}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Bottom tagline */}
-          <div style={{
-            marginTop: 'var(--spacing-2xl)',
-            paddingTop: 'var(--spacing-xl)',
-            borderTop: '1px solid var(--border-light)',
-            textAlign: 'center',
-          }}>
+            {/* Vision Description */}
             <p style={{
               fontSize: 'var(--font-size-body-lg)',
-              color: 'var(--text-coral)',
-              fontWeight: 600,
-              margin: 0,
+              color: 'var(--text-secondary)',
+              lineHeight: 'var(--line-height-relaxed)',
+              marginBottom: 'var(--spacing-xl)',
             }}>
-              {fieldValues.vision_conclusion || "One system that strengthens belonging, accelerates career readiness, and grows social capital — at scale."}
+              {fieldValues.vision_description || "For decades, mentorship lived in pockets — siloed, manual, and dependent on heroic staff lift. Today's learners and workers need something different: reliable, accessible, AI-supported connections that meet them where they are."}
             </p>
+
+            {/* Proof Point - Moved to left column */}
+            <div style={{
+              padding: 'var(--spacing-lg)',
+              background: 'var(--gradient-hero)',
+              borderRadius: 'var(--radius-xl)',
+            }}>
+              <p style={{
+                fontSize: 'var(--font-size-body)',
+                fontWeight: 600,
+                color: 'var(--text-coral)',
+                margin: 0,
+                fontFamily: 'var(--font-headline)',
+              }}>
+                {fieldValues.proof_text || "One system that strengthens belonging, accelerates career readiness, and grows social capital — at scale."}
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column - Partner Checklist */}
+          <div>
+            {/* Checklist Header */}
+            <h3 style={{
+              fontSize: 'var(--font-size-h4)',
+              fontWeight: 600,
+              color: 'var(--text-primary)',
+              marginBottom: 'var(--spacing-xl)',
+              fontFamily: 'var(--font-headline)',
+            }}>
+              {fieldValues.checklist_heading || "Our AI-Powered Mentorship OS unites:"}
+            </h3>
+
+            {/* Partner List with checkmarks */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
+              {partners.map((partner: string, index: number) => (
+                <div
+                  key={index}
+                  style={{
+                    display: 'flex',
+                    gap: 'var(--spacing-md)',
+                    alignItems: 'center',
+                  }}
+                  className="scroll-animate"
+                  data-delay={index * 100}
+                >
+                  {/* Checkmark badge */}
+                  <div style={{
+                    width: '36px',
+                    height: '36px',
+                    minWidth: '36px',
+                    background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(248, 159, 123, 0.1) 100%)',
+                    borderRadius: 'var(--radius-full)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--text-coral)">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                    </svg>
+                  </div>
+                  <span style={{
+                    fontSize: 'var(--font-size-body-lg)',
+                    color: 'var(--text-primary)',
+                    fontWeight: 500,
+                  }}>
+                    {partner}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -246,21 +154,15 @@ export function Component({ fieldValues }: any) {
 export const fields: any = [
   {
     type: 'text',
-    name: 'mission',
-    label: 'Mission Statement',
-    default: "To ensure every learner has the connections, confidence, and support to realize their full potential — not by chance, but by design.",
+    name: 'heading',
+    label: 'Section Heading',
+    default: "Our Vision",
   },
   {
     type: 'text',
-    name: 'vision_headline',
-    label: 'Vision Headline',
-    default: "A world where mentorship isn't a program.",
-  },
-  {
-    type: 'text',
-    name: 'vision_tagline',
-    label: 'Vision Tagline',
-    default: "It's infrastructure.",
+    name: 'subtitle',
+    label: 'Subtitle',
+    default: "A world where mentorship isn't a program. It's infrastructure.",
   },
   {
     type: 'text',
@@ -270,14 +172,14 @@ export const fields: any = [
   },
   {
     type: 'text',
-    name: 'vision_statement',
-    label: 'Vision Statement',
-    default: "We're building the AI-Powered Mentorship Operating System that unites:",
+    name: 'checklist_heading',
+    label: 'Checklist Heading',
+    default: "Our AI-Powered Mentorship OS unites:",
   },
   {
     type: 'text',
-    name: 'vision_conclusion',
-    label: 'Vision Conclusion',
+    name: 'proof_text',
+    label: 'Bottom Statement',
     default: "One system that strengthens belonging, accelerates career readiness, and grows social capital — at scale.",
   },
   {
@@ -301,5 +203,5 @@ export const fields: any = [
 ];
 
 export const meta = {
-  label: 'Mission & Vision',
+  label: 'Our Vision',
 };

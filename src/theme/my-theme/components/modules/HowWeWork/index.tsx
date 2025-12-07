@@ -7,24 +7,19 @@ import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 const defaultPillars = [
   {
-    icon: 'people',
-    title: 'Human Connection Amplified',
-    description: "We don't replace human connection — we amplify it.",
-  },
-  {
     icon: 'ai',
-    title: 'AI-Guided Support',
-    description: 'Our AI agents help mentors, coaches, supervisors, and advisors show up with more consistency, clarity, and confidence.',
+    title: 'AI Mentorship Platform',
+    description: 'Our AI agents help mentors and advisors show up with consistency and confidence.',
   },
   {
     icon: 'insights',
-    title: 'Actionable Intelligence',
-    description: 'Our intelligence layer turns conversations into actionable insights for leaders across education and workforce systems.',
+    title: 'Actionable Insights',
+    description: 'Our intelligence layer transforms conversations into insights for leaders across AI for education and workforce systems.',
   },
   {
     icon: 'network',
-    title: 'Unified Network',
-    description: 'Our network unites campuses, communities, and employers through relationships that meaningfully change lives.',
+    title: 'The Network',
+    description: 'Our network unites campuses and employers through relationships that meaningfully change lives.',
   },
 ];
 
@@ -93,22 +88,8 @@ export function Component({ fieldValues }: any) {
       }} />
 
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-3xl)' }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            padding: '0.5rem 1.25rem',
-            background: 'var(--bg-light-coral)',
-            borderRadius: 'var(--radius-full)',
-            fontSize: 'var(--font-size-small)',
-            fontWeight: 600,
-            color: 'var(--text-coral)',
-            marginBottom: 'var(--spacing-lg)',
-            border: '1px solid var(--border-light)',
-          }}>
-            How We Work
-          </div>
+        {/* Header - No pill */}
+        <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-xl)' }}>
           <h2 style={{
             fontSize: 'var(--font-size-h2)',
             fontWeight: 500,
@@ -117,24 +98,27 @@ export function Component({ fieldValues }: any) {
             fontFamily: 'var(--font-headline)',
             lineHeight: 'var(--line-height-tight)',
           }}>
-            {fieldValues.heading || 'Powered by people. Guided by AI. Designed for impact.'}
+            {fieldValues.heading || 'How We Work'}
           </h2>
+          <p style={{
+            fontSize: 'var(--font-size-body-lg)',
+            color: 'rgba(255, 255, 255, 0.8)',
+            maxWidth: 'var(--max-width-prose)',
+            margin: '0 auto',
+          }}>
+            {fieldValues.subheading || "Powered by people. Guided by AI. Designed for impact. We don't replace human connection—we amplify it."}
+          </p>
         </div>
 
         {/* Pillars Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gap: 'var(--spacing-xl)',
           marginBottom: 'var(--spacing-3xl)',
         }} className="how-we-work-grid">
           <style>{`
-            @media (max-width: 1024px) {
-              .how-we-work-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-              }
-            }
-            @media (max-width: 600px) {
+            @media (max-width: 900px) {
               .how-we-work-grid {
                 grid-template-columns: 1fr !important;
               }
@@ -188,29 +172,22 @@ export function Component({ fieldValues }: any) {
           ))}
         </div>
 
-        {/* Bottom Statement */}
+        {/* Bottom Statement - Simple centered text */}
         <div className="scroll-animate" data-delay="400" style={{
           textAlign: 'center',
+          maxWidth: 'var(--max-width-prose)',
+          margin: '0 auto',
         }}>
-          <div style={{
-            background: 'linear-gradient(135deg, var(--bg-light-coral) 0%, rgba(248, 159, 123, 0.15) 100%)',
-            borderRadius: 'var(--radius-xl)',
-            padding: 'var(--spacing-2xl)',
-            border: '1px solid var(--border-light)',
-            maxWidth: 'var(--max-width-prose)',
-            margin: '0 auto',
+          <p style={{
+            fontSize: 'var(--font-size-h4)',
+            color: 'white',
+            fontWeight: 600,
+            lineHeight: 'var(--line-height-normal)',
+            margin: 0,
+            fontFamily: 'var(--font-headline)',
           }}>
-            <p style={{
-              fontSize: 'var(--font-size-h4)',
-              color: 'white',
-              fontWeight: 600,
-              lineHeight: 'var(--line-height-normal)',
-              margin: 0,
-              fontFamily: 'var(--font-headline)',
-            }}>
-              {fieldValues.conclusion || 'Belonging, readiness, and opportunity become predictable — not accidental.'}
-            </p>
-          </div>
+            {fieldValues.conclusion || 'Through engagement automation and predictive power, belonging, readiness, and opportunity are predictable—not accidental.'}
+          </p>
         </div>
       </div>
     </section>
@@ -223,13 +200,19 @@ export const fields: any = [
     type: 'text',
     name: 'heading',
     label: 'Section Heading',
-    default: 'Powered by people. Guided by AI. Designed for impact.',
+    default: 'How We Work',
+  },
+  {
+    type: 'text',
+    name: 'subheading',
+    label: 'Subheading',
+    default: "Powered by people. Guided by AI. Designed for impact. We don't replace human connection—we amplify it.",
   },
   {
     type: 'text',
     name: 'conclusion',
     label: 'Bottom Statement',
-    default: 'Belonging, readiness, and opportunity become predictable — not accidental.',
+    default: 'Through engagement automation and predictive power, belonging, readiness, and opportunity are predictable—not accidental.',
   },
   {
     type: 'group',

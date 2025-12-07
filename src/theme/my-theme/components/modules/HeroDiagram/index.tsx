@@ -3,9 +3,10 @@ import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import heroImg01 from '../../../assets/Hero_Img_01_B.jpg';
-import heroImg02 from '../../../assets/Hero_Img_02.jpg';
-import heroImg03 from '../../../assets/Hero_Img_03.jpg';
+// Homepage hero images: Toccara (top), Sara (bottom left), Nic (bottom right)
+import heroToccara from '../../../assets/Hero_Toccara.jpg';
+import heroSara from '../../../assets/Hero_Sara.jpg';
+import heroNic from '../../../assets/Hero_Nic.jpg';
 import { DemoModal } from '../../shared/DemoModal';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
@@ -174,20 +175,21 @@ export function Component({ fieldValues }: any) {
     }
   };
 
-  // Map mentor image keys to imported images
+  // Map mentor image keys to imported images (fallback for legacy data)
   const mentorImageMap: Record<string, string> = {
-    heroImg01: heroImg01,
-    heroImg02: heroImg02,
-    heroImg03: heroImg03,
+    heroImg01: heroToccara,
+    heroImg02: heroSara,
+    heroImg03: heroNic,
   };
 
   // Use custom mentors if provided, otherwise fall back to defaults
   const customMentors = fieldValues.mentors || [];
 
-  const mentorProfiles: MentorProfile[] = customMentors.length >= 5 ? customMentors.slice(0, 5).map((m: any) => ({
+  const mentorProfiles: MentorProfile[] = customMentors.length >= 3 ? customMentors.slice(0, 3).map((m: any) => ({
     name: m.mentor_name,
     role: m.role,
-    image: mentorImageMap[m.image_key] || heroImg01,
+    // Support both uploaded image and legacy image_key selection
+    image: m.image?.src || mentorImageMap[m.image_key] || heroToccara,
     bio: m.bio,
     expertise: m.expertise ? m.expertise.split(',').map((s: string) => s.trim()) : [],
     stats: [
@@ -197,63 +199,39 @@ export function Component({ fieldValues }: any) {
     ]
   })) : [
     {
-      name: 'Nic Hayes',
-      role: 'Apprentice to Project Manager',
-      image: heroImg01,
-      bio: 'Mentorship developed durable skills that transformed my career trajectory from apprentice to project manager.',
-      expertise: ['Project Management', 'Durable Skills', 'Career Growth'],
+      name: 'Toccara Richards',
+      role: 'First Year Student',
+      image: heroToccara,
+      bio: 'Mentorship improved her sense of belonging.',
+      expertise: ['Campus Resources', 'Peer Support', 'Persistence'],
       stats: [
-        { label: 'Mentees', value: '24' },
-        { label: 'Years Growth', value: '3' },
-        { label: 'Success Rate', value: '92%' }
-      ]
-    },
-    {
-      name: 'Maya Rodriguez',
-      role: 'Early-Career Talent',
-      image: heroImg02,
-      bio: 'Mentorship increased her social capital, opening doors to opportunities she never thought possible.',
-      expertise: ['Networking', 'Social Capital', 'Career Development'],
-      stats: [
-        { label: 'Connections', value: '45' },
-        { label: 'New Opportunities', value: '8' },
-        { label: 'Confidence', value: '+40%' }
+        { label: 'Belonging', value: '+19%' },
+        { label: 'Campus Engagement', value: '+45%' },
+        { label: 'Graduated', value: '4 Years' }
       ]
     },
     {
       name: 'Sara Chen',
       role: 'Award Winning Researcher',
-      image: heroImg03,
-      bio: 'Mentorship developed human skills in the AI Era, balancing technical expertise with emotional intelligence.',
+      image: heroSara,
+      bio: 'Mentorship developed human skills in AI Era.',
       expertise: ['AI Research', 'Human Skills', 'Leadership'],
       stats: [
-        { label: 'Mentees', value: '38' },
-        { label: 'Publications', value: '12' },
-        { label: 'Impact Score', value: '96%' }
+        { label: 'Retention', value: '+6%' },
+        { label: 'Career Confidence', value: '+30%' },
+        { label: 'Team Lead', value: 'Yes' }
       ]
     },
     {
-      name: 'Jordan Williams',
-      role: 'First-Gen Graduate',
-      image: heroImg01,
-      bio: 'Identity-aligned mentorship helped me navigate the hidden curriculum and find my place on campus.',
-      expertise: ['Student Success', 'Belonging', 'First-Gen Support'],
+      name: 'Nic Hayes',
+      role: 'Apprentice to Project Manager',
+      image: heroNic,
+      bio: 'Mentorship developed durable skills.',
+      expertise: ['Project Management', 'Durable Skills', 'Career Growth'],
       stats: [
-        { label: 'GPA Increase', value: '+0.8' },
-        { label: 'Campus Groups', value: '4' },
-        { label: 'Belonging', value: '+19%' }
-      ]
-    },
-    {
-      name: 'Toccara Davis',
-      role: 'College Success Story',
-      image: heroImg02,
-      bio: 'Peer mentorship transformed my isolation into belonging, leading me to graduate four years later.',
-      expertise: ['Campus Resources', 'Peer Support', 'Persistence'],
-      stats: [
-        { label: 'Resources Used', value: '12' },
-        { label: 'Mentor Sessions', value: '45' },
-        { label: 'Re-enrollment', value: '86%' }
+        { label: 'Conversion', value: '+42%' },
+        { label: 'Promotion', value: 'Youngest PM' },
+        { label: 'Mentor Impact', value: '86%' }
       ]
     }
   ];
@@ -674,14 +652,25 @@ export function Component({ fieldValues }: any) {
         </div>
       </div>
 
-      <button
-        onClick={() => setIsDemoModalOpen(true)}
-        className="btn-primary-coral"
-        style={{ width: '100%' }}
-        aria-label={fieldValues.button_text}
-      >
-        {fieldValues.button_text}
-      </button>
+      {fieldValues.button_url ? (
+        <a
+          href={fieldValues.button_url}
+          className="btn-primary-coral"
+          style={{ width: '100%', display: 'block', textAlign: 'center' }}
+          aria-label={fieldValues.button_text}
+        >
+          {fieldValues.button_text}
+        </a>
+      ) : (
+        <button
+          onClick={() => setIsDemoModalOpen(true)}
+          className="btn-primary-coral"
+          style={{ width: '100%' }}
+          aria-label={fieldValues.button_text}
+        >
+          {fieldValues.button_text}
+        </button>
+      )}
     </div>
   );
 
@@ -878,13 +867,23 @@ export function Component({ fieldValues }: any) {
                     {description}
                   </p>
 
-                  <button
-                    onClick={() => setIsDemoModalOpen(true)}
-                    className="btn-primary-coral"
-                    aria-label={fieldValues.button_text}
-                  >
-                    {fieldValues.button_text}
-                  </button>
+                  {fieldValues.button_url ? (
+                    <a
+                      href={fieldValues.button_url}
+                      className="btn-primary-coral"
+                      aria-label={fieldValues.button_text}
+                    >
+                      {fieldValues.button_text}
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => setIsDemoModalOpen(true)}
+                      className="btn-primary-coral"
+                      aria-label={fieldValues.button_text}
+                    >
+                      {fieldValues.button_text}
+                    </button>
+                  )}
                 </div>
 
                 <div className="hero-diagram" style={{
@@ -1272,6 +1271,13 @@ export const fields: any = [
     default: 'Request a Demo',
   },
   {
+    type: 'text',
+    name: 'button_url',
+    label: 'Button URL',
+    help_text: 'Leave empty to open demo modal, or enter a URL to link to a page.',
+    default: '',
+  },
+  {
     type: 'group',
     name: 'nodes',
     label: 'Diagram Nodes',
@@ -1356,13 +1362,24 @@ export const fields: any = [
         default: 'Career Mentor',
       },
       {
+        type: 'image',
+        name: 'image',
+        label: 'Profile Image (Upload)',
+        help_text: 'Upload a custom profile image. If not uploaded, falls back to the preset selection below.',
+        default: {
+          src: '',
+          alt: 'Mentor profile',
+        },
+      },
+      {
         type: 'choice',
         name: 'image_key',
-        label: 'Profile Image',
+        label: 'Profile Image (Preset)',
+        help_text: 'Only used if no custom image is uploaded above.',
         choices: [
-          ['heroImg01', 'Hero Image 1'],
-          ['heroImg02', 'Hero Image 2'],
-          ['heroImg03', 'Hero Image 3'],
+          ['heroImg01', 'Toccara (Default)'],
+          ['heroImg02', 'Sara'],
+          ['heroImg03', 'Nic'],
         ],
         default: 'heroImg01',
       },

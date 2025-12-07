@@ -1,9 +1,4 @@
 import React from 'react';
-import {
-  ModuleFields,
-  TextField,
-  ImageField,
-} from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 import defaultHeroImage from '../../../assets/about-us-hero.jpg';
 import blueArrows from '../../../assets/blue-arrows.svg';
@@ -105,17 +100,8 @@ export function Component({ fieldValues }: any) {
               color: 'var(--text-primary)',
               fontFamily: 'var(--font-headline)',
             }}>
-              {fieldValues.title || 'Mentorship, Reinvented for the AI Era'}
+              {fieldValues.title || 'Mentorship for the Real World: Human Connection in the Age of AI'}
             </h1>
-
-            <p style={{
-              fontSize: 'var(--font-size-body-lg)',
-              color: 'var(--text-coral)',
-              fontWeight: 600,
-              marginBottom: 'var(--spacing-md)',
-            }}>
-              {fieldValues.tagline || "We're building the infrastructure that connects learning to opportunity."}
-            </p>
 
             <p style={{
               fontSize: 'var(--font-size-body-lg)',
@@ -124,7 +110,7 @@ export function Component({ fieldValues }: any) {
               marginBottom: 'var(--spacing-xl)',
               maxWidth: 'var(--max-width-prose)',
             }}>
-              {fieldValues.description || "Mentor Collective exists to ensure every learner — whether a student, jobseeker, or early-career professional — has access to the connections, confidence, and support they need to thrive."}
+              {fieldValues.description || "Our mentorship infrastructure connects learning to opportunity. We work to ensure every learner—student, jobseeker, or early-career professional—gets the connections, confidence, and support needed to thrive."}
             </p>
           </div>
 
@@ -190,29 +176,25 @@ export function Component({ fieldValues }: any) {
   );
 }
 
-export const fields = (
-  <ModuleFields>
-    <TextField
-      name="title"
-      label="Hero Title"
-      default="Mentorship, Reinvented for the AI Era"
-    />
-    <TextField
-      name="tagline"
-      label="Tagline"
-      default="We're building the infrastructure that connects learning to opportunity."
-    />
-    <TextField
-      name="description"
-      label="Description"
-      default="Mentor Collective exists to ensure every learner — whether a student, jobseeker, or early-career professional — has access to the connections, confidence, and support they need to thrive."
-    />
-    <ImageField
-      name="hero_image"
-      label="Hero Image (Right Side)"
-    />
-  </ModuleFields>
-);
+export const fields: any = [
+  {
+    type: 'text',
+    name: 'title',
+    label: 'Hero Title',
+    default: 'Mentorship for the Real World: Human Connection in the Age of AI',
+  },
+  {
+    type: 'text',
+    name: 'description',
+    label: 'Description',
+    default: 'Our mentorship infrastructure connects learning to opportunity. We work to ensure every learner—student, jobseeker, or early-career professional—gets the connections, confidence, and support needed to thrive.',
+  },
+  {
+    type: 'image',
+    name: 'hero_image',
+    label: 'Hero Image (Right Side)',
+  },
+];
 
 export const meta = {
   label: 'About Hero',

@@ -10,7 +10,11 @@ interface FAQ {
 interface FAQSectionProps {
   fieldValues: {
     heading: string;
+    subtitle?: string;
     faqs: FAQ[];
+    show_button?: boolean;
+    button_text?: string;
+    button_url?: string;
   };
 }
 
@@ -89,6 +93,11 @@ export const Component: React.FC<FAQSectionProps> = ({ fieldValues }) => {
           <h2 id="faq-heading" style={styles.heading}>
             {fieldValues.heading}
           </h2>
+          {fieldValues.subtitle && (
+            <p style={styles.subtitle}>
+              {fieldValues.subtitle}
+            </p>
+          )}
 
           <div style={styles.faqList}>
             {faqs.map((faq, index) => (
@@ -138,6 +147,20 @@ export const Component: React.FC<FAQSectionProps> = ({ fieldValues }) => {
               </div>
             ))}
           </div>
+
+          {fieldValues.show_button !== false && (
+            <div style={styles.buttonContainer}>
+              <a
+                href={fieldValues.button_url || '/faq'}
+                style={styles.viewMoreButton}
+              >
+                {fieldValues.button_text || 'View More'}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ marginLeft: '8px' }}>
+                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+            </div>
+          )}
         </div>
       </section>
     </>
@@ -161,10 +184,19 @@ const styles: Record<string, React.CSSProperties> = {
     fontFamily: 'var(--font-headline)',
     fontWeight: 500,
     textAlign: 'center',
-    marginBottom: 'var(--spacing-3xl)',
+    marginBottom: 'var(--spacing-sm)',
     lineHeight: 'var(--line-height-tight)',
     letterSpacing: 'var(--letter-spacing-tight)',
     color: 'var(--text-primary)',
+  },
+  subtitle: {
+    fontSize: 'var(--font-size-body-lg)',
+    fontFamily: 'var(--font-body)',
+    textAlign: 'center',
+    color: 'var(--text-secondary)',
+    lineHeight: 'var(--line-height-relaxed)',
+    maxWidth: 'var(--max-width-prose)',
+    margin: '0 auto var(--spacing-xl)',
   },
   faqList: {
     display: 'flex',
@@ -215,6 +247,24 @@ const styles: Record<string, React.CSSProperties> = {
     overflow: 'hidden',
     transition: 'var(--transition-medium)',
   },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 'var(--spacing-2xl)',
+  },
+  viewMoreButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: 'var(--btn-padding)',
+    background: 'var(--gradient-coral)',
+    color: 'white',
+    borderRadius: 'var(--radius-full)',
+    fontSize: 'var(--font-size-body)',
+    fontWeight: 600,
+    textDecoration: 'none',
+    boxShadow: 'var(--shadow-coral-sm)',
+    transition: 'var(--transition-medium)',
+  },
 };
 
 export const fields: ModuleFields = [
@@ -223,6 +273,12 @@ export const fields: ModuleFields = [
     name: 'heading',
     label: 'Section Heading',
     default: 'Frequently Asked Questions',
+  },
+  {
+    type: 'text',
+    name: 'subtitle',
+    label: 'Subtitle',
+    default: 'Find answers to commonly asked questions about our mentorship platform.',
   },
   {
     type: 'group',
@@ -248,6 +304,24 @@ export const fields: ModuleFields = [
           'Mentor Collective is an AI-powered mentorship platform that connects students with mentors to support their academic and professional success.',
       },
     ],
+  },
+  {
+    type: 'boolean',
+    name: 'show_button',
+    label: 'Show View More Button',
+    default: true,
+  },
+  {
+    type: 'text',
+    name: 'button_text',
+    label: 'Button Text',
+    default: 'View More',
+  },
+  {
+    type: 'text',
+    name: 'button_url',
+    label: 'Button URL',
+    default: '/faq',
   },
 ];
 

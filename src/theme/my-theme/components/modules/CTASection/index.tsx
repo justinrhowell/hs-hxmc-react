@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { DemoModal } from '../../shared/DemoModal';
+import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 import {
   ModuleFields,
   TextField,
 } from '@hubspot/cms-components/fields';
-import { DemoModal } from '../../shared/DemoModal';
-import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
 export function Component({ fieldValues }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,32 +76,35 @@ export function Component({ fieldValues }: any) {
                   lineHeight: 'var(--line-height-tight)'
                 }}
               >
-                Ready to unlock your network's hidden power?
+                {fieldValues.heading || "Ready to unlock your network's hidden power?"}
               </h2>
               <p style={{
                 fontSize: 'var(--font-size-lead)',
                 color: 'var(--text-white-soft)',
-                marginBottom: 'var(--spacing-md)',
+                marginBottom: 'var(--spacing-2xl)',
                 lineHeight: 'var(--line-height-normal)'
               }}>
-                Mentorship reinvented as AI infrastructure for education, workforce, and early talent ecosystems.
+                {fieldValues.subheading || 'Scale human connection. Drive measurable outcomes.'}
               </p>
-              <p style={{
-                fontSize: 'var(--font-size-body-lg)',
-                color: 'var(--text-white-soft)',
-                marginBottom: 'var(--spacing-2xl)',
-                lineHeight: 'var(--line-height-normal)',
-                fontWeight: 600
-              }}>
-                One OS. Infinite pathways.
-              </p>
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="btn-white"
-                aria-label="Request a demo"
-              >
-                Request a Demo
-              </button>
+              {fieldValues.buttonUrl ? (
+                <a
+                  href={fieldValues.buttonUrl}
+                  className="btn-white"
+                  aria-label={fieldValues.buttonText || 'Request a Demo'}
+                >
+                  {fieldValues.buttonText || 'Request a Demo'}
+                  <span style={{ fontSize: 'var(--font-size-body-lg)' }}>→</span>
+                </a>
+              ) : (
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="btn-white"
+                  aria-label="Request a demo"
+                >
+                  {fieldValues.buttonText || 'Request a Demo'}
+                  <span style={{ fontSize: 'var(--font-size-body-lg)' }}>→</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -122,17 +125,17 @@ export const fields = (
     <TextField
       name="subheading"
       label="Subheading"
-      default="Mentorship reinvented as AI infrastructure for education, workforce, and early talent ecosystems."
-    />
-    <TextField
-      name="tagline"
-      label="Tagline"
-      default="One OS. Infinite pathways."
+      default="Scale human connection. Drive measurable outcomes."
     />
     <TextField
       name="buttonText"
       label="Button Text"
       default="Request a Demo"
+    />
+    <TextField
+      name="buttonUrl"
+      label="Button URL (optional - leave blank for demo modal)"
+      default=""
     />
   </ModuleFields>
 );

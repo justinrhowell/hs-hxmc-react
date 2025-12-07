@@ -1,89 +1,63 @@
 import React from 'react';
-import { ModuleFields } from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
-// All FAQ data built into the component
-const faqData = [
+// Default FAQ data organized by category
+const defaultFaqData = [
+  // Foundational Questions
   {
     question: "What is an AI-powered mentorship platform?",
-    answer: "An AI-powered mentorship platform uses artificial intelligence to match mentors and mentees, guide conversations, and deliver measurable outcomes. Mentor Collective's platform scales human connection by automating logistics and fueling every mentorship relationship with data-driven insights."
+    answer: "An AI-powered mentorship platform streamlines and personalizes the mentorship experience by using dynamic automation, smart matching, and data-driven insights. It moves beyond creating connections: the platform converts these interactions into meaningful data, applying advanced analytics to uncover true progress and measurable outcomes at scale."
   },
   {
     question: "How does Mentor Collective's AI Mentorship OS work?",
-    answer: "Our AI Mentorship Operating System (OS) reveals connection gaps, sparks engagement with personalized prompts, scales mentorship through automation, and fuels programs with real-time insights. It connects education and workforce ecosystems to drive retention, belonging, and career mobility."
+    answer: "Our AI Mentorship Operating System (OS) reveals connection gaps, sparks engagement with personalized prompts, scales mentorship through automation, and fuels programs with retention analytics and insights. It connects education and workforce ecosystems to drive retention, belonging, and career mobility."
   },
   {
-    question: "What makes Mentor Collective different from traditional mentorship programs?",
-    answer: "Unlike one-off mentorship initiatives, Mentor Collective is built as infrastructure. Our AI-native platform uses a decade of mentorship data to automate matching, sustain engagement with AI-guided conversation prompts, and provide intelligence to improve retention and belonging across large populations."
+    question: "What makes Mentor Collective the premier choice over traditional programs?",
+    answer: "Unlike one-off mentorship initiatives, Mentor Collective is built as essential infrastructure. Our AI-native platform uses a decade of mentorship data to automate matching, sustain engagement with AI-guided conversation prompts and provide the intelligence to improve retention and belonging across large populations."
   },
   {
     question: "Is this platform meant to replace human mentors?",
     answer: "No. Our platform amplifies the value of human connection. We provide tools to ensure mentors and mentees stay engaged, build trust, and achieve outcomes. The AI acts as a guide and accelerator—not a replacement."
+  },
+  // Impact, Outcomes, and ROI
+  {
+    question: "How can I improve student retention with mentorship?",
+    answer: "Mentorship builds a sense of belonging, increases career confidence, and provides access to social capital and professional networks. Institutions using our platform have seen up to a 6% retention lift and a 30% increase in career confidence."
+  },
+  {
+    question: "How to measure the ROI of mentorship programs?",
+    answer: "Our partners report significant ROI, including millions in operational savings. They have gained value through improved persistence and engagement. ROI is calculated through retention and staff savings. Our analytics track engagement, belonging, risk flags, and ROI through configurable dashboards. As an example, some districts have saved over $20,000 per retained teacher, while partners have realized $7.8M in value."
+  },
+  {
+    question: "Is there data to show how mentorship impacts belonging or career confidence?",
+    answer: "Absolutely, yes. Learners on our platform experience up to a 19% boost in sense of belonging. Furthermore, mentees are 2.5x more likely to feel career-ready. Our built-in analytics track these essential belonging analytics and career readiness metrics in real-time."
+  },
+  // Platform Features and Use Cases
+  {
+    question: "How does AI help with mentor-mentee matching and engagement?",
+    answer: "Our proprietary algorithm uses 80+ variables to optimize mentor matching based on goals, identity, and experience. The AI also drives sustained engagement through our proprietary Conversation Sparks—personalized prompts that sustain conversation and deepen relationships."
+  },
+  {
+    question: "What are Conversation Sparks and how do they work?",
+    answer: "Conversation Sparks are AI-guided prompts tailored to each match. They remove the #1 barrier to mentorship—\"I don't know what to say\"—and help relationships thrive. Prompts evolve over time based on engagement data."
+  },
+  {
+    question: "How to integrate mentorship into workforce development programs?",
+    answer: "We serve higher education institutions, employers, workforce boards, and nonprofits. Many partners use Mentor Collective to activate alumni, connect learners to industry professionals, and power regional talent pathways. For employers, the platform is an essential early talent development tool, embedding mentorship into internships and development programs to improve internship conversion and reduce early attrition. Some partners have seen a 42% increase in intern-to-full-time conversion."
+  },
+  {
+    question: "What's the best mentorship platform for universities and higher education?",
+    answer: "Mentor Collective's AI-powered Mentorship OS is trusted by over 200+ partners, including major higher education institutions, to deliver essential college retention solutions and student engagement tools. Our platform is essential for first-gen student support as we use identity-aligned matching and scalable tools to ensure equitable access to social capital. For example, UW-Green Bay saw a 30.6% increase in career decision confidence for first-generation students in our program."
   },
   {
     question: "Can the platform integrate with our existing student or HR systems?",
     answer: "Yes. Our platform offers secure integrations with SSO, CRMs, and data feeds to connect seamlessly with campus systems, employer platforms, and workforce tools."
   },
   {
-    question: "How does mentorship improve student retention and career readiness?",
-    answer: "Mentorship builds a sense of belonging, increases career confidence, and provides access to professional networks. Institutions using our platform have seen up to a 6% retention lift and a 30% increase in career confidence."
+    question: "What kind of support does Mentor Collective offer for program administrators?",
+    answer: "We provide full-service support, from implementation to launch to continuous improvement. Our team helps customize programs, configure reports, and maximize impact without adding staff burden, acting as your essential mentor program automation partner."
   },
-  {
-    question: "What kind of ROI can institutions expect from mentorship programs?",
-    answer: "Our partners report significant ROI, including millions in operational savings. For example, some districts have saved over $20,000 per retained teacher, while campuses have realized $7.8M in value through improved persistence and engagement."
-  },
-  {
-    question: "Is there data to show how mentorship impacts belonging or career confidence?",
-    answer: "Yes. Learners on our platform experience up to a 19% boost in sense of belonging, and mentees are 2.5x more likely to feel career-ready. Our built-in analytics track these metrics in real time."
-  },
-  {
-    question: "Can Mentor Collective help us measure the impact of our mentorship programs?",
-    answer: "Absolutely. Our Insights Hub transforms conversation data into actionable intelligence. You can monitor engagement, belonging, risk flags, and ROI through configurable dashboards."
-  },
-  {
-    question: "Who is this platform for—students, employers, or institutions?",
-    answer: "All of the above. We serve higher education institutions, employers, workforce boards, and nonprofits. Our platform supports students, jobseekers, early-career professionals, and alumni."
-  },
-  {
-    question: "How can employers use this mentorship platform to retain early talent?",
-    answer: "Employers embed mentorship into internships, onboarding, and development programs to improve conversion and reduce early attrition. Some partners have seen a 42% increase in intern-to-full-time conversion."
-  },
-  {
-    question: "How does Mentor Collective support first-generation and underrepresented students?",
-    answer: "We use identity-aligned matching and scalable tools to ensure equitable access to social capital. Mentorship helps close opportunity gaps and build confidence for learners navigating systemic barriers."
-  },
-  {
-    question: "Does this platform support mentorship across alumni networks or workforce pipelines?",
-    answer: "Yes. Many partners use Mentor Collective to activate alumni, connect learners to industry professionals, and power regional talent pathways."
-  },
-  {
-    question: "What does onboarding look like for mentors and mentees?",
-    answer: "Participants receive intuitive, research-backed training. Onboarding is self-guided and mobile-friendly, making it easy to get started. Our platform handles recruitment nudges, surveys, and reminders."
-  },
-  {
-    question: "How does AI help with mentor matching and engagement?",
-    answer: "Our proprietary algorithm uses 80+ variables to optimize matches based on goals, identity, and experience. AI also drives engagement through Sparks—personalized prompts that sustain conversation and deepen relationships."
-  },
-  {
-    question: "What are Conversation Sparks™ and how do they work?",
-    answer: "Conversation Sparks are AI-guided prompts tailored to each match. They remove the #1 barrier to mentorship—not knowing what to say—and help relationships thrive. Prompts evolve over time based on engagement data."
-  },
-  {
-    question: "What kind of support does Mentor Collective offer for program admins?",
-    answer: "We provide full-service support, from implementation to launch to continuous improvement. Our team helps customize programs, configure reports, and maximize impact without adding staff burden."
-  },
-  {
-    question: "What kind of organizations partner with Mentor Collective?",
-    answer: "We work with 200+ partners across higher education, regional networks, nonprofits, and employers. Our platform supports everything from campus-wide initiatives to statewide workforce programs."
-  },
-  {
-    question: "How secure is the platform and how is data handled?",
-    answer: "Security is a top priority. We support encrypted data feeds, secure integrations, and rigorous privacy protocols to protect participant information and institutional data."
-  },
-  {
-    question: "What are some examples of successful mentorship programs using this system?",
-    answer: "At UW-Green Bay, first-generation students in our program saw a 30.6% increase in career decision confidence and a 90% re-enrollment rate. Princeton's graduate program achieved 99% employment within a year for mentees in mentorship and experiential learning programs."
-  }
 ];
 
 const styles: Record<string, React.CSSProperties> = {
@@ -151,7 +125,15 @@ const styles: Record<string, React.CSSProperties> = {
   },
 };
 
-export function Component() {
+export function Component({ fieldValues }: any) {
+  // Use custom FAQs if provided, otherwise fall back to defaults
+  const customFaqs = fieldValues.faqs || [];
+  const faqData = customFaqs.length > 0
+    ? customFaqs.map((faq: any) => ({
+        question: faq.question || 'Question?',
+        answer: faq.answer || 'Answer goes here.',
+      }))
+    : defaultFaqData;
   return (
     <>
       <script dangerouslySetInnerHTML={{__html: `
@@ -259,11 +241,33 @@ export function Component() {
   );
 }
 
-export const fields = (
-  <ModuleFields>
-    {/* FAQ content is built into the component */}
-  </ModuleFields>
-);
+export const fields: any = [
+  {
+    type: 'group',
+    name: 'faqs',
+    label: 'FAQ Items',
+    help_text: 'Add FAQ questions and answers. Leave empty to use defaults.',
+    occurrence: {
+      min: 0,
+      max: 50,
+      default: 0,
+    },
+    children: [
+      {
+        type: 'text',
+        name: 'question',
+        label: 'Question',
+        default: 'What is your question?',
+      },
+      {
+        type: 'text',
+        name: 'answer',
+        label: 'Answer',
+        default: 'The answer to the question goes here.',
+      },
+    ],
+  },
+];
 
 export const meta = {
   label: 'FAQ Page Content',
