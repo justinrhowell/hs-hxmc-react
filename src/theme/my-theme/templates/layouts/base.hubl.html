@@ -105,6 +105,11 @@
   </head>
   <body>
     <div class="body-wrapper {{ builtin_body_classes }}">
+      {# Global Navigation #}
+      {% module "global_navigation"
+        path="../../components/modules/Navigation"
+      %}
+
       {% block body %}
       {% endblock body %}
     </div>

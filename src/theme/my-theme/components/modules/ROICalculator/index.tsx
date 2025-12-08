@@ -34,10 +34,8 @@ export function Component({ fieldValues }: any) {
             // Toggle elements
             const heToggle = document.getElementById('roi-toggle-he');
             const corpToggle = document.getElementById('roi-toggle-corp');
-            const emToggle = document.getElementById('roi-toggle-em');
             const heCalculator = document.getElementById('roi-calculator-he');
             const corpCalculator = document.getElementById('roi-calculator-corp');
-            const emCalculator = document.getElementById('roi-calculator-em');
 
             // HE inputs
             const studentsServedInput = document.getElementById('students-served');
@@ -52,28 +50,15 @@ export function Component({ fieldValues }: any) {
             const revenueSavingsHEElement = document.getElementById('revenue-savings-value-he');
             const totalROIHEElement = document.getElementById('total-roi-value-he');
 
-            // Corp inputs
-            const employeesServedInput = document.getElementById('employees-served');
-            const hourlyRateCorpInput = document.getElementById('hourly-rate-corp');
-            const totalEmployeesInput = document.getElementById('total-employees');
-            const revenuePerEmployeeInput = document.getElementById('revenue-per-employee');
-            const turnoverRateInput = document.getElementById('turnover-rate');
-            const retentionIncreaseCorpInput = document.getElementById('retention-increase-corp');
+            // Corp inputs (using the Emerging Market calculator formula)
+            const corpEmployeesInput = document.getElementById('corp-employees');
+            const corpTurnoverRateInput = document.getElementById('corp-turnover-rate');
+            const corpAvgSalaryInput = document.getElementById('corp-avg-salary');
+            const corpMentorshipIncreaseInput = document.getElementById('corp-mentorship-increase');
 
             // Corp outputs
-            const staffSavingsCorpElement = document.getElementById('staff-savings-value-corp');
-            const revenueSavingsCorpElement = document.getElementById('revenue-savings-value-corp');
-            const totalROICorpElement = document.getElementById('total-roi-value-corp');
-
-            // Emerging Market inputs
-            const emEmployeesInput = document.getElementById('em-employees');
-            const emTurnoverRateInput = document.getElementById('em-turnover-rate');
-            const emAvgSalaryInput = document.getElementById('em-avg-salary');
-            const emMentorshipIncreaseInput = document.getElementById('em-mentorship-increase');
-
-            // Emerging Market outputs
-            const emTurnoverCostElement = document.getElementById('em-turnover-cost-value');
-            const emSavingsElement = document.getElementById('em-savings-value');
+            const corpTurnoverCostElement = document.getElementById('corp-turnover-cost-value');
+            const corpSavingsElement = document.getElementById('corp-savings-value');
 
             function formatCurrency(value) {
               return new Intl.NumberFormat('en-US', {
@@ -97,14 +82,10 @@ export function Component({ fieldValues }: any) {
               if (corpToggle) {
                 corpToggle.classList.remove('active');
               }
-              if (emToggle) {
-                emToggle.classList.remove('active');
-              }
 
               // Hide all calculators
               if (heCalculator) heCalculator.style.display = 'none';
               if (corpCalculator) corpCalculator.style.display = 'none';
-              if (emCalculator) emCalculator.style.display = 'none';
 
               // Show selected
               if (mode === 'he') {
@@ -113,9 +94,6 @@ export function Component({ fieldValues }: any) {
               } else if (mode === 'corp') {
                 if (corpToggle) corpToggle.classList.add('active');
                 if (corpCalculator) corpCalculator.style.display = 'block';
-              } else if (mode === 'em') {
-                if (emToggle) emToggle.classList.add('active');
-                if (emCalculator) emCalculator.style.display = 'block';
               }
             }
 
@@ -124,9 +102,6 @@ export function Component({ fieldValues }: any) {
             }
             if (corpToggle) {
               corpToggle.addEventListener('click', function() { handleToggle('corp'); });
-            }
-            if (emToggle) {
-              emToggle.addEventListener('click', function() { handleToggle('em'); });
             }
 
             // HE Calculator
@@ -154,37 +129,12 @@ export function Component({ fieldValues }: any) {
               if (totalROIHEElement) totalROIHEElement.textContent = formatCurrency(totalROI);
             }
 
-            // Corp Calculator
+            // Corp Calculator (using the Emerging Market formula from sales)
             function calculateCorpROI() {
-              const employeesServed = parseInt((employeesServedInput.value || '').replace(/[^0-9]/g, '')) || 0;
-              const hourlyRate = parseFloat((hourlyRateCorpInput.value || '').replace(/[^0-9.]/g, '')) || 0;
-              const totalEmployees = parseInt((totalEmployeesInput.value || '').replace(/[^0-9]/g, '')) || 0;
-              const revenuePerEmployee = parseInt((revenuePerEmployeeInput.value || '').replace(/[^0-9]/g, '')) || 0;
-              const turnoverRate = parseFloat(turnoverRateInput.value) || 0;
-              const retentionIncrease = parseFloat(retentionIncreaseCorpInput.value) || 0;
-
-              const matchingHours = 12 * employeesServed / 60;
-              const communicatingHours = 58 * 2.5 * employeesServed / 60;
-              const totalHours = matchingHours + communicatingHours;
-              const staffCostSavings = Math.round(hourlyRate * totalHours);
-
-              const lostEmployees = totalEmployees * (turnoverRate / 100);
-              const retainedEmployees = lostEmployees * (retentionIncrease / 100);
-              const revenueSavings = Math.round(retainedEmployees * revenuePerEmployee);
-
-              const totalROI = staffCostSavings + revenueSavings;
-
-              if (staffSavingsCorpElement) staffSavingsCorpElement.textContent = formatCurrency(staffCostSavings);
-              if (revenueSavingsCorpElement) revenueSavingsCorpElement.textContent = formatCurrency(revenueSavings);
-              if (totalROICorpElement) totalROICorpElement.textContent = formatCurrency(totalROI);
-            }
-
-            // Emerging Market Calculator
-            function calculateEMROI() {
-              const employees = parseInt((emEmployeesInput.value || '').replace(/[^0-9]/g, '')) || 0;
-              const turnoverRate = parseFloat(emTurnoverRateInput.value) || 0;
-              const avgSalary = parseInt((emAvgSalaryInput.value || '').replace(/[^0-9]/g, '')) || 0;
-              const mentorshipIncrease = parseFloat(emMentorshipIncreaseInput.value) || 0;
+              const employees = parseInt((corpEmployeesInput.value || '').replace(/[^0-9]/g, '')) || 0;
+              const turnoverRate = parseFloat(corpTurnoverRateInput.value) || 0;
+              const avgSalary = parseInt((corpAvgSalaryInput.value || '').replace(/[^0-9]/g, '')) || 0;
+              const mentorshipIncrease = parseFloat(corpMentorshipIncreaseInput.value) || 0;
               const costOfTurnover = 0.60; // Fixed at 60%
 
               // Cost of employee turnover = employees × turnover_rate × salary × cost_of_turnover
@@ -193,8 +143,8 @@ export function Component({ fieldValues }: any) {
               // Savings = turnover_cost × mentorship_increase
               const savings = Math.round(turnoverCost * (mentorshipIncrease / 100));
 
-              if (emTurnoverCostElement) emTurnoverCostElement.textContent = formatCurrency(turnoverCost);
-              if (emSavingsElement) emSavingsElement.textContent = formatCurrency(savings);
+              if (corpTurnoverCostElement) corpTurnoverCostElement.textContent = formatCurrency(turnoverCost);
+              if (corpSavingsElement) corpSavingsElement.textContent = formatCurrency(savings);
             }
 
             function handleNumberInput(e, calcFn) {
@@ -230,23 +180,14 @@ export function Component({ fieldValues }: any) {
             if (retentionIncreaseHEInput) retentionIncreaseHEInput.addEventListener('input', calculateHEROI);
 
             // Corp event listeners
-            if (employeesServedInput) employeesServedInput.addEventListener('input', function(e) { handleNumberInput(e, calculateCorpROI); });
-            if (hourlyRateCorpInput) hourlyRateCorpInput.addEventListener('input', function(e) { handleDecimalInput(e, calculateCorpROI); });
-            if (totalEmployeesInput) totalEmployeesInput.addEventListener('input', function(e) { handleNumberInput(e, calculateCorpROI); });
-            if (revenuePerEmployeeInput) revenuePerEmployeeInput.addEventListener('input', function(e) { handleCurrencyInput(e, calculateCorpROI); });
-            if (turnoverRateInput) turnoverRateInput.addEventListener('input', calculateCorpROI);
-            if (retentionIncreaseCorpInput) retentionIncreaseCorpInput.addEventListener('input', calculateCorpROI);
-
-            // Emerging Market event listeners
-            if (emEmployeesInput) emEmployeesInput.addEventListener('input', function(e) { handleNumberInput(e, calculateEMROI); });
-            if (emTurnoverRateInput) emTurnoverRateInput.addEventListener('input', calculateEMROI);
-            if (emAvgSalaryInput) emAvgSalaryInput.addEventListener('input', function(e) { handleCurrencyInput(e, calculateEMROI); });
-            if (emMentorshipIncreaseInput) emMentorshipIncreaseInput.addEventListener('input', calculateEMROI);
+            if (corpEmployeesInput) corpEmployeesInput.addEventListener('input', function(e) { handleNumberInput(e, calculateCorpROI); });
+            if (corpTurnoverRateInput) corpTurnoverRateInput.addEventListener('input', calculateCorpROI);
+            if (corpAvgSalaryInput) corpAvgSalaryInput.addEventListener('input', function(e) { handleCurrencyInput(e, calculateCorpROI); });
+            if (corpMentorshipIncreaseInput) corpMentorshipIncreaseInput.addEventListener('input', calculateCorpROI);
 
             // Initial calculations
             calculateHEROI();
             calculateCorpROI();
-            calculateEMROI();
           }
 
           if (document.readyState === 'loading') {
@@ -276,10 +217,6 @@ export function Component({ fieldValues }: any) {
         }
         .roi-toggle-btn:first-child {
           border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-          border-right: none;
-        }
-        .roi-toggle-btn:nth-child(2) {
-          border-radius: 0;
           border-right: none;
         }
         .roi-toggle-btn:last-child {
@@ -312,19 +249,11 @@ export function Component({ fieldValues }: any) {
             min-width: 120px;
           }
           .roi-toggle-btn:first-child {
-            border-radius: var(--radius-sm) 0 0 0;
+            border-radius: var(--radius-sm) 0 0 var(--radius-sm);
             border-right: none;
-            border-bottom: none;
-          }
-          .roi-toggle-btn:nth-child(2) {
-            border-radius: 0 var(--radius-sm) 0 0;
-            border-right: 1px solid var(--text-muted);
-            border-bottom: none;
           }
           .roi-toggle-btn:last-child {
-            border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-            flex-basis: 100%;
-            border-top: 1px solid var(--text-muted);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
           }
         }
       `}} />
@@ -375,13 +304,10 @@ export function Component({ fieldValues }: any) {
             {/* Toggle Buttons */}
             <div className="roi-toggle-container">
               <button id="roi-toggle-he" className="roi-toggle-btn active" type="button">
-                Higher Education
+                Higher Ed
               </button>
               <button id="roi-toggle-corp" className="roi-toggle-btn" type="button">
                 Corporate
-              </button>
-              <button id="roi-toggle-em" className="roi-toggle-btn" type="button">
-                Emerging Market
               </button>
             </div>
 
@@ -475,105 +401,24 @@ export function Component({ fieldValues }: any) {
                 marginBottom: 'var(--spacing-lg)'
               }} className="roi-inputs-grid">
                 <div>
-                  <label htmlFor="employees-served" style={labelStyle}>
-                    Employees Served
-                  </label>
-                  <input id="employees-served" type="text" defaultValue="1,000" placeholder="Enter Number" style={inputStyle} />
-                </div>
-
-                <div>
-                  <label htmlFor="hourly-rate-corp" style={labelStyle}>
-                    Staff Hourly Rate
-                  </label>
-                  <input id="hourly-rate-corp" type="text" defaultValue="$35.00" placeholder="Enter Amount" style={inputStyle} />
-                </div>
-
-                <div>
-                  <label htmlFor="total-employees" style={labelStyle}>
-                    Total Employee Population
-                  </label>
-                  <input id="total-employees" type="text" defaultValue="5,000" placeholder="Enter Number" style={inputStyle} />
-                </div>
-
-                <div>
-                  <label htmlFor="revenue-per-employee" style={labelStyle}>
-                    Revenue Per Employee
-                  </label>
-                  <input id="revenue-per-employee" type="text" defaultValue="$75,000" placeholder="Enter Amount" style={inputStyle} />
-                </div>
-
-                <div>
-                  <label htmlFor="turnover-rate" style={labelStyle}>
-                    Turnover Rate (%)
-                  </label>
-                  <input id="turnover-rate" type="number" defaultValue="18" placeholder="%" min="0" max="100" step="0.1" style={inputStyle} />
-                </div>
-
-                <div>
-                  <label htmlFor="retention-increase-corp" style={labelStyle}>
-                    Retention Improvement (%)
-                  </label>
-                  <input id="retention-increase-corp" type="number" defaultValue="5" placeholder="%" min="0" max="100" step="0.1" style={inputStyle} />
-                </div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--spacing-sm)', marginBottom: 'var(--spacing-md)' }}>
-                <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', background: 'var(--bg-cream)', borderRadius: 'var(--radius-md)', border: '1px solid var(--text-muted)' }}>
-                  <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
-                    Staff Savings
-                  </div>
-                  <div id="staff-savings-value-corp" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
-                    $37,917
-                  </div>
-                </div>
-
-                <div style={{ padding: 'var(--spacing-sm) var(--spacing-md)', background: 'var(--bg-cream)', borderRadius: 'var(--radius-md)', border: '1px solid var(--text-muted)' }}>
-                  <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
-                    Revenue Retained
-                  </div>
-                  <div id="revenue-savings-value-corp" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
-                    $3,375,000
-                  </div>
-                </div>
-              </div>
-
-              <div style={{ padding: 'var(--spacing-md) var(--spacing-lg)', background: 'var(--primary-navy)', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
-                <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'rgba(255,255,255,0.7)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
-                  Total Annual ROI
-                </div>
-                <div id="total-roi-value-corp" style={{ fontSize: 'var(--font-size-h3)', fontWeight: 800, color: 'var(--text-white)', lineHeight: 1 }}>
-                  $3,412,917
-                </div>
-              </div>
-            </div>
-
-            {/* Emerging Market Calculator */}
-            <div id="roi-calculator-em" style={{ display: 'none' }}>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: 'var(--spacing-md)',
-                marginBottom: 'var(--spacing-lg)'
-              }} className="roi-inputs-grid">
-                <div>
-                  <label htmlFor="em-employees" style={labelStyle}>
+                  <label htmlFor="corp-employees" style={labelStyle}>
                     How Many Employees
                   </label>
-                  <input id="em-employees" type="text" defaultValue="100" placeholder="Enter Number" style={inputStyle} />
+                  <input id="corp-employees" type="text" defaultValue="100" placeholder="Enter Number" style={inputStyle} />
                 </div>
 
                 <div>
-                  <label htmlFor="em-turnover-rate" style={labelStyle}>
+                  <label htmlFor="corp-turnover-rate" style={labelStyle}>
                     Average Turnover Rate (%)
                   </label>
-                  <input id="em-turnover-rate" type="number" defaultValue="10" placeholder="%" min="0" max="100" step="0.1" style={inputStyle} />
+                  <input id="corp-turnover-rate" type="number" defaultValue="10" placeholder="%" min="0" max="100" step="0.1" style={inputStyle} />
                 </div>
 
                 <div>
-                  <label htmlFor="em-avg-salary" style={labelStyle}>
+                  <label htmlFor="corp-avg-salary" style={labelStyle}>
                     Average Salary
                   </label>
-                  <input id="em-avg-salary" type="text" defaultValue="$50,000" placeholder="Enter Amount" style={inputStyle} />
+                  <input id="corp-avg-salary" type="text" defaultValue="$50,000" placeholder="Enter Amount" style={inputStyle} />
                 </div>
 
                 <div>
@@ -591,10 +436,10 @@ export function Component({ fieldValues }: any) {
                 </div>
 
                 <div style={{ gridColumn: '1 / -1' }}>
-                  <label htmlFor="em-mentorship-increase" style={labelStyle}>
+                  <label htmlFor="corp-mentorship-increase" style={labelStyle}>
                     Estimated Mentorship Retention Increase (%)
                   </label>
-                  <input id="em-mentorship-increase" type="number" defaultValue="30" placeholder="%" min="0" max="100" step="0.1" style={inputStyle} />
+                  <input id="corp-mentorship-increase" type="number" defaultValue="30" placeholder="%" min="0" max="100" step="0.1" style={inputStyle} />
                 </div>
               </div>
 
@@ -603,7 +448,7 @@ export function Component({ fieldValues }: any) {
                   <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Cost of Employee Turnover
                   </div>
-                  <div id="em-turnover-cost-value" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
+                  <div id="corp-turnover-cost-value" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
                     $300,000
                   </div>
                 </div>
@@ -612,7 +457,7 @@ export function Component({ fieldValues }: any) {
                   <div style={{ fontSize: 'var(--font-size-xs)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase', letterSpacing: 'var(--letter-spacing-wide)' }}>
                     Savings with Mentor Collective
                   </div>
-                  <div id="em-savings-value" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
+                  <div id="corp-savings-value" style={{ fontSize: 'var(--font-size-h4)', fontWeight: 700, color: 'var(--primary-navy)' }}>
                     $90,000
                   </div>
                 </div>

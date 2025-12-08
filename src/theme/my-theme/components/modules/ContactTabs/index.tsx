@@ -197,21 +197,21 @@ export function Component({ fieldValues }: any) {
                   panels[index].classList.add('active');
                 }
 
-                // Load partner form when tab is clicked (lazy load)
-                if (index === 1 && !formsLoaded.partner && partnerFormId) {
+                // Load mentee/mentor form when tab is clicked (lazy load)
+                if (index === 1 && !formsLoaded.mentee && menteeMentorFormId) {
                   loadHubSpotScript(function() {
-                    createForm('partner-form-container', partnerFormId, { sfdcCampaignId: sfdcCampaignId });
-                    formsLoaded.partner = true;
+                    createForm('mentee-mentor-form-container', menteeMentorFormId);
+                    formsLoaded.mentee = true;
                   });
                 }
               });
             });
 
-            // Load the first form immediately
-            if (menteeMentorFormId && !formsLoaded.mentee) {
+            // Load the Partner form immediately (first tab)
+            if (partnerFormId && !formsLoaded.partner) {
               loadHubSpotScript(function() {
-                createForm('mentee-mentor-form-container', menteeMentorFormId);
-                formsLoaded.mentee = true;
+                createForm('partner-form-container', partnerFormId, { sfdcCampaignId: sfdcCampaignId });
+                formsLoaded.partner = true;
               });
             }
           }
@@ -229,26 +229,26 @@ export function Component({ fieldValues }: any) {
           {/* Tab Navigation */}
           <nav className="contact-tabs-nav">
             <button className="contact-tab-button active" type="button">
-              Mentors & Mentees
+              Partner With Mentor Collective
             </button>
             <button className="contact-tab-button" type="button">
-              Partner With Mentor Collective
+              Mentors & Mentees
             </button>
           </nav>
 
-          {/* Form Panel 1: Mentors & Mentees */}
-          <div className="contact-form-panel active" id="mentee-mentor-panel">
+          {/* Form Panel 1: Partner (default) */}
+          <div className="contact-form-panel active" id="partner-panel">
             <div className="contact-form-card">
-              <div id="mentee-mentor-form-container" className="hs-form-container">
+              <div id="partner-form-container" className="hs-form-container">
                 {/* HubSpot form will be loaded here via JavaScript */}
               </div>
             </div>
           </div>
 
-          {/* Form Panel 2: Partner */}
-          <div className="contact-form-panel" id="partner-panel">
+          {/* Form Panel 2: Mentors & Mentees */}
+          <div className="contact-form-panel" id="mentee-mentor-panel">
             <div className="contact-form-card">
-              <div id="partner-form-container" className="hs-form-container">
+              <div id="mentee-mentor-form-container" className="hs-form-container">
                 {/* HubSpot form will be loaded here via JavaScript */}
               </div>
             </div>

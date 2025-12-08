@@ -75,8 +75,8 @@ export function Component({ fieldValues }: any) {
           {/* Left Column - Visual Elements */}
           <div className="scroll-animate" data-delay="200">
             <img
-              src={smartMatchingSvg}
-              alt="Smart Matching illustration showing AI-powered mentor matching"
+              src={fieldValues.custom_image?.src || smartMatchingSvg}
+              alt={fieldValues.custom_image?.alt || "Smart Matching illustration showing AI-powered mentor matching"}
               style={{
                 width: '100%',
                 height: 'auto',
@@ -180,6 +180,11 @@ export function Component({ fieldValues }: any) {
 }
 
 export const fields: any = [
+  {
+    type: 'image',
+    name: 'custom_image',
+    label: 'Section Image (upload custom image)',
+  },
   {
     type: 'text',
     name: 'section_title',

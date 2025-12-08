@@ -45,7 +45,7 @@ export function Component({ fieldValues }: any) {
           minHeight: '65vh',
           display: 'flex',
           alignItems: 'center',
-          padding: 'var(--spacing-3xl) var(--spacing-lg)',
+          padding: 'var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl)',
           background: 'var(--gradient-hero)',
           backgroundImage: 'var(--pattern-dots)',
           backgroundSize: 'var(--pattern-dots-size)',

@@ -181,8 +181,8 @@ export function Component({ fieldValues }: any) {
           {/* Right Column - Visual + Stat Card */}
           <div className="platform-right-col scroll-animate" data-delay="200" style={{ textAlign: 'center' }}>
             <img
-              src={integrationsSvg}
-              alt="Integrations illustration showing connected systems and workflows"
+              src={fieldValues.custom_image?.src || integrationsSvg}
+              alt={fieldValues.custom_image?.alt || "Integrations illustration showing connected systems and workflows"}
               style={{
                 width: '100%',
                 height: 'auto',
@@ -274,6 +274,11 @@ export function Component({ fieldValues }: any) {
 }
 
 export const fields: any = [
+  {
+    type: 'image',
+    name: 'custom_image',
+    label: 'Section Image (upload custom image)',
+  },
   {
     type: 'text',
     name: 'section_title',

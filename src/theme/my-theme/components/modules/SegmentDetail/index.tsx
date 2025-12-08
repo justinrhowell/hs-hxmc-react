@@ -313,8 +313,8 @@ export function Component({ fieldValues }: any) {
           >
             <div className="scroll-animate" data-delay="200">
               <img
-                src={imageMap[selectedImage] || integrationsSvg}
-                alt={`${heading} illustration`}
+                src={fieldValues.custom_image?.src || imageMap[selectedImage] || integrationsSvg}
+                alt={fieldValues.custom_image?.alt || `${heading} illustration`}
                 style={{
                   width: '100%',
                   height: 'auto',
@@ -428,9 +428,14 @@ export const fields: any = [
     default: 'right',
   },
   {
+    type: 'image',
+    name: 'custom_image',
+    label: 'Custom Image (upload your own)',
+  },
+  {
     type: 'choice',
     name: 'image',
-    label: 'Illustration',
+    label: 'Illustration (fallback if no custom image)',
     choices: [
       ['integrations', 'Integrations'],
       ['smart-matching', 'Smart Matching'],

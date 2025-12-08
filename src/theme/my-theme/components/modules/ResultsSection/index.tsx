@@ -1,10 +1,6 @@
 import React from 'react';
-import girlMicroscopeImg from '../../../assets/girl-looking-into-microscope.png';
-import scienceGirlImg from '../../../assets/science-girl.jpg';
-import blueArrows from '../../../assets/blue-arrows.svg';
-import yellowStar from '../../../assets/yellow-star.svg';
-import fourLeafSvg from '../../../assets/four-leaf-graphic.svg';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
+import sceneAnimationData from '../../../assets/Scene-1.json';
 
 interface Stat {
   number: string;
@@ -29,6 +25,9 @@ export function Component({ fieldValues }: any) {
       }))
     : defaultStats;
 
+  // Create a data URL for the Lottie animation
+  const lottieJsonString = JSON.stringify(sceneAnimationData);
+
   return (
     <>
     <style>{`
@@ -36,50 +35,79 @@ export function Component({ fieldValues }: any) {
         .results-content {
           grid-template-columns: 1fr !important;
         }
-        .results-images {
-          height: 420px !important;
-          max-width: 480px !important;
+        .results-lottie-container {
+          max-width: 500px !important;
           margin: 0 auto var(--spacing-xl) !important;
-        }
-        .results-images .photo-back {
-          width: 320px !important;
-          height: 230px !important;
-          left: 40px !important;
-        }
-        .results-images .photo-front {
-          width: 300px !important;
-          height: 240px !important;
-          top: 170px !important;
-          left: 100px !important;
         }
       }
       @media (max-width: 480px) {
-        .results-images {
-          height: 340px !important;
-        }
-        .results-images .photo-back {
-          width: 250px !important;
-          height: 180px !important;
-          left: 20px !important;
-        }
-        .results-images .photo-front {
-          width: 230px !important;
-          height: 190px !important;
-          top: 135px !important;
-          left: 70px !important;
-        }
-        .results-images .decor-arrows {
-          width: 80px !important;
-        }
-        .results-images .decor-star {
-          width: 40px !important;
-        }
-        .results-images .decor-leaf {
-          width: 60px !important;
+        .results-lottie-container {
+          max-width: 100% !important;
         }
       }
     `}</style>
     <ScrollAnimationScript />
+
+    {/* Lottie player script and initialization */}
+    <script dangerouslySetInnerHTML={{__html: `
+      (function() {
+        // Load lottie-player if not already loaded
+        if (!document.querySelector('script[src*="lottie-player"]')) {
+          var script = document.createElement('script');
+          script.src = 'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js';
+          script.onload = function() {
+            setTimeout(initResultsLottie, 300);
+          };
+          document.head.appendChild(script);
+        } else {
+          setTimeout(initResultsLottie, 300);
+        }
+
+        function initResultsLottie() {
+          var player = document.getElementById('results-lottie-player');
+          var dataEl = document.getElementById('results-lottie-data');
+          var lottieContainer = document.getElementById('results-lottie-container');
+
+          if (!player || !dataEl || !lottieContainer) {
+            setTimeout(initResultsLottie, 200);
+            return;
+          }
+
+          // Parse and load the animation data
+          try {
+            var animationData = JSON.parse(dataEl.textContent);
+            player.load(animationData);
+            player.stop(); // Start stopped, will play on scroll
+          } catch (e) {
+            console.error('Failed to load Lottie animation:', e);
+            return;
+          }
+
+          // Set up intersection observer for scroll-triggered playback
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                player.play();
+              } else {
+                player.stop();
+              }
+            });
+          }, { threshold: 0.3 });
+
+          observer.observe(lottieContainer);
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initResultsLottie, 500);
+          });
+        } else {
+          setTimeout(initResultsLottie, 500);
+        }
+      })();
+    `}} />
+
     <section
       style={{
         padding: 'var(--section-padding-lg) var(--spacing-lg)',
@@ -93,104 +121,27 @@ export function Component({ fieldValues }: any) {
     >
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto', padding: '0 var(--spacing-lg)', position: 'relative', zIndex: 'var(--z-base)' }}>
         <div className="results-content scroll-animate" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-3xl)', alignItems: 'center' }}>
+          {/* Lottie Animation Container */}
           <div
-            className="results-images"
+            id="results-lottie-container"
+            className="results-lottie-container"
             style={{
-              position: 'relative',
-              height: '560px',
               width: '100%',
-              paddingLeft: 'var(--spacing-xl)',
-              paddingTop: 'var(--spacing-lg)',
             }}
           >
-            {/* Blue arrows - top left */}
-            <img
-              src={blueArrows}
-              alt=""
-              aria-hidden="true"
-              className="decor-arrows"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '120px',
-                height: 'auto',
-                zIndex: 1,
-              }}
+            <div
+              id="results-lottie-data"
+              style={{ display: 'none' }}
+              dangerouslySetInnerHTML={{ __html: lottieJsonString }}
             />
-
-            {/* Photo 1 - Girl with microscope - BACK/TOP */}
-            <img
-              src={girlMicroscopeImg}
-              alt="Mentorship in action - student using microscope"
-              loading="lazy"
-              className="photo-back"
-              style={{
-                position: 'absolute',
-                top: 'var(--spacing-lg)',
-                left: 'var(--spacing-2xl)',
-                width: '400px',
-                height: '280px',
-                objectFit: 'cover',
-                borderRadius: 'var(--radius-xl)',
-                boxShadow: 'var(--shadow-lg)',
-                zIndex: 2,
-                transform: 'rotate(-3deg)',
-              }}
-            />
-
-            {/* Photo 2 - Science girl - FRONT/BOTTOM - overlapping */}
-            <img
-              src={scienceGirlImg}
-              alt="Student in science program"
-              loading="lazy"
-              className="photo-front"
-              style={{
-                position: 'absolute',
-                top: '220px',
-                left: '120px',
-                width: '380px',
-                height: '300px',
-                objectFit: 'cover',
-                borderRadius: 'var(--radius-xl)',
-                boxShadow: 'var(--shadow-xl)',
-                zIndex: 3,
-                transform: 'rotate(2deg)',
-              }}
-            />
-
-            {/* Four-leaf graphic - bottom left */}
-            <img
-              src={fourLeafSvg}
-              alt=""
-              aria-hidden="true"
-              className="decor-leaf"
-              style={{
-                position: 'absolute',
-                bottom: 'var(--spacing-md)',
-                left: 'var(--spacing-md)',
-                width: '90px',
-                height: 'auto',
-                zIndex: 4,
-              }}
-            />
-
-            {/* Yellow star - top right area */}
-            <img
-              src={yellowStar}
-              alt=""
-              aria-hidden="true"
-              className="decor-star"
-              style={{
-                position: 'absolute',
-                top: 'var(--spacing-xs)',
-                right: 'var(--spacing-2xl)',
-                width: '60px',
-                height: 'auto',
-                zIndex: 4,
-              }}
-            />
+            <lottie-player
+              id="results-lottie-player"
+              background="transparent"
+              speed="1"
+              style={{ width: '100%', height: 'auto' }}
+            ></lottie-player>
           </div>
+
           <div>
             <h2
               id="results-heading"

@@ -34,18 +34,6 @@ export function Component({ fieldValues }: any) {
             pointerEvents: 'none',
           }} />
 
-          {/* Decorative accent */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '200px',
-            height: '4px',
-            background: 'var(--gradient-coral)',
-            borderRadius: '0 0 4px 4px',
-          }} />
-
           <div style={{ position: 'relative', zIndex: 1 }}>
             <h2 style={{
               fontSize: 'var(--font-size-h3)',

@@ -57,6 +57,16 @@ export function Component({ fieldValues }: any) {
       }))
     : [
         {
+          title: 'Talent Acquisition',
+          heading: 'Mentorship Made Maya Job-Ready',
+          description: 'Embed mentorship into internships, apprenticeships, and project-based learning to grow your own talent pipeline.\n\nMaya, a recent college graduate, did everything right—good grades and a polished résumé. Yet after 100+ applications she had no offers, saying, "I don\'t think I\'ll ever ever get a job." Her new mentorship relationship provided the clear path and crucial social network she needed, transforming her despair into confident success.',
+          subtitle: 'Connection is the Missing Link',
+          stats: 'Mentees see a 21% increase in comfort asking for help from established professionals and an 18% boost in self-efficacy. Intern-to-full-time conversion rates increase by 42%.',
+          cta: 'Explore more stories →',
+          ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
+          image: storiesTalentImg
+        },
+        {
           title: 'College Success Ready',
           heading: 'Toccara - College Career Success',
           description: 'Build confidence and belonging early. Use mentorship to bridge the gap from high school to college and ensure every learner persists.\n\nToccara\'s college dream quickly turned into a nightmare as she became profoundly homesick after moving cross-country. Six months in, feeling isolated and ready to transfer back home, a friend mentioned she should join the mentorship program for first-years. Matched with a relatable peer mentor who understood her struggles, Toccara received guidance on the myriad of campus resources available and clubs that matched her interests. The simple act of peer support transformed isolation into belonging, ultimately leading Toccara to graduate four years later.',
@@ -75,16 +85,6 @@ export function Component({ fieldValues }: any) {
           cta: 'Explore more stories →',
           ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
           image: storiesCollegeImg
-        },
-        {
-          title: 'Talent Acquisition',
-          heading: 'Mentorship Made Maya Job-Ready',
-          description: 'Embed mentorship into internships, apprenticeships, and project-based learning to grow your own talent pipeline.\n\nMaya, a recent college graduate, did everything right—good grades and a polished résumé. Yet after 100+ applications she had no offers, saying, "I don\'t think I\'ll ever ever get a job." Her new mentorship relationship provided the clear path and crucial social network she needed, transforming her despair into confident success.',
-          subtitle: 'Connection is the Missing Link',
-          stats: 'Mentees see a 21% increase in comfort asking for help from established professionals and an 18% boost in self-efficacy. Intern-to-full-time conversion rates increase by 42%.',
-          cta: 'Explore more stories →',
-          ctaUrl: 'https://www.mentorcollective.org/blog/the-fragmented-dream-and-the-spark-we-need-why-mentorship-is-the-essential-infrastructure',
-          image: storiesTalentImg
         },
         {
           title: 'Professional Development',

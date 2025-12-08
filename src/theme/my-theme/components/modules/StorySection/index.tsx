@@ -108,8 +108,8 @@ export function Component({ fieldValues }: any) {
             }}
           >
             <img
-              src={mentorProfilesSvg}
-              alt="Mentor profiles illustration showing mentor-mentee connections"
+              src={fieldValues.custom_image?.src || mentorProfilesSvg}
+              alt={fieldValues.custom_image?.alt || "Mentor profiles illustration showing mentor-mentee connections"}
               style={{
                 width: '100%',
                 height: 'auto',
@@ -169,6 +169,11 @@ export const fields: any = [
     name: 'title',
     label: 'Story Title',
     default: "Confidence Sparked Noah's Future",
+  },
+  {
+    type: 'image',
+    name: 'custom_image',
+    label: 'Story Image (upload custom image)',
   },
   {
     type: 'richtext',

@@ -70,8 +70,8 @@ export function Component({ fieldValues }: any) {
             }}
           >
             <img
-              src={integrationsSvg}
-              alt="Network integrations illustration showing data insights and mentor connections"
+              src={fieldValues.custom_image?.src || integrationsSvg}
+              alt={fieldValues.custom_image?.alt || "Network integrations illustration showing data insights and mentor connections"}
               style={{
                 width: '100%',
                 height: 'auto',
@@ -185,6 +185,11 @@ export function Component({ fieldValues }: any) {
 }
 
 export const fields: any = [
+  {
+    type: 'image',
+    name: 'custom_image',
+    label: 'Section Image (upload custom image)',
+  },
   {
     type: 'text',
     name: 'heading',

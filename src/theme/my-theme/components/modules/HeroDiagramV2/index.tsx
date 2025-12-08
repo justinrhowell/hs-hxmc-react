@@ -97,7 +97,7 @@ export function Component({ fieldValues }: any) {
       name: 'Toccara Richards',
       role: 'First Year Student',
       image: heroToccara,
-      bio: 'Mentorship improved her sense of belonging.',
+      bio: 'Mentorship improved sense of belonging.',
       expertise: ['Campus Resources', 'Peer Support', 'Persistence'],
       stats: [
         { label: 'Belonging', value: '+19%' },
@@ -110,7 +110,7 @@ export function Component({ fieldValues }: any) {
       name: 'Sara Chen',
       role: 'Award Winning Researcher',
       image: heroSara,
-      bio: 'Mentorship developed human skills in AI Era.',
+      bio: 'Mentorship developed human skills in the AI Era.',
       expertise: ['AI Research', 'Human Skills', 'Leadership'],
       stats: [
         { label: 'Retention', value: '+6%' },
@@ -123,7 +123,7 @@ export function Component({ fieldValues }: any) {
       name: 'Nic Hayes',
       role: 'Apprentice to Project Manager',
       image: heroNic,
-      bio: 'Mentorship developed durable skills.',
+      bio: 'Mentorship developed leadership skills.',
       expertise: ['Project Management', 'Durable Skills', 'Career Growth'],
       stats: [
         { label: 'Conversion', value: '+42%' },

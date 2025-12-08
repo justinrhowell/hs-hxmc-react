@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  ModuleFields,
-  TextField,
-  BooleanField,
-  ImageField,
-} from '@hubspot/cms-components/fields';
 import mcLogo from '../../../assets/MentorCollective-Primary-Logo.svg';
-import { DemoModal } from '../../shared/DemoModal';
 
 interface MenuItem {
   label: string;
@@ -14,37 +7,30 @@ interface MenuItem {
   external?: boolean;
 }
 
-const defaultMenuItems: MenuItem[] = [
-  { label: 'Mentorship OS', href: '/product' },
-  { label: 'Network', href: '/network' },
-  { label: 'Resources', href: '/resources' },
-  { label: 'Company', href: '/about' },
+const menuItems: MenuItem[] = [
+  { label: 'Mentorship OS', href: '/product-dev' },
+  { label: 'Network', href: '/network-dev' },
+  { label: 'Resources', href: '/resource-dev' },
+  { label: 'Company', href: '/about-dev' },
   { label: 'Log In', href: 'https://app.mentorcollective.org/sign_in', external: true }
 ];
 
-export function Component({ fieldValues }: any) {
-  // Build menu items from field values or use defaults
-  const menuItems: MenuItem[] = (fieldValues.menu_items && fieldValues.menu_items.length > 0)
-    ? fieldValues.menu_items.map((item: any) => ({
-        label: item.menu_label || 'Menu Item',
-        href: item.href || '#',
-        external: item.external === 'true' || item.external === true,
-      }))
-    : defaultMenuItems;
-
-  const logoSrc = fieldValues.logo?.src || mcLogo;
-  const logoAlt = fieldValues.logo?.alt || 'Mentor Collective';
-  const ctaText = fieldValues.cta_text || 'Request a Demo';
-  const showCta = fieldValues.show_cta !== false;
+export function Component() {
+  const logoSrc = mcLogo;
+  const logoAlt = 'Mentor Collective';
+  const ctaText = 'Request a Demo';
+  const ctaHref = '/demo-dev';
 
   const styles: Record<string, React.CSSProperties> = {
     nav: {
-      position: 'sticky',
+      position: 'fixed',
       top: 0,
+      left: 0,
+      right: 0,
       background: 'var(--bg-glass)',
       backdropFilter: 'blur(20px)',
       boxShadow: 'var(--shadow-sm)',
-      zIndex: 'var(--z-modal)',
+      zIndex: 9999,
       padding: '12px 0',
       transition: 'var(--transition-smooth)',
       overflow: 'visible',
@@ -79,7 +65,7 @@ export function Component({ fieldValues }: any) {
     },
     menuLink: {
       fontFamily: 'var(--font-body)',
-      fontSize: 'var(--font-size-small)',
+      fontSize: 'var(--font-size-base)',
       fontWeight: 500,
       color: 'var(--text-primary)',
       textDecoration: 'none',
@@ -99,6 +85,14 @@ export function Component({ fieldValues }: any) {
   return (
     <>
       <style>{`
+        nav[role="navigation"] {
+          position: fixed !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          z-index: 9999 !important;
+        }
+
         @media (max-width: 768px) {
           .desktop-menu {
             display: none !important;
@@ -143,7 +137,7 @@ export function Component({ fieldValues }: any) {
       `}</style>
       <script dangerouslySetInnerHTML={{__html: `
         (function() {
-          function initMegaMenu() {
+          function initNavigation() {
             let lastScrollY = window.scrollY;
 
             // Scroll effect for navigation
@@ -192,31 +186,12 @@ export function Component({ fieldValues }: any) {
                 }
               };
             }
-
-            // Request demo button
-            const demoBtns = document.querySelectorAll('.demo-request-btn');
-            demoBtns.forEach(btn => {
-              btn.onclick = function() {
-                const modal = document.querySelector('.demo-modal');
-                if (modal) {
-                  modal.style.display = 'flex';
-                }
-                if (mobileMenu && isMobileMenuOpen) {
-                  mobileMenu.style.transform = 'translateX(100%)';
-                  isMobileMenuOpen = false;
-                  if (hamburgerIcon && closeIcon) {
-                    hamburgerIcon.style.display = 'block';
-                    closeIcon.style.display = 'none';
-                  }
-                }
-              };
-            });
           }
 
           if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initMegaMenu);
+            document.addEventListener('DOMContentLoaded', initNavigation);
           } else {
-            setTimeout(initMegaMenu, 100);
+            setTimeout(initNavigation, 100);
           }
         })();
       `}} />
@@ -255,15 +230,13 @@ export function Component({ fieldValues }: any) {
                   </a>
                 </div>
               ))}
-              {showCta && (
-                <button
-                  className="demo-request-btn btn-primary-coral btn-sm"
-                  type="button"
-                  aria-label={ctaText}
-                >
-                  {ctaText}
-                </button>
-              )}
+              <a
+                href={ctaHref}
+                className="btn-primary-coral btn-sm"
+                aria-label={ctaText}
+              >
+                {ctaText}
+              </a>
             </div>
 
             {/* Mobile Hamburger */}
@@ -324,89 +297,25 @@ export function Component({ fieldValues }: any) {
                 {item.label}
               </a>
             ))}
-            {showCta && (
-              <button
-                className="demo-request-btn btn-primary-coral btn-sm"
-                style={{ width: '100%', marginTop: 'var(--spacing-sm)' }}
-                type="button"
-              >
-                {ctaText}
-              </button>
-            )}
+            <a
+              href={ctaHref}
+              className="btn-primary-coral btn-sm"
+              style={{ width: '100%', marginTop: 'var(--spacing-sm)', display: 'block', textAlign: 'center' }}
+            >
+              {ctaText}
+            </a>
           </div>
         </div>
       </nav>
-
-      <DemoModal />
+      {/* Spacer to prevent content from going under fixed nav */}
+      <div style={{ height: '56px' }} className="nav-spacer" />
     </>
   );
 }
 
-export const fields: any = [
-  {
-    type: 'image',
-    name: 'logo',
-    label: 'Logo Image',
-    default: {
-      src: '',
-      alt: 'Mentor Collective',
-    },
-  },
-  {
-    type: 'group',
-    name: 'menu_items',
-    label: 'Menu Items',
-    occurrence: {
-      min: 1,
-      max: 10,
-      default: 5,
-    },
-    default: [
-      { label: 'Mentorship OS', href: '/product', external: 'false' },
-      { label: 'Network', href: '/network', external: 'false' },
-      { label: 'Resources', href: '/resources', external: 'false' },
-      { label: 'Company', href: '/about', external: 'false' },
-      { label: 'Log In', href: 'https://app.mentorcollective.org/sign_in', external: 'true' },
-    ],
-    children: [
-      {
-        type: 'text',
-        name: 'menu_label',
-        label: 'Menu Label',
-        default: 'Menu Item',
-      },
-      {
-        type: 'text',
-        name: 'href',
-        label: 'Link URL',
-        default: '#',
-      },
-      {
-        type: 'choice',
-        name: 'external',
-        label: 'Open in New Tab?',
-        choices: [
-          ['false', 'No'],
-          ['true', 'Yes'],
-        ],
-        default: 'false',
-      },
-    ],
-  },
-  {
-    type: 'boolean',
-    name: 'show_cta',
-    label: 'Show CTA Button',
-    default: true,
-  },
-  {
-    type: 'text',
-    name: 'cta_text',
-    label: 'CTA Button Text',
-    default: 'Request a Demo',
-  },
-];
+// Empty fields - navigation is global with hardcoded values
+export const fields: any = [];
 
 export const meta = {
-  label: 'Navigation',
+  label: 'Navigation (Global)',
 };

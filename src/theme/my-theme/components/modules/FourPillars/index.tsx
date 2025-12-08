@@ -200,8 +200,8 @@ export function Component({ fieldValues }: any) {
           >
             <div className="scroll-animate" data-delay="200">
               <img
-                src={mentorProfilesSvg}
-                alt="Mentor profiles illustration showing diverse mentors and mentees connected through the platform"
+                src={fieldValues.custom_image?.src || mentorProfilesSvg}
+                alt={fieldValues.custom_image?.alt || "Mentor profiles illustration showing diverse mentors and mentees connected through the platform"}
                 style={{
                   width: '100%',
                   height: 'auto',
@@ -261,6 +261,11 @@ export function Component({ fieldValues }: any) {
 }
 
 export const fields: any = [
+  {
+    type: 'image',
+    name: 'custom_image',
+    label: 'Section Image (upload custom image)',
+  },
   {
     type: 'text',
     name: 'heading',

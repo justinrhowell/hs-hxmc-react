@@ -87,21 +87,21 @@ export function Component({ fieldValues }: any) {
       width: 'fit-content',
     },
     logoItem: {
-      height: '80px',
+      height: '90px',
       display: 'flex',
       alignItems: 'center',
       opacity: 0.7,
       filter: 'grayscale(100%)',
       transition: 'var(--transition-smooth)',
       flexShrink: 0,
-      minWidth: '180px',
+      minWidth: '200px',
       justifyContent: 'center' as const,
     },
     logoImg: {
       height: '100%',
       width: 'auto',
       objectFit: 'contain' as const,
-      maxWidth: '220px',
+      maxWidth: '240px',
     },
   };
 

@@ -49,6 +49,7 @@ export function Component({ fieldValues }: any) {
 
   const privacyUrl = fieldValues.privacy_url || 'https://www.mentorcollective.org/privacy-policy';
   const termsUrl = fieldValues.terms_url || 'https://www.mentorcollective.org/terms-of-use';
+  const aiPolicyUrl = fieldValues.ai_policy_url || 'https://www.mentorcollective.org/ai-policy';
   const sitemapUrl = fieldValues.sitemap_url || 'https://www.mentorcollective.org/sitemap';
 
   const linkStyle: React.CSSProperties = {
@@ -233,6 +234,11 @@ export function Component({ fieldValues }: any) {
                 textDecoration: 'none',
                 transition: 'var(--transition-fast)'
               }}>{fieldValues.terms_text || 'Terms of Use'}</a>
+              <a href={aiPolicyUrl} style={{
+                color: 'var(--text-secondary)',
+                textDecoration: 'none',
+                transition: 'var(--transition-fast)'
+              }}>{fieldValues.ai_policy_text || 'AI Policy'}</a>
               <a href={sitemapUrl} style={{
                 color: 'var(--text-secondary)',
                 textDecoration: 'none',
@@ -422,6 +428,18 @@ export const fields: any = [
     name: 'terms_url',
     label: 'Terms of Use URL',
     default: 'https://www.mentorcollective.org/terms-of-use',
+  },
+  {
+    type: 'text',
+    name: 'ai_policy_text',
+    label: 'AI Policy Link Text',
+    default: 'AI Policy',
+  },
+  {
+    type: 'text',
+    name: 'ai_policy_url',
+    label: 'AI Policy URL',
+    default: 'https://www.mentorcollective.org/ai-policy',
   },
   {
     type: 'text',

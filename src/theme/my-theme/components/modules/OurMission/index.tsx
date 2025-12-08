@@ -49,7 +49,6 @@ export function Component({ fieldValues }: any) {
                 style={{
                   width: '100%',
                   height: 'auto',
-                  maxWidth: '450px',
                   borderRadius: 'var(--radius-xl)',
                   display: 'block',
                 }}
@@ -57,7 +56,6 @@ export function Component({ fieldValues }: any) {
             ) : (
               <div style={{
                 width: '100%',
-                maxWidth: '450px',
                 aspectRatio: '4/3',
                 background: 'linear-gradient(135deg, rgba(239, 71, 111, 0.1) 0%, rgba(248, 159, 123, 0.1) 100%)',
                 borderRadius: 'var(--radius-xl)',
