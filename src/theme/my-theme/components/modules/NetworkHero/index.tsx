@@ -76,8 +76,56 @@ export function Component({ fieldValues }: any) {
     }
   };
 
+  // Use custom nodes if provided, otherwise fall back to defaults
+  const customNodes = fieldValues.nodes || [];
+
   // Network-specific node data
-  const nodeData: Record<string, NodeData> = {
+  const nodeData: Record<string, NodeData> = customNodes.length === 4 ? {
+    learners: {
+      label: customNodes[0].node_label || 'Learners',
+      shortLabel: customNodes[0].short_label || 'Learners',
+      tooltipTitle: customNodes[0].tooltipTitle || 'Learners',
+      tooltipStat: customNodes[0].tooltipStat || '2.5x',
+      tooltipLabel: customNodes[0].tooltipLabel || 'more likely to feel career-ready',
+      tooltipDesc: customNodes[0].tooltipDesc || 'Students and early-career individuals build durable skills and social capital through meaningful mentorship.',
+      fullDescription: customNodes[0].fullDescription || 'Students gain access to guidance, industry insights, and networking opportunities that accelerate their career readiness and professional development.',
+      caseStudy: customNodes[0].caseStudy || 'Learners in our network report 2.5x higher career confidence.',
+      ...nodePositions.learners
+    },
+    alumni: {
+      label: customNodes[1].node_label || 'Alumni',
+      shortLabel: customNodes[1].short_label || 'Alumni',
+      tooltipTitle: customNodes[1].tooltipTitle || 'Alumni Network',
+      tooltipStat: customNodes[1].tooltipStat || '+45%',
+      tooltipLabel: customNodes[1].tooltipLabel || 'engagement increase',
+      tooltipDesc: customNodes[1].tooltipDesc || 'Alumni give back while expanding their own networks and staying connected to their alma mater.',
+      fullDescription: customNodes[1].fullDescription || 'Alumni mentors strengthen institutional ties while building their leadership skills and expanding professional networks.',
+      caseStudy: customNodes[1].caseStudy || 'Partner institutions see 45% higher alumni engagement through mentorship.',
+      ...nodePositions.alumni
+    },
+    employers: {
+      label: customNodes[2].node_label || 'Employers',
+      shortLabel: customNodes[2].short_label || 'Employers',
+      tooltipTitle: customNodes[2].tooltipTitle || 'Employers',
+      tooltipStat: customNodes[2].tooltipStat || '+42%',
+      tooltipLabel: customNodes[2].tooltipLabel || 'intern conversion rate',
+      tooltipDesc: customNodes[2].tooltipDesc || 'Employers access diverse talent pipelines and improve retention through embedded mentorship.',
+      fullDescription: customNodes[2].fullDescription || 'Companies leverage mentorship to identify, develop, and retain top talent while building stronger, more diverse teams.',
+      caseStudy: customNodes[2].caseStudy || 'Partner employers see 42% increase in intern-to-full-time conversion.',
+      ...nodePositions.employers
+    },
+    professionals: {
+      label: customNodes[3].node_label || 'Professionals',
+      shortLabel: customNodes[3].short_label || 'Professionals',
+      tooltipTitle: customNodes[3].tooltipTitle || 'Industry Professionals',
+      tooltipStat: customNodes[3].tooltipStat || '90%+',
+      tooltipLabel: customNodes[3].tooltipLabel || 'mentor satisfaction',
+      tooltipDesc: customNodes[3].tooltipDesc || 'Working professionals develop leadership skills while making meaningful impact on the next generation.',
+      fullDescription: customNodes[3].fullDescription || 'Professionals enhance their own growth while contributing to workforce development and talent cultivation.',
+      caseStudy: customNodes[3].caseStudy || 'Over 90% of professional mentors report high satisfaction and personal growth.',
+      ...nodePositions.professionals
+    }
+  } : {
     learners: {
       label: 'Learners',
       shortLabel: 'Learners',
@@ -1259,6 +1307,67 @@ export const fields: any = [
     name: 'button_url',
     label: 'Button URL',
     default: '',
+  },
+  {
+    type: 'group',
+    name: 'nodes',
+    label: 'Diagram Nodes',
+    help_text: 'The 4 clickable nodes around the diagram (order: Learners, Alumni, Employers, Professionals). Leave empty to use default content.',
+    occurrence: {
+      min: 0,
+      max: 4,
+      default: 0,
+    },
+    children: [
+      {
+        type: 'text',
+        name: 'node_label',
+        label: 'Node Label',
+        default: 'Learners',
+      },
+      {
+        type: 'text',
+        name: 'short_label',
+        label: 'Short Label',
+        default: 'Learners',
+      },
+      {
+        type: 'text',
+        name: 'tooltipTitle',
+        label: 'Tooltip Title',
+        default: 'Learners',
+      },
+      {
+        type: 'text',
+        name: 'tooltipStat',
+        label: 'Stat Number',
+        default: '2.5x',
+      },
+      {
+        type: 'text',
+        name: 'tooltipLabel',
+        label: 'Stat Label',
+        default: 'more likely to feel career-ready',
+      },
+      {
+        type: 'text',
+        name: 'tooltipDesc',
+        label: 'Short Description',
+        default: 'Students and early-career individuals build durable skills and social capital through meaningful mentorship.',
+      },
+      {
+        type: 'text',
+        name: 'fullDescription',
+        label: 'Full Description (shown when expanded)',
+        default: 'Students gain access to guidance, industry insights, and networking opportunities that accelerate their career readiness and professional development.',
+      },
+      {
+        type: 'text',
+        name: 'caseStudy',
+        label: 'Case Study Text',
+        default: 'Learners in our network report 2.5x higher career confidence.',
+      },
+    ],
   },
   {
     type: 'group',

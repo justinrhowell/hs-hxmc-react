@@ -307,8 +307,6 @@ export function Component() {
           </div>
         </div>
       </nav>
-      {/* Spacer to prevent content from going under fixed nav */}
-      <div style={{ height: '56px' }} className="nav-spacer" />
     </>
   );
 }

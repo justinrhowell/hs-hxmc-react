@@ -1,8 +1,6 @@
 import React from 'react';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 import defaultHeroImage from '../../../assets/about-us-hero.jpg';
-import blueArrows from '../../../assets/blue-arrows.svg';
-import yellowStar from '../../../assets/yellow-star.svg';
 
 export function Component({ fieldValues }: any) {
   const heroImageSrc = fieldValues.hero_image?.src || defaultHeroImage;
@@ -23,18 +21,7 @@ export function Component({ fieldValues }: any) {
             order: -1 !important;
             max-width: 500px !important;
             margin: 0 auto !important;
-            padding-top: 30px !important;
-            padding-right: 10px !important;
             padding-bottom: 40px !important;
-          }
-          .about-hero-image img[aria-hidden="true"]:first-of-type {
-            width: 100px !important;
-            left: -10px !important;
-          }
-          .about-hero-image img[aria-hidden="true"]:last-of-type {
-            width: 90px !important;
-            bottom: -10px !important;
-            right: -10px !important;
           }
         }
       `}} />
@@ -45,7 +32,7 @@ export function Component({ fieldValues }: any) {
           minHeight: '65vh',
           display: 'flex',
           alignItems: 'center',
-          padding: 'var(--spacing-xl) var(--spacing-lg) var(--spacing-3xl)',
+          padding: 'var(--spacing-lg) var(--spacing-lg) var(--spacing-3xl)',
           background: 'var(--gradient-hero)',
           backgroundImage: 'var(--pattern-dots)',
           backgroundSize: 'var(--pattern-dots-size)',
@@ -114,61 +101,81 @@ export function Component({ fieldValues }: any) {
             </p>
           </div>
 
-          {/* Right Column - Image with decorative elements */}
+          {/* Right Column - Image or Lottie */}
           <div
             className="about-hero-image scroll-animate"
             data-delay="200"
             style={{
               position: 'relative',
-              paddingTop: '40px',
-              paddingRight: '20px',
             }}
           >
-            {/* Blue arrows - top left */}
-            <img
-              src={blueArrows}
-              alt=""
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: '-20px',
-                width: '160px',
-                height: 'auto',
-                zIndex: 1,
-              }}
-            />
-
-            {/* Main hero image */}
-            <img
-              src={heroImageSrc}
-              alt={heroImageAlt}
-              style={{
-                width: '100%',
-                height: 'auto',
-                borderRadius: '24px',
-                display: 'block',
-                position: 'relative',
-                zIndex: 2,
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
-              }}
-              loading="eager"
-            />
-
-            {/* Yellow star - bottom right */}
-            <img
-              src={yellowStar}
-              alt=""
-              aria-hidden="true"
-              style={{
-                position: 'absolute',
-                bottom: '-30px',
-                right: '-30px',
-                width: '140px',
-                height: 'auto',
-                zIndex: 3,
-              }}
-            />
+            {/* Main hero image or Lottie animation */}
+            {fieldValues.lottie_url && (fieldValues.lottie_url.includes('.json') || fieldValues.lottie_url.includes('lottie')) ? (
+              <>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
+                <div
+                  id="about-hero-lottie-container"
+                  style={{
+                    width: '100%',
+                    position: 'relative',
+                    zIndex: 2,
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: `<lottie-player
+                      id="about-hero-lottie"
+                      src="${fieldValues.lottie_url}"
+                      background="transparent"
+                      speed="1"
+                      style="width: 100%; height: auto;"
+                    ></lottie-player>`
+                  }}
+                />
+                <script dangerouslySetInnerHTML={{
+                  __html: `
+                    (function() {
+                      function initAboutHeroLottie() {
+                        var container = document.getElementById('about-hero-lottie-container');
+                        if (!container) return;
+                        var observer = new IntersectionObserver(function(entries) {
+                          entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                              var player = container.querySelector('lottie-player');
+                              if (player && typeof player.play === 'function') {
+                                player.play();
+                              } else if (player) {
+                                player.addEventListener('ready', function() { player.play(); });
+                              }
+                              observer.unobserve(entry.target);
+                            }
+                          });
+                        }, { threshold: 0.3 });
+                        observer.observe(container);
+                      }
+                      if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', initAboutHeroLottie);
+                      } else {
+                        setTimeout(initAboutHeroLottie, 500);
+                      }
+                    })();
+                  `
+                }} />
+              </>
+            ) : (
+              <img
+                src={heroImageSrc}
+                alt={heroImageAlt}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  borderRadius: '24px',
+                  display: 'block',
+                  position: 'relative',
+                  zIndex: 2,
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
+                }}
+                loading="eager"
+              />
+            )}
           </div>
         </div>
       </section>
@@ -193,6 +200,13 @@ export const fields: any = [
     type: 'image',
     name: 'hero_image',
     label: 'Hero Image (Right Side)',
+  },
+  {
+    type: 'text',
+    name: 'lottie_url',
+    label: 'Lottie Animation URL (.json)',
+    help_text: 'Paste a URL to a Lottie JSON file. If provided, plays on scroll reveal (no loop). Takes priority over image.',
+    default: '',
   },
 ];
 

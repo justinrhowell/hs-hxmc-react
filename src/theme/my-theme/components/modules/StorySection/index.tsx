@@ -107,16 +107,67 @@ export function Component({ fieldValues }: any) {
               justifyContent: 'center',
             }}
           >
-            <img
-              src={fieldValues.custom_image?.src || mentorProfilesSvg}
-              alt={fieldValues.custom_image?.alt || "Mentor profiles illustration showing mentor-mentee connections"}
-              style={{
-                width: '100%',
-                height: 'auto',
-                maxWidth: '450px',
-                display: 'block',
-              }}
-            />
+            {fieldValues.lottie_url && (fieldValues.lottie_url.includes('.json') || fieldValues.lottie_url.includes('lottie')) ? (
+              <>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
+                <div
+                  id="story-lottie-container"
+                  style={{
+                    width: '100%',
+                    maxWidth: '450px',
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: `<lottie-player
+                      id="story-lottie"
+                      src="${fieldValues.lottie_url}"
+                      background="transparent"
+                      speed="1"
+                      style="width: 100%; height: auto;"
+                    ></lottie-player>`
+                  }}
+                />
+                <script dangerouslySetInnerHTML={{
+                  __html: `
+                    (function() {
+                      function initStoryLottie() {
+                        var container = document.getElementById('story-lottie-container');
+                        if (!container) return;
+                        var observer = new IntersectionObserver(function(entries) {
+                          entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                              var player = container.querySelector('lottie-player');
+                              if (player && typeof player.play === 'function') {
+                                player.play();
+                              } else if (player) {
+                                player.addEventListener('ready', function() { player.play(); });
+                              }
+                              observer.unobserve(entry.target);
+                            }
+                          });
+                        }, { threshold: 0.3 });
+                        observer.observe(container);
+                      }
+                      if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', initStoryLottie);
+                      } else {
+                        setTimeout(initStoryLottie, 500);
+                      }
+                    })();
+                  `
+                }} />
+              </>
+            ) : (
+              <img
+                src={fieldValues.custom_image?.src || mentorProfilesSvg}
+                alt={fieldValues.custom_image?.alt || "Mentor profiles illustration showing mentor-mentee connections"}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxWidth: '450px',
+                  display: 'block',
+                }}
+              />
+            )}
           </div>
         </div>
 
@@ -174,6 +225,13 @@ export const fields: any = [
     type: 'image',
     name: 'custom_image',
     label: 'Story Image (upload custom image)',
+  },
+  {
+    type: 'text',
+    name: 'lottie_url',
+    label: 'Lottie Animation URL (.json)',
+    help_text: 'Paste a URL to a Lottie JSON file. If provided, plays on scroll reveal (no loop). Takes priority over image.',
+    default: '',
   },
   {
     type: 'richtext',

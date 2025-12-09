@@ -93,7 +93,7 @@ export function Component({ fieldValues }: any) {
 
         .blog-content pre {
           background: var(--black);
-          color: var(--text-inverse);
+          color: var(--white);
           padding: var(--spacing-md);
           border-radius: var(--radius-md);
           overflow-x: auto;
@@ -105,7 +105,7 @@ export function Component({ fieldValues }: any) {
         .blog-content code {
           background: var(--bg-light-coral);
           color: var(--text-coral);
-          padding: var(--spacing-3xs) var(--spacing-2xs);
+          padding: 0.125rem 0.375rem;
           border-radius: var(--radius-sm);
           font-size: var(--font-size-small);
         }
@@ -169,7 +169,7 @@ export function Component({ fieldValues }: any) {
       `}} />
 
       <section style={{
-        padding: '0 var(--spacing-lg) var(--section-padding-md)',
+        padding: 'var(--section-padding-md) var(--spacing-lg)',
         background: 'var(--bg-white)',
       }}>
         <div style={{

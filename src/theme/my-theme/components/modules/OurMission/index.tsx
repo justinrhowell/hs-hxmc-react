@@ -32,7 +32,7 @@ export function Component({ fieldValues }: any) {
           gap: 'var(--spacing-3xl)',
           alignItems: 'center',
         }} className="mission-main-grid">
-          {/* Left Column - Image */}
+          {/* Left Column - Image or Lottie */}
           <div
             className="mission-image-column scroll-animate"
             data-delay="200"
@@ -42,7 +42,55 @@ export function Component({ fieldValues }: any) {
               justifyContent: 'center',
             }}
           >
-            {fieldValues.image?.src ? (
+            {fieldValues.lottie_url && (fieldValues.lottie_url.includes('.json') || fieldValues.lottie_url.includes('lottie')) ? (
+              <>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
+                <div
+                  id="our-mission-lottie-container"
+                  style={{
+                    width: '100%',
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: `<lottie-player
+                      id="our-mission-lottie"
+                      src="${fieldValues.lottie_url}"
+                      background="transparent"
+                      speed="1"
+                      style="width: 100%; height: auto;"
+                    ></lottie-player>`
+                  }}
+                />
+                <script dangerouslySetInnerHTML={{
+                  __html: `
+                    (function() {
+                      function initOurMissionLottie() {
+                        var container = document.getElementById('our-mission-lottie-container');
+                        if (!container) return;
+                        var observer = new IntersectionObserver(function(entries) {
+                          entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                              var player = container.querySelector('lottie-player');
+                              if (player && typeof player.play === 'function') {
+                                player.play();
+                              } else if (player) {
+                                player.addEventListener('ready', function() { player.play(); });
+                              }
+                              observer.unobserve(entry.target);
+                            }
+                          });
+                        }, { threshold: 0.3 });
+                        observer.observe(container);
+                      }
+                      if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', initOurMissionLottie);
+                      } else {
+                        setTimeout(initOurMissionLottie, 500);
+                      }
+                    })();
+                  `
+                }} />
+              </>
+            ) : fieldValues.image?.src ? (
               <img
                 src={fieldValues.image.src}
                 alt={fieldValues.image.alt || 'Our Mission'}
@@ -162,6 +210,13 @@ export const fields: any = [
     type: 'image',
     name: 'image',
     label: 'Mission Image',
+  },
+  {
+    type: 'text',
+    name: 'lottie_url',
+    label: 'Lottie Animation URL (.json)',
+    help_text: 'Paste a URL to a Lottie JSON file. If provided, plays on scroll reveal (no loop). Takes priority over image.',
+    default: '',
   },
 ];
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   ModuleFields,
   TextField,
@@ -135,11 +135,18 @@ const imageMap: Record<string, string> = {
 export function Component({ fieldValues }: any) {
   const segmentType = fieldValues.segment_type || 'higher-education';
   const content = defaultContent[segmentType] || defaultContent['higher-education'];
+  const lottieContainerRef = useRef<HTMLDivElement>(null);
+  const lottieId = `segment-lottie-${segmentType}-${Math.random().toString(36).substr(2, 9)}`;
 
   const heading = fieldValues.heading || content.heading;
   const subheading = fieldValues.subheading || content.subheading;
   const imagePosition = fieldValues.image_position || content.imagePosition;
   const selectedImage = fieldValues.image || content.image;
+
+  // Check if a Lottie file URL is provided
+  const lottieUrl = fieldValues.lottie_url || '';
+  // Check for .json in URL (may have query params after)
+  const hasLottie = lottieUrl && (lottieUrl.includes('.json') || lottieUrl.includes('lottie'));
 
   const proofPoints = (fieldValues.proof_points && fieldValues.proof_points.length > 0)
     ? fieldValues.proof_points.map((p: any) => ({
@@ -164,6 +171,46 @@ export function Component({ fieldValues }: any) {
   };
   const bgColor = fieldValues.background_color || 'warm';
   const sectionBg = bgColorMap[bgColor] || bgColorMap['warm'];
+
+  // Lottie play on reveal effect
+  useEffect(() => {
+    if (!hasLottie) return;
+
+    // Load lottie-player script if not already loaded
+    if (!document.querySelector('script[src*="lottie-player"]')) {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js';
+      script.async = true;
+      document.head.appendChild(script);
+    }
+
+    // Set up intersection observer for play-on-reveal
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const player = entry.target.querySelector('lottie-player') as any;
+            if (player && player.play) {
+              player.play();
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    const container = lottieContainerRef.current;
+    if (container) {
+      observer.observe(container);
+    }
+
+    return () => {
+      if (container) {
+        observer.unobserve(container);
+      }
+    };
+  }, [hasLottie, lottieUrl]);
 
   return (
     <>
@@ -311,18 +358,76 @@ export function Component({ fieldValues }: any) {
               textAlign: 'center',
             }}
           >
-            <div className="scroll-animate" data-delay="200">
-              <img
-                src={fieldValues.custom_image?.src || imageMap[selectedImage] || integrationsSvg}
-                alt={fieldValues.custom_image?.alt || `${heading} illustration`}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxWidth: '500px',
-                  display: 'block',
-                  margin: '0 auto',
-                }}
-              />
+            <div className="scroll-animate" data-delay="200" ref={hasLottie ? lottieContainerRef : undefined}>
+              {hasLottie ? (
+                <>
+                  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
+                  <div
+                    id={`lottie-container-${lottieId}`}
+                    style={{
+                      width: '100%',
+                      maxWidth: '500px',
+                      margin: '0 auto',
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: `<lottie-player
+                        id="${lottieId}"
+                        src="${lottieUrl}"
+                        background="transparent"
+                        speed="1"
+                        style="width: 100%; height: auto;"
+                      ></lottie-player>`
+                    }}
+                  />
+                  <script dangerouslySetInnerHTML={{
+                    __html: `
+                      (function() {
+                        function initSegmentLottie() {
+                          var container = document.getElementById('lottie-container-${lottieId}');
+                          if (!container) return;
+
+                          var observer = new IntersectionObserver(function(entries) {
+                            entries.forEach(function(entry) {
+                              if (entry.isIntersecting) {
+                                var player = container.querySelector('lottie-player');
+                                if (player && typeof player.play === 'function') {
+                                  player.play();
+                                } else if (player) {
+                                  // Wait for player to be ready
+                                  player.addEventListener('ready', function() {
+                                    player.play();
+                                  });
+                                }
+                                observer.unobserve(entry.target);
+                              }
+                            });
+                          }, { threshold: 0.3 });
+
+                          observer.observe(container);
+                        }
+
+                        if (document.readyState === 'loading') {
+                          document.addEventListener('DOMContentLoaded', initSegmentLottie);
+                        } else {
+                          setTimeout(initSegmentLottie, 500);
+                        }
+                      })();
+                    `
+                  }} />
+                </>
+              ) : (
+                <img
+                  src={fieldValues.custom_image?.src || imageMap[selectedImage] || integrationsSvg}
+                  alt={fieldValues.custom_image?.alt || `${heading} illustration`}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxWidth: '500px',
+                    display: 'block',
+                    margin: '0 auto',
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -433,9 +538,16 @@ export const fields: any = [
     label: 'Custom Image (upload your own)',
   },
   {
+    type: 'text',
+    name: 'lottie_url',
+    label: 'Lottie Animation URL (.json)',
+    help_text: 'Paste a URL to a Lottie JSON file (upload to HubSpot Files first). If provided, this will play on scroll reveal (no loop). Takes priority over image.',
+    default: '',
+  },
+  {
     type: 'choice',
     name: 'image',
-    label: 'Illustration (fallback if no custom image)',
+    label: 'Illustration (fallback if no custom image or Lottie)',
     choices: [
       ['integrations', 'Integrations'],
       ['smart-matching', 'Smart Matching'],

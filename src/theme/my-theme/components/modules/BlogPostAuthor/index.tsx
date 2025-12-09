@@ -194,17 +194,17 @@ export const fields = (
     <TextField
       name="author_name"
       label="Author Name"
-      default="Sarah Johnson"
+      default="Laura H. Doughty"
     />
     <TextField
       name="title"
       label="Job Title"
-      default="Senior Content Strategist"
+      default="Manager, Brand & Communications"
     />
     <RichTextField
       name="bio"
       label="Author Bio"
-      default="Sarah is a content strategist with over 10 years of experience in education technology. She's passionate about helping organizations leverage mentorship to drive meaningful outcomes."
+      default="As a creative leader with an artistic background, Laura blends data-informed strategy with compelling storytelling to oversee content initiatives that elevate brand visibility. She is passionate about crafting narratives that translate the power of mentorship into opportunities for all, illuminating pathways for learners to succeed and ultimately driving our mission of 'Mentorship for All.'"
     />
     <ImageField
       name="image"

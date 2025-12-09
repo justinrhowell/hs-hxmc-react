@@ -1,5 +1,5 @@
 import React from 'react';
-import mcLogo from '../../../assets/MentorCollective-Black-Logo.svg';
+import mcLogo from '../../../assets/MentorCollective-Primary-Logo.svg';
 
 interface FooterLink {
   text: string;
@@ -8,9 +8,6 @@ interface FooterLink {
 
 export function Component({ fieldValues }: any) {
   const description = fieldValues.description || 'The premier AI-powered mentorship operating system for human connection, resilience, and adaptability.';
-  const facebookUrl = fieldValues.facebook_url || 'https://www.facebook.com/mentorcollective/';
-  const linkedinUrl = fieldValues.linkedin_url || 'https://www.linkedin.com/company/mentorcollective/';
-  const instagramUrl = fieldValues.instagram_url || 'https://www.instagram.com/mentorcollective/';
 
   // Build link arrays from field values or use defaults
   const productsLinks: FooterLink[] = (fieldValues.products_links && fieldValues.products_links.length > 0)
@@ -31,9 +28,9 @@ export function Component({ fieldValues }: any) {
         url: item.url || '#',
       }))
     : [
-        { text: 'Higher Ed', url: '/solutions/higher-ed' },
-        { text: 'K-12', url: '/solutions/k12' },
-        { text: 'Enterprise', url: '/solutions/enterprise' },
+        { text: 'Higher Ed', url: '/network' },
+        { text: 'Corporate', url: '/network' },
+        { text: 'Strategic Partnerships', url: '/network' },
       ];
 
   const companyLinks: FooterLink[] = (fieldValues.company_links && fieldValues.company_links.length > 0)
@@ -43,7 +40,7 @@ export function Component({ fieldValues }: any) {
       }))
     : [
         { text: 'About', url: '/about' },
-        { text: 'Press', url: '/press' },
+        { text: 'Blog', url: '/blog' },
         { text: 'Contact', url: '/contact' },
       ];
 
@@ -55,7 +52,7 @@ export function Component({ fieldValues }: any) {
   const linkStyle: React.CSSProperties = {
     color: 'var(--text-secondary)',
     textDecoration: 'none',
-    fontSize: 'var(--font-size-small)',
+    fontSize: 'var(--font-size-base)',
     transition: 'var(--transition-fast)',
   };
 
@@ -115,40 +112,19 @@ export function Component({ fieldValues }: any) {
                 />
               </div>
               <p style={{
-                fontSize: 'var(--font-size-small)',
+                fontSize: 'var(--font-size-base)',
                 color: 'var(--text-secondary)',
                 lineHeight: 1.6,
-                marginBottom: 'var(--spacing-md)',
                 maxWidth: '300px'
               }}>
                 {description}
               </p>
-              <div style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
-                <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" style={{
-                  color: 'var(--text-secondary)',
-                  fontSize: 'var(--font-size-large)',
-                  textDecoration: 'none',
-                  transition: 'var(--transition-fast)'
-                }} aria-label="LinkedIn">in</a>
-                <a href={instagramUrl} target="_blank" rel="noopener noreferrer" style={{
-                  color: 'var(--text-secondary)',
-                  fontSize: 'var(--font-size-large)',
-                  textDecoration: 'none',
-                  transition: 'var(--transition-fast)'
-                }} aria-label="Instagram">IG</a>
-                <a href={facebookUrl} target="_blank" rel="noopener noreferrer" style={{
-                  color: 'var(--text-secondary)',
-                  fontSize: 'var(--font-size-large)',
-                  textDecoration: 'none',
-                  transition: 'var(--transition-fast)'
-                }} aria-label="Facebook">f</a>
-              </div>
             </div>
 
             {/* Product Column */}
             <div>
               <h3 style={{
-                fontSize: 'var(--font-size-small)',
+                fontSize: 'var(--font-size-base)',
                 fontWeight: 600,
                 marginBottom: 'var(--spacing-sm)',
                 color: 'var(--text-primary)',
@@ -170,7 +146,7 @@ export function Component({ fieldValues }: any) {
             {/* Solutions Column */}
             <div>
               <h3 style={{
-                fontSize: 'var(--font-size-small)',
+                fontSize: 'var(--font-size-base)',
                 fontWeight: 600,
                 marginBottom: 'var(--spacing-sm)',
                 color: 'var(--text-primary)',
@@ -192,7 +168,7 @@ export function Component({ fieldValues }: any) {
             {/* Company Column */}
             <div>
               <h3 style={{
-                fontSize: 'var(--font-size-small)',
+                fontSize: 'var(--font-size-base)',
                 fontWeight: 600,
                 marginBottom: 'var(--spacing-sm)',
                 color: 'var(--text-primary)',
@@ -219,7 +195,7 @@ export function Component({ fieldValues }: any) {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            fontSize: 'var(--font-size-small)',
+            fontSize: 'var(--font-size-base)',
             color: 'var(--text-secondary)'
           }}>
             <div>{fieldValues.copyright || '© 2025 Mentor Collective. All rights reserved.'}</div>
@@ -269,25 +245,6 @@ export const fields: any = [
     name: 'description',
     label: 'Company Description',
     default: 'The premier AI-powered mentorship operating system for human connection, resilience, and adaptability.',
-  },
-  // Social Links
-  {
-    type: 'text',
-    name: 'linkedin_url',
-    label: 'LinkedIn URL',
-    default: 'https://www.linkedin.com/company/mentorcollective/',
-  },
-  {
-    type: 'text',
-    name: 'instagram_url',
-    label: 'Instagram URL',
-    default: 'https://www.instagram.com/mentorcollective/',
-  },
-  {
-    type: 'text',
-    name: 'facebook_url',
-    label: 'Facebook URL',
-    default: 'https://www.facebook.com/mentorcollective/',
   },
   // Products Column
   {
@@ -343,9 +300,9 @@ export const fields: any = [
       default: 3,
     },
     default: [
-      { text: 'Higher Ed', url: '/solutions/higher-ed' },
-      { text: 'K-12', url: '/solutions/k12' },
-      { text: 'Enterprise', url: '/solutions/enterprise' },
+      { text: 'Higher Ed', url: '/network' },
+      { text: 'Corporate', url: '/network' },
+      { text: 'Strategic Partnerships', url: '/network' },
     ],
     children: [
       {
@@ -380,7 +337,7 @@ export const fields: any = [
     },
     default: [
       { text: 'About', url: '/about' },
-      { text: 'Press', url: '/press' },
+      { text: 'Blog', url: '/blog' },
       { text: 'Contact', url: '/contact' },
     ],
     children: [

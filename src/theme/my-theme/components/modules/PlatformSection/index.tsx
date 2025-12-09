@@ -180,17 +180,69 @@ export function Component({ fieldValues }: any) {
 
           {/* Right Column - Visual + Stat Card */}
           <div className="platform-right-col scroll-animate" data-delay="200" style={{ textAlign: 'center' }}>
-            <img
-              src={fieldValues.custom_image?.src || integrationsSvg}
-              alt={fieldValues.custom_image?.alt || "Integrations illustration showing connected systems and workflows"}
-              style={{
-                width: '100%',
-                height: 'auto',
-                maxWidth: '550px',
-                display: 'block',
-                margin: '0 auto',
-              }}
-            />
+            {fieldValues.lottie_url && (fieldValues.lottie_url.includes('.json') || fieldValues.lottie_url.includes('lottie')) ? (
+              <>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
+                <div
+                  id="platform-lottie-container"
+                  style={{
+                    width: '100%',
+                    maxWidth: '550px',
+                    margin: '0 auto',
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: `<lottie-player
+                      id="platform-lottie"
+                      src="${fieldValues.lottie_url}"
+                      background="transparent"
+                      speed="1"
+                      style="width: 100%; height: auto;"
+                    ></lottie-player>`
+                  }}
+                />
+                <script dangerouslySetInnerHTML={{
+                  __html: `
+                    (function() {
+                      function initPlatformLottie() {
+                        var container = document.getElementById('platform-lottie-container');
+                        if (!container) return;
+                        var observer = new IntersectionObserver(function(entries) {
+                          entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                              var player = container.querySelector('lottie-player');
+                              if (player && typeof player.play === 'function') {
+                                player.play();
+                              } else if (player) {
+                                player.addEventListener('ready', function() { player.play(); });
+                              }
+                              observer.unobserve(entry.target);
+                            }
+                          });
+                        }, { threshold: 0.3 });
+                        observer.observe(container);
+                      }
+                      if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', initPlatformLottie);
+                      } else {
+                        setTimeout(initPlatformLottie, 500);
+                      }
+                    })();
+                  `
+                }} />
+              </>
+            ) : (
+              <img
+                src={fieldValues.custom_image?.src || integrationsSvg}
+                alt={fieldValues.custom_image?.alt || "Integrations illustration showing connected systems and workflows"}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxWidth: '550px',
+                  display: 'block',
+                  margin: '0 auto',
+                }}
+              />
+            )}
 
             {/* Stat Card - centered under image */}
             <div style={{
@@ -278,6 +330,13 @@ export const fields: any = [
     type: 'image',
     name: 'custom_image',
     label: 'Section Image (upload custom image)',
+  },
+  {
+    type: 'text',
+    name: 'lottie_url',
+    label: 'Lottie Animation URL (.json)',
+    help_text: 'Paste a URL to a Lottie JSON file. If provided, plays on scroll reveal (no loop). Takes priority over image.',
+    default: '',
   },
   {
     type: 'text',

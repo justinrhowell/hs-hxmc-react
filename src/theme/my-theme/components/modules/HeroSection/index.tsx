@@ -53,7 +53,7 @@ export function Component({ fieldValues }: any) {
           ...backgroundStyles[backgroundStyle],
           backgroundImage: showPattern ? 'var(--pattern-dots)' : 'none',
           backgroundSize: showPattern ? 'var(--pattern-dots-size)' : 'auto',
-          padding: 'var(--section-padding-lg) var(--spacing-lg)',
+          padding: 'var(--spacing-lg) var(--spacing-lg) var(--section-padding-lg)',
           minHeight: fieldValues.min_height || 'auto',
         }}
       >

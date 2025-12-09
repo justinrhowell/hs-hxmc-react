@@ -261,7 +261,7 @@ export const fields = (
     <TextField
       name="author"
       label="Author Name"
-      default="Sarah Johnson"
+      default="Laura H. Doughty"
     />
     <ImageField
       name="author_image"

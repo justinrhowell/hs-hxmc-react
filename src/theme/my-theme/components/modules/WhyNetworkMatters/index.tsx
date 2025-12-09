@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 import integrationsSvg from '../../../assets/Integrations.svg';
+import { NetworkDiagram } from './NetworkDiagram';
 
 const defaultReasons = [
   {
@@ -59,26 +60,78 @@ export function Component({ fieldValues }: any) {
           gap: 'var(--spacing-3xl)',
           alignItems: 'center',
         }} className="why-network-main-grid">
-          {/* Left Column - Illustration */}
+          {/* Left Column - Interactive Network Diagram */}
           <div
-            className="why-network-illustration scroll-animate"
-            data-delay="200"
+            className="why-network-illustration"
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <img
-              src={fieldValues.custom_image?.src || integrationsSvg}
-              alt={fieldValues.custom_image?.alt || "Network integrations illustration showing data insights and mentor connections"}
-              style={{
-                width: '100%',
-                height: 'auto',
-                maxWidth: '450px',
-                display: 'block',
-              }}
-            />
+            {fieldValues.lottie_url && (fieldValues.lottie_url.includes('.json') || fieldValues.lottie_url.includes('lottie')) ? (
+              <>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
+                <div
+                  id="why-network-lottie-container"
+                  style={{
+                    width: '100%',
+                    maxWidth: '450px',
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: `<lottie-player
+                      id="why-network-lottie"
+                      src="${fieldValues.lottie_url}"
+                      background="transparent"
+                      speed="1"
+                      style="width: 100%; height: auto;"
+                    ></lottie-player>`
+                  }}
+                />
+                <script dangerouslySetInnerHTML={{
+                  __html: `
+                    (function() {
+                      function initWhyNetworkLottie() {
+                        var container = document.getElementById('why-network-lottie-container');
+                        if (!container) return;
+                        var observer = new IntersectionObserver(function(entries) {
+                          entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                              var player = container.querySelector('lottie-player');
+                              if (player && typeof player.play === 'function') {
+                                player.play();
+                              } else if (player) {
+                                player.addEventListener('ready', function() { player.play(); });
+                              }
+                              observer.unobserve(entry.target);
+                            }
+                          });
+                        }, { threshold: 0.3 });
+                        observer.observe(container);
+                      }
+                      if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', initWhyNetworkLottie);
+                      } else {
+                        setTimeout(initWhyNetworkLottie, 500);
+                      }
+                    })();
+                  `
+                }} />
+              </>
+            ) : fieldValues.custom_image?.src ? (
+              <img
+                src={fieldValues.custom_image.src}
+                alt={fieldValues.custom_image.alt || "Network illustration"}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxWidth: '450px',
+                  display: 'block',
+                }}
+              />
+            ) : (
+              <NetworkDiagram />
+            )}
           </div>
 
           {/* Right Column - Content */}
@@ -189,6 +242,13 @@ export const fields: any = [
     type: 'image',
     name: 'custom_image',
     label: 'Section Image (upload custom image)',
+  },
+  {
+    type: 'text',
+    name: 'lottie_url',
+    label: 'Lottie Animation URL (.json)',
+    help_text: 'Paste a URL to a Lottie JSON file. If provided, plays on scroll reveal (no loop). Takes priority over image.',
+    default: '',
   },
   {
     type: 'text',

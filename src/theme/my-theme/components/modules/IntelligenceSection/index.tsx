@@ -73,6 +73,27 @@ export function Component({ fieldValues }: any) {
           grid-template-columns: 1fr !important;
         }
       }
+      @keyframes floatOrb1 {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+        50% { transform: translate(30px, -20px) scale(1.1); opacity: 0.6; }
+      }
+      @keyframes floatOrb2 {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+        50% { transform: translate(-25px, 15px) scale(1.05); opacity: 0.5; }
+      }
+      @keyframes floatOrb3 {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+        50% { transform: translate(15px, 25px) scale(1.15); opacity: 0.55; }
+      }
+      @keyframes floatOrb4 {
+        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.25; }
+        50% { transform: translate(-20px, -30px) scale(1.08); opacity: 0.45; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .intelligence-orb {
+          animation: none !important;
+        }
+      }
     `}</style>
     <ScrollAnimationScript />
     <section
@@ -85,7 +106,68 @@ export function Component({ fieldValues }: any) {
         overflow: 'hidden',
       }}
     >
-      <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto' }}>
+      {/* Animated glowing orbs */}
+      <div
+        className="intelligence-orb"
+        style={{
+          position: 'absolute',
+          top: '-100px',
+          left: '-150px',
+          width: '500px',
+          height: '500px',
+          background: 'radial-gradient(circle, rgba(239, 71, 111, 0.7) 0%, rgba(239, 71, 111, 0.3) 40%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(80px)',
+          animation: 'floatOrb1 8s ease-in-out infinite',
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        className="intelligence-orb"
+        style={{
+          position: 'absolute',
+          top: '40%',
+          right: '-150px',
+          width: '450px',
+          height: '450px',
+          background: 'radial-gradient(circle, rgba(17, 138, 178, 0.7) 0%, rgba(17, 138, 178, 0.3) 40%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(70px)',
+          animation: 'floatOrb2 10s ease-in-out infinite',
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        className="intelligence-orb"
+        style={{
+          position: 'absolute',
+          bottom: '-100px',
+          left: '20%',
+          width: '400px',
+          height: '400px',
+          background: 'radial-gradient(circle, rgba(248, 159, 123, 0.6) 0%, rgba(248, 159, 123, 0.25) 40%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(60px)',
+          animation: 'floatOrb3 12s ease-in-out infinite',
+          pointerEvents: 'none',
+        }}
+      />
+      <div
+        className="intelligence-orb"
+        style={{
+          position: 'absolute',
+          top: '10%',
+          right: '20%',
+          width: '350px',
+          height: '350px',
+          background: 'radial-gradient(circle, rgba(239, 71, 111, 0.5) 0%, rgba(239, 71, 111, 0.2) 40%, transparent 70%)',
+          borderRadius: '50%',
+          filter: 'blur(50px)',
+          animation: 'floatOrb4 9s ease-in-out infinite',
+          pointerEvents: 'none',
+        }}
+      />
+      <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)' }}>
           <h2 style={{
             fontSize: 'var(--font-size-h2)',

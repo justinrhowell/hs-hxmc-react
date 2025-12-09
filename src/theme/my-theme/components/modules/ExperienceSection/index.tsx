@@ -74,16 +74,67 @@ export function Component({ fieldValues }: any) {
         }} className="experience-content">
           {/* Left Column - Visual Elements */}
           <div className="scroll-animate" data-delay="200">
-            <img
-              src={fieldValues.custom_image?.src || smartMatchingSvg}
-              alt={fieldValues.custom_image?.alt || "Smart Matching illustration showing AI-powered mentor matching"}
-              style={{
-                width: '100%',
-                height: 'auto',
-                maxWidth: '550px',
-                display: 'block',
-              }}
-            />
+            {fieldValues.lottie_url && (fieldValues.lottie_url.includes('.json') || fieldValues.lottie_url.includes('lottie')) ? (
+              <>
+                <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
+                <div
+                  id="experience-lottie-container"
+                  style={{
+                    width: '100%',
+                    maxWidth: '550px',
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: `<lottie-player
+                      id="experience-lottie"
+                      src="${fieldValues.lottie_url}"
+                      background="transparent"
+                      speed="1"
+                      style="width: 100%; height: auto;"
+                    ></lottie-player>`
+                  }}
+                />
+                <script dangerouslySetInnerHTML={{
+                  __html: `
+                    (function() {
+                      function initExperienceLottie() {
+                        var container = document.getElementById('experience-lottie-container');
+                        if (!container) return;
+                        var observer = new IntersectionObserver(function(entries) {
+                          entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                              var player = container.querySelector('lottie-player');
+                              if (player && typeof player.play === 'function') {
+                                player.play();
+                              } else if (player) {
+                                player.addEventListener('ready', function() { player.play(); });
+                              }
+                              observer.unobserve(entry.target);
+                            }
+                          });
+                        }, { threshold: 0.3 });
+                        observer.observe(container);
+                      }
+                      if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', initExperienceLottie);
+                      } else {
+                        setTimeout(initExperienceLottie, 500);
+                      }
+                    })();
+                  `
+                }} />
+              </>
+            ) : (
+              <img
+                src={fieldValues.custom_image?.src || smartMatchingSvg}
+                alt={fieldValues.custom_image?.alt || "Smart Matching illustration showing AI-powered mentor matching"}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxWidth: '550px',
+                  display: 'block',
+                }}
+              />
+            )}
           </div>
 
           {/* Right Column - Text Content */}
@@ -184,6 +235,13 @@ export const fields: any = [
     type: 'image',
     name: 'custom_image',
     label: 'Section Image (upload custom image)',
+  },
+  {
+    type: 'text',
+    name: 'lottie_url',
+    label: 'Lottie Animation URL (.json)',
+    help_text: 'Paste a URL to a Lottie JSON file. If provided, plays on scroll reveal (no loop). Takes priority over image.',
+    default: '',
   },
   {
     type: 'text',
