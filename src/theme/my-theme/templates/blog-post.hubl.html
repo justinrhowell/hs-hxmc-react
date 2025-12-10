@@ -84,96 +84,122 @@
 
 {% block body %}
 
-  {# Blog Post Hero - With optional featured image background #}
+  <style>
+    .blog-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-2xl);
+      align-items: center;
+    }
+
+    .blog-hero-image {
+      overflow: hidden;
+    }
+
+    .blog-hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      aspect-ratio: 2/1;
+    }
+
+    @media (max-width: 900px) {
+      .blog-hero-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+      }
+
+      .blog-hero-content {
+        order: 1;
+      }
+
+      .blog-hero-image-container {
+        order: 2;
+      }
+    }
+  </style>
+
+  {# Blog Post Hero - Two column layout with featured image on right #}
   <section style="
-    padding: calc(80px + var(--spacing-3xl)) var(--spacing-lg) var(--spacing-3xl);
-    {% if content.featured_image %}
-    background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('{{ content.featured_image }}');
-    background-size: cover;
-    background-position: center;
-    min-height: 450px;
-    display: flex;
-    align-items: flex-end;
-    {% else %}
+    padding: calc(80px + var(--spacing-xl)) var(--spacing-lg) var(--spacing-2xl);
     background: var(--gradient-hero);
-    {% endif %}
   ">
     <div style="max-width: var(--max-width-xl); margin: 0 auto; width: 100%;">
-      {# Topic Tags #}
-      {% if content.topic_list %}
-        <div style="display: flex; gap: var(--spacing-xs); flex-wrap: wrap; margin-bottom: var(--spacing-md);">
-          {% for topic in content.topic_list %}
-            <a href="{{ blog_tag_url(group.id, topic.slug) }}" style="
-              display: inline-block;
-              padding: var(--spacing-xxs) var(--spacing-sm);
-              {% if content.featured_image %}
-              background: rgba(255,255,255,0.2);
-              color: var(--text-white);
-              backdrop-filter: blur(4px);
-              {% else %}
-              background: var(--bg-light-coral);
-              color: var(--text-coral);
-              {% endif %}
-              font-size: var(--font-size-xs);
-              font-weight: 600;
-              border-radius: var(--radius-full);
-              text-decoration: none;
-            ">
-              {{ topic.name }}
-            </a>
-          {% endfor %}
-        </div>
-      {% endif %}
+      <div class="blog-hero-grid">
+        {# Left Column - Content #}
+        <div class="blog-hero-content">
+          {# Topic Tags #}
+          {% if content.topic_list %}
+            <div style="display: flex; gap: var(--spacing-xs); flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+              {% for topic in content.topic_list %}
+                <a href="{{ blog_tag_url(group.id, topic.slug) }}" style="
+                  display: inline-block;
+                  padding: var(--spacing-xxs) var(--spacing-sm);
+                  background: var(--bg-light-coral);
+                  color: var(--text-coral);
+                  font-size: var(--font-size-xs);
+                  font-weight: 600;
+                  border-radius: var(--radius-full);
+                  text-decoration: none;
+                ">
+                  {{ topic.name }}
+                </a>
+              {% endfor %}
+            </div>
+          {% endif %}
 
-      {# Title #}
-      <h1 style="
-        font-family: var(--font-headline);
-        font-size: var(--font-size-h1);
-        font-weight: 600;
-        {% if content.featured_image %}
-        color: var(--text-white);
-        {% else %}
-        color: var(--text-primary);
-        {% endif %}
-        line-height: var(--line-height-tight);
-        margin-bottom: var(--spacing-lg);
-        max-width: 1200px;
-      ">
-        {{ content.name }}
-      </h1>
+          {# Title #}
+          <h1 style="
+            font-family: var(--font-headline);
+            font-size: var(--font-size-h1);
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--spacing-lg);
+          ">
+            {{ content.name }}
+          </h1>
 
-      {# Meta Info #}
-      <div style="
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-md);
-        flex-wrap: wrap;
-        {% if content.featured_image %}
-        color: rgba(255,255,255,0.9);
-        {% else %}
-        color: var(--text-secondary);
-        {% endif %}
-        font-size: var(--font-size-body);
-      ">
-        {% if content.blog_author %}
-          <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
-            {% if content.blog_author.avatar %}
-              <img
-                src="{{ content.blog_author.avatar }}"
-                alt="{{ content.blog_author.display_name }}"
-                style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid {% if content.featured_image %}rgba(255,255,255,0.5){% else %}var(--border-light){% endif %};"
-              >
+          {# Meta Info #}
+          <div style="
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+            color: var(--text-secondary);
+            font-size: var(--font-size-body);
+          ">
+            {% if content.blog_author %}
+              <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                {% if content.blog_author.avatar %}
+                  <img
+                    src="{{ content.blog_author.avatar }}"
+                    alt="{{ content.blog_author.display_name }}"
+                    style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-light);"
+                  >
+                {% endif %}
+                <span style="font-weight: 500;">{{ content.blog_author.display_name }}</span>
+              </div>
             {% endif %}
-            <span style="font-weight: 500;">{{ content.blog_author.display_name }}</span>
+
+            {% if content.publish_date %}
+              <span>{{ content.publish_date | datetimeformat('%B %d, %Y') }}</span>
+            {% endif %}
+
+            {% if content.read_time %}
+              <span>{{ content.read_time }} min read</span>
+            {% endif %}
           </div>
-        {% endif %}
+        </div>
 
-        {% if content.publish_date %}
-          <span>{{ content.publish_date | datetimeformat('%B %d, %Y') }}</span>
-        {% endif %}
-
-        {% if content.read_time %}
-          <span>{{ content.read_time }} min read</span>
+        {# Right Column - Featured Image #}
+        {% if content.featured_image %}
+          <div class="blog-hero-image-container">
+            <div class="blog-hero-image">
+              <img src="{{ content.featured_image }}" alt="{{ content.name | escape }}" />
+            </div>
+          </div>
         {% endif %}
       </div>
     </div>

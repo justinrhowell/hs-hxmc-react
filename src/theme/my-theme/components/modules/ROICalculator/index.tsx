@@ -30,6 +30,84 @@ export function Component({ fieldValues }: any) {
     <>
       <script dangerouslySetInnerHTML={{__html: `
         (function() {
+          // HubSpot Analytics Tracking
+          var roiTracking = {
+            hasInteracted: false,
+            currentSegment: 'higher_ed',
+            lastTrackedROI: null,
+            debounceTimer: null,
+
+            // Track calculator interaction event
+            trackInteraction: function(segment, inputs, results) {
+              // Debounce to avoid tracking every keystroke
+              if (this.debounceTimer) clearTimeout(this.debounceTimer);
+
+              var self = this;
+              this.debounceTimer = setTimeout(function() {
+                // Only track if values have changed significantly
+                var roiValue = results.totalROI || results.savings || 0;
+                if (self.lastTrackedROI === roiValue) return;
+                self.lastTrackedROI = roiValue;
+
+                // Store in localStorage for form submission capture
+                var trackingData = {
+                  timestamp: Date.now(),
+                  segment: segment,
+                  inputs: inputs,
+                  results: results,
+                  page_url: window.location.href
+                };
+                localStorage.setItem('mc_roi_calculator', JSON.stringify(trackingData));
+
+                // Track via HubSpot Analytics API if available
+                if (typeof _hsq !== 'undefined') {
+                  // First interaction event
+                  if (!self.hasInteracted) {
+                    _hsq.push(['trackCustomBehavioralEvent', {
+                      name: 'pe512371_roi_calculator_started',
+                      properties: {
+                        calculator_segment: segment
+                      }
+                    }]);
+                    self.hasInteracted = true;
+                  }
+
+                  // Track calculation completed with results
+                  _hsq.push(['trackCustomBehavioralEvent', {
+                    name: 'pe512371_roi_calculator_completed',
+                    properties: {
+                      calculator_segment: segment,
+                      total_roi_estimate: roiValue,
+                      staff_savings: results.staffSavings || 0,
+                      revenue_retained: results.revenueRetained || 0,
+                      turnover_cost: results.turnoverCost || 0,
+                      mentorship_savings: results.savings || 0
+                    }
+                  }]);
+                }
+
+                console.log('[ROI Calculator] Tracked:', trackingData);
+              }, 1500); // Wait 1.5s after last input before tracking
+            },
+
+            // Track segment switch
+            trackSegmentSwitch: function(newSegment) {
+              this.currentSegment = newSegment;
+
+              if (typeof _hsq !== 'undefined') {
+                _hsq.push(['trackCustomBehavioralEvent', {
+                  name: 'pe512371_roi_calculator_segment_switch',
+                  properties: {
+                    calculator_segment: newSegment
+                  }
+                }]);
+              }
+            }
+          };
+
+          // Make tracking available globally for form integration
+          window.mcROITracking = roiTracking;
+
           function initROICalculator() {
             // Toggle elements
             const heToggle = document.getElementById('roi-toggle-he');
@@ -91,9 +169,11 @@ export function Component({ fieldValues }: any) {
               if (mode === 'he') {
                 if (heToggle) heToggle.classList.add('active');
                 if (heCalculator) heCalculator.style.display = 'block';
+                roiTracking.trackSegmentSwitch('higher_ed');
               } else if (mode === 'corp') {
                 if (corpToggle) corpToggle.classList.add('active');
                 if (corpCalculator) corpCalculator.style.display = 'block';
+                roiTracking.trackSegmentSwitch('corporate');
               }
             }
 
@@ -127,6 +207,20 @@ export function Component({ fieldValues }: any) {
               if (staffSavingsHEElement) staffSavingsHEElement.textContent = formatCurrency(staffCostSavings);
               if (revenueSavingsHEElement) revenueSavingsHEElement.textContent = formatCurrency(revenueSavings);
               if (totalROIHEElement) totalROIHEElement.textContent = formatCurrency(totalROI);
+
+              // Track interaction with HubSpot
+              roiTracking.trackInteraction('higher_ed', {
+                studentsServed: studentsServed,
+                hourlyRate: hourlyRate,
+                totalStudents: totalStudents,
+                tuition: tuition,
+                attritionRate: lossRate,
+                retentionImprovement: retentionIncrease
+              }, {
+                staffSavings: staffCostSavings,
+                revenueRetained: revenueSavings,
+                totalROI: totalROI
+              });
             }
 
             // Corp Calculator (using the Emerging Market formula from sales)
@@ -145,6 +239,17 @@ export function Component({ fieldValues }: any) {
 
               if (corpTurnoverCostElement) corpTurnoverCostElement.textContent = formatCurrency(turnoverCost);
               if (corpSavingsElement) corpSavingsElement.textContent = formatCurrency(savings);
+
+              // Track interaction with HubSpot
+              roiTracking.trackInteraction('corporate', {
+                employees: employees,
+                turnoverRate: turnoverRate,
+                avgSalary: avgSalary,
+                mentorshipRetentionIncrease: mentorshipIncrease
+              }, {
+                turnoverCost: turnoverCost,
+                savings: savings
+              });
             }
 
             function handleNumberInput(e, calcFn) {
