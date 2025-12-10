@@ -1,5 +1,5 @@
 <!--
-  templateType: page
+  templateType: blog_post
   isAvailableForNewContent: true
   label: Blog Post
   screenshotPath: ../assets/blog-post-screenshot.png
@@ -12,11 +12,15 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "{{ page_meta.html_title | escape }}",
-  "description": "{{ page_meta.meta_description | escape }}",
-  "url": "{{ request.full_url | split('?') | first }}",
+  "headline": "{{ content.name | escape }}",
+  "description": "{{ content.meta_description | escape }}",
+  "url": "{{ content.absolute_url }}",
+  {% if content.publish_date %}
   "datePublished": "{{ content.publish_date | datetimeformat('%Y-%m-%dT%H:%M:%S+00:00') }}",
+  {% endif %}
+  {% if content.updated %}
   "dateModified": "{{ content.updated | datetimeformat('%Y-%m-%dT%H:%M:%S+00:00') }}",
+  {% endif %}
   {% if content.featured_image %}
   "image": {
     "@type": "ImageObject",
@@ -41,10 +45,11 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "{{ request.full_url | split('?') | first }}"
-  },
-  "articleSection": "{{ content.topic_list[0].name | default('Mentorship') }}",
-  "keywords": "mentorship, higher education, student retention, career readiness, AI matching"
+    "@id": "{{ content.absolute_url }}"
+  }
+  {% if content.topic_list[0] %}
+  ,"articleSection": "{{ content.topic_list[0].name }}"
+  {% endif %}
 }
 </script>
 
@@ -69,8 +74,8 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "{{ page_meta.html_title | truncate(50) | escape }}",
-      "item": "{{ request.full_url | split('?') | first }}"
+      "name": "{{ content.name | truncate(50) | escape }}",
+      "item": "{{ content.absolute_url }}"
     }
   ]
 }
@@ -79,33 +84,308 @@
 
 {% block body %}
 
-  {% module
-    "blog_post_hero"
-    path="../components/modules/BlogPostHero"
-  %}
+  {# Blog Post Hero - With optional featured image background #}
+  <section style="
+    padding: calc(80px + var(--spacing-3xl)) var(--spacing-lg) var(--spacing-3xl);
+    {% if content.featured_image %}
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('{{ content.featured_image }}');
+    background-size: cover;
+    background-position: center;
+    min-height: 450px;
+    display: flex;
+    align-items: flex-end;
+    {% else %}
+    background: var(--gradient-hero);
+    {% endif %}
+  ">
+    <div style="max-width: var(--max-width-xl); margin: 0 auto; width: 100%;">
+      {# Topic Tags #}
+      {% if content.topic_list %}
+        <div style="display: flex; gap: var(--spacing-xs); flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+          {% for topic in content.topic_list %}
+            <a href="{{ blog_tag_url(group.id, topic.slug) }}" style="
+              display: inline-block;
+              padding: var(--spacing-xxs) var(--spacing-sm);
+              {% if content.featured_image %}
+              background: rgba(255,255,255,0.2);
+              color: var(--text-white);
+              backdrop-filter: blur(4px);
+              {% else %}
+              background: var(--bg-light-coral);
+              color: var(--text-coral);
+              {% endif %}
+              font-size: var(--font-size-xs);
+              font-weight: 600;
+              border-radius: var(--radius-full);
+              text-decoration: none;
+            ">
+              {{ topic.name }}
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
 
-  {% module
-    "blog_post_content"
-    path="../components/modules/BlogPostContent"
-  %}
+      {# Title #}
+      <h1 style="
+        font-family: var(--font-headline);
+        font-size: var(--font-size-h1);
+        font-weight: 600;
+        {% if content.featured_image %}
+        color: var(--text-white);
+        {% else %}
+        color: var(--text-primary);
+        {% endif %}
+        line-height: var(--line-height-tight);
+        margin-bottom: var(--spacing-lg);
+        max-width: 1200px;
+      ">
+        {{ content.name }}
+      </h1>
 
-  {% module
-    "blog_post_author"
-    path="../components/modules/BlogPostAuthor"
-  %}
+      {# Meta Info #}
+      <div style="
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        flex-wrap: wrap;
+        {% if content.featured_image %}
+        color: rgba(255,255,255,0.9);
+        {% else %}
+        color: var(--text-secondary);
+        {% endif %}
+        font-size: var(--font-size-body);
+      ">
+        {% if content.blog_author %}
+          <div style="display: flex; align-items: center; gap: var(--spacing-sm);">
+            {% if content.blog_author.avatar %}
+              <img
+                src="{{ content.blog_author.avatar }}"
+                alt="{{ content.blog_author.display_name }}"
+                style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid {% if content.featured_image %}rgba(255,255,255,0.5){% else %}var(--border-light){% endif %};"
+              >
+            {% endif %}
+            <span style="font-weight: 500;">{{ content.blog_author.display_name }}</span>
+          </div>
+        {% endif %}
 
-  {% module
-    "newsletter"
-    path="../components/modules/Newsletter",
-    heading="Enjoyed this article?",
-    description="Subscribe to our newsletter for more insights on mentorship, education technology, and organizational success.",
-    layout="boxed"
-  %}
+        {% if content.publish_date %}
+          <span>{{ content.publish_date | datetimeformat('%B %d, %Y') }}</span>
+        {% endif %}
 
-  {% module
-    "related_posts"
-    path="../components/modules/RelatedPosts"
-  %}
+        {% if content.read_time %}
+          <span>{{ content.read_time }} min read</span>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  {# Blog Post Content - This renders your actual blog content #}
+  <article style="
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    background: var(--bg-white);
+  ">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div class="blog-post-body" style="
+        font-family: var(--font-body);
+        font-size: var(--font-size-body-lg);
+        line-height: var(--line-height-relaxed);
+        color: var(--text-primary);
+      ">
+        {{ content.post_body }}
+      </div>
+    </div>
+  </article>
+
+  {# Author Bio Section #}
+  {% if content.blog_author %}
+    <section style="
+      padding: var(--spacing-2xl) var(--spacing-lg);
+      background: var(--bg-cream);
+    ">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div style="
+          display: flex;
+          gap: var(--spacing-lg);
+          align-items: flex-start;
+          flex-wrap: wrap;
+        ">
+          {% if content.blog_author.avatar %}
+            <img
+              src="{{ content.blog_author.avatar }}"
+              alt="{{ content.blog_author.display_name }}"
+              style="
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                object-fit: cover;
+                flex-shrink: 0;
+              "
+            >
+          {% endif %}
+          <div style="flex: 1; min-width: 250px;">
+            <p style="
+              font-size: var(--font-size-small);
+              color: var(--text-muted);
+              text-transform: uppercase;
+              letter-spacing: 1px;
+              margin-bottom: var(--spacing-xs);
+            ">
+              Written by
+            </p>
+            <h3 style="
+              font-family: var(--font-headline);
+              font-size: var(--font-size-h4);
+              font-weight: 500;
+              color: var(--text-primary);
+              margin-bottom: var(--spacing-sm);
+            ">
+              {{ content.blog_author.display_name }}
+            </h3>
+            {% if content.blog_author.bio %}
+              <p style="
+                font-size: var(--font-size-body);
+                color: var(--text-secondary);
+                line-height: var(--line-height-normal);
+              ">
+                {{ content.blog_author.bio }}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {# Social Share #}
+  <section style="
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background: var(--bg-white);
+    border-top: 1px solid var(--border-light);
+  ">
+    <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+      <p style="
+        font-size: var(--font-size-body);
+        color: var(--text-secondary);
+        margin-bottom: var(--spacing-md);
+      ">
+        Share this article
+      </p>
+      <div style="display: flex; justify-content: center; gap: var(--spacing-md);">
+        <a href="https://twitter.com/intent/tweet?url={{ content.absolute_url | urlencode }}&text={{ content.name | urlencode }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           style="
+             padding: var(--spacing-sm) var(--spacing-md);
+             background: var(--bg-light);
+             border-radius: var(--radius-md);
+             color: var(--text-primary);
+             text-decoration: none;
+             font-weight: 500;
+           ">
+          Twitter
+        </a>
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ content.absolute_url | urlencode }}&title={{ content.name | urlencode }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           style="
+             padding: var(--spacing-sm) var(--spacing-md);
+             background: var(--bg-light);
+             border-radius: var(--radius-md);
+             color: var(--text-primary);
+             text-decoration: none;
+             font-weight: 500;
+           ">
+          LinkedIn
+        </a>
+        <a href="mailto:?subject={{ content.name | urlencode }}&body={{ content.absolute_url | urlencode }}"
+           style="
+             padding: var(--spacing-sm) var(--spacing-md);
+             background: var(--bg-light);
+             border-radius: var(--radius-md);
+             color: var(--text-primary);
+             text-decoration: none;
+             font-weight: 500;
+           ">
+          Email
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {# Related Posts #}
+  {% set defined_topics = content.topic_list | selectattr('name') | map(attribute='id') | list %}
+  {% if defined_topics %}
+    {% set related_posts = blog_recent_topic_posts(group.id, defined_topics[0], 3) %}
+    {% if related_posts | length > 0 %}
+      <section style="
+        padding: var(--spacing-3xl) var(--spacing-lg);
+        background: var(--bg-light);
+      ">
+        <div style="max-width: var(--max-width-xl); margin: 0 auto;">
+          <h2 style="
+            font-family: var(--font-headline);
+            font-size: var(--font-size-h2);
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+          ">
+            Related Articles
+          </h2>
+          <div style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+          ">
+            {% for post in related_posts %}
+              {% if post.absolute_url != content.absolute_url %}
+                <article style="
+                  background: var(--bg-white);
+                  border-radius: var(--radius-lg);
+                  overflow: hidden;
+                  box-shadow: var(--shadow-md);
+                  border: 1px solid var(--border-light);
+                ">
+                  {% if post.featured_image %}
+                    <a href="{{ post.absolute_url }}" style="display: block; aspect-ratio: 16/9; overflow: hidden;">
+                      <img
+                        src="{{ post.featured_image }}"
+                        alt="{{ post.name }}"
+                        style="width: 100%; height: 100%; object-fit: cover;"
+                        loading="lazy"
+                      >
+                    </a>
+                  {% endif %}
+                  <div style="padding: var(--spacing-lg);">
+                    <h3 style="
+                      font-family: var(--font-headline);
+                      font-size: var(--font-size-h4);
+                      font-weight: 500;
+                      color: var(--text-primary);
+                      margin-bottom: var(--spacing-sm);
+                      line-height: var(--line-height-tight);
+                    ">
+                      <a href="{{ post.absolute_url }}" style="color: inherit; text-decoration: none;">
+                        {{ post.name }}
+                      </a>
+                    </h3>
+                    {% if post.publish_date %}
+                      <p style="
+                        font-size: var(--font-size-small);
+                        color: var(--text-muted);
+                      ">
+                        {{ post.publish_date | datetimeformat('%B %d, %Y') }}
+                      </p>
+                    {% endif %}
+                  </div>
+                </article>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </section>
+    {% endif %}
+  {% endif %}
 
   {% module
     "footer"
@@ -113,3 +393,75 @@
   %}
 
 {% endblock body %}
+
+<style>
+  {# Blog content styling #}
+  .blog-post-body h1,
+  .blog-post-body h2,
+  .blog-post-body h3,
+  .blog-post-body h4,
+  .blog-post-body h5,
+  .blog-post-body h6 {
+    font-family: var(--font-headline);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    line-height: var(--line-height-tight);
+  }
+
+  .blog-post-body h2 { font-size: var(--font-size-h2); }
+  .blog-post-body h3 { font-size: var(--font-size-h3); }
+  .blog-post-body h4 { font-size: var(--font-size-h4); }
+
+  .blog-post-body p {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .blog-post-body a {
+    color: var(--text-coral);
+    text-decoration: underline;
+  }
+
+  .blog-post-body ul,
+  .blog-post-body ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+  }
+
+  .blog-post-body li {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .blog-post-body blockquote {
+    border-left: 4px solid var(--text-coral);
+    padding-left: var(--spacing-lg);
+    margin: var(--spacing-xl) 0;
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+
+  .blog-post-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: var(--spacing-lg) 0;
+  }
+
+  .blog-post-body pre,
+  .blog-post-body code {
+    background: var(--bg-light);
+    border-radius: var(--radius-sm);
+    font-family: monospace;
+  }
+
+  .blog-post-body pre {
+    padding: var(--spacing-md);
+    overflow-x: auto;
+    margin: var(--spacing-lg) 0;
+  }
+
+  .blog-post-body code {
+    padding: 2px 6px;
+  }
+</style>

@@ -97,43 +97,6 @@ export function Component({ fieldValues }: any) {
             {description}
           </p>
 
-          {/* Category Tabs */}
-          <div
-            className="scroll-animate resource-hero-categories"
-            data-delay="300"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 'var(--spacing-xs)',
-              flexWrap: 'wrap',
-              background: 'var(--bg-light)',
-              padding: 'var(--spacing-xs)',
-              borderRadius: 'var(--radius-lg)',
-            }}
-          >
-            {['All Resources', 'Articles', 'Case Studies', 'Guides', 'Webinars'].map((category, index) => (
-              <button
-                key={index}
-                type="button"
-                className="resource-hero-category"
-                style={{
-                  padding: 'var(--spacing-sm) var(--spacing-lg)',
-                  background: index === 0 ? 'var(--primary-blue)' : 'transparent',
-                  border: 'none',
-                  borderRadius: 'var(--radius-md)',
-                  fontSize: 'var(--font-size-body)',
-                  fontWeight: index === 0 ? 600 : 500,
-                  color: index === 0 ? 'var(--text-white)' : 'var(--text-primary)',
-                  cursor: 'pointer',
-                  transition: 'var(--transition-medium)',
-                  boxShadow: index === 0 ? 'var(--shadow-md)' : 'none',
-                }}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
         </div>
       </section>
     </>

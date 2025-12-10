@@ -14,7 +14,7 @@ import storiesTalentImg from '../../../assets/stories-talent.jpg';
 import storiesProfDevImg from '../../../assets/stories-profdev.jpg';
 import storiesDeiImg from '../../../assets/stories-dei.jpg';
 import storiesWorkforceImg from '../../../assets/stories-workforce.jpg';
-import toccaraImg from '../../../assets/Toccara - College Career Success.jpg';
+import toccaraImg from '../../../assets/Stories_Toccara-new-compressed.jpg';
 import storiesNicImg from '../../../assets/Stories_Nic.jpg';
 // Decorative elements
 import blueArrows from '../../../assets/blue-arrows.svg';

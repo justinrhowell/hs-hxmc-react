@@ -2,6 +2,7 @@ import {
   ModuleFields,
   TextField,
   BooleanField,
+  BlogField,
 } from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 import blueArrows from '../../../assets/blue-arrows.svg';
@@ -9,16 +10,21 @@ import yellowStar from '../../../assets/yellow-star.svg';
 
 // HubL template to fetch featured/latest blog post
 export const hublDataTemplate = `
-{% set featured_post = blog_recent_posts('default', 1)[0] %}
+{% set selected_blog = module.blog_select %}
+{% if selected_blog %}
+  {% set featured_post = blog_recent_posts(selected_blog, 1)[0] %}
+{% else %}
+  {% set featured_post = null %}
+{% endif %}
 {% if featured_post %}
   {% set hublData = {
     "id": featured_post.id,
     "title": featured_post.name,
-    "description": featured_post.post_summary,
+    "description": featured_post.post_summary|striptags|truncate(200),
     "url": featured_post.absolute_url,
     "featured_image": featured_post.featured_image,
     "publish_date": featured_post.publish_date|datetimeformat('%B %d, %Y'),
-    "author": featured_post.blog_author.display_name,
+    "author": featured_post.blog_author.display_name if featured_post.blog_author else "Mentor Collective",
     "topic": featured_post.topic_list[0].name if featured_post.topic_list else "Article"
   } %}
 {% endif %}
@@ -272,6 +278,11 @@ export function Component({ fieldValues, hublData }: any) {
 
 export const fields = (
   <ModuleFields>
+    <BlogField
+      name="blog_select"
+      label="Select Blog"
+      default=""
+    />
     <BooleanField
       name="use_manual_content"
       label="Use Manual Content (instead of latest blog post)"

@@ -14,37 +14,22 @@
     class="main-content-area"
   %}
     {% dnd_section
-      padding={
-        "top": 0,
-        "bottom": 0
-      }
+      background_image={
+        "backgroundPosition": "MIDDLE_CENTER",
+        "backgroundSize": "cover",
+        "imageUrl": "",
+        "color": "#ffffff"
+      },
+      max_width=1200,
+      vertical_alignment="TOP"
     %}
       {% dnd_column
         width=12
       %}
         {% dnd_row %}
           {% dnd_module
-            path="../components/modules/ProductHero"
-            label="Hero Section"
-          %}
-          {% end_dnd_module %}
-        {% end_dnd_row %}
-      {% end_dnd_column %}
-    {% end_dnd_section %}
-
-    {% dnd_section
-      padding={
-        "top": 0,
-        "bottom": 0
-      }
-    %}
-      {% dnd_column
-        width=12
-      %}
-        {% dnd_row %}
-          {% dnd_module
-            path="../components/modules/SystemIntro"
-            label="System Introduction"
+            path="@hubspot/rich_text",
+            html="<h1>Page Title</h1><p>Add your content here...</p>"
           %}
           {% end_dnd_module %}
         {% end_dnd_row %}

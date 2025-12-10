@@ -2,22 +2,39 @@ import {
   ModuleFields,
   TextField,
   NumberField,
+  BlogField,
 } from '@hubspot/cms-components/fields';
 import { ScrollAnimationScript } from '../../shared/ScrollAnimationScript';
 
-// HubL template to fetch blog posts
+// HubL template to fetch blog posts - uses blog field or finds first available blog
 export const hublDataTemplate = `
-{% set blog_posts = blog_recent_posts('default', module.post_limit || 9) %}
+{% set selected_blog = module.blog_select %}
+{% if selected_blog %}
+  {% set blog_posts = blog_recent_posts(selected_blog, module.post_limit || 9) %}
+{% else %}
+  {% set blog_posts = [] %}
+{% endif %}
 {% set posts_array = [] %}
 {% for post in blog_posts %}
+  {% set featured_img = "" %}
+  {% if post.featured_image %}
+    {% if post.featured_image is string %}
+      {% set featured_img = post.featured_image %}
+    {% elif post.featured_image.src %}
+      {% set featured_img = post.featured_image.src %}
+    {% endif %}
+  {% endif %}
+  {% if not featured_img and post.post_list_content_featured_image %}
+    {% set featured_img = post.post_list_content_featured_image %}
+  {% endif %}
   {% set post_data = {
     "id": post.id,
     "title": post.name,
-    "description": post.post_summary|truncate(150),
+    "description": post.post_summary|striptags|truncate(150) if post.post_summary else "",
     "url": post.absolute_url,
-    "featured_image": post.featured_image,
-    "publish_date": post.publish_date|datetimeformat('%B %d, %Y'),
-    "author": post.blog_author.display_name,
+    "featured_image": featured_img,
+    "publish_date": post.publish_date|datetimeformat('%B %d, %Y') if post.publish_date else "",
+    "author": post.blog_author.display_name if post.blog_author else "Mentor Collective",
     "topic": post.topic_list[0].name if post.topic_list else "Article"
   } %}
   {% do posts_array.append(post_data) %}
@@ -26,8 +43,8 @@ export const hublDataTemplate = `
 `;
 
 export function Component({ fieldValues, hublData }: any) {
-  const heading = fieldValues.heading || 'Latest Resources';
-  const subtitle = fieldValues.subtitle || 'Stay up to date with our latest insights and research';
+  const heading = fieldValues.heading || '';
+  const subtitle = fieldValues.subtitle || '';
 
   // Parse blog posts from HubL data or use fallback
   let posts: any[] = [];
@@ -170,48 +187,16 @@ export function Component({ fieldValues, hublData }: any) {
                     border: '1px solid var(--border-light)',
                   }}
                 >
-                  {/* Image */}
+                  {/* Content */}
                   <div style={{
-                    width: '100%',
-                    height: '200px',
-                    overflow: 'hidden',
-                    position: 'relative',
-                    background: 'var(--bg-cream)',
+                    padding: 'var(--spacing-lg)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 1,
                   }}>
-                    {post.featured_image ? (
-                      <img
-                        src={post.featured_image}
-                        alt={post.title}
-                        loading="lazy"
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          transition: 'transform 0.3s ease',
-                        }}
-                      />
-                    ) : (
-                      <div style={{
-                        width: '100%',
-                        height: '100%',
-                        background: 'linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-light) 100%)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style={{ opacity: 0.3 }}>
-                          <rect x="3" y="3" width="18" height="18" rx="2" stroke="var(--text-muted)" strokeWidth="2"/>
-                          <circle cx="8.5" cy="8.5" r="1.5" fill="var(--text-muted)"/>
-                          <path d="M3 16L8 11L13 16" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round"/>
-                          <path d="M14 14L17 11L21 15" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round"/>
-                        </svg>
-                      </div>
-                    )}
                     {/* Topic Badge */}
                     <div style={{
-                      position: 'absolute',
-                      top: 'var(--spacing-sm)',
-                      left: 'var(--spacing-sm)',
+                      display: 'inline-block',
                       background: colors.bg,
                       color: colors.text,
                       padding: '0.375rem 0.75rem',
@@ -220,18 +205,12 @@ export function Component({ fieldValues, hublData }: any) {
                       fontWeight: 600,
                       textTransform: 'uppercase',
                       letterSpacing: '0.05em',
+                      marginBottom: 'var(--spacing-sm)',
+                      width: 'fit-content',
                     }}>
                       {post.topic || 'Article'}
                     </div>
-                  </div>
 
-                  {/* Content */}
-                  <div style={{
-                    padding: 'var(--spacing-lg)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flex: 1,
-                  }}>
                     <h3 style={{
                       fontSize: 'var(--font-size-h4)',
                       fontWeight: 500,
@@ -311,15 +290,21 @@ export function Component({ fieldValues, hublData }: any) {
 
 export const fields = (
   <ModuleFields>
+    <BlogField
+      name="blog_select"
+      label="Select Blog"
+      default=""
+      required={true}
+    />
     <TextField
       name="heading"
       label="Section Heading"
-      default="Latest Resources"
+      default=""
     />
     <TextField
       name="subtitle"
       label="Subtitle"
-      default="Stay up to date with our latest insights and research"
+      default=""
     />
     <NumberField
       name="post_limit"

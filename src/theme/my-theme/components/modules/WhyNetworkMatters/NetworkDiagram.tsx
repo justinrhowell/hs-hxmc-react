@@ -297,21 +297,37 @@ export function NetworkDiagram() {
         }
 
         @media (max-width: 768px) {
-          .network-outer-node-content {
-            padding: 8px 14px;
-            font-size: var(--font-size-xs);
+          .network-diagram-container {
+            max-width: 280px;
+            padding: 10px;
           }
-          .network-inner-node-circle {
-            width: 32px;
-            height: 32px;
+          .network-outer-node {
+            left: var(--mobile-left) !important;
+            top: var(--mobile-top) !important;
+          }
+          .network-outer-node-content {
+            padding: 5px 10px;
+            font-size: 10px;
+          }
+          .network-inner-node {
+            display: none;
           }
           .network-center-icon {
-            width: 48px;
-            height: 48px;
+            width: 36px;
+            height: 36px;
           }
           .network-center-text {
-            font-size: 11px;
-            max-width: 100px;
+            font-size: 9px;
+            max-width: 70px;
+            line-height: 1.2;
+          }
+          .network-main-circle {
+            width: 50%;
+            height: 50%;
+          }
+          .network-pulse-ring {
+            width: 50%;
+            height: 50%;
           }
         }
       `}} />
@@ -354,10 +370,15 @@ export function NetworkDiagram() {
 
         {/* Outer nodes - positioned around the circle */}
         {outerNodes.map((node, index) => {
-          const radius = 48;
+          const radius = 48; // Desktop radius
+          const mobileRadius = 52; // Wider radius for mobile to prevent overlap
           const angleRad = (node.angle * Math.PI) / 180;
           const x = 50 + radius * Math.cos(angleRad);
           const y = 50 + radius * Math.sin(angleRad);
+
+          // Mobile positioning - push labels further out
+          const xMobile = 50 + mobileRadius * Math.cos(angleRad);
+          const yMobile = 50 + mobileRadius * Math.sin(angleRad);
 
           return (
             <div
@@ -368,6 +389,8 @@ export function NetworkDiagram() {
                 top: `${y}%`,
                 transform: 'translate(-50%, -50%) scale(0.8)',
                 transitionDelay: `${index * 150}ms`,
+                ['--mobile-left' as any]: `${xMobile}%`,
+                ['--mobile-top' as any]: `${yMobile}%`,
               }}
               data-node-index={index}
             >

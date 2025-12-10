@@ -649,13 +649,14 @@ nav[role="navigation"] {
     overflow: visible !important;
 }
 
-/* Ensure nav parent containers don't interfere with sticky */
-html,
-body,
-.body-wrapper {
-    position: relative;
-    overflow-x: visible !important;
-    overflow-y: visible !important;
+/* Prevent horizontal scroll on page */
+html {
+    overflow-x: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 
 /* Ensure body has enough height for scrolling */

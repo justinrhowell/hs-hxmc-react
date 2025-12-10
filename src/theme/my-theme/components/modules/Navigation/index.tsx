@@ -8,10 +8,10 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { label: 'Mentorship OS', href: '/product-dev' },
-  { label: 'Network', href: '/network-dev' },
-  { label: 'Resources', href: '/resource-dev' },
-  { label: 'Company', href: '/about-dev' },
+  { label: 'Mentorship OS', href: '/mentorship-os' },
+  { label: 'Network', href: '/network' },
+  { label: 'Resources', href: '/resources' },
+  { label: 'Company', href: '/about' },
   { label: 'Log In', href: 'https://app.mentorcollective.org/sign_in', external: true }
 ];
 
@@ -19,7 +19,7 @@ export function Component() {
   const logoSrc = mcLogo;
   const logoAlt = 'Mentor Collective';
   const ctaText = 'Request a Demo';
-  const ctaHref = '/demo-dev';
+  const ctaHref = '/demo';
 
   const styles: Record<string, React.CSSProperties> = {
     nav: {

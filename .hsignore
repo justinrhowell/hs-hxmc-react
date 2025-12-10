@@ -19,3 +19,7 @@ dist
 
 # Git
 .git
+
+# Large root folders not needed for deploy
+reference
+assets-source

@@ -16,10 +16,10 @@ export function Component({ fieldValues }: any) {
         url: item.url || '#',
       }))
     : [
-        { text: 'Reveal', url: '/product#reveal' },
-        { text: 'Spark', url: '/product#spark' },
-        { text: 'Scale', url: '/product#scale' },
-        { text: 'Fuel', url: '/product#fuel' },
+        { text: 'Reveal', url: '/mentorship-os' },
+        { text: 'Spark', url: '/mentorship-os' },
+        { text: 'Scale', url: '/mentorship-os' },
+        { text: 'Fuel', url: '/mentorship-os' },
       ];
 
   const solutionsLinks: FooterLink[] = (fieldValues.solutions_links && fieldValues.solutions_links.length > 0)
@@ -47,7 +47,6 @@ export function Component({ fieldValues }: any) {
   const privacyUrl = fieldValues.privacy_url || 'https://www.mentorcollective.org/privacy-policy';
   const termsUrl = fieldValues.terms_url || 'https://www.mentorcollective.org/terms-of-use';
   const aiPolicyUrl = fieldValues.ai_policy_url || 'https://www.mentorcollective.org/ai-policy';
-  const sitemapUrl = fieldValues.sitemap_url || 'https://www.mentorcollective.org/sitemap';
 
   const linkStyle: React.CSSProperties = {
     color: 'var(--text-secondary)',
@@ -215,11 +214,6 @@ export function Component({ fieldValues }: any) {
                 textDecoration: 'none',
                 transition: 'var(--transition-fast)'
               }}>{fieldValues.ai_policy_text || 'AI Policy'}</a>
-              <a href={sitemapUrl} style={{
-                color: 'var(--text-secondary)',
-                textDecoration: 'none',
-                transition: 'var(--transition-fast)'
-              }}>{fieldValues.sitemap_text || 'Sitemap'}</a>
             </div>
           </div>
         </div>
@@ -263,10 +257,10 @@ export const fields: any = [
       default: 4,
     },
     default: [
-      { text: 'Reveal', url: '/product#reveal' },
-      { text: 'Spark', url: '/product#spark' },
-      { text: 'Scale', url: '/product#scale' },
-      { text: 'Fuel', url: '/product#fuel' },
+      { text: 'Reveal', url: '/mentorship-os' },
+      { text: 'Spark', url: '/mentorship-os' },
+      { text: 'Scale', url: '/mentorship-os' },
+      { text: 'Fuel', url: '/mentorship-os' },
     ],
     children: [
       {
@@ -397,18 +391,6 @@ export const fields: any = [
     name: 'ai_policy_url',
     label: 'AI Policy URL',
     default: 'https://www.mentorcollective.org/ai-policy',
-  },
-  {
-    type: 'text',
-    name: 'sitemap_text',
-    label: 'Sitemap Link Text',
-    default: 'Sitemap',
-  },
-  {
-    type: 'text',
-    name: 'sitemap_url',
-    label: 'Sitemap URL',
-    default: 'https://www.mentorcollective.org/sitemap',
   },
 ];
 

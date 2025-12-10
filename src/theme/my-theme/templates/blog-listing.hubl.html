@@ -1,0 +1,224 @@
+<!--
+  templateType: blog_listing
+  isAvailableForNewContent: true
+  label: Blog Listing
+  screenshotPath: ../assets/blog-listing-screenshot.png
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {# Blog Listing Hero #}
+  <section style="
+    padding: calc(80px + var(--spacing-2xl)) var(--spacing-lg) var(--spacing-2xl);
+    background: var(--gradient-hero);
+    text-align: center;
+  ">
+    <div style="max-width: var(--max-width-lg); margin: 0 auto;">
+      <h1 style="
+        font-family: var(--font-headline);
+        font-size: var(--font-size-h1);
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-md);
+      ">
+        {{ group.public_title | default('Resources & Insights') }}
+      </h1>
+      <p style="
+        font-size: var(--font-size-body-lg);
+        color: var(--text-secondary);
+        max-width: var(--max-width-prose);
+        margin: 0 auto;
+      ">
+        Explore our latest articles on mentorship, student success, and education technology.
+      </p>
+    </div>
+  </section>
+
+  {# Blog Posts Grid #}
+  <section style="
+    padding: var(--spacing-3xl) var(--spacing-lg);
+    background: var(--bg-white);
+  ">
+    <div style="max-width: var(--max-width-xl); margin: 0 auto;">
+
+      {# Posts Grid #}
+      <div style="
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: var(--spacing-xl);
+      ">
+        {% for post in contents %}
+          <article style="
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            border: 1px solid var(--border-light);
+          ">
+            {# Featured Image #}
+            {% if post.featured_image %}
+              <a href="{{ post.absolute_url }}" style="display: block; aspect-ratio: 16/9; overflow: hidden;">
+                <img
+                  src="{{ post.featured_image }}"
+                  alt="{{ post.featured_image_alt_text | default(post.name) }}"
+                  style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;"
+                  loading="lazy"
+                >
+              </a>
+            {% endif %}
+
+            {# Post Content #}
+            <div style="padding: var(--spacing-lg);">
+              {# Topic Tag #}
+              {% if post.topic_list[0] %}
+                <span style="
+                  display: inline-block;
+                  padding: var(--spacing-xxs) var(--spacing-sm);
+                  background: var(--bg-light-coral);
+                  color: var(--text-coral);
+                  font-size: var(--font-size-xs);
+                  font-weight: 600;
+                  border-radius: var(--radius-full);
+                  margin-bottom: var(--spacing-sm);
+                ">
+                  {{ post.topic_list[0].name }}
+                </span>
+              {% endif %}
+
+              {# Title #}
+              <h2 style="
+                font-family: var(--font-headline);
+                font-size: var(--font-size-h4);
+                font-weight: 500;
+                color: var(--text-primary);
+                margin-bottom: var(--spacing-sm);
+                line-height: var(--line-height-tight);
+              ">
+                <a href="{{ post.absolute_url }}" style="color: inherit; text-decoration: none;">
+                  {{ post.name }}
+                </a>
+              </h2>
+
+              {# Excerpt #}
+              <p style="
+                font-size: var(--font-size-body);
+                color: var(--text-secondary);
+                line-height: var(--line-height-normal);
+                margin-bottom: var(--spacing-md);
+              ">
+                {{ post.post_list_content | striptags | truncate(150) }}
+              </p>
+
+              {# Meta #}
+              <div style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: var(--font-size-small);
+                color: var(--text-muted);
+              ">
+                <span>{{ post.publish_date | datetimeformat('%B %d, %Y') }}</span>
+                <a href="{{ post.absolute_url }}" style="
+                  color: var(--text-coral);
+                  font-weight: 600;
+                  text-decoration: none;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 4px;
+                ">
+                  Read more
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      {# Pagination #}
+      {% if contents.total_page_count > 1 %}
+        <nav style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: var(--spacing-sm);
+          margin-top: var(--spacing-2xl);
+        " aria-label="Blog pagination">
+
+          {# Previous Page #}
+          {% if contents.has_previous %}
+            <a href="{{ blog_page_link(contents.previous_page_number) }}" style="
+              padding: var(--spacing-sm) var(--spacing-md);
+              border: 2px solid var(--border-medium);
+              border-radius: var(--radius-md);
+              color: var(--text-primary);
+              text-decoration: none;
+              font-weight: 500;
+            ">
+              Previous
+            </a>
+          {% endif %}
+
+          {# Page Numbers #}
+          {% for page_num in contents|paging_links %}
+            {% if page_num == contents.current_page_number %}
+              <span style="
+                padding: var(--spacing-sm) var(--spacing-md);
+                background: var(--gradient-coral);
+                color: var(--text-white);
+                border-radius: var(--radius-md);
+                font-weight: 600;
+              ">
+                {{ page_num }}
+              </span>
+            {% else %}
+              <a href="{{ blog_page_link(page_num) }}" style="
+                padding: var(--spacing-sm) var(--spacing-md);
+                border: 2px solid var(--border-light);
+                border-radius: var(--radius-md);
+                color: var(--text-secondary);
+                text-decoration: none;
+                font-weight: 500;
+              ">
+                {{ page_num }}
+              </a>
+            {% endif %}
+          {% endfor %}
+
+          {# Next Page #}
+          {% if contents.has_next %}
+            <a href="{{ blog_page_link(contents.next_page_number) }}" style="
+              padding: var(--spacing-sm) var(--spacing-md);
+              border: 2px solid var(--border-medium);
+              border-radius: var(--radius-md);
+              color: var(--text-primary);
+              text-decoration: none;
+              font-weight: 500;
+            ">
+              Next
+            </a>
+          {% endif %}
+        </nav>
+      {% endif %}
+
+    </div>
+  </section>
+
+  {% module
+    "newsletter"
+    path="../components/modules/Newsletter",
+    heading="Stay Updated",
+    description="Subscribe to our newsletter for the latest insights on mentorship and education.",
+    layout="boxed"
+  %}
+
+  {% module
+    "footer"
+    path="../components/modules/Footer"
+  %}
+
+{% endblock body %}
