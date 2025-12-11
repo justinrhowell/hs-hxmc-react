@@ -73,24 +73,126 @@ export function Component({ fieldValues }: any) {
           grid-template-columns: 1fr !important;
         }
       }
-      @keyframes floatOrb1 {
-        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
-        50% { transform: translate(30px, -20px) scale(1.1); opacity: 0.6; }
+
+      /* Node Network Animation */
+      .intelligence-network-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
       }
-      @keyframes floatOrb2 {
-        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-        50% { transform: translate(-25px, 15px) scale(1.05); opacity: 0.5; }
+
+      .intelligence-network-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
-      @keyframes floatOrb3 {
-        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
-        50% { transform: translate(15px, 25px) scale(1.15); opacity: 0.55; }
+
+      /* Glowing nodes */
+      .intel-node {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
       }
-      @keyframes floatOrb4 {
-        0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.25; }
-        50% { transform: translate(-20px, -30px) scale(1.08); opacity: 0.45; }
+
+      .intel-node-core {
+        width: 6px;
+        height: 6px;
+        background: rgba(239, 71, 111, 0.9);
+        border-radius: 50%;
+        box-shadow:
+          0 0 10px rgba(239, 71, 111, 0.8),
+          0 0 20px rgba(239, 71, 111, 0.6),
+          0 0 30px rgba(239, 71, 111, 0.4);
+        animation: nodePulse 3s ease-in-out infinite;
       }
+
+      .intel-node-core.teal {
+        background: rgba(6, 214, 160, 0.9);
+        box-shadow:
+          0 0 10px rgba(6, 214, 160, 0.8),
+          0 0 20px rgba(6, 214, 160, 0.6),
+          0 0 30px rgba(6, 214, 160, 0.4);
+      }
+
+      .intel-node-core.blue {
+        background: rgba(17, 138, 178, 0.9);
+        box-shadow:
+          0 0 10px rgba(17, 138, 178, 0.8),
+          0 0 20px rgba(17, 138, 178, 0.6),
+          0 0 30px rgba(17, 138, 178, 0.4);
+      }
+
+      .intel-node-core.peach {
+        background: rgba(248, 159, 123, 0.9);
+        box-shadow:
+          0 0 10px rgba(248, 159, 123, 0.8),
+          0 0 20px rgba(248, 159, 123, 0.6),
+          0 0 30px rgba(248, 159, 123, 0.4);
+      }
+
+      @keyframes nodePulse {
+        0%, 100% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.5);
+          opacity: 1;
+        }
+      }
+
+      @keyframes nodeFloat {
+        0%, 100% { transform: translate(0, 0); }
+        25% { transform: translate(10px, -15px); }
+        50% { transform: translate(-5px, 10px); }
+        75% { transform: translate(15px, 5px); }
+      }
+
+      @keyframes linePulse {
+        0%, 100% { opacity: 0.15; }
+        50% { opacity: 0.4; }
+      }
+
+      @keyframes sparkle {
+        0%, 100% { opacity: 0; transform: scale(0); }
+        50% { opacity: 1; transform: scale(1); }
+      }
+
+      .intel-sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        box-shadow: 0 0 6px white, 0 0 12px rgba(255, 255, 255, 0.5);
+        animation: sparkle 2s ease-in-out infinite;
+      }
+
+      /* Subtle gradient orbs for depth */
+      .intel-glow-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.3;
+        animation: orbFloat 20s ease-in-out infinite;
+      }
+
+      @keyframes orbFloat {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -20px) scale(1.05); }
+        66% { transform: translate(-20px, 15px) scale(0.95); }
+      }
+
       @media (prefers-reduced-motion: reduce) {
-        .intelligence-orb {
+        .intel-node-core,
+        .intel-sparkle,
+        .intel-glow-orb {
           animation: none !important;
         }
       }
@@ -106,67 +208,128 @@ export function Component({ fieldValues }: any) {
         overflow: 'hidden',
       }}
     >
-      {/* Animated glowing orbs */}
-      <div
-        className="intelligence-orb"
-        style={{
-          position: 'absolute',
-          top: '-100px',
-          left: '-150px',
-          width: '500px',
-          height: '500px',
-          background: 'radial-gradient(circle, rgba(239, 71, 111, 0.7) 0%, rgba(239, 71, 111, 0.3) 40%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(80px)',
-          animation: 'floatOrb1 8s ease-in-out infinite',
-          pointerEvents: 'none',
-        }}
-      />
-      <div
-        className="intelligence-orb"
-        style={{
-          position: 'absolute',
-          top: '40%',
-          right: '-150px',
-          width: '450px',
-          height: '450px',
-          background: 'radial-gradient(circle, rgba(17, 138, 178, 0.7) 0%, rgba(17, 138, 178, 0.3) 40%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(70px)',
-          animation: 'floatOrb2 10s ease-in-out infinite',
-          pointerEvents: 'none',
-        }}
-      />
-      <div
-        className="intelligence-orb"
-        style={{
-          position: 'absolute',
-          bottom: '-100px',
-          left: '20%',
+      {/* Tech Network Background */}
+      <div className="intelligence-network-bg">
+        {/* SVG for connecting lines */}
+        <svg className="intelligence-network-canvas" style={{ opacity: 0.6 }}>
+          <defs>
+            <linearGradient id="lineGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="rgba(239, 71, 111, 0.5)" />
+              <stop offset="100%" stopColor="rgba(17, 138, 178, 0.3)" />
+            </linearGradient>
+            <linearGradient id="lineGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(6, 214, 160, 0.4)" />
+              <stop offset="100%" stopColor="rgba(239, 71, 111, 0.3)" />
+            </linearGradient>
+            <linearGradient id="lineGradient3" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="rgba(248, 159, 123, 0.4)" />
+              <stop offset="100%" stopColor="rgba(17, 138, 178, 0.2)" />
+            </linearGradient>
+          </defs>
+          {/* Connecting lines between nodes */}
+          <line x1="5%" y1="15%" x2="25%" y2="25%" stroke="url(#lineGradient1)" strokeWidth="1" style={{ animation: 'linePulse 4s ease-in-out infinite' }} />
+          <line x1="25%" y1="25%" x2="45%" y2="10%" stroke="url(#lineGradient2)" strokeWidth="1" style={{ animation: 'linePulse 5s ease-in-out infinite 0.5s' }} />
+          <line x1="45%" y1="10%" x2="70%" y2="20%" stroke="url(#lineGradient1)" strokeWidth="1" style={{ animation: 'linePulse 4.5s ease-in-out infinite 1s' }} />
+          <line x1="70%" y1="20%" x2="90%" y2="8%" stroke="url(#lineGradient3)" strokeWidth="1" style={{ animation: 'linePulse 6s ease-in-out infinite' }} />
+          <line x1="10%" y1="40%" x2="30%" y2="55%" stroke="url(#lineGradient2)" strokeWidth="1" style={{ animation: 'linePulse 5.5s ease-in-out infinite 0.3s' }} />
+          <line x1="30%" y1="55%" x2="55%" y2="45%" stroke="url(#lineGradient1)" strokeWidth="1" style={{ animation: 'linePulse 4s ease-in-out infinite 0.7s' }} />
+          <line x1="55%" y1="45%" x2="80%" y2="50%" stroke="url(#lineGradient3)" strokeWidth="1" style={{ animation: 'linePulse 5s ease-in-out infinite 1.2s' }} />
+          <line x1="80%" y1="50%" x2="95%" y2="35%" stroke="url(#lineGradient2)" strokeWidth="1" style={{ animation: 'linePulse 4.5s ease-in-out infinite' }} />
+          <line x1="15%" y1="75%" x2="35%" y2="85%" stroke="url(#lineGradient1)" strokeWidth="1" style={{ animation: 'linePulse 6s ease-in-out infinite 0.5s' }} />
+          <line x1="35%" y1="85%" x2="60%" y2="70%" stroke="url(#lineGradient3)" strokeWidth="1" style={{ animation: 'linePulse 5s ease-in-out infinite 0.8s' }} />
+          <line x1="60%" y1="70%" x2="85%" y2="80%" stroke="url(#lineGradient2)" strokeWidth="1" style={{ animation: 'linePulse 4.5s ease-in-out infinite 1.5s' }} />
+          <line x1="85%" y1="80%" x2="95%" y2="65%" stroke="url(#lineGradient1)" strokeWidth="1" style={{ animation: 'linePulse 5.5s ease-in-out infinite' }} />
+          {/* Cross connections */}
+          <line x1="25%" y1="25%" x2="30%" y2="55%" stroke="url(#lineGradient3)" strokeWidth="0.5" style={{ animation: 'linePulse 7s ease-in-out infinite 0.2s' }} />
+          <line x1="55%" y1="45%" x2="60%" y2="70%" stroke="url(#lineGradient1)" strokeWidth="0.5" style={{ animation: 'linePulse 6s ease-in-out infinite 0.6s' }} />
+          <line x1="70%" y1="20%" x2="80%" y2="50%" stroke="url(#lineGradient2)" strokeWidth="0.5" style={{ animation: 'linePulse 5.5s ease-in-out infinite 1s' }} />
+          <line x1="45%" y1="10%" x2="55%" y2="45%" stroke="url(#lineGradient3)" strokeWidth="0.5" style={{ animation: 'linePulse 6.5s ease-in-out infinite' }} />
+        </svg>
+
+        {/* Glowing nodes */}
+        <div className="intel-node" style={{ top: '15%', left: '5%', animation: 'nodeFloat 8s ease-in-out infinite' }}>
+          <div className="intel-node-core" style={{ animationDelay: '0s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '25%', left: '25%', animation: 'nodeFloat 10s ease-in-out infinite 1s' }}>
+          <div className="intel-node-core teal" style={{ animationDelay: '0.5s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '10%', left: '45%', animation: 'nodeFloat 9s ease-in-out infinite 2s' }}>
+          <div className="intel-node-core blue" style={{ animationDelay: '1s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '20%', left: '70%', animation: 'nodeFloat 11s ease-in-out infinite 0.5s' }}>
+          <div className="intel-node-core peach" style={{ animationDelay: '1.5s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '8%', left: '90%', animation: 'nodeFloat 8s ease-in-out infinite 1.5s' }}>
+          <div className="intel-node-core" style={{ animationDelay: '2s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '40%', left: '10%', animation: 'nodeFloat 12s ease-in-out infinite' }}>
+          <div className="intel-node-core blue" style={{ animationDelay: '0.3s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '55%', left: '30%', animation: 'nodeFloat 9s ease-in-out infinite 2s' }}>
+          <div className="intel-node-core" style={{ animationDelay: '0.8s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '45%', left: '55%', animation: 'nodeFloat 10s ease-in-out infinite 0.8s' }}>
+          <div className="intel-node-core teal" style={{ animationDelay: '1.2s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '50%', left: '80%', animation: 'nodeFloat 8s ease-in-out infinite 1.2s' }}>
+          <div className="intel-node-core peach" style={{ animationDelay: '1.8s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '35%', left: '95%', animation: 'nodeFloat 11s ease-in-out infinite 0.3s' }}>
+          <div className="intel-node-core blue" style={{ animationDelay: '2.2s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '75%', left: '15%', animation: 'nodeFloat 10s ease-in-out infinite 1s' }}>
+          <div className="intel-node-core teal" style={{ animationDelay: '0.6s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '85%', left: '35%', animation: 'nodeFloat 9s ease-in-out infinite 0.5s' }}>
+          <div className="intel-node-core peach" style={{ animationDelay: '1.1s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '70%', left: '60%', animation: 'nodeFloat 11s ease-in-out infinite 1.8s' }}>
+          <div className="intel-node-core" style={{ animationDelay: '1.6s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '80%', left: '85%', animation: 'nodeFloat 8s ease-in-out infinite 0.7s' }}>
+          <div className="intel-node-core blue" style={{ animationDelay: '2s' }}></div>
+        </div>
+        <div className="intel-node" style={{ top: '65%', left: '95%', animation: 'nodeFloat 10s ease-in-out infinite 1.3s' }}>
+          <div className="intel-node-core teal" style={{ animationDelay: '0.4s' }}></div>
+        </div>
+
+        {/* Sparkle effects */}
+        <div className="intel-sparkle" style={{ top: '18%', left: '15%', animationDelay: '0s' }}></div>
+        <div className="intel-sparkle" style={{ top: '30%', left: '48%', animationDelay: '0.7s' }}></div>
+        <div className="intel-sparkle" style={{ top: '12%', left: '78%', animationDelay: '1.4s' }}></div>
+        <div className="intel-sparkle" style={{ top: '52%', left: '22%', animationDelay: '2.1s' }}></div>
+        <div className="intel-sparkle" style={{ top: '48%', left: '68%', animationDelay: '0.3s' }}></div>
+        <div className="intel-sparkle" style={{ top: '38%', left: '88%', animationDelay: '1.8s' }}></div>
+        <div className="intel-sparkle" style={{ top: '78%', left: '28%', animationDelay: '1.1s' }}></div>
+        <div className="intel-sparkle" style={{ top: '72%', left: '72%', animationDelay: '2.5s' }}></div>
+        <div className="intel-sparkle" style={{ top: '88%', left: '52%', animationDelay: '0.9s' }}></div>
+        <div className="intel-sparkle" style={{ top: '62%', left: '8%', animationDelay: '1.6s' }}></div>
+
+        {/* Subtle background glow orbs for depth */}
+        <div className="intel-glow-orb" style={{
+          top: '-10%',
+          left: '-5%',
           width: '400px',
           height: '400px',
-          background: 'radial-gradient(circle, rgba(248, 159, 123, 0.6) 0%, rgba(248, 159, 123, 0.25) 40%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(60px)',
-          animation: 'floatOrb3 12s ease-in-out infinite',
-          pointerEvents: 'none',
-        }}
-      />
-      <div
-        className="intelligence-orb"
-        style={{
-          position: 'absolute',
-          top: '10%',
-          right: '20%',
+          background: 'radial-gradient(circle, rgba(239, 71, 111, 0.4) 0%, transparent 70%)',
+        }} />
+        <div className="intel-glow-orb" style={{
+          top: '30%',
+          right: '-10%',
           width: '350px',
           height: '350px',
-          background: 'radial-gradient(circle, rgba(239, 71, 111, 0.5) 0%, rgba(239, 71, 111, 0.2) 40%, transparent 70%)',
-          borderRadius: '50%',
-          filter: 'blur(50px)',
-          animation: 'floatOrb4 9s ease-in-out infinite',
-          pointerEvents: 'none',
-        }}
-      />
+          background: 'radial-gradient(circle, rgba(17, 138, 178, 0.35) 0%, transparent 70%)',
+          animationDelay: '5s',
+        }} />
+        <div className="intel-glow-orb" style={{
+          bottom: '-5%',
+          left: '30%',
+          width: '300px',
+          height: '300px',
+          background: 'radial-gradient(circle, rgba(6, 214, 160, 0.3) 0%, transparent 70%)',
+          animationDelay: '10s',
+        }} />
+      </div>
       <div style={{ maxWidth: 'var(--max-width-xl)', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-2xl)' }}>
           <h2 style={{

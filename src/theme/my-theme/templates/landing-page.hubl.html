@@ -1,0 +1,804 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: Landing Page Template
+  screenshotPath: ../assets/images/template-previews/landing-page.png
+-->
+{% extends "./layouts/base.hubl.html" %}
+
+{% block body %}
+
+  {# Landing Page Styles - Scoped to this template #}
+  <style>
+    /* ==========================================================================
+       LANDING PAGE TEMPLATE STYLES
+       Comprehensive styles for landing pages with native HubSpot blocks
+       ========================================================================== */
+
+    /* Main content wrapper */
+    .landing-page-content {
+      min-height: 100vh;
+    }
+
+    /* ==========================================================================
+       DND AREA STYLES
+       ========================================================================== */
+
+    .main-content-area .dnd-section {
+      padding: var(--section-padding-sm) 0;
+    }
+
+    @media (min-width: 768px) {
+      .main-content-area .dnd-section {
+        padding: var(--section-padding-md) 0;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .main-content-area .dnd-section {
+        padding: var(--section-padding-lg) 0;
+      }
+    }
+
+    /* DnD Column Gap - ensure spacing between columns */
+    .dnd-section > .row-fluid {
+      gap: var(--spacing-lg) !important;
+    }
+
+    .dnd-section .row-fluid-wrapper .row-fluid {
+      gap: var(--spacing-lg) !important;
+    }
+
+    /* Alternative column gap using margin for older HubSpot markup */
+    .dnd-section [class*="span"]:not(:last-child) {
+      margin-right: var(--spacing-lg);
+    }
+
+    /* Reset margin on mobile when columns stack */
+    @media (max-width: 768px) {
+      .dnd-section [class*="span"]:not(:last-child) {
+        margin-right: 0;
+        margin-bottom: var(--spacing-lg);
+      }
+    }
+
+    /* ==========================================================================
+       HUBSPOT FORM STYLES
+       Native HubSpot form block styling for brand consistency
+       ========================================================================== */
+
+    /* Form Container */
+    .hs-form-container,
+    .hs_cos_wrapper_type_form {
+      font-family: var(--font-body) !important;
+    }
+
+    /* Form wrapper */
+    .hs-form-frame,
+    .hs-form {
+      font-family: var(--font-body) !important;
+      max-width: 100%;
+    }
+
+    /* Form title */
+    .form-title,
+    .hs-form-title {
+      font-family: var(--font-headline) !important;
+      font-size: var(--font-size-h3) !important;
+      font-weight: 600 !important;
+      color: var(--text-primary) !important;
+      margin-bottom: var(--spacing-md) !important;
+      line-height: var(--line-height-tight) !important;
+    }
+
+    /* Field group */
+    .hs-form-field {
+      margin-bottom: var(--spacing-sm) !important;
+    }
+
+    /* Labels */
+    .hs-form-field > label,
+    .hs-form-field label.hs-form-label {
+      display: block !important;
+      font-family: var(--font-body) !important;
+      font-size: var(--font-size-base) !important;
+      font-weight: 600 !important;
+      color: var(--text-primary) !important;
+      margin-bottom: 8px !important;
+      line-height: 1.4 !important;
+    }
+
+    /* Required field indicator */
+    .hs-form-required {
+      color: var(--primary-coral) !important;
+      margin-left: 2px !important;
+    }
+
+    /* All input types */
+    .hs-form .hs-input,
+    .hs-form input[type="text"],
+    .hs-form input[type="email"],
+    .hs-form input[type="tel"],
+    .hs-form input[type="number"],
+    .hs-form input[type="url"],
+    .hs-form input[type="date"],
+    .hs-form input[type="password"],
+    .hs-form textarea,
+    .hs-form select {
+      width: 100% !important;
+      padding: 14px 18px !important;
+      border: 2px solid rgba(239, 71, 111, 0.15) !important;
+      border-radius: var(--radius-md) !important;
+      font-family: var(--font-body) !important;
+      font-size: var(--font-size-base) !important;
+      color: var(--text-primary) !important;
+      background: var(--bg-white) !important;
+      transition: all 0.2s ease !important;
+      box-sizing: border-box !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+    }
+
+    /* Placeholder styling */
+    .hs-form .hs-input::placeholder,
+    .hs-form input::placeholder,
+    .hs-form textarea::placeholder {
+      color: var(--text-muted) !important;
+      opacity: 0.7 !important;
+    }
+
+    /* Focus state */
+    .hs-form .hs-input:focus,
+    .hs-form input:focus,
+    .hs-form textarea:focus,
+    .hs-form select:focus {
+      border-color: var(--primary-coral) !important;
+      outline: none !important;
+      box-shadow: 0 0 0 4px rgba(239, 71, 111, 0.1) !important;
+    }
+
+    /* Hover state */
+    .hs-form .hs-input:hover,
+    .hs-form input:hover,
+    .hs-form textarea:hover,
+    .hs-form select:hover {
+      border-color: rgba(239, 71, 111, 0.3) !important;
+    }
+
+    /* Textarea specific */
+    .hs-form textarea {
+      min-height: 140px !important;
+      resize: vertical !important;
+      line-height: var(--line-height-normal) !important;
+    }
+
+    /* Select dropdown */
+    .hs-form select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23EF476F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 16px center !important;
+      background-size: 16px !important;
+      padding-right: 48px !important;
+      cursor: pointer !important;
+    }
+
+    /* Multi-select */
+    .hs-form select[multiple] {
+      height: auto !important;
+      min-height: 120px !important;
+      padding: 12px !important;
+      background-image: none !important;
+    }
+
+    /* Fieldset / Field wrapper */
+    .hs-form fieldset {
+      max-width: 100% !important;
+      margin: 0 0 var(--spacing-xs) 0 !important;
+      padding: 0 !important;
+      border: none !important;
+    }
+
+    /* Multi-column form layouts */
+    .hs-form fieldset.form-columns-1 {
+      display: block !important;
+    }
+
+    .hs-form fieldset.form-columns-1 .hs-form-field {
+      width: 100% !important;
+    }
+
+    .hs-form fieldset.form-columns-2 {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: var(--spacing-sm) !important;
+      margin-bottom: var(--spacing-xs) !important;
+    }
+
+    .hs-form fieldset.form-columns-2 .hs-form-field {
+      flex: 1 1 calc(50% - var(--spacing-md) / 2) !important;
+      min-width: 200px !important;
+      width: auto !important;
+    }
+
+    .hs-form fieldset.form-columns-3 {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: var(--spacing-sm) !important;
+      margin-bottom: var(--spacing-xs) !important;
+    }
+
+    .hs-form fieldset.form-columns-3 .hs-form-field {
+      flex: 1 1 calc(33.333% - var(--spacing-md) * 2 / 3) !important;
+      min-width: 180px !important;
+      width: auto !important;
+    }
+
+    /* Ensure inputs fill their container */
+    .hs-form fieldset .hs-form-field .input {
+      width: 100% !important;
+    }
+
+    .hs-form fieldset .hs-form-field .hs-input {
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    @media (max-width: 768px) {
+      .hs-form fieldset.form-columns-2,
+      .hs-form fieldset.form-columns-3 {
+        flex-direction: column !important;
+      }
+
+      .hs-form fieldset.form-columns-2 .hs-form-field,
+      .hs-form fieldset.form-columns-3 .hs-form-field {
+        flex: 1 1 100% !important;
+        width: 100% !important;
+      }
+    }
+
+    /* ==========================================================================
+       CHECKBOX AND RADIO STYLING
+       ========================================================================== */
+
+    /* Checkbox and Radio styling */
+    .hs-form .hs-form-checkbox,
+    .hs-form .hs-form-radio {
+      display: flex !important;
+      align-items: flex-start !important;
+      gap: 12px !important;
+      margin-bottom: 12px !important;
+      cursor: pointer !important;
+    }
+
+    /* Reset checkbox/radio inputs */
+    .hs-form input[type="checkbox"],
+    .hs-form input[type="radio"] {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      width: 22px !important;
+      height: 22px !important;
+      min-width: 22px !important;
+      min-height: 22px !important;
+      max-width: 22px !important;
+      max-height: 22px !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 2px solid rgba(239, 71, 111, 0.4) !important;
+      border-radius: 4px !important;
+      background-color: var(--bg-white) !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      flex-shrink: 0 !important;
+      position: relative !important;
+    }
+
+    .hs-form input[type="radio"] {
+      border-radius: 50% !important;
+    }
+
+    /* Checkbox hover state */
+    .hs-form input[type="checkbox"]:hover,
+    .hs-form input[type="radio"]:hover {
+      border-color: var(--primary-coral) !important;
+      background-color: rgba(239, 71, 111, 0.05) !important;
+    }
+
+    /* Checkbox checked state */
+    .hs-form input[type="checkbox"]:checked,
+    .hs-form input[type="radio"]:checked {
+      background-color: var(--primary-coral) !important;
+      border-color: var(--primary-coral) !important;
+    }
+
+    /* Checkmark for checkbox */
+    .hs-form input[type="checkbox"]:checked::after {
+      content: '' !important;
+      position: absolute !important;
+      left: 6px !important;
+      top: 2px !important;
+      width: 6px !important;
+      height: 12px !important;
+      border: solid white !important;
+      border-width: 0 2px 2px 0 !important;
+      transform: rotate(45deg) !important;
+    }
+
+    /* Dot for radio */
+    .hs-form input[type="radio"]:checked::after {
+      content: '' !important;
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 8px !important;
+      height: 8px !important;
+      background-color: white !important;
+      border-radius: 50% !important;
+    }
+
+    /* Focus state for checkboxes/radios */
+    .hs-form input[type="checkbox"]:focus,
+    .hs-form input[type="radio"]:focus {
+      outline: none !important;
+      box-shadow: 0 0 0 3px rgba(239, 71, 111, 0.2) !important;
+    }
+
+    .hs-form .hs-form-checkbox label,
+    .hs-form .hs-form-radio label,
+    .hs-form .hs-form-checkbox span,
+    .hs-form .hs-form-radio span {
+      font-weight: 400 !important;
+      color: var(--text-secondary) !important;
+      line-height: 1.5 !important;
+      cursor: pointer !important;
+      font-size: var(--font-size-base) !important;
+    }
+
+    /* Checkbox/Radio list container */
+    .hs-form .inputs-list {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    .hs-form .inputs-list li {
+      margin-bottom: 8px !important;
+    }
+
+    /* Boolean checkbox (single checkbox fields) */
+    .hs-form .hs-form-booleancheckbox {
+      margin-top: var(--spacing-sm) !important;
+    }
+
+    .hs-form .hs-form-booleancheckbox-display {
+      display: flex !important;
+      align-items: flex-start !important;
+      gap: 12px !important;
+      cursor: pointer !important;
+    }
+
+    .hs-form .hs-form-booleancheckbox-display input {
+      margin-top: 2px !important;
+    }
+
+    .hs-form .hs-form-booleancheckbox-display span {
+      flex: 1 !important;
+      line-height: 1.5 !important;
+      font-size: var(--font-size-small) !important;
+      color: var(--text-muted) !important;
+    }
+
+    /* Error states */
+    .hs-form .hs-input.error,
+    .hs-form .hs-error-msgs,
+    .hs-form .invalid {
+      border-color: #dc3545 !important;
+    }
+
+    .hs-form .hs-error-msgs {
+      color: #dc3545 !important;
+      font-size: var(--font-size-small) !important;
+      margin-top: 6px !important;
+      list-style: none !important;
+      padding: 0 !important;
+    }
+
+    .hs-form .hs-error-msgs li {
+      margin-bottom: 4px !important;
+    }
+
+    /* Help text */
+    .hs-form .hs-field-desc {
+      font-size: var(--font-size-small) !important;
+      color: var(--text-muted) !important;
+      margin-top: 6px !important;
+      line-height: 1.4 !important;
+    }
+
+    /* Rich text within forms */
+    .hs-form .hs-richtext {
+      font-family: var(--font-body) !important;
+      font-size: var(--font-size-base) !important;
+      color: var(--text-secondary) !important;
+      line-height: var(--line-height-normal) !important;
+      margin-bottom: var(--spacing-md) !important;
+    }
+
+    .hs-form .hs-richtext a {
+      color: var(--primary-coral) !important;
+      text-decoration: underline !important;
+    }
+
+    .hs-form .hs-richtext a:hover {
+      color: var(--primary-navy) !important;
+    }
+
+    /* Submit button */
+    .hs-form .hs-submit {
+      margin-top: var(--spacing-sm) !important;
+    }
+
+    .hs-form .hs-button,
+    .hs-form input[type="submit"],
+    .hs-form .actions input {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.5rem !important;
+      padding: var(--btn-padding) !important;
+      background: var(--gradient-coral) !important;
+      color: var(--text-white) !important;
+      border: none !important;
+      border-radius: var(--radius-full) !important;
+      font-family: var(--font-body) !important;
+      font-size: var(--font-size-body) !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      transition: all 0.25s ease !important;
+      text-decoration: none !important;
+    }
+
+    .hs-form .hs-button:hover,
+    .hs-form input[type="submit"]:hover,
+    .hs-form .actions input:hover {
+      background: var(--white) !important;
+      color: var(--primary-coral) !important;
+      box-shadow: inset 0 0 0 2px var(--primary-coral) !important;
+      transform: none !important;
+    }
+
+    .hs-form .hs-button:active,
+    .hs-form input[type="submit"]:active,
+    .hs-form .actions input:active {
+      transform: none !important;
+    }
+
+    /* Loading state */
+    .hs-form .hs-button.hs-button-loading,
+    .hs-form input[type="submit"]:disabled {
+      opacity: 0.7 !important;
+      cursor: not-allowed !important;
+      transform: none !important;
+    }
+
+    /* Success message */
+    .hs-form .submitted-message,
+    .hs-form-success-message {
+      background: rgba(6, 214, 160, 0.1) !important;
+      border: 2px solid var(--secondary-teal) !important;
+      border-radius: var(--radius-lg) !important;
+      padding: var(--spacing-lg) !important;
+      text-align: center !important;
+      color: var(--text-primary) !important;
+      font-size: var(--font-size-body) !important;
+    }
+
+    .hs-form .submitted-message p,
+    .hs-form-success-message p {
+      margin: 0 !important;
+    }
+
+    /* Legal consent / GDPR */
+    .hs-form .legal-consent-container {
+      margin-top: var(--spacing-md) !important;
+      padding-top: var(--spacing-md) !important;
+      border-top: 1px solid rgba(239, 71, 111, 0.1) !important;
+    }
+
+    .hs-form .legal-consent-container .hs-form-booleancheckbox-display {
+      font-size: var(--font-size-small) !important;
+    }
+
+    .hs-form .legal-consent-container p {
+      font-size: var(--font-size-small) !important;
+      color: var(--text-muted) !important;
+      line-height: var(--line-height-relaxed) !important;
+    }
+
+    /* File upload styling */
+    .hs-form input[type="file"] {
+      padding: 12px !important;
+      background: var(--bg-secondary) !important;
+    }
+
+    /* Date picker */
+    .hs-form .hs-datepicker {
+      font-family: var(--font-body) !important;
+    }
+
+    /* ==========================================================================
+       HUBSPOT RICH TEXT / CTA BUTTON STYLES
+       ========================================================================== */
+
+    /* Rich text module */
+    .hs_cos_wrapper_type_rich_text {
+      font-family: var(--font-body) !important;
+      font-size: var(--font-size-body) !important;
+      color: var(--text-secondary) !important;
+      line-height: var(--line-height-relaxed) !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text h1 {
+      font-family: var(--font-headline) !important;
+      font-size: var(--font-size-h1) !important;
+      font-weight: 600 !important;
+      color: var(--text-primary) !important;
+      margin-bottom: var(--spacing-md) !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text h2 {
+      font-family: var(--font-headline) !important;
+      font-size: var(--font-size-h2) !important;
+      font-weight: 500 !important;
+      color: var(--text-primary) !important;
+      margin-bottom: var(--spacing-md) !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text h3 {
+      font-family: var(--font-headline) !important;
+      font-size: var(--font-size-h3) !important;
+      font-weight: 500 !important;
+      color: var(--text-primary) !important;
+      margin-bottom: var(--spacing-sm) !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text h4,
+    .hs_cos_wrapper_type_rich_text h5,
+    .hs_cos_wrapper_type_rich_text h6 {
+      font-family: var(--font-headline) !important;
+      color: var(--text-primary) !important;
+      margin-bottom: var(--spacing-sm) !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text p {
+      margin-bottom: var(--spacing-md) !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text a {
+      color: var(--primary-coral) !important;
+      text-decoration: underline !important;
+      transition: color 0.2s ease !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text a:hover {
+      color: var(--primary-navy) !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text ul,
+    .hs_cos_wrapper_type_rich_text ol {
+      padding-left: var(--spacing-lg) !important;
+      margin-bottom: var(--spacing-md) !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text li {
+      margin-bottom: var(--spacing-xs) !important;
+    }
+
+    .hs_cos_wrapper_type_rich_text blockquote {
+      font-size: var(--font-size-quote) !important;
+      font-style: italic !important;
+      border-left: 4px solid var(--primary-coral) !important;
+      padding-left: var(--spacing-md) !important;
+      margin: var(--spacing-lg) 0 !important;
+      color: var(--text-secondary) !important;
+    }
+
+    /* CTA buttons */
+    .hs-cta-wrapper {
+      display: inline-block !important;
+    }
+
+    .hs-cta-wrapper a.cta_button {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 16px 36px !important;
+      background: var(--gradient-coral) !important;
+      color: var(--text-white) !important;
+      border: none !important;
+      border-radius: var(--radius-full) !important;
+      font-family: var(--font-body) !important;
+      font-size: var(--font-size-body) !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      transition: all 0.25s ease !important;
+    }
+
+    .hs-cta-wrapper a.cta_button:hover {
+      background: var(--bg-white) !important;
+      color: var(--primary-coral) !important;
+      box-shadow: inset 0 0 0 2px var(--primary-coral), 0 4px 16px rgba(239, 71, 111, 0.2) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* ==========================================================================
+       HUBSPOT IMAGE MODULE STYLES
+       ========================================================================== */
+
+    .hs_cos_wrapper_type_image img {
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: var(--radius-lg) !important;
+    }
+
+    /* ==========================================================================
+       HUBSPOT VIDEO MODULE STYLES
+       ========================================================================== */
+
+    .hs_cos_wrapper_type_video {
+      border-radius: var(--radius-xl) !important;
+      overflow: hidden !important;
+      box-shadow: var(--shadow-lg) !important;
+    }
+
+    /* ==========================================================================
+       HUBSPOT BUTTON MODULE STYLES
+       ========================================================================== */
+
+    .hs-button-module a,
+    .hs_cos_wrapper_type_cta a {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 16px 36px !important;
+      background: var(--gradient-coral) !important;
+      color: var(--text-white) !important;
+      border: none !important;
+      border-radius: var(--radius-full) !important;
+      font-family: var(--font-body) !important;
+      font-size: var(--font-size-body) !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      transition: all 0.25s ease !important;
+    }
+
+    .hs-button-module a:hover,
+    .hs_cos_wrapper_type_cta a:hover {
+      background: var(--bg-white) !important;
+      color: var(--primary-coral) !important;
+      box-shadow: inset 0 0 0 2px var(--primary-coral), 0 4px 16px rgba(239, 71, 111, 0.2) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* ==========================================================================
+       HUBSPOT DIVIDER STYLES
+       ========================================================================== */
+
+    .hs_cos_wrapper_type_horizontal_spacer hr,
+    .hs-horizontal-rule {
+      border: none !important;
+      border-top: 1px solid rgba(239, 71, 111, 0.15) !important;
+      margin: var(--spacing-xl) 0 !important;
+    }
+
+    /* ==========================================================================
+       SECTION BACKGROUND OPTIONS
+       ========================================================================== */
+
+    /* White background section */
+    .section-white {
+      background: var(--bg-white) !important;
+    }
+
+    /* Cream/warm background section */
+    .section-cream {
+      background: var(--bg-cream) !important;
+    }
+
+    /* Hero gradient background */
+    .section-hero {
+      background: var(--gradient-hero) !important;
+    }
+
+    /* Navy dark background */
+    .section-navy {
+      background: var(--primary-navy) !important;
+    }
+
+    .section-navy h1,
+    .section-navy h2,
+    .section-navy h3,
+    .section-navy h4,
+    .section-navy h5,
+    .section-navy h6,
+    .section-navy p,
+    .section-navy li {
+      color: var(--text-white) !important;
+    }
+
+    .section-navy p,
+    .section-navy li {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    /* Coral gradient background */
+    .section-coral {
+      background: var(--gradient-coral) !important;
+    }
+
+    .section-coral h1,
+    .section-coral h2,
+    .section-coral h3,
+    .section-coral h4,
+    .section-coral h5,
+    .section-coral h6,
+    .section-coral p,
+    .section-coral li {
+      color: var(--text-white) !important;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE ADJUSTMENTS
+       ========================================================================== */
+
+    @media (max-width: 768px) {
+      .main-content-area .dnd-section {
+        padding-left: var(--spacing-sm) !important;
+        padding-right: var(--spacing-sm) !important;
+      }
+
+      .hs-form .hs-button,
+      .hs-form input[type="submit"] {
+        width: 100% !important;
+        min-width: auto !important;
+      }
+    }
+  </style>
+
+  {# Drag and Drop Area - Main Content #}
+  {% dnd_area "main_content"
+    label="Main Content",
+    class="main-content-area landing-page-content"
+  %}
+    {% dnd_section
+      background_image={
+        "backgroundPosition": "MIDDLE_CENTER",
+        "backgroundSize": "cover",
+        "imageUrl": "",
+        "color": "#FDF8EF"
+      },
+      max_width=1200,
+      vertical_alignment="MIDDLE"
+    %}
+      {% dnd_column
+        width=12
+      %}
+        {% dnd_row %}
+          {% dnd_module
+            path="@hubspot/rich_text",
+            html="<h1 style='text-align: center;'>Landing Page Title</h1><p style='text-align: center; max-width: 700px; margin: 0 auto;'>Add your compelling landing page content here. Use the drag and drop editor to add modules like forms, images, CTAs, and more.</p>"
+          %}
+          {% end_dnd_module %}
+        {% end_dnd_row %}
+      {% end_dnd_column %}
+    {% end_dnd_section %}
+  {% end_dnd_area %}
+
+  {# Global Footer #}
+  {% module
+    "footer"
+    path="../components/modules/Footer"
+  %}
+
+{% endblock body %}
